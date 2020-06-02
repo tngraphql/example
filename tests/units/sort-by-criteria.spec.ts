@@ -6,32 +6,17 @@
  */
 import {SortByCriteria} from "../../src/Repositories/Criteria/SortByCriteria";
 
-require('../support');
 import {expect} from 'chai';
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {join} from "path";
-import {Kernel} from "../../src/app/GraphQL/Kernel";
-import {Application} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 
 describe('Sort By Criteria', () => {
-    let app: Application;
-    let kernel: Kernel;
-    let schema;
     let UserModel;
     let UserRepository;
-    before(async () => {
-        app = require('../../src/bootstrap/app');
 
-        app.autoload(join(app.getBasePath(), 'app'), 'App');
-
-        kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
-
-        await kernel.handle();
-    })
     beforeEach(async () => {
         class User extends BaseModel {
             public static table = 'users'

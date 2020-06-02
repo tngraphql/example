@@ -6,12 +6,8 @@
  */
 import {cleanup, resetTables, setup} from "../helpers";
 
-require('../support');
 import {expect} from 'chai';
-import {Application, Service} from "@tngraphql/illuminate";
-import {Kernel} from "../../src/app/GraphQL/Kernel";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {join} from "path";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
@@ -30,22 +26,11 @@ function getBaseRepository() {
 }
 
 describe('Base Repository', () => {
-    let app: Application;
-    let kernel: Kernel;
-    let schema;
-    let server;
     let UserModel;
     let ProfileModel;
     let UserRepository: ReturnType<typeof getBaseRepository>;
 
     before(async () => {
-        app = require('../../src/bootstrap/app');
-
-        app.autoload(join(app.getBasePath(), 'app'), 'App');
-
-        kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
-
-        await kernel.handle();
 
         class Profile extends BaseModel {
             @column()
@@ -87,20 +72,6 @@ describe('Base Repository', () => {
     //     await resetTables();
     //     UserModel.create({name: 'nguyen'})
     // });
-
-    it('test', async () => {
-        class B{
-
-        }
-
-        @Service()
-        class A {
-            constructor(public b: B) {
-            }
-        }
-
-        console.log(await app.make(A,[1]));
-    });
 
     it('should new query', async () => {
         const repo = new UserRepository();

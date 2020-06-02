@@ -391,10 +391,10 @@
     smpltmpl "^1.0.2"
     snake-case "^3.0.3"
 
-"@tngraphql/graphql@^1.0.4-1-alpha":
-  version "1.0.4-1-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/graphql/-/graphql-1.0.4-1-alpha.tgz#8b7ca7b792b50958157dd372569cafca5c6465fe"
-  integrity sha512-Cftkxypuyhn9QMy9pkG8baOqwUjo5ryye2OgTSHsAOk66GFDodN3Z41pA4MwIanNWBmM6mCZKOf0Rx4O3H9DxQ==
+"@tngraphql/graphql@^1.0.4-2-alpha":
+  version "1.0.4-2-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/graphql/-/graphql-1.0.4-2-alpha.tgz#60e93aa389b1ff5489352012ad67a59bd720230f"
+  integrity sha512-/9bUEkpklO8E6KOZcV55GPaAfAIYLrwJ7IPhtVcIZI7b5D0ThB4njY3JFTtkWOtUrzLwUtVRi7j+hNUyOX9ieQ==
   dependencies:
     "@poppinss/dev-utils" "^1.0.4"
     "@poppinss/utils" "^2.1.2"
@@ -446,10 +446,10 @@
     uuid "^7.0.3"
     validatorjs "^3.18.1"
 
-"@tngraphql/illuminate@^1.1.7-2-alpha":
-  version "1.1.7-2-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-2-alpha.tgz#d9db73d1951d019fbcc49cffe8d7c9a4c66b272c"
-  integrity sha512-KvnyZ9hXNahEFevDMJb9PFL+I7liqC0pbZPN98sDgkGWKMEBGin5HbOxRn8xzc2NnPXMgIc9d4jhBqCtz/PEgw==
+"@tngraphql/illuminate@^1.1.7-4-alpha":
+  version "1.1.7-4-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-4-alpha.tgz#5aa2a4fad39646915f3841c2235a1823bdc98ea6"
+  integrity sha512-OzCplhOhUBWAMNytI1VQDL8EwDCxuETxwZ2TgMH9oPD7KTg4rNh21j7DqQkTkrX+52U0qwiPw5w/n3NGR4yVkA==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"

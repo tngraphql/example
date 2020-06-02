@@ -29,4 +29,6 @@ app.singleton('Illuminate/Foundation/GraphQL/Kernel', GraphQLKernel);
 
 app.singleton('Illuminate/Foundation/Console/Kernel', ConsoleKernel);
 
+app.alias('Illuminate/Foundation/Console/Kernel', 'ace');
+
 export = app;

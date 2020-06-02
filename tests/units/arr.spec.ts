@@ -5,7 +5,6 @@
  * Time: 7:28 PM
  */
 
-import '../support';
 import {expect} from 'chai';
 
 import Arr from "../../src/lib/Arr";

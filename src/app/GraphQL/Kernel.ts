@@ -14,7 +14,6 @@ import {Authenticate} from "@tngraphql/auth/dist/src/Middleware/Authenticate";
 import {CanMiddleware} from "@tngraphql/guard/dist/src/Middleware/CanMiddleware";
 import {SortByMiddleware} from "./Middleware/SortByMiddleware";
 
-
 @Service()
 export class Kernel extends GraphQLKernel {
     /**

@@ -4,13 +4,8 @@
  * Date: 5/26/2020
  * Time: 11:14 AM
  */
-require('../support');
-
 import {expect} from 'chai';
 import {FilterCriteria} from "../../src/Repositories/Criteria/FilterCriteria";
-import {Application} from "@tngraphql/illuminate";
-import {Kernel} from "../../src/app/GraphQL/Kernel";
-import {join} from "path";
 import {FilterContract} from "../../src/Contracts/FilterContract";
 import {OperatorEnumType} from "../../src/app/GraphQL/Types/OperatorEnumType";
 import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
@@ -19,22 +14,10 @@ import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 
 describe('Filter Apply', () => {
-    let app: Application;
-    let kernel: Kernel;
-    let schema;
-    let server;
     let UserModel: LucidModel;
     let ProfileModel;
 
     beforeEach(async () => {
-        app = require('../../src/bootstrap/app');
-
-        app.autoload(join(app.getBasePath(), 'app'), 'App');
-
-        kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
-
-        await kernel.handle();
-
         class Profile extends BaseModel {
             @column()
             public id: string;

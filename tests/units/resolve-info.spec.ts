@@ -5,7 +5,6 @@
  * Time: 7:54 AM
  */
 
-import '../support';
 import {expect} from 'chai';
 import {ResolveInfo} from "../../src/lib/ResolveInfo";
 import {graphql} from "graphql";
@@ -21,8 +20,9 @@ import {
     Query,
     Resolver
 } from "@tngraphql/graphql";
-import {DefaultContainer} from "@tngraphql/graphql/dist/utils/container";
+import {DefaultContainer, IOCContainer} from "@tngraphql/graphql/dist/utils/container";
 import {Router} from "@tngraphql/route";
+import {BuildContext} from "@tngraphql/graphql/dist/schema/build-context";
 
 describe('Resolve Info', () => {
     let info;
@@ -92,6 +92,7 @@ describe('Resolve Info', () => {
         }
 
 
+        BuildContext.routeStore = undefined;
         const router = new Router();
         const container = new DefaultContainer();
         container.bind('SampleResolver', SampleResolver);

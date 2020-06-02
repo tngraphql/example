@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_NAME=test nyc --reporter=lcov --reporter=text mocha -r ts-node/register tests/**/*.spec.ts --t 15000 --exit",
+    "test": "cross-env DB_NAME=test nyc --reporter=lcov --reporter=text mocha -r ts-node/register --exit",
     "dev": "ts-node-dev src/index.ts",
     "ace": "ts-node ace"
   },
@@ -15,9 +15,9 @@
     "@adonisjs/profiler": "^2.0.0",
     "@tngraphql/auth": "^1.0.1",
     "@tngraphql/console": "^1.0.0",
-    "@tngraphql/graphql": "^1.0.4-1-alpha",
+    "@tngraphql/graphql": "^1.0.4-2-alpha",
     "@tngraphql/guard": "^1.0.1",
-    "@tngraphql/illuminate": "^1.1.7-2-alpha",
+    "@tngraphql/illuminate": "^1.1.7-4-alpha",
     "@tngraphql/lucid": "^1.0.8",
     "@tngraphql/mail": "^1.0.13-alpha",
     "@tngraphql/route": "^1.0.0",

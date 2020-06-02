@@ -15,9 +15,7 @@ const ResolveLang = registerCustomInject((data: ResolverData<{lang: any}>) => {
 
 @Service()
 export class UserRepository extends BaseRepository<UserModel> {
-    constructor(@ResolveLang() public lang: any) {
-        super();
-    }
+    @ResolveLang() public lang: any
 
     model(): typeof UserModel {
         return UserModel;

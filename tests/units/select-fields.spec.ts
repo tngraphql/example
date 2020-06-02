@@ -5,15 +5,12 @@
  * Time: 6:34 PM
  */
 
-import '../support';
 import {expect} from 'chai';
 import {
     buildSchema,
-    createUnionType,
     Field,
     ID,
     Info,
-    InterfaceType,
     ObjectType,
     Query,
     Resolver

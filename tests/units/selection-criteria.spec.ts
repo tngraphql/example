@@ -6,34 +6,17 @@ import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
  * Date: 5/30/2020
  * Time: 7:36 PM
  */
-require('../support');
 import {expect} from 'chai';
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {SelectionCriteria} from "../../src/Repositories/Criteria/SelectionCriteria";
 import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
 import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {join} from "path";
-import {Kernel} from "../../src/app/GraphQL/Kernel";
-import {Application} from "@tngraphql/illuminate";
 import {cleanup, setup} from "../helpers";
 import {RelationQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/RelationQueryBuilderContract";
 
 describe('Selection Criteria', () => {
-    let app: Application;
-    let kernel: Kernel;
-    let schema;
     let UserModel;
     let ProfileModel;
-
-    before(async () => {
-        app = require('../../src/bootstrap/app');
-
-        app.autoload(join(app.getBasePath(), 'app'), 'App');
-
-        kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
-
-        await kernel.handle();
-    })
 
     beforeEach(async () => {
         class Profile extends BaseModel {
