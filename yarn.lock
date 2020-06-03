@@ -370,7 +370,7 @@
     jsonwebtoken "^8.5.1"
     lodash.upperfirst "^4.3.1"
 
-"@tngraphql/console@^1.0.0", "@tngraphql/console@^1.0.1":
+"@tngraphql/console@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@tngraphql/console/-/console-1.0.1.tgz#da086d5c31241d98fc7528c0da8f54662059e2fc"
   integrity sha512-fpD8HUUqwpYjfCXZqmGBGgEJh1jDwnR03nIdlBAP/PBfzowtxYT2bqBy7ps7dHw0psNmhFIGKDjLCPJXF4mtfw==
@@ -416,40 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.3-2-alpha":
-  version "1.1.3-2-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.3-2-alpha.tgz#87fbb2540c8bda9524a1c23202900330a2907fe5"
-  integrity sha512-/OZZHWnp6h0EcEsKTxJfSdzinXkQvPkfLdV0lB5CqDuxPiIF58GwiH1GeE+uGaCT2e5W50Wl3BpyE9GxB/FXwg==
-  dependencies:
-    "@adonisjs/env" "^1.0.12"
-    "@adonisjs/events" "^1.0.7"
-    "@adonisjs/logger" "^1.1.9"
-    "@adonisjs/profiler" "^2.0.0"
-    "@poppinss/dev-utils" "^1.0.4"
-    "@poppinss/utils" "^2.1.2"
-    apollo-server "^2.10.1"
-    camelcase "^5.3.1"
-    chance "^1.1.4"
-    cli-table3 "^0.5.1"
-    glob "^7.1.6"
-    graphql-query-complexity "^0.4.1"
-    graphql-subscriptions "^1.1.0"
-    graphql-tools "^4.0.7"
-    lodash "^4.17.15"
-    log-update "^4.0.0"
-    macroable "^4.0.2"
-    moment "^2.24.0"
-    pretty-hrtime "^1.0.3"
-    randomstring "^1.1.5"
-    reflect-metadata "^0.1.13"
-    snake-case "^3.0.3"
-    uuid "^7.0.3"
-    validatorjs "^3.18.1"
-
-"@tngraphql/illuminate@^1.1.7-4-alpha":
-  version "1.1.7-4-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-4-alpha.tgz#5aa2a4fad39646915f3841c2235a1823bdc98ea6"
-  integrity sha512-OzCplhOhUBWAMNytI1VQDL8EwDCxuETxwZ2TgMH9oPD7KTg4rNh21j7DqQkTkrX+52U0qwiPw5w/n3NGR4yVkA==
+"@tngraphql/illuminate@^1.1.7-5-alpha":
+  version "1.1.7-5-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-5-alpha.tgz#9034b6dadd3087dfce51d4944df57cfdc234d9a5"
+  integrity sha512-+K4/8qkrY4DjUDB4DyyhMgEZV97HJFyKCxBPn8QDICNyYbfKOAWSAD4k/v+5lN0w/HX1EZyuIysBBGKpLn9FSQ==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"
@@ -491,19 +461,16 @@
     macroable "^4.0.3"
     pluralize "^8.0.0"
 
-"@tngraphql/mail@^1.0.13-alpha":
-  version "1.0.13-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/mail/-/mail-1.0.13-alpha.tgz#d726310ec22b50ef5837b2911ae2e3991d20b932"
-  integrity sha512-6YfLNTEKzAhjDQg6Exu35+QLljdFMQbjZKxQ74Y4ps5qtCeT+DyYTi2DaGq8ZLqxyMPDl7uxV1MPUOrWoqHkQw==
+"@tngraphql/mail@^1.0.15-alpha":
+  version "1.0.15-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/mail/-/mail-1.0.15-alpha.tgz#2a62c965c44f46b80f5e1a9d23b9bde3a8791f60"
+  integrity sha512-3BoaTbDdd5/Xja4C2Ra5Dnn5ILiLXfScmUqfWJipZJ721/iEHUM2RDla1MiqlYHLQIiYncxCUI3NDuPpEGfhLA==
   dependencies:
     "@poppinss/dev-utils" "^1.0.6"
-    "@tngraphql/console" "^1.0.1"
-    "@tngraphql/illuminate" "^1.1.3-2-alpha"
-    "@tngraphql/route" "^1.0.1"
     email-validator "^2.0.4"
     nodemailer "^6.4.6"
 
-"@tngraphql/route@^1.0.0", "@tngraphql/route@^1.0.1":
+"@tngraphql/route@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@tngraphql/route/-/route-1.0.1.tgz#dc740bd785d310d444704a6bb0a26d5d415801b0"
   integrity sha512-4h1J4LQhwkSWSuC7RkO8SV1RHOlZ88ofPcFTzYbujyrJOEzu5FzB9LsprcgvCQ72Nx9BUushCNW2VsKLssBceQ==

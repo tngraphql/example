@@ -70,6 +70,7 @@ export async function cleanup(customTables?: string[]) {
 
     await db.schema.dropTableIfExists('users')
     await db.schema.dropTableIfExists('profiles')
+    await db.schema.dropTableIfExists('tngraphql_schema')
 
     await database.manager.closeAll();
 }

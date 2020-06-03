@@ -22,8 +22,7 @@ export class TestEmail extends Mailable {
      * Build the message.
      */
     public build(): void {
-        //
-        this.from('asjgns@gmail.com')
+        this.to('nguyenpl117@gmail.com')
             .text('plain mail');
     }
 }

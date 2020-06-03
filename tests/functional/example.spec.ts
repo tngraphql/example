@@ -9,6 +9,10 @@ import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClien
 import {expect} from 'chai';
 import {createTestClient} from "apollo-server-testing";
 import {cleanup, createServer, setupDB} from "../helpers";
+import {Mail} from "@tngraphql/mail/dist/src/Mail";
+import {TestEmail} from "../../src/app/Mail/TestEmail";
+import {Event} from "@tngraphql/illuminate/dist/Support/Facades";
+import {MessageSending} from "@tngraphql/mail/dist/src/Events";
 const { gql } = require('apollo-server');
 
 describe('Example', () => {
@@ -37,7 +41,11 @@ describe('Example', () => {
         expect(res.data.user.id).to.be.eq(1);
     });
 
-    it('u', async () => {
-
+    it('Send Mail', async () => {
+        // Mail.fake();
+        Event.on(MessageSending, data => {
+            console.log(JSON.stringify(data));
+        })
+        await Mail.send(new TestEmail());
     });
 });
