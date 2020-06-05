@@ -32,18 +32,22 @@ export class SortByMiddleware implements MiddlewareInterface {
 
         const fn: any = sortBy.getType();
 
-        data.args.order = Arr.wrap(data.args.sortBy).map(sortBy => {
+        data.args.order = this.transform(fn, data.args.sortBy);
+
+        await next();
+    }
+
+
+    public transform(target: Function, orders: any): any[] {
+        return Arr.wrap(orders).map(sortBy => {
             return _.transform(sortBy || {}, (result, value, key: string) => {
-                const resolveFn = fn.prototype[`resolve${_.upperFirst(key)}`];
+                const resolveFn = target.prototype[`resolve${_.upperFirst(key)}`];
                 if (typeof resolveFn === "function") {
                     result[resolveFn(value)] = value;
                 } else {
                     result[key] = value;
                 }
-            }, {})
+            }, {});
         });
-
-        await next();
     }
-
 }

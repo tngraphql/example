@@ -11,7 +11,7 @@ import RoleModel from "../../../Models/RoleModel";
 import RoleUserModel from "../../../Models/RoleUserModel";
 import {UserModel} from "../../../UserModel";
 
-@InputType('SortUser')
+@InputType('UserSort')
 export class UserSortInputType {
     @Field(returns => SortEnumType)
     id: SortEnumType
@@ -48,7 +48,15 @@ export class UserSortInputType {
 
     resolveRoleId() {
         return RoleModel.query()
-            .count(`${RoleModel.getTable()}.id`)
+            .select(`${RoleModel.getTable()}.id`)
+            .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
+            .whereRaw(`${RoleUserModel.getTable()}.user_id = ${UserModel.getTable()}.id`)
+            .toSQL().sql
+    }
+
+    resolveRoleName() {
+        return RoleModel.query()
+            .select(`${RoleModel.getTable()}.name`)
             .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
             .whereRaw(`${RoleUserModel.getTable()}.user_id = ${UserModel.getTable()}.id`)
             .toSQL().sql

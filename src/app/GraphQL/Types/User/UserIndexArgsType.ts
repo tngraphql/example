@@ -27,4 +27,6 @@ export class UserIndexArgsType {
     sortBy: UserSortInputType
 
     where: any;
+
+    order: any;
 }

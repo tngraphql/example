@@ -26,9 +26,9 @@ class StoreType {
 export function registerFilterEnumType(name, target: any): void {
     registerEnumType(target, {name: `FilterField${name}`});
 
-    const filterName = 'Filter' + name;
+    const filterName =  name + 'Filter';
 
-    @InputType(`FilterGroup${name}`)
+    @InputType(`${name}FilterGroup`)
     class FilterGroupType implements GroupContract {
         @Field()
         operator: string;

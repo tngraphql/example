@@ -12,6 +12,9 @@ import {UserCreateArgsType} from "../Types/User/UserCreateArgsType";
 import {FilterCriteria} from "../../../Repositories/Criteria/FilterCriteria";
 import {OperatorEnumType} from "../Types/OperatorEnumType";
 import {UserModel} from "../../UserModel";
+import {Filter} from "../Middleware/Filter";
+import {UserIndexArgsType} from "../Types/User/UserIndexArgsType";
+import {IPaginateType} from "../../../Contracts/IPaginateType";
 Gate.define('admin', (user, resource) => {
     console.log({resource});
     return true;
@@ -28,21 +31,16 @@ export class UserResolve extends BaseResolve {
     }
 
     @Query(returns => UserType)
-    @UseMiddleware('auth')
-    async profile(@Ctx() context: any) {
-        this.repo.pushCriteria(new FilterCriteria({
-            field: 'id',
-            operator: OperatorEnumType.eq,
-            value: await context.auth.id()
-        }))
-        return this.repo.first();
+    @UseMiddleware(Filter)
+    async index(@Args() args: UserIndexArgsType, @SelectFields() fields): Promise<UserType> {
+        return this.getFirst(args, fields) as any;
     }
 
     @Query(returns => paginateType(UserType))
     @UseMiddleware(['auth'])
     async list(@Args() args: UserListArgsType, @SelectFields() fields, @Ctx() context) {
         // UserModel.create({name: '123'})
-        return super.list(args, fields, context);
+        return this.getPaginate(args, fields) as any;
     }
 
     @Mutation(returns => UserType, {description: 'Tạo mới tài khoản'})
@@ -57,6 +55,33 @@ export class UserResolve extends BaseResolve {
 
     @Mutation(returns => DeleteType)
     delete() {
+
+    }
+
+    @Query(returns => UserType)
+    @UseMiddleware('auth')
+    async profile(@Ctx() context: any) {
+        this.repo.pushCriteria(new FilterCriteria({
+            field: 'id',
+            operator: OperatorEnumType.eq,
+            value: await context.auth.id()
+        }))
+        return this.repo.first();
+    }
+
+    async profileUpdate() {
+
+    }
+
+    async register() {
+
+    }
+
+    async forgotPassword() {
+
+    }
+
+    async resetPassword() {
 
     }
 }

@@ -7,9 +7,13 @@
 import {Field, ObjectType} from "@tngraphql/graphql";
 import { DateTime } from 'luxon'
 import {TimestampScalarType} from "../TimestampScalarType";
+import {registerPaginateType} from "../PaginateType";
+import RoleModel from "../../../Models/RoleModel";
+import {PermissionType} from "../Permission/PermissionType";
 
 @ObjectType('Role')
 export class RoleType {
+    static model = RoleModel
 
     @Field()
     public id: number
@@ -23,9 +27,19 @@ export class RoleType {
     @Field()
     public description: string;
 
+    @Field()
+    public isDefault(): boolean {
+        return true;
+    };
+
+    @Field(returns => [PermissionType])
+    public permissions: PermissionType[]
+
     @Field(returns => TimestampScalarType)
     public createdAt: DateTime
 
     @Field(returns => TimestampScalarType)
     public updatedAt: DateTime
 }
+
+registerPaginateType(RoleType);

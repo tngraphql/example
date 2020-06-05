@@ -35,15 +35,4 @@ export class BaseResolve {
         this.repo.pushCriteria(new SelectionCriteria(fields));
         return this.repo.query().paginate(args.limit, args.page);
     }
-
-    @Query(returns => UserType)
-    @UseMiddleware(Filter)
-    async index(@Args() args: UserIndexArgsType, @SelectFields() fields): Promise<UserType> {
-        return this.getFirst(args, fields) as any;
-    }
-
-    @Query(returns => paginateType(UserType))
-    async list(@Args() args: UserListArgsType, @SelectFields() fields, @Ctx() context): Promise<IPaginateType<UserType>> {
-        return this.getPaginate(args, fields) as any;
-    }
 }

@@ -394,6 +394,43 @@ describe('User Http', () => {
                 expect(res.errors).to.undefined;
                 expect(res.data.user.id).to.eq(user.id);
             });
+
+            it('should sort by roleId without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleId": "DESC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.user.id).to.eq(user.id);
+            });
+
+            it('should sort by roleName without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleName": "DESC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.user.id).to.eq(user.id);
+            });
+
         });
 
         describe('User Http | index | roles', () => {
@@ -618,6 +655,24 @@ describe('User Http', () => {
         });
 
         describe('User Http | list | sortBy', () => {
+            it('should order by when sortBy as array', async () => {
+                await UserModel.create({name: 'job1'});
+                await UserModel.create({name: 'job2'});
+                const user = await UserModel.create({name: 'job3'});
+
+                const res = await client.query({
+                    query: USER_LIST_QUERY,
+                    variables: {
+                        "sortBy": [{
+                            "id": "DESC"
+                        }]
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+            });
+
             it('should sort by id without error', async () => {
                 await UserModel.create({name: 'job1'});
                 await UserModel.create({name: 'job2'});
@@ -710,6 +765,78 @@ describe('User Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,1,2]);
+            });
+
+            it('should sort by roleId DESC without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_LIST_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleId": "DESC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
+            });
+
+            it('should sort by roleId ASC without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_LIST_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleId": "ASC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
+            });
+
+            it('should sort by roleName DESC without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_LIST_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleName": "DESC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
+            });
+
+            it('should sort by roleName ASC without error', async () => {
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const role = await RoleModel.create({name: 'super'});
+                const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
+
+                const res = await client.query({
+                    query: USER_LIST_QUERY,
+                    variables: {
+                        "sortBy": {
+                            "roleName": "ASC"
+                        }
+                    }
+                });
+
+                expect(res.errors).to.undefined;
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
             });
         });
     });

@@ -2,6 +2,8 @@ import {Field, ObjectType} from "@tngraphql/graphql";
 import {UserModel} from "../../../UserModel";
 import {registerPaginateType} from "../PaginateType";
 import {RoleType} from "../Role/RoleType";
+import {DateTime} from "luxon";
+import {TimestampScalarType} from "../TimestampScalarType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -18,7 +20,7 @@ export class UserType {
     id: number
 
     @Field()
-    public token: string;
+    public token?: string;
 
     @Field()
     public phone: string;
@@ -38,14 +40,14 @@ export class UserType {
     @Field()
     public gender: string;
 
-    @Field()
-    public createdAt: string;
+    @Field(returns => TimestampScalarType)
+    public createdAt: DateTime;
 
-    @Field()
-    public updatedAt: string;
+    @Field(returns => TimestampScalarType)
+    public updatedAt: DateTime;
 
-    @Field()
-    public deletedAt: string;
+    @Field(returns => TimestampScalarType)
+    public deletedAt: DateTime;
 
     @Field(returns => [RoleType])
     roles: RoleType[]

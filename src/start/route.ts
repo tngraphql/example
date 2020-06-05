@@ -21,3 +21,4 @@ Route.query('profile', 'UserResolve.profile')
 
 Route.resource('user', 'UserResolve')
 Route.resource('mony', 'MonyResolve')
+Route.resource('role', 'RoleResolve')

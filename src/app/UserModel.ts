@@ -55,7 +55,7 @@ export class UserModel extends Auth {
     public updatedAt: DateTime
 
     @column()
-    public deletedAt: string;
+    public deletedAt: DateTime;
 
     @manyToMany(() => RoleModel, {
         pivotTable: 'role_user',
