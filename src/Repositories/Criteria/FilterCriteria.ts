@@ -67,11 +67,11 @@ export class FilterCriteria extends Criteria {
         if (typeof filter.field === 'function') {
             const field = filter.field(value, filter.operator);
             if (typeof field === 'string') {
-                return query.whereRaw(field);
+                return query[method](builder => builder.whereRaw(field));
             }
 
             if (typeof field === "function") {
-                return query.where(field);
+                return query[method](field);
             }
 
             return query[method](field.field, filter.operator, field.value);

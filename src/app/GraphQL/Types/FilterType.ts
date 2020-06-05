@@ -2,6 +2,7 @@ import {Field, InputType, registerEnumType} from "@tngraphql/graphql";
 import {OperatorEnumType} from "./OperatorEnumType";
 import {GraphQLString} from "graphql";
 import {FilterContract, GroupContract} from "../../../Contracts/FilterContract";
+import {ValueScalarType} from "./ValueScalarType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -44,7 +45,7 @@ export function registerFilterEnumType(name, target: any): void {
         @Field(returns => OperatorEnumType)
         operator: OperatorEnumType;
 
-        @Field(returns => [GraphQLString])
+        @Field(returns => [ValueScalarType])
         value: any;
 
         @Field(returns => target)

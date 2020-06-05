@@ -10,6 +10,7 @@ import {join} from "path";
 import {Kernel} from "./src/app/GraphQL/Kernel";
 import {Application} from "@tngraphql/illuminate";
 import { requireAll } from '@poppinss/utils/build'
+import {resetTables} from "./tests/helpers";
 
 chai.config.includeStack = true;
 chai.should();
@@ -30,18 +31,21 @@ before(async function() {
 
     app.autoload(join(app.getBasePath(), 'app'), 'App');
 
+    app.environment = 'test';
+
     const kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
 
     await kernel.handle();
 
     requireAll(app.basePath('database'), true);
-});
-let modules;
-beforeEach(async () => {
-    // clearModule(app.basePath('database/factories/UserFactory.ts'));
-    // modules = requireAll(app.basePath('database'), true);
+
+    const {setupDB, resetTables} = require('./tests/helpers');
+    await setupDB();
+    await resetTables();
 });
 
-afterEach(async () => {
+after(async () => {
+    const {cleanup} = require('./tests/helpers');
 
+    await cleanup();
 });

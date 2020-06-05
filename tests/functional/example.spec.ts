@@ -8,7 +8,7 @@ import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClien
  */
 import {expect} from 'chai';
 import {createTestClient} from "apollo-server-testing";
-import {cleanup, createServer, setupDB} from "../helpers";
+import {createServer, resetTables, seedDB} from "../helpers";
 import {Mail} from "@tngraphql/mail/dist/src/Mail";
 import {TestEmail} from "../../src/app/Mail/TestEmail";
 import {Event} from "@tngraphql/illuminate/dist/Support/Facades";
@@ -21,11 +21,11 @@ describe('Example', () => {
     before(async () => {
         const server: any = await createServer();
         client = createTestClient(server);
-        await setupDB();
+        await seedDB();
     });
 
     after(async () => {
-        await cleanup();
+        await resetTables();
     });
 
     it('test', async () => {
@@ -43,9 +43,9 @@ describe('Example', () => {
 
     it('Send Mail', async () => {
         // Mail.fake();
-        Event.on(MessageSending, data => {
-            console.log(JSON.stringify(data));
-        })
+        // Event.on(MessageSending, data => {
+        //     console.log(JSON.stringify(data));
+        // })
         await Mail.send(new TestEmail());
     });
 });

@@ -16,6 +16,7 @@ import { Route } from '@tngraphql/illuminate/dist/Support/Facades';
 //
 // Route.query('user234', 'ExampleResolve.sfasf2')
 Route.mutation('login', 'ExampleResolve.login')
+Route.query('profile', 'UserResolve.profile')
 // Route.query('sentmail', 'ExampleResolve.sentmail')
 
 Route.resource('user', 'UserResolve')

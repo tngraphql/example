@@ -7,6 +7,7 @@
 import {MiddlewareInterface, NextFn, ResolverData} from "@tngraphql/graphql";
 import {getMetadataStorage} from "@tngraphql/graphql/dist/metadata/getMetadataStorage";
 import * as _ from "lodash";
+import Arr from "../../../lib/Arr";
 
 export class SortByMiddleware implements MiddlewareInterface {
     public async handle(data: ResolverData<{}>, next: NextFn, args: any): Promise<any> {
@@ -31,14 +32,16 @@ export class SortByMiddleware implements MiddlewareInterface {
 
         const fn: any = sortBy.getType();
 
-        data.args.order = _.transform(data.args.sortBy || {}, (result, value, key: string) => {
-            const resolveFn = fn.prototype[`resolve${_.upperFirst(key)}`];
-            if (typeof resolveFn === "function") {
-                result[resolveFn(value)] = value;
-            } else {
-                result[key] = value;
-            }
-        }, {});
+        data.args.order = Arr.wrap(data.args.sortBy).map(sortBy => {
+            return _.transform(sortBy || {}, (result, value, key: string) => {
+                const resolveFn = fn.prototype[`resolve${_.upperFirst(key)}`];
+                if (typeof resolveFn === "function") {
+                    result[resolveFn(value)] = value;
+                } else {
+                    result[key] = value;
+                }
+            }, {})
+        });
 
         await next();
     }

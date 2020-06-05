@@ -25,7 +25,6 @@ export class Filter {
         next: () => Promise<void>,
         allowedRoles: string[],
     ) {
-        console.log('filter');
         await next()
     }
 }

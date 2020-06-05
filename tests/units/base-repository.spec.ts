@@ -4,8 +4,7 @@
  * Date: 5/26/2020
  * Time: 9:19 PM
  */
-import {cleanup, resetTables, setup} from "../helpers";
-
+import {resetTables, seedDB} from "../helpers";
 import {expect} from 'chai';
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
@@ -14,6 +13,7 @@ import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {Criteria} from "../../src/Repositories/Criteria/Criteria";
 import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
+import {DateTime} from "luxon";
 
 function getBaseRepository() {
     class Example extends BaseRepository {
@@ -31,7 +31,6 @@ describe('Base Repository', () => {
     let UserRepository: ReturnType<typeof getBaseRepository>;
 
     before(async () => {
-
         class Profile extends BaseModel {
             @column()
             public id: string;
@@ -45,6 +44,12 @@ describe('Base Repository', () => {
 
             @column()
             public name: string;
+
+            @column.dateTime({ autoCreate: true })
+            public createdAt: DateTime
+
+            @column.dateTime({ autoCreate: true, autoUpdate: true })
+            public updatedAt: DateTime
 
             @hasOne(() => Profile)
             public profile: HasOne<typeof Profile>
@@ -63,15 +68,11 @@ describe('Base Repository', () => {
     });
 
     before(async () => {
-        await setup();
+        await seedDB();
     })
     after(async () => {
-        await cleanup();
+        await resetTables();
     });
-    // beforeEach(async () => {
-    //     await resetTables();
-    //     UserModel.create({name: 'nguyen'})
-    // });
 
     it('should new query', async () => {
         const repo = new UserRepository();
@@ -164,10 +165,9 @@ describe('Base Repository', () => {
         };
         const user: any = await repo.create({name: 'nguyen'});
         expect(await repo.destroy([user.id])).to.deep.eq([user.id]);
-        expect(await UserModel.query().where('id', '2').first()).to.be.null;
+        expect(await UserModel.query().where('id', user.id).first()).to.be.null;
         expect(stack[0].id).to.eq(user.id);
     });
-
 
     describe('Base Repository | Crireria', () => {
         let ActiveCriteria;
@@ -256,12 +256,8 @@ describe('Base Repository', () => {
         });
 
         it('should throw error when page < 1', async () => {
-            return expect(repo.paginate(20, '*', 0)).to.be.rejectedWith(Error);
+            return expect(repo.paginate(20, 0)).to.be.rejectedWith(Error);
         });
-
-        // it('should throw error when page exists', async () => {
-        //     return expect(repo.paginate(20, '*', 2)).to.be.rejectedWith('The page you were looking for doesn\'t exist');
-        // });
 
         it('success', async () => {
             const data = await repo.paginate();

@@ -8,6 +8,7 @@ import {Criteria} from "./Criteria";
 import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import {BaseRepository} from "../Lucid/BaseRepository";
+import Arr from "../../lib/Arr";
 
 export class SortByCriteria extends Criteria {
     constructor(protected sortBy: any) {
@@ -15,8 +16,11 @@ export class SortByCriteria extends Criteria {
     }
 
     public apply(query: ModelQueryBuilderContract<LucidModel>, repository: BaseRepository) {
-        for (let field in this.sortBy) {
-            repository.orderBy(field, this.sortBy[field]);
+        const orders = Arr.wrap(this.sortBy);
+        for(let sortBy of orders) {
+            for (let [field, direction] of Object.entries(sortBy)) {
+                repository.orderBy(field, direction as any);
+            }
         }
     }
 }

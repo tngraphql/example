@@ -416,10 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.7-5-alpha":
-  version "1.1.7-5-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-5-alpha.tgz#9034b6dadd3087dfce51d4944df57cfdc234d9a5"
-  integrity sha512-+K4/8qkrY4DjUDB4DyyhMgEZV97HJFyKCxBPn8QDICNyYbfKOAWSAD4k/v+5lN0w/HX1EZyuIysBBGKpLn9FSQ==
+"@tngraphql/illuminate@^1.1.7-6-alpha":
+  version "1.1.7-6-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-6-alpha.tgz#f96d680be0cfcc1daaf79abde70b58912dcaf95c"
+  integrity sha512-At4PRjxqn6KL1yzxD5h5bWO1cz+H5+YGcBCyd9gEM5q9bEC45rbujwEzTzmqQXh/pnyhpXUxMUuRb36mfQTLfA==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"
@@ -446,10 +446,10 @@
     uuid "^7.0.3"
     validatorjs "^3.18.1"
 
-"@tngraphql/lucid@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.8.tgz#ac88bf4a9f20fca3441ad42e24befef9b19faf48"
-  integrity sha512-BeEbr5AaxTZnAu/ddnHTiVc65CLCQnFFOSFUGjADO04E/Wogy7DRFYZZQ9Fqdj++pnCFTEfbNUsqNpFYNcrk7A==
+"@tngraphql/lucid@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.11.tgz#8d1c36c7ef9436db997e2f9eba17d0b79a94ec01"
+  integrity sha512-E/PmJFhTj9OvQnp/nadylvBar/WoYkrgjpRiVWsT64U5MuVkxb3UXhkuc1huuc8QQX3xjVHx1aMC2T6qA3namA==
   dependencies:
     "@poppinss/hooks" "^1.0.5"
     "@poppinss/utils" "^2.2.0"
@@ -632,6 +632,11 @@
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
+
+"@types/luxon@^1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.24.0.tgz#1620218d373031ce05e3818ad0ef0c0dd0d0a009"
+  integrity sha512-OCTdVRQf/ge2ULlGqVKRI/HwyWoKpLV3ppLt6H27yzK/qdYNJ60Sz5tUxy3Jt1RD9K4Iz1tcDWPFJArBFZNAWQ==
 
 "@types/mime@*":
   version "2.0.1"

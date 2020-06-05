@@ -5,7 +5,7 @@
  * Time: 7:37 PM
  */
 import {UserRepository} from "../../src/Repositories/Lucid/UserRepository";
-import {cleanup, setupDB} from "../helpers";
+import {resetTables, seedDB} from "../helpers";
 import {Application} from "@tngraphql/illuminate";
 import {expect} from 'chai';
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
@@ -16,11 +16,11 @@ describe('User Repository', () => {
         app = Application.getInstance<Application>()
     });
     beforeEach(async () => {
-        await setupDB();
+        await seedDB();
     });
 
     afterEach(async () => {
-        await cleanup();
+        await resetTables();
     });
 
     it('find all user', async () => {

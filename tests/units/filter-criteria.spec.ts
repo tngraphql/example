@@ -152,16 +152,33 @@ describe('Filter Apply', () => {
     it('field is callback return string', async () => {
         const repo = UserModel.query();
         const filters: FilterContract = {
-            operator: OperatorEnumType.eq,
-            value: 'nguyen',
-            field: (value, operation) => {
-                return `name ${operation} ${value}`;
-            }
+            operator: OperatorEnumType.OR,
+            items: [
+                {
+                    operator: OperatorEnumType.eq,
+                    value: 'nguyen',
+                    field: (value, operation) => {
+                        return `name ${operation} ${value}`;
+                    }
+                },
+                {
+                    operator: OperatorEnumType.eq,
+                    value: 'nguyen2',
+                    field: (value, operation) => {
+                        return `name ${operation} ${value}`;
+                    }
+                }
+            ]
         }
 
         FilterCriteria.filter(repo, filters);
         const sql = repo.toSQL();
-        const rsql = UserModel.query().whereRaw(`name = nguyen`).toSQL();
+        const rsql = UserModel.query()
+            .where(builder => {
+                builder.orWhere(builder => builder.whereRaw(`name = nguyen`))
+                    .orWhere(builder => builder.whereRaw(`name = nguyen2`))
+            })
+            .toSQL();
         expect(sql.sql).to.deep.equal(rsql.sql);
         expect(sql.bindings).to.deep.equal(rsql.bindings);
     });

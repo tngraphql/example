@@ -23,7 +23,7 @@ export class UserIndexArgsType {
     @Field(returns => filterType(UserFilterEnumType))
     filter: FilterContract<typeof UserFilterEnumType>
 
-    @Field({description: 'order'})
+    @Field(returns => [UserSortInputType], {description: 'order'})
     sortBy: UserSortInputType
 
     where: any;

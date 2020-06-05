@@ -11,7 +11,7 @@ import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {SelectionCriteria} from "../../src/Repositories/Criteria/SelectionCriteria";
 import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
 import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {cleanup, setup} from "../helpers";
+import {resetTables, seedDB} from "../helpers";
 import {RelationQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/RelationQueryBuilderContract";
 
 describe('Selection Criteria', () => {
@@ -47,11 +47,11 @@ describe('Selection Criteria', () => {
 
         UserModel = User;
         ProfileModel = Profile;
-        await setup();
+        await seedDB();
     });
 
     afterEach( async () => {
-        await cleanup()
+        await resetTables()
     })
 
     it('should select column without error', async () => {

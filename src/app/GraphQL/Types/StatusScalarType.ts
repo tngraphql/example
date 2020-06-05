@@ -8,22 +8,25 @@
 import {GraphQLScalarType, Kind} from "graphql";
 
 export const StatusScalarType = new GraphQLScalarType({
-    name: 'DateTime',
-    description:
-        'The javascript `Date` as string. Type represents date and time as the ISO Date string.',
+    name: 'Status',
+
+    description: 'Status',
     parseValue(value: string) {
-        return new Date(value);
+        return value;
     },
     serialize(value: Date) {
-        if (!(value instanceof Date)) {
-            throw new Error(`Unable to serialize value '${value}' as it's not instance of 'Date'`);
-        }
-        return value.toISOString();
+        return value;
     },
     parseLiteral(ast) {
-        if (ast.kind === Kind.STRING) {
-            return new Date(ast.value);
+        switch (ast.kind) {
+            // Implement your own behavior here by returning what suits your needs
+            // depending on ast.kind
+            case 'StringValue':
+                return ast.value;
+            case 'IntValue':
+                return ast.value;
+            default:
+                return null;
         }
-        return null;
     },
 });

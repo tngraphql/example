@@ -47,7 +47,11 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
     }
 
     public orderBy(column: string, direction?: 'asc' | 'desc') {
-        this._query.orderBy(column, direction);
+        if (column.toLowerCase().startsWith('select')) {
+            this._query.orderByRaw(`(${column}) ${direction}`);
+        } else {
+            this._query.orderBy(column, direction);
+        }
         return this;
     }
 
@@ -60,7 +64,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
         return (await this._query.first());
     }
 
-    public async paginate(perPage: number = 20, columns: any = '*', page: number = 1) {
+    public async paginate(perPage: number = 20, page: number = 1) {
         this.applyCriteria();
         const result = await this._query.paginate(page, perPage);
 

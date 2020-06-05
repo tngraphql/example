@@ -7,9 +7,10 @@
  */
 
 module.exports = {
-    timeout: 25000,
+    timeout: 125000,
     require: ['ts-node/register','reflect-metadata'],
     file: './init.ts',
     exit: true,
-    recursive: ['tests/**/*.spec.ts']
+    recursive: ['tests/**/*.spec.ts'],
 }
+// mocha.setup()

@@ -12,6 +12,7 @@ module.exports = {
         "src"
     ],
     "exclude": [
-        "**/*.spec.js"
+        "**/*.spec.js",
+        "src/database"
     ]
 }

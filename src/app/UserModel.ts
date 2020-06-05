@@ -7,29 +7,63 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {belongsTo, column, hasMany, hasOne, manyToMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {Auth} from "@tngraphql/auth/dist/src/Auth";
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {ProfileModel} from "./ProfileModel";
+import UserSocialModel from "./Models/UserSocialModel";
+import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import RoleModel from "./Models/RoleModel";
+import {DateTime} from "luxon";
 
-// App/UserModel
+type GENDER = '1' | '2';
+
+export enum Gender {
+    male = '1',
+    famale = '2'
+}
+
 export class UserModel extends Auth {
-    public static table = 'users'
+    public static table = 'users';
 
-    @column({ isPrimary: true })
-    public id: string;
+    @column({isPrimary: true})
+    public id: number;
+
+    @column()
+    public phone: string;
+
+    @column()
+    public password: string;
 
     @column()
     public name: string;
 
     @column()
-    public password: string;
+    public avatar: string;
 
-    @hasOne(() => ProfileModel, {foreignKey: 'userId'})
-    public profile: HasOne<typeof ProfileModel>
+    @column()
+    public dob: string;
 
-    static boot() {
-        super.boot();
-    }
+    @column()
+    public email: string;
+
+    @column()
+    public gender: GENDER;
+
+    @column.dateTime({ autoCreate: true })
+    public createdAt: DateTime
+
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
+    public updatedAt: DateTime
+
+    @column()
+    public deletedAt: string;
+
+    @manyToMany(() => RoleModel, {
+        pivotTable: 'role_user',
+        pivotForeignKey: 'user_id',
+        pivotRelatedForeignKey: 'role_id',
+    })
+    public roles: ManyToMany<typeof RoleModel>
+
+    @hasMany(() => UserSocialModel)
+    public socialAccounts: HasMany<typeof UserSocialModel>
 }
