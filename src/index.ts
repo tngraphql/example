@@ -13,6 +13,7 @@ import * as path from 'path';
 import { ApolloServer } from 'apollo-server';
 import { Kernel } from './app/GraphQL/Kernel';
 import { GraphQLExceptions } from './app/Exceptions/GraphQLExceptions';
+import {UserModel} from "./app/UserModel";
 
 const app: Application = require('./bootstrap/app');
 
@@ -33,7 +34,6 @@ async function main() {
             // version: '1.7.10'
         }
     });
-
 
     await server.listen(4002);
     console.timeEnd();

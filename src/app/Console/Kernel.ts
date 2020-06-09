@@ -11,12 +11,14 @@ import { ConsoleKernel } from '@tngraphql/illuminate/dist/Foundation/Console';
 import { Greet } from './Commands/Greet';
 import { Service } from '@tngraphql/illuminate';
 import {KeysCommand} from "@tngraphql/auth/dist/src/command/KeysCommand";
+import {TestHttpMake} from "./Commands/TestHttpMake";
 
 @Service()
 export class Kernel extends ConsoleKernel {
     public commands = [
         Greet,
-        KeysCommand
+        KeysCommand,
+        TestHttpMake
     ];
 
     classmap = [
