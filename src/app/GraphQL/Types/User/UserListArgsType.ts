@@ -5,7 +5,7 @@
  * Time: 9:07 PM
  */
 
-import {ArgsType, Field} from "@tngraphql/graphql";
+import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {FilterContract} from "../../../../Contracts/FilterContract";
 import {filterType} from "../FilterType";
 import {UserSortInputType} from "./UserSortInputType";
@@ -13,10 +13,10 @@ import {UserFilterEnumType} from "./UserFilterEnumType";
 
 @ArgsType()
 export class UserListArgsType {
-    @Field()
+    @Field(returns => Int)
     page: number;
 
-    @Field()
+    @Field(returns => Int)
     limit: number = 20;
 
     @Field(returns => filterType(UserFilterEnumType))

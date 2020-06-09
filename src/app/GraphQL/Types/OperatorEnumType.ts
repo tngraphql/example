@@ -14,7 +14,7 @@ export enum OperatorEnumType {
     gt = ">",
     lte = "<=",
     lt = "<",
-    not = "not",
+    not = "<>",
     is = "=",
     in = "in",
     notIn = "not in",

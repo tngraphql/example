@@ -14,3 +14,5 @@ coverage
 # parcel cache
 .cache
 *.key
+.nyc_output/
+.env

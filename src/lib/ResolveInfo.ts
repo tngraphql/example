@@ -5,7 +5,7 @@
  * Time: 4:04 PM
  */
 
-import { merge } from './utils';
+import {empty, merge} from './utils';
 import {GraphQLResolveInfo} from "graphql";
 import {
     FieldNode,
@@ -101,16 +101,6 @@ export class ResolveInfo {
     }
 
     protected empty(mixedVar) {
-        const emptyValues = [undefined, null, false, 0, '', '0'];
-
-        if ( emptyValues.indexOf(mixedVar) !== -1 ) {
-            return true;
-        }
-
-        if ( typeof mixedVar === 'object' ) {
-            return !Object.keys(mixedVar).length;
-        }
-
-        return false;
+        return empty(mixedVar);
     }
 }

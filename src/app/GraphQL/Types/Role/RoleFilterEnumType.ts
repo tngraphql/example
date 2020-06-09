@@ -6,6 +6,9 @@
  */
 
 import {registerFilterEnumType} from "../FilterType";
+import OptionModel from "../../../Models/OptionModel";
+import {empty} from "../../../../lib/utils";
+import Arr from "../../../../lib/Arr";
 
 enum RoleFilterEnumType {
     id = 'id',
@@ -14,6 +17,24 @@ enum RoleFilterEnumType {
     description = 'description',
     createdAt = 'createdAt',
     updatedAt = 'updatedAt',
+}
+
+namespace RoleFilterEnumType {
+    export const isDefault = function (val, operation) {
+        const [value] = Arr.wrap(val);
+
+        const method = !empty(value) ? 'where' : 'whereNot';
+
+        return query => {
+            query[method](query => {
+                query.where('name', operation, builder => {
+                    builder.from(OptionModel.getTable())
+                        .select('value')
+                        .where('name', 'defaultRole')
+                });
+            });
+        }
+    }
 }
 
 registerFilterEnumType('Role', RoleFilterEnumType);

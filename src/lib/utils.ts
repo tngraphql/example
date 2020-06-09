@@ -41,3 +41,17 @@ function customizer(objValue, srcValue) {
 export function merge(...args) {
     return _.mergeWith(...args, customizer);
 }
+
+export function empty(mixedVar) {
+    const emptyValues = [undefined, null, false, 0, '', '0'];
+
+    if ( emptyValues.indexOf(mixedVar) !== -1 ) {
+        return true;
+    }
+
+    if ( typeof mixedVar === 'object' ) {
+        return !Object.keys(mixedVar).length;
+    }
+
+    return false;
+}

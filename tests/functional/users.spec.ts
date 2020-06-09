@@ -9,7 +9,13 @@ import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClien
 import {authContext, createServer, resetTables, seedDB} from "../helpers";
 import {createTestClient} from "apollo-server-testing";
 import {expect} from "chai";
-import {PROFILE_QUERY, USER_LIST_QUERY, USER_QUERY, USER_ROLES_QUERY} from "./queries/user-query";
+import {
+    PROFILE_QUERY,
+    USER_LIST_QUERY,
+    USER_QUERY,
+    USER_ROLES_PERMISSION_QUERY,
+    USER_ROLES_QUERY
+} from "./queries/user-query";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {Context} from "@tngraphql/graphql/dist/resolvers/context";
 import {Gender, UserModel} from "../../src/app/UserModel";
@@ -449,6 +455,22 @@ describe('User Http', () => {
                 expect(res.data.user.roles).to.be.length(2);
                 const roleResponse: RoleModel = res.data.user.roles[0];
                 expect(roleResponse.id).to.be.eq(role.id);
+            });
+
+            describe('User Http | index | roles | permission', () => {
+                it('should response permission', async () => {
+                    const role = await RoleModel.first();
+                    await role.preload('permissions');
+
+                    const res = await client.query({
+                        query: USER_ROLES_PERMISSION_QUERY
+                    });
+
+                    expect(res.errors).to.undefined;
+                    expect(res.data.user.roles).to.be.length(1);
+                    expect(res.data.user.roles[0].permissions).to.be.not.undefined
+                    expect(res.data.user.roles[0].permissions.map(x => x.name)).to.deep.eq(role.permissions.map(x => x.name));
+                });
             });
         });
     });

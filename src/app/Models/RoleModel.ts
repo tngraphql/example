@@ -26,6 +26,8 @@ export default class RoleModel extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
+    isDefault?: boolean
+
     @manyToMany(() => PermissionModel, {
         pivotTable: PermissionRoleModel.getTable(),
         pivotForeignKey: 'role_id',

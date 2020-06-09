@@ -5,7 +5,7 @@
  * Time: 7:28 PM
  */
 
-import {expect} from 'chai';
+import {expect, assert} from 'chai';
 
 import Arr from "../../src/lib/Arr";
 

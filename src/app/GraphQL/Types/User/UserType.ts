@@ -20,9 +20,6 @@ export class UserType {
     id: number
 
     @Field()
-    public token?: string;
-
-    @Field()
     public phone: string;
 
     @Field()

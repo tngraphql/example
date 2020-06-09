@@ -58,7 +58,7 @@ export class FilterCriteria extends Criteria {
 
         let value = array.indexOf(filter.operator as OperatorEnumType) !== -1
             ? filter.value
-            : Arr.array_wrap(filter.value).join('');
+            : this.toStr(Arr.array_wrap(filter.value))
 
         if (filter.value === null) {
             value = filter.value;
@@ -78,6 +78,11 @@ export class FilterCriteria extends Criteria {
         }
 
         return query[method](filter.field, filter.operator, value);
+    }
+
+    protected static toStr(value: any[]) {
+        if (value.length > 1) return value.join('');
+        return value[0];
     }
 
     public static is_item(item) {

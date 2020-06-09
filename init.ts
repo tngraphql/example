@@ -39,13 +39,13 @@ before(async function() {
 
     requireAll(app.basePath('database'), true);
 
-    const {setupDB, resetTables} = require('./tests/helpers');
-    await setupDB();
-    await resetTables();
+    // const {setupDB, resetTables} = require('./tests/helpers');
+    // await setupDB();
+    // await resetTables();
 });
 
 after(async () => {
-    const {cleanup} = require('./tests/helpers');
-
-    await cleanup();
+    // const {cleanup} = require('./tests/helpers');
+    //
+    // await cleanup();
 });

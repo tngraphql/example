@@ -1,4 +1,4 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
+import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {filterType} from "../FilterType";
 import {UserFilterEnumType} from "../User/UserFilterEnumType";
 import {FilterContract} from "../../../../Contracts/FilterContract";
@@ -15,10 +15,10 @@ import {RoleSortInputType} from "./RoleSortInputType";
 
 @ArgsType()
 export class RoleListArgsType {
-    @Field()
+    @Field(returns => Int)
     page: number;
 
-    @Field()
+    @Field(returns => Int)
     limit: number = 20;
 
     @Field(returns => filterType(RoleFilterEnumType))

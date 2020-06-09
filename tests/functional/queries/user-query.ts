@@ -10,7 +10,6 @@ export const PROFILE_QUERY = gql`
 query profile {
   profile {
     id
-    token
     phone
     name
     avatar
@@ -25,10 +24,9 @@ query profile {
 `;
 
 export const USER_QUERY = gql`
-query user($filter: FilterUser, $sortBy: [SortUser]) {
+query user($filter: UserFilter, $sortBy: [UserSort]) {
   user(filter: $filter, sortBy: $sortBy) {
     id
-    token
     phone
     name
     avatar
@@ -43,7 +41,7 @@ query user($filter: FilterUser, $sortBy: [SortUser]) {
 `;
 
 export const USER_ROLES_QUERY = gql`
-query user($filter: FilterUser, $sortBy: [SortUser]) {
+query user($filter: UserFilter, $sortBy: [UserSort]) {
   user(filter: $filter, sortBy: $sortBy) {
     roles {
       id
@@ -57,12 +55,26 @@ query user($filter: FilterUser, $sortBy: [SortUser]) {
 }
 `
 
+export const USER_ROLES_PERMISSION_QUERY = gql`
+query user($filter: UserFilter, $sortBy: [UserSort]) {
+  user(filter: $filter, sortBy: $sortBy) {
+    roles {
+      id
+      name
+      permissions {
+        name
+      }
+    }
+  }
+}
+`
+
 export const USER_LIST_QUERY = gql`
 query users(
-  $page: Float
-  $limit: Float = 20
-  $filter: FilterUser
-  $sortBy: [SortUser]
+  $page: Int
+  $limit: Int = 20
+  $filter: UserFilter
+  $sortBy: [UserSort]
 ) {
   users(page: $page, limit: $limit, filter: $filter, sortBy: $sortBy) {
     from
@@ -72,7 +84,6 @@ query users(
     total
     data {
       id
-      token
       phone
       name
       avatar

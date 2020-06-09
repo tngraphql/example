@@ -8,7 +8,6 @@ import {Args, Ctx, Query, Resolver, UseMiddleware} from '@tngraphql/graphql';
 import {BaseResolve} from "./BaseResolve";
 import {SelectFields} from "../../../decorators/SelectFields";
 import {paginateType} from "../Types/PaginateType";
-import {IPaginateType} from "../../../Contracts/IPaginateType";
 import {SortByCriteria} from "../../../Repositories/Criteria/SortByCriteria";
 import {FilterCriteria} from "../../../Repositories/Criteria/FilterCriteria";
 import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
@@ -25,7 +24,7 @@ export class RoleResolve extends BaseResolve {
 
     @Query(returns => RoleType)
     @UseMiddleware('auth')
-    async index(@Args() args: RoleIndexArgsType, @SelectFields() fields): Promise<RoleType> {
+    async index(@Args() args: RoleIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -35,7 +34,7 @@ export class RoleResolve extends BaseResolve {
 
     @Query(returns => paginateType(RoleType))
     @UseMiddleware('auth')
-    async list(@Args() args: RoleListArgsType, @SelectFields() fields, @Ctx() context): Promise<IPaginateType<RoleType>> {
+    async list(@Args() args: RoleListArgsType, @SelectFields() fields, @Ctx() context) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));

@@ -28,7 +28,10 @@ async function main() {
     const server = new ApolloServer({
         schema: await kernel.complie(),
         formatError: GraphQLExceptions.handle.bind(app),
-        context: context => context
+        context: context => context,
+        playground: {
+            // version: '1.7.10'
+        }
     });
 
 
