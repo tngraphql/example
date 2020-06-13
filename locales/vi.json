@@ -1,3 +1,6 @@
 {
-	"user": "user"
+	"user": "user",
+	"Delete error.": "Xóa lỗi.",
+	"Delete success.": "Xóa thành công.",
+	"The selected id does not exist or has been deleted.": "id đã chọn không tồn tại hoặc đã bị xóa."
 }

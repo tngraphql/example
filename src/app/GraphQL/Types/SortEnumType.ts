@@ -10,6 +10,8 @@ import {registerEnumType} from "@tngraphql/graphql";
 export enum SortEnumType {
     ASC = 'asc',
     DESC = 'desc',
+    asc = 'asc',
+    desc = 'desc',
 }
 
 registerEnumType(SortEnumType, {name: 'SortValue'});

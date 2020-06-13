@@ -16,6 +16,6 @@ export class GraphQLExceptions {
             error.validation = error.originalError.getValidatorMessages();
         }
 
-        return Object.assign({code: error.originalError.code}, error);
+        return Object.assign({code: error?.originalError?.code}, error);
     }
 }

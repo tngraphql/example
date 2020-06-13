@@ -14,6 +14,7 @@ export class DeleteType {
     @Field(returns => StatusScalarType)
     status: any
 
+    @Field()
     message: string
 
     @Field(returns => [GraphQLString])

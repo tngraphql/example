@@ -7,17 +7,16 @@
 
 import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClient";
 import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../../../../../tests/helpers";
-import {UserModel} from "../../../UserModel";
+import {authContext, createServer, resetTables, seedDB} from "../helpers";
 const { gql } = require('apollo-server');
 import {expect} from "chai";
+import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
+import {UserModel} from "../../src/app/UserModel";
+import ${model} from "../../src/app/Models/${model}";
+import {${queryName.toUpperCase()}_LIST_QUERY, ${queryName.toUpperCase()}_QUERY} from "./queries/role-query";
+import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 
-// has authentication
-const hasAuth = true;
-const name = 'User'
-const model = 'UserModel'
-
-describe('{{name}} Http', () => {
+describe('${name} Http', () => {
     let client: ApolloServerTestClient;
 
     before(async () => {
@@ -27,37 +26,32 @@ describe('{{name}} Http', () => {
 
     beforeEach(async () => {
         await seedDB();
+        authContext(await UserModel.first());
     });
 
     afterEach(async () => {
         await resetTables();
-        authContext(await UserModel.first());
+        authContext(null);
     });
 
-    describe('{{name}} Http | Index', () => {
-        describe('{{name}} Http | index | base', () => {
-            it('should response first {{name}}', async () => {
+    describe('${name} Http | Index', () => {
+        describe('${name} Http | index | base', () => {
+            it('should response first ${name}', async () => {
                 const ${queryName} = await ${model}.first();
 
                 const res = await client.query({
-                    query: USER_QUERY
+                    query: ${queryName.toUpperCase()}_QUERY
                 });
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.phone).to.eq(${queryName}.phone);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-                expect(res.data.${queryName}.avatar).to.eq(${queryName}.avatar);
-                // expect(res.data.${queryName}.dob).to.eq(${queryName}.dob);
-                expect(res.data.${queryName}.email).to.eq(${queryName}.email);
-                expect(res.data.${queryName}.gender).to.eq(${queryName}.gender);
             });
 
-            it('should response first {{name}} using order by', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'});
+            it('should response first ${name} using order by', async () => {
+                const ${queryName} = await Factory.model('App/Models/${model}').create();
 
                 const res = await client.query({
-                    query: USER_QUERY,
+                    query: ${queryName.toUpperCase()}_QUERY,
                     variables: {
                         "sortBy": {
                             "id": "DESC"
@@ -67,404 +61,115 @@ describe('{{name}} Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
             });
 
-            it('should response {{name}} filter', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
+            it('should response first ${name} when not authentication', async () => {
+                authContext(null);
 
                 const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": "job",
-                            "operator": "eq"
-                        }
-                    }
+                    query: ${queryName.toUpperCase()}_QUERY,
                 });
 
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
+                expect(res.errors).to.be.not.undefined;
             });
         });
 
         describe('User Http | index | filter', () => {
-            it('should filter id without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
+        <% _.forEach(attributes, function(attribute) { %>
+            it('should filter ${attribute} without error', async () => {
+                const ${queryName} = await Factory.model('App/Models/${model}').create();
 
                 const res = await client.query({
-                    query: USER_QUERY,
+                    query: ${queryName.toUpperCase()}_QUERY,
                     variables: {
                         "filter": {
-                            "field": "id",
-                            "value": user.id,
+                            "field": "${attribute}",
+                            "value": ${queryName}.${attribute},
                             "operator": "eq"
                         }
                     }
                 });
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should filter phone without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', phone: '0357096208'})
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "phone",
-                            "value": "0357096208",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should filter name without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": "job",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should filter email without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com'})
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "email",
-                            "value": "job@gmail.com",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should filter gender without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "gender",
-                            "value": Gender.male,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.gender).to.eq(${queryName}.gender);
-            });
-
-            it('should filter roleId without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "roleId",
-                            "value": role.id,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should filter roleName without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "roleName",
-                            "value": role.name,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
+                expect(res.data.${queryName}.${attribute}).to.eq(${queryName}.${attribute});
+            })
+        <% }); %>
         });
 
         describe('User Http | index | sortBy', () => {
-            it('should order by when sortBy as array', async () => {
-                await ${model}.create({name: 'job1'});
-                await ${model}.create({name: 'job2'});
-                const ${queryName} = await ${model}.create({name: 'job3'});
+        <% _.forEach(attributes, function(attribute) { %>
+            it('should sort by desc ${attribute} without error', async () => {
+                await Factory.model('App/Models/${model}').createMany(3);
+
+                const ${queryName} = await ${model}.query().orderBy('${attribute}', SortEnumType.DESC).first();
 
                 const res = await client.query({
-                    query: USER_QUERY,
+                    query: ${queryName.toUpperCase()}_QUERY,
                     variables: {
                         "sortBy": [{
-                            "id": "DESC"
+                            "${attribute}": SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
+                expect(res.data.${queryName}.${attribute}).to.eq(${queryName}.${attribute});
+            })
 
-            it('should sort by id without error', async () => {
-                await ${model}.create({name: 'job1'});
-                await ${model}.create({name: 'job2'});
-                const ${queryName} = await ${model}.create({name: 'job3'});
+            it('should sort by asc ${attribute} without error', async () => {
+                await Factory.model('App/Models/${model}').createMany(3);
+
+                const ${queryName} = await ${model}.query().orderBy('${attribute}', SortEnumType.ASC).first();
 
                 const res = await client.query({
-                    query: USER_QUERY,
+                    query: ${queryName.toUpperCase()}_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
-                        }
+                        "sortBy": [{
+                            "${attribute}": SortEnumType.ASC
+                        }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should sort by phone without error', async () => {
-                await ${model}.create({phone: '1'});
-                await ${model}.create({phone: '2'});
-                const ${queryName} = await ${model}.create({phone: '3'});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "phone": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by name without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: '1'});
-                await ${model}.create({name: '2'});
-                const ${queryName} = await ${model}.create({name: '3'});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "name": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by email without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: 'job',email: 'a1@gmail.com'});
-                await ${model}.create({name: 'job',email: 'a2@gmail.com'});
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com'});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "email": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by gender without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: 'job',email: 'a1@gmail.com', gender: Gender.male});
-                await ${model}.create({name: 'job',email: 'a2@gmail.com', gender: Gender.male});
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "gender": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by roleId without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleId": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by roleName without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleName": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-        });
-
-        describe('User Http | index | roles', () => {
-            it('should response role for user', async () => {
-                const ${queryName} = await ${model}.first();
-                const role = await RoleModel.first();
-                const roleNew = await RoleModel.create({name: 'guest'});
-
-                await Role${model}.create({userId: user.id, roleId: roleNew.id})
-
-                const res = await client.query({
-                    query: USER_ROLES_QUERY
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.roles).to.be.length(2);
-                const roleResponse: RoleModel = res.data.${queryName}.roles[0];
-                expect(roleResponse.id).to.be.eq(role.id);
-            });
-
-            describe('User Http | index | roles | permission', () => {
-                it('should response permission', async () => {
-                    const role = await RoleModel.first();
-                    await role.preload('permissions');
-
-                    const res = await client.query({
-                        query: USER_ROLES_PERMISSION_QUERY
-                    });
-
-                    expect(res.errors).to.undefined;
-                    expect(res.data.${queryName}.roles).to.be.length(1);
-                    expect(res.data.${queryName}.roles[0].permissions).to.be.not.undefined
-                    expect(res.data.${queryName}.roles[0].permissions.map(x => x.name)).to.deep.eq(role.permissions.map(x => x.name));
-                });
-            });
+                expect(res.data.${queryName}.${attribute}).to.eq(${queryName}.${attribute});
+            })
+        <% }); %>
         });
     });
 
-    describe('{{name}} Http | list', () => {
-        beforeEach(async () => {
-            authContext(await ${model}.first());
-        });
-
-        describe('User Http | list | base', () => {
+    describe('${name} Http | list', () => {
+        describe('${name} Http | list | base', () => {
             it('should response error when is not login', async () => {
                 authContext(null);
                 const res = await client.query({
-                    query: USER_LIST_QUERY
+                    query: ${queryName.toUpperCase()}_LIST_QUERY
                 });
                 expect(res.errors).to.not.undefined;
                 expect(res.errors[0]['code']).to.eq('E_AUTHENTICATION');
             });
 
-            it('should reponse list user', async () => {
-                await ${model}.create({name: 'job'});
-                await ${model}.create({name: 'job2'});
-                await ${model}.create({name: 'job3'});
-                const ${queryName} = await ${model}.create({name: 'job4', phone: '132545646', avatar: './image.jpg',
-                    email: 'asd@gmail.com', gender: Gender.famale});
+            it('should reponse list ${queryName}', async () => {
+                await Factory.model('App/Models/${model}').createMany(5);
+                const ${queryName}s = await ${model}.query();
 
                 const res = await client.query({
-                    query: USER_LIST_QUERY
+                    query: ${queryName.toUpperCase()}_LIST_QUERY
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data).to.length(5);
-                expect(res.data.users.total).to.eq(5);
-                expect(res.data.users.currentPage).to.eq(1);
-                const users = res.data.users.data;
-                const userJob = users.find(x => x.id === user.id);
-
-                expect(userJob.id).to.eq(${queryName}.id);
-                expect(userJob.phone).to.eq(${queryName}.phone);
-                expect(userJob.name).to.eq(${queryName}.name);
-                expect(userJob.avatar).to.eq(${queryName}.avatar);
-                // expect(userJob.dob).to.eq(${queryName}.dob);
-                expect(userJob.email).to.eq(${queryName}.email);
-                expect(userJob.gender).to.eq(${queryName}.gender);
+                expect(res.data.${queryName}s.data).to.length(${queryName}s.length);
+                expect(res.data.${queryName}s.total).to.eq(${queryName}s.length);
+                expect(res.data.${queryName}s.currentPage).to.eq(1);
             });
 
-            it('should response user paginate', async () => {
-                await ${model}.create({name: 'job'});
-                const user1 = await ${model}.create({name: 'job2'});
-                const user2 = await ${model}.create({name: 'job3'});
-                const ${queryName} = await ${model}.create({name: 'job4', phone: '132545646', avatar: './image.jpg',
-                    email: 'asd@gmail.com', gender: Gender.famale});
+            it('should response ${name} paginate', async () => {
+                await Factory.model('App/Models/${model}').createMany(5);
+                const ${queryName}s = await ${model}.query();
 
                 const res = await client.query({
-                    query: USER_LIST_QUERY,
+                    query: ${queryName.toUpperCase()}_LIST_QUERY,
                     variables: {
                         page: 2,
                         limit: 2
@@ -472,345 +177,85 @@ describe('{{name}} Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data).to.length(2)
-                expect(res.data.users.perPage).to.eq(2)
-                expect(res.data.users.total).to.eq(5)
-                expect(res.data.users.currentPage).to.eq(2)
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([user1, user2].map(x=>x.id))
+                expect(res.data.${queryName}s.data).to.length(2)
+                expect(res.data.${queryName}s.perPage).to.eq(2)
+                expect(res.data.${queryName}s.total).to.eq(${queryName}s.length)
+                expect(res.data.${queryName}s.currentPage).to.eq(2)
             });
         });
 
-        describe('User Http | list | filter', () => {
-            it('should filter id without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
+        describe('${name} Http | list | filter', () => {
+        <% _.forEach(attributes, function(attribute) { %>
+            it('should filter ${attribute} without error', async () => {
+                const ${queryName} = await Factory.model('App/Models/${model}').create();
 
                 const res = await client.query({
-                    query: USER_LIST_QUERY,
+                    query: ${queryName.toUpperCase()}_LIST_QUERY,
                     variables: {
                         "filter": {
-                            "field": "id",
-                            "value": user.id,
+                            "field": "${attribute}",
+                            "value": ${queryName}.${attribute},
                             "operator": "eq"
                         }
                     }
                 });
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id)
+                expect(res.data.${queryName}s.data[0].id).to.eq(${queryName}.id)
+                expect(res.data.${queryName}s.data[0].${attribute}).to.eq(${queryName}.${attribute})
             });
-
-            it('should filter phone without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', phone: '0357096208'})
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "phone",
-                            "value": "0357096208",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-                expect(res.data.users.data[0].name).to.eq(${queryName}.name);
-            });
-
-            it('should filter name without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": "job",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-                expect(res.data.users.data[0].name).to.eq(${queryName}.name);
-            });
-
-            it('should filter email without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com'})
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "email",
-                            "value": "job@gmail.com",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-                expect(res.data.users.data[0].name).to.eq(${queryName}.name);
-            });
-
-            it('should filter gender without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "gender",
-                            "value": Gender.male,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-                expect(res.data.users.data[0].gender).to.eq(${queryName}.gender);
-            });
-
-            it('should filter roleId without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "roleId",
-                            "value": role.id,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-            });
-
-            it('should filter roleName without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "roleName",
-                            "value": role.name,
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data[0].id).to.eq(${queryName}.id);
-            });
+        <% }); %>
         });
 
-        describe('User Http | list | sortBy', () => {
-            it('should order by when sortBy as array', async () => {
-                await ${model}.create({name: 'job1'});
-                await ${model}.create({name: 'job2'});
-                const ${queryName} = await ${model}.create({name: 'job3'});
+        describe('${name} Http | list | sortBy', () => {
+        <% _.forEach(attributes, function(attribute) { %>
+            it('should order by ${attribute} desc when sortBy as array', async () => {
+                await Factory.model('App/Models/${model}').createMany(5);
+
+                const data = await ${model}.query().orderBy('${attribute}', SortEnumType.DESC)
 
                 const res = await client.query({
-                    query: USER_LIST_QUERY,
+                    query: ${queryName.toUpperCase()}_LIST_QUERY,
                     variables: {
                         "sortBy": [{
-                            "id": "DESC"
+                            "${attribute}": SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+                expect(res.data.${name}s.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
             });
 
-            it('should sort by id without error', async () => {
-                await ${model}.create({name: 'job1'});
-                await ${model}.create({name: 'job2'});
-                const ${queryName} = await ${model}.create({name: 'job3'});
+            it('should order by ${attribute} asc when sortBy as array', async () => {
+                await Factory.model('App/Models/${model}').createMany(5);
+
+                const data = await ${model}.query().orderBy('${attribute}', SortEnumType.ASC)
 
                 const res = await client.query({
-                    query: USER_LIST_QUERY,
+                    query: ${queryName.toUpperCase()}_LIST_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
-                        }
+                        "sortBy": [{
+                            "${attribute}": SortEnumType.ASC
+                        }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+                expect(res.data.${name}s.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
             });
-
-            it('should sort by phone without error', async () => {
-                await ${model}.create({phone: '1'});
-                await ${model}.create({phone: '2'});
-                const ${queryName} = await ${model}.create({phone: '3'});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "phone": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
-                // expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-            });
-
-            it('should sort by name without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: '1'});
-                await ${model}.create({name: '2'});
-                const ${queryName} = await ${model}.create({name: '3'});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "name": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,2,1]);
-            });
-
-            it('should sort by email without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: 'job',email: 'a1@gmail.com'});
-                await ${model}.create({name: 'job',email: 'a2@gmail.com'});
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com'});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "email": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,2,1]);
-            });
-
-            it('should sort by gender without error', async () => {
-                await ${model}.truncate(true);
-                await ${model}.create({name: 'job',email: 'a1@gmail.com', gender: Gender.male});
-                await ${model}.create({name: 'job',email: 'a2@gmail.com', gender: Gender.male});
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "gender": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,1,2]);
-            });
-
-            it('should sort by roleId DESC without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleId": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
-            });
-
-            it('should sort by roleId ASC without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleId": "ASC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
-            });
-
-            it('should sort by roleName DESC without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleName": "DESC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
-            });
-
-            it('should sort by roleName ASC without error', async () => {
-                const ${queryName} = await ${model}.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
-                const role = await RoleModel.create({name: 'super'});
-                const role_user = await Role${model}.create({roleId: role.id, userId: user.id});
-
-                const res = await client.query({
-                    query: USER_LIST_QUERY,
-                    variables: {
-                        "sortBy": {
-                            "roleName": "ASC"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
-            });
+        <% }); %>
         });
     });
 
-    describe('{{name}} Http | create', () => {
+    describe('${name} Http | create', () => {
 
     });
 
-    describe('{{name}} Http | update', () => {
+    describe('${name} Http | update', () => {
 
     });
 
-    describe('{{name}} Http | delete', () => {
+    describe('${name} Http | delete', () => {
 
     });
 

@@ -7,14 +7,14 @@
 
 import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClient";
 import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../../../../../tests/helpers";
-import {UserModel} from "../../../UserModel";
+import {authContext, createServer, resetTables, seedDB} from "../helpers";
 const { gql } = require('apollo-server');
 import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-
-const name = 'User'
-const model = 'UserModel'
+import {UserModel} from "../../src/app/UserModel";
+import ${model} from "../../src/app/Models/${model}";
+import {${queryName.toUpperCase()}_LIST_QUERY, ${queryName.toUpperCase()}_QUERY} from "./queries/role-query";
+import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 
 describe('${name} Http', () => {
     let client: ApolloServerTestClient;
@@ -44,16 +44,10 @@ describe('${name} Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.phone).to.eq(${queryName}.phone);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-                expect(res.data.${queryName}.avatar).to.eq(${queryName}.avatar);
-                // expect(res.data.${queryName}.dob).to.eq(${queryName}.dob);
-                expect(res.data.${queryName}.email).to.eq(${queryName}.email);
-                expect(res.data.${queryName}.gender).to.eq(${queryName}.gender);
             });
 
             it('should response first ${name} using order by', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'});
+                const ${queryName} = await Factory.model('App/Models/${model}').create();
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_QUERY,
@@ -66,13 +60,12 @@ describe('${name} Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
             });
 
             it('should response first ${name} when authentication', async () => {
                 const ${queryName} = await ${model}.first();
 
-                authContext(await ${model}.create({name: 'job'}));
+                authContext(await UserModel.first());
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_QUERY
@@ -80,52 +73,6 @@ describe('${name} Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.phone).to.eq(${queryName}.phone);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-                expect(res.data.${queryName}.avatar).to.eq(${queryName}.avatar);
-                // expect(res.data.${queryName}.dob).to.eq(${queryName}.dob);
-                expect(res.data.${queryName}.email).to.eq(${queryName}.email);
-                expect(res.data.${queryName}.gender).to.eq(${queryName}.gender);
-            });
-
-            it('should response ${name} filter', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
-
-                const res = await client.query({
-                    query: ${queryName.toUpperCase()}_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": "job",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
-            });
-
-            it('should response user filter when authentication', async () => {
-                const ${queryName} = await ${model}.create({name: 'job'})
-
-                authContext(user);
-
-                const res = await client.query({
-                    query: ${queryName.toUpperCase()}_QUERY,
-                    variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": "job",
-                            "operator": "eq"
-                        }
-                    }
-                });
-
-                expect(res.errors).to.undefined;
-                expect(res.data.${queryName}.id).to.eq(${queryName}.id);
-                expect(res.data.${queryName}.name).to.eq(${queryName}.name);
             });
         });
 
@@ -154,11 +101,9 @@ describe('${name} Http', () => {
         describe('User Http | index | sortBy', () => {
         <% _.forEach(attributes, function(attribute) { %>
             it('should sort by desc ${attribute} without error', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
+                await Factory.model('App/Models/${model}').createMany(3);
 
-                const ${queryName} = await ${model}.orderBy('${attribute}', SortEnumType.DESC).first();
+                const ${queryName} = await ${model}.query().orderBy('${attribute}', SortEnumType.DESC).first();
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_QUERY,
@@ -175,11 +120,9 @@ describe('${name} Http', () => {
             })
 
             it('should sort by asc ${attribute} without error', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
+                await Factory.model('App/Models/${model}').createMany(3);
 
-                const ${queryName} = await ${model}.orderBy('${attribute}', SortEnumType.ASC).first();
+                const ${queryName} = await ${model}.query().orderBy('${attribute}', SortEnumType.ASC).first();
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_QUERY,
@@ -203,7 +146,7 @@ describe('${name} Http', () => {
             authContext(await UserModel.first());
         });
 
-        describe('User Http | list | base', () => {
+        describe('${name} Http | list | base', () => {
             it('should response error when is not login', async () => {
                 authContext(null);
                 const res = await client.query({
@@ -214,36 +157,22 @@ describe('${name} Http', () => {
             });
 
             it('should reponse list ${queryName}', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                const ${queryName} =  await Factory.model('App/Models/${model}').create();
+                await Factory.model('App/Models/${model}').createMany(5);
+                const ${queryName}s = await ${model}.query();
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_LIST_QUERY
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.${queryName}s.data).to.length(5);
-                expect(res.data.${queryName}s.total).to.eq(5);
+                expect(res.data.${queryName}s.data).to.length(${queryName}s.length);
+                expect(res.data.${queryName}s.total).to.eq(${queryName}s.length);
                 expect(res.data.${queryName}s.currentPage).to.eq(1);
-                const ${queryName}s = res.data.${queryName}s.data;
-                const ${queryName}Job = ${queryName}s.find(x => x.id === ${queryName}.id);
-
-                expect(${queryName}Job.id).to.eq(${queryName}.id);
-                expect(${queryName}Job.phone).to.eq(${queryName}.phone);
-                expect(${queryName}Job.name).to.eq(${queryName}.name);
-                expect(${queryName}Job.avatar).to.eq(${queryName}.avatar);
-                // expect(${queryName}Job.dob).to.eq(${queryName}.dob);
-                expect(${queryName}Job.email).to.eq(${queryName}.email);
-                expect(${queryName}Job.gender).to.eq(${queryName}.gender);
             });
 
-            it('should response user paginate', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                const ${queryName} = await Factory.model('App/Models/${model}').create();
+            it('should response ${name} paginate', async () => {
+                await Factory.model('App/Models/${model}').createMany(5);
+                const ${queryName}s = await ${model}.query();
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_LIST_QUERY,
@@ -256,12 +185,12 @@ describe('${name} Http', () => {
                 expect(res.errors).to.undefined;
                 expect(res.data.${queryName}s.data).to.length(2)
                 expect(res.data.${queryName}s.perPage).to.eq(2)
-                expect(res.data.${queryName}s.total).to.eq(5)
+                expect(res.data.${queryName}s.total).to.eq(${queryName}s.length)
                 expect(res.data.${queryName}s.currentPage).to.eq(2)
             });
         });
 
-        describe('User Http | list | filter', () => {
+        describe('${name} Http | list | filter', () => {
         <% _.forEach(attributes, function(attribute) { %>
             it('should filter ${attribute} without error', async () => {
                 const ${queryName} = await Factory.model('App/Models/${model}').create();
@@ -283,14 +212,12 @@ describe('${name} Http', () => {
         <% }); %>
         });
 
-        describe('User Http | list | sortBy', () => {
+        describe('${name} Http | list | sortBy', () => {
         <% _.forEach(attributes, function(attribute) { %>
             it('should order by ${attribute} desc when sortBy as array', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
+                await Factory.model('App/Models/${model}').createMany(5);
 
-                const data = ${model}.orderBy('${attribute}', SortEnumType.DESC)
+                const data = await ${model}.query().orderBy('${attribute}', SortEnumType.DESC)
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_LIST_QUERY,
@@ -302,15 +229,13 @@ describe('${name} Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id);
+                expect(res.data.${name}s.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by ${attribute} asc when sortBy as array', async () => {
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
-                await Factory.model('App/Models/${model}').create();
+                await Factory.model('App/Models/${model}').createMany(5);
 
-                const data = ${model}.orderBy('${attribute}', SortEnumType.ASC)
+                const data = await ${model}.query().orderBy('${attribute}', SortEnumType.ASC)
 
                 const res = await client.query({
                     query: ${queryName.toUpperCase()}_LIST_QUERY,
@@ -322,7 +247,7 @@ describe('${name} Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id);
+                expect(res.data.${name}s.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
             });
         <% }); %>
         });

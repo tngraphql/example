@@ -49,6 +49,14 @@ export function empty(mixedVar) {
         return true;
     }
 
+    if (Array.isArray(mixedVar)) {
+        if (!mixedVar.length) {
+            return true;
+        }
+
+        return !mixedVar.some(x => !empty(x));
+    }
+
     if ( typeof mixedVar === 'object' ) {
         return !Object.keys(mixedVar).length;
     }

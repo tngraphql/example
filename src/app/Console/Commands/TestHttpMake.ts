@@ -6,10 +6,15 @@ import * as _ from 'lodash'
 import * as fs from "fs";
 import {GeneratorFile} from "@tngraphql/console/dist/Generator/File";
 import {UserModel} from "../../UserModel";
+import RoleModel from "../../Models/RoleModel";
+import {RoleCreateArgsType} from "../../GraphQL/Types/Role/RoleCreateArgsType";
+import {RoleUpdateArgsType} from "../../GraphQL/Types/Role/RoleUpdateArgsType";
+import {RoleDeleteArgsType} from "../../GraphQL/Types/Role/RoleDeleteArgsType";
 
 export class TestHttpMake extends GeneratorCommand {
     protected getStub(): string {
-        return join(__dirname, 'stub/file.spec.stub');
+        return join(__dirname, 'stub/file.auth.spec.stub');
+        // return join(__dirname, 'stub/file.spec.stub');
     }
 
     protected getSuffix(): string {
@@ -28,32 +33,24 @@ export class TestHttpMake extends GeneratorCommand {
 
 
     async handle(...args: any[]): Promise<any> {
-        await this.generateFile('./TestCmd', {
-            model: 'UserModel',
+        await this.generateFile('./tests/functional', {
+            model: 'RoleModel',
             queryName: 'role',
             name: 'role',
-            attribute: []
-        }, {})
+            attributes: Array.from(RoleModel.$columnsDefinitions.keys())
+                .filter(x => !['createdAt', 'updatedAt', 'deletedAt'].includes(x)),
+            create: RoleCreateArgsType,
+            update: RoleUpdateArgsType,
+            delete: RoleDeleteArgsType
+        }, {});
 
-        // const compiled = _.template(fs.readFileSync(this.getStub(), {encoding: 'utf8'}));
-        //
-        // const contents = compiled({
-        //     model: 'UserModel',
-        //     queryName: 'role',
-        //     name: 'role',
-        //     attribute: [
-        //
-        //     ]
-        // });
-        // console.log(contents)
-        // await this.put('./TestCmd', contents);
         return Promise.resolve(undefined);
     }
 
     async generateFile(filePath: any, template: any, options: any) {
         const file = new GeneratorFile(this.buildClass(this.name), options);
         file.destinationDir(filePath);
-        file.stub(this.getStub());
+        file.stub(this.getStub(), {raw: true});
         if (template) {
             file.apply(template);
         }
@@ -66,15 +63,11 @@ export class TestHttpMake extends GeneratorCommand {
 
         const compiled = _.template(fs.readFileSync(this.getStub(), {encoding: 'utf8'}));
 
-        const contents = compiled({
-            model: 'RoleModel',
-            queryName: 'role',
-            name: 'role',
-            attributes: Array.from(UserModel.$columnsDefinitions.keys()).filter(x => !['createdAt', 'updatedAt', 'deletedAt'].includes(x))
-        });
+        const contents = compiled(template);
 
+        const filePathString = fileJSON.filepath.replace('.ts', '.spec.ts');
 
-        await this.put(fileJSON.filepath, contents);
-        this.logger.create(fileJSON.relativepath);
+        await this.put(filePathString, contents);
+        this.logger.create(filePathString);
     }
 }
