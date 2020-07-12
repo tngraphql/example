@@ -20,8 +20,6 @@ import {DeleteType} from "../Types/DeleteType";
 import {RoleCreateArgsType} from "../Types/Role/RoleCreateArgsType";
 import {RoleUpdateArgsType} from "../Types/Role/RoleUpdateArgsType";
 import {Resource} from "../../../lib/Resource";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import RoleModel from "../../Models/RoleModel";
 import {RoleDeleteArgsType} from "../Types/Role/RoleDeleteArgsType";
 
 @Resolver()
@@ -48,21 +46,24 @@ export class RoleResolve extends BaseResolve {
         return this.repo.query().paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => RoleType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => RoleType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(RoleCreateArgsType)
+    @UseMiddleware('auth')
     async create(@Args() args: RoleCreateArgsType) {
         return this.repo.create(args);
     }
 
     @Mutation(returns => RoleType)
     @ValidateArgs(RoleUpdateArgsType)
+    @UseMiddleware('auth')
     async update(@Args() args: RoleUpdateArgsType) {
         return this.repo.update(args, args.id);
     }
 
     @Mutation(returns => DeleteType)
     @ValidateArgs(RoleDeleteArgsType)
-    async delete(@Arg('id', returns => [Int]) id: number, @Ctx() ctx) {
-        return Resource.delete(await this.repo.destroy(id), ctx.lang);
+    @UseMiddleware('auth')
+    async delete(@Args() args: RoleDeleteArgsType, @Ctx() ctx) {
+        return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 }

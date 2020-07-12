@@ -24,8 +24,8 @@ export enum Gender {
 export class UserModel extends Auth {
     public static table = 'users';
 
-    @column({isPrimary: true})
-    public id: number;
+    @column({isPrimary: true, consume: value => String(value)})
+    public id: string;
 
     @column()
     public phone: string;

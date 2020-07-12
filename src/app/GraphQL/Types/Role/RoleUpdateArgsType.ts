@@ -1,6 +1,7 @@
 import {ArgsType, Field} from "@tngraphql/graphql";
 import {GraphQLString} from "graphql";
 import {Rules} from "@tngraphql/illuminate";
+import {UidScalarType} from "../UidScalerType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -11,9 +12,9 @@ import {Rules} from "@tngraphql/illuminate";
 
 @ArgsType()
 export class RoleUpdateArgsType {
-    @Field()
+    @Field(returns => UidScalarType)
     @Rules('required')
-    public id: number
+    public id: string
 
     @Field()
     @Rules([

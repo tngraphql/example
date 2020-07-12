@@ -3,8 +3,16 @@ import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 
 export default class TagModel extends BaseModel {
-    @column({ isPrimary: true })
-    public id: number
+    public static table = 'tags';
+
+    @column({ isPrimary: true, consume: value => String(value) })
+    public id: string
+
+    @column()
+    name: string;
+
+    @column()
+    slug: string
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime

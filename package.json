@@ -23,6 +23,7 @@
     "@tngraphql/route": "^1.0.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
+    "continuation-local-storage": "^3.2.1",
     "i18n": "^0.8.6",
     "luxon": "^1.24.1",
     "macroable": "^4.0.2",

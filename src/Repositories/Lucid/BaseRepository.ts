@@ -31,8 +31,17 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
      */
     protected preventCriteriaOverwriting: boolean = true;
 
+    public async transaction(callback): Promise<any> {
+        const client = this.model().$adapter.modelConstructorClient(this.model(), {});
+        return client.transaction(callback);
+    }
+
+    public newQuery(): ModelQueryBuilderContract<LucidModel, T> {
+        return this.model().query();
+    }
+
     public query() {
-        this._query = this.model().query();
+        this._query = this.newQuery();
         return this;
     }
 
@@ -61,6 +70,13 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
 
     public async first(): Promise<T> {
         this.applyCriteria();
+        return (await this._query.first());
+    }
+
+    public async firstBy(id: any, attribute: string = 'id', columns: string[] = ['*']) {
+        this.applyCriteria();
+        this._query.where(attribute,  id)
+            .select(columns)
         return (await this._query.first());
     }
 
@@ -95,9 +111,13 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
             return id.delete();
         }
 
-        const query = this.model().query();
+        const query = this.newQuery();
 
-        const instance = await query.where(attribute, id).firstOrFail();
+        const instance = await query.where(attribute, id).first();
+
+        if (!instance) {
+            return 0;
+        }
 
         return instance.delete();
     }

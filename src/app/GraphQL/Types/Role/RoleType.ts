@@ -10,13 +10,14 @@ import {TimestampScalarType} from "../TimestampScalarType";
 import {registerPaginateType} from "../PaginateType";
 import RoleModel from "../../../Models/RoleModel";
 import {PermissionType} from "../Permission/PermissionType";
+import {ID} from "../UidScalerType";
 
 @ObjectType('Role')
 export class RoleType {
     static model = RoleModel
 
-    @Field()
-    public id: number
+    @Field(returns => ID)
+    public id: number | string
 
     @Field()
     public name: string;

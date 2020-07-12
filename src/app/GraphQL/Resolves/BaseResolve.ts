@@ -21,18 +21,4 @@ import {IPaginateType} from "../../../Contracts/IPaginateType";
 @Resolver()
 export class BaseResolve {
     public repo: BaseRepository;
-
-    getFirst(args, fields) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.query().first();
-    }
-
-    getPaginate(args, fields) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.query().paginate(args.limit, args.page);
-    }
 }

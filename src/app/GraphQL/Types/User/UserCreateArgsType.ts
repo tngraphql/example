@@ -11,5 +11,5 @@ import {ArgsType, Field} from "@tngraphql/graphql";
 export class UserCreateArgsType {
 
     @Field({description: 'ID'})
-    id: number
+    id: string
 }

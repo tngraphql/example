@@ -20,5 +20,13 @@ Route.query('profile', 'UserResolve.profile')
 // Route.query('sentmail', 'ExampleResolve.sentmail')
 
 Route.resource('user', 'UserResolve')
-Route.resource('mony', 'MonyResolve')
+// Route.resource('mony', 'MonyResolve')
 Route.resource('role', 'RoleResolve')
+Route.resource('permission', 'PermissionResolve')
+
+Route.resource('tag', 'TagResolve')['modules']('Tag');
+
+Route.group(() => {
+    Route.resource('contact', 'ContactResolve');
+    Route.resource('contactReply', 'ContactReplyResolve');
+})['modules']('Contact');

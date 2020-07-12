@@ -15,6 +15,8 @@ import {UserModel} from "../../UserModel";
 import {Filter} from "../Middleware/Filter";
 import {UserIndexArgsType} from "../Types/User/UserIndexArgsType";
 import {IPaginateType} from "../../../Contracts/IPaginateType";
+import {SortByCriteria} from "../../../Repositories/Criteria/SortByCriteria";
+import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
 Gate.define('admin', (user, resource) => {
     console.log({resource});
     return true;
@@ -32,15 +34,20 @@ export class UserResolve extends BaseResolve {
 
     @Query(returns => UserType)
     @UseMiddleware(Filter)
-    async index(@Args() args: UserIndexArgsType, @SelectFields() fields): Promise<UserType> {
-        return this.getFirst(args, fields) as any;
+    async index(@Args() args: UserIndexArgsType, @SelectFields() fields){
+        this.repo.pushCriteria(new SortByCriteria(args.order));
+        this.repo.pushCriteria(new FilterCriteria(args.filter));
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.query().first();
     }
 
     @Query(returns => paginateType(UserType))
     @UseMiddleware(['auth'])
     async list(@Args() args: UserListArgsType, @SelectFields() fields, @Ctx() context) {
-        // UserModel.create({name: '123'})
-        return this.getPaginate(args, fields) as any;
+        this.repo.pushCriteria(new SortByCriteria(args.order));
+        this.repo.pushCriteria(new FilterCriteria(args.filter));
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.query().paginate(args.limit, args.page);
     }
 
     @Mutation(returns => UserType, {description: 'Tạo mới tài khoản'})

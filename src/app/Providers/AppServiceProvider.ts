@@ -8,11 +8,18 @@
  * file that was distributed with this source code.
  */
 import { ServiceProvider } from '@tngraphql/illuminate';
+import {Database} from "@tngraphql/lucid";
+
 
 export class AppServiceProvider extends ServiceProvider {
     register(): void {
+
     }
 
     boot(): void {
+        const cls = require('continuation-local-storage');
+        const namespace = cls.createNamespace('my-very-own-namespace');
+
+        Database._cls = namespace;
     }
 }

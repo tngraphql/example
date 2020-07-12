@@ -1,3 +1,5 @@
+import {ExistsRule, UniqueRule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rules";
+
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117
@@ -62,4 +64,27 @@ export function empty(mixedVar) {
     }
 
     return false;
+}
+
+export function cloneObject(v) {
+    try {
+        return JSON.parse(JSON.stringify(v));
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export function ruleToString(v) {
+    for(let i in v) {
+        v[i] = v[i].map(x => {
+            if (x instanceof UniqueRule) {
+                return 'unique';
+            } else if (x instanceof ExistsRule) {
+                return 'exists';
+            }
+            return x;
+        });
+    }
+    return v;
 }

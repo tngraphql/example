@@ -5,14 +5,14 @@ import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 export default class PermissionRoleModel extends BaseModel {
     public static table = 'permission_role'
 
-    @column({ isPrimary: true })
-    public id: number
+    @column({ isPrimary: true, consume: value => String(value) })
+    public id: string
 
-    @column()
-    public permissionId: number
+    @column({ consume: value => String(value)})
+    public permissionId: string
 
-    @column()
-    public roleId: number
+    @column({ consume: value => String(value)})
+    public roleId: string
 
     public static $columns: Pick<PermissionRoleModel, 'id' | 'permissionId' | 'roleId'>
 }

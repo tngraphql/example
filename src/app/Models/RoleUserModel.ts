@@ -1,18 +1,17 @@
-import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 
 export default class RoleUserModel extends BaseModel {
     public static table = 'role_user';
 
-    @column({ isPrimary: true })
-    public id: number
+    @column({ isPrimary: true, consume: value => String(value) })
+    public id: string
 
-    @column()
-    public userId: number
+    @column({consume: value => String(value)})
+    public userId: string
 
-    @column()
-    public roleId: number
+    @column({consume: value => String(value)})
+    public roleId: string
 
     public static $columns: Pick<RoleUserModel, 'id' | 'userId' | 'roleId'>
 }

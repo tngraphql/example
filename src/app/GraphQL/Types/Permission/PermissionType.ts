@@ -2,6 +2,7 @@ import {Field, ObjectType} from "@tngraphql/graphql";
 import {TimestampScalarType} from "../TimestampScalarType";
 import {DateTime} from "luxon";
 import PermissionModel from "../../../Models/PermissionModel";
+import {registerPaginateType} from "../PaginateType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -32,3 +33,5 @@ export class PermissionType {
     @Field(returns => TimestampScalarType)
     public updatedAt: DateTime
 }
+
+registerPaginateType(PermissionType);

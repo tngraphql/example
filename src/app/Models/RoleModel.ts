@@ -8,8 +8,8 @@ import PermissionRoleModel from "./PermissionRoleModel";
 export default class RoleModel extends BaseModel {
     public static table = 'roles';
 
-    @column({ isPrimary: true })
-    public id: number
+    @column({ isPrimary: true, consume: value => String(value) })
+    public id: string
 
     @column()
     public name: string;

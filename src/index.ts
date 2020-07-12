@@ -31,7 +31,7 @@ async function main() {
         formatError: GraphQLExceptions.handle.bind(app),
         context: context => context,
         playground: {
-            // version: '1.7.10'
+            version: '1.7.10'
         }
     });
 

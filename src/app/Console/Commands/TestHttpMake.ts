@@ -10,11 +10,16 @@ import RoleModel from "../../Models/RoleModel";
 import {RoleCreateArgsType} from "../../GraphQL/Types/Role/RoleCreateArgsType";
 import {RoleUpdateArgsType} from "../../GraphQL/Types/Role/RoleUpdateArgsType";
 import {RoleDeleteArgsType} from "../../GraphQL/Types/Role/RoleDeleteArgsType";
+import {compileRules, handlerRulers} from "@tngraphql/illuminate/dist/Foundation/Validate/helpers";
+import {ruleToString} from "../../../lib/utils";
+import TagModel from "../../Features/Tag/TagModel";
+import ContactModel from "../../Features/Contact/ContactModel";
+import ContactReplyModel from "../../Features/Contact/ContactReplyModel";
 
 export class TestHttpMake extends GeneratorCommand {
     protected getStub(): string {
-        return join(__dirname, 'stub/file.auth.spec.stub');
-        // return join(__dirname, 'stub/file.spec.stub');
+        // return join(__dirname, 'stub/file.auth.spec.stub');
+        return join(__dirname, 'stub/file.spec.stub');
     }
 
     protected getSuffix(): string {
@@ -33,13 +38,19 @@ export class TestHttpMake extends GeneratorCommand {
 
 
     async handle(...args: any[]): Promise<any> {
+
+        const instance = handlerRulers(RoleCreateArgsType, args)
+        const validate = Object.entries(ruleToString(compileRules(instance)));
+
         await this.generateFile('./tests/functional', {
-            model: 'RoleModel',
-            queryName: 'role',
-            name: 'role',
-            attributes: Array.from(RoleModel.$columnsDefinitions.keys())
+            model: 'ContactReplyModel',
+            queryName: 'contactReply',
+            name: 'contactReply',
+            attributes: Array.from(ContactReplyModel.$columnsDefinitions.keys())
                 .filter(x => !['createdAt', 'updatedAt', 'deletedAt'].includes(x)),
-            create: RoleCreateArgsType,
+            create: {
+                validate
+            },
             update: RoleUpdateArgsType,
             delete: RoleDeleteArgsType
         }, {});

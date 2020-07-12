@@ -15,6 +15,7 @@ import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
 import {Context} from "@tngraphql/graphql/dist/resolvers/context";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {UserModel} from "../src/app/UserModel";
+import {merge} from "../src/lib/utils";
 
 export async function setup(destroyDb: boolean = true) {
     const database = Application.getInstance<Application>().db;
@@ -276,6 +277,25 @@ export async function resetTables() {
 
     await database.manager.closeAll();
 }
+// @ts-ignore
+ApolloServer.prototype.setContext = function setContext(newContext) {
+    this.context = newContext;
+}
+
+// @ts-ignore
+ApolloServer.prototype.mergeContext = function mergeContext(partialContext) {
+    this.context = Object.assign({}, this.context, partialContext);
+}
+
+// @ts-ignore
+ApolloServer.prototype.mergeHeaders = function mergeHeaders(headers) {
+    // console.log(this.context.toString())
+    // this.context.bind(this, {req: {headers}})
+    //
+    this.context = merge({}, this.context, {
+        req: {headers}
+    });
+}
 
 export async function createServer(context = {}): Promise<ApolloServer> {
     const app = Application.getInstance<Application>();
@@ -285,18 +305,16 @@ export async function createServer(context = {}): Promise<ApolloServer> {
         schema: await kernel.complie(),
         formatError: GraphQLExceptions.handle.bind(app),
         context: ctx => {
-            return {
-                ...ctx,
-                ...context,
+            return merge(ctx, context, {
                 req: {
                     bearerToken: () => null
                 }
-            }
+            });
         }
     });
 }
 
-export function authContext(data = {id: 1}) {
+export function authContext(data: {id: string} = {id: "1"}) {
     Context.getter('auth', () => {
         return new RequestGuard(() => {
             if (!data) {

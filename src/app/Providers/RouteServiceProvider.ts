@@ -8,6 +8,13 @@
  * file that was distributed with this source code.
  */
 import { RoutingServiceProvider } from '@tngraphql/illuminate/dist/Foundation/Routing/RoutingServiceProvider';
+import {RouteGroup, RouteResource} from "@tngraphql/route";
+RouteResource.prototype['modules'] = function (module, resolve = 'Resolves') {
+    return this.namespace(`App/Features/${module}/${resolve}`);
+};
+RouteGroup.prototype['modules'] = function (module, resolve = 'Resolves') {
+    return this.namespace(`App/Features/${module}/${resolve}`);
+}
 
 export class RouteServiceProvider extends RoutingServiceProvider {
 
@@ -31,7 +38,6 @@ export class RouteServiceProvider extends RoutingServiceProvider {
     }
 
     protected mapDefaultRouter() {
-        delete require.cache[require.resolve(this.app.basePath('start/route'))]
         this.app.route.group(() => require(this.app.basePath('start/route')))
              .namespace('App/GraphQL/Resolves')
              // .middleware(['acl:admin']);

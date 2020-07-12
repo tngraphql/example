@@ -5,7 +5,7 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "apollo-server-testing/dist/createTestClient";
+import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
 import {createTestClient} from "apollo-server-testing";
 import {authContext, createServer, resetTables, seedDB} from "../helpers";
 const { gql } = require('apollo-server');
@@ -18,10 +18,11 @@ import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 
 describe('${name} Http', () => {
     let client: ApolloServerTestClient;
+    let server: any;
 
     before(async () => {
-        const server: any = await createServer();
-        client = createTestClient(server);
+        server = await createServer();
+        client = createTestClient(server) as ApolloServerTestClient;
     });
 
     beforeEach(async () => {

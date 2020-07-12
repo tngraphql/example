@@ -45,7 +45,7 @@ before(async function() {
 });
 
 after(async () => {
-    const {cleanup} = require('./tests/helpers');
-
-    await cleanup();
+    // const {cleanup} = require('./tests/helpers');
+    //
+    // await cleanup();
 });
