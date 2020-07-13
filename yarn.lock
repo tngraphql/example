@@ -416,10 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.7-6-alpha":
-  version "1.1.7-6-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-6-alpha.tgz#f96d680be0cfcc1daaf79abde70b58912dcaf95c"
-  integrity sha512-At4PRjxqn6KL1yzxD5h5bWO1cz+H5+YGcBCyd9gEM5q9bEC45rbujwEzTzmqQXh/pnyhpXUxMUuRb36mfQTLfA==
+"@tngraphql/illuminate@^1.1.7-11-alpha":
+  version "1.1.7-11-alpha"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-11-alpha.tgz#2c8e38ab56f54c8bfd67df201603013673063a83"
+  integrity sha512-IukkPzMUKx9aTvddi00uluU/husz846muBomE3acx0QldJARhiTPNvhGgoEgosM9eSvMCSeGPmjga6v0MJpgDg==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"

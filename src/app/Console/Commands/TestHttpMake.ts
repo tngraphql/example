@@ -15,6 +15,7 @@ import {ruleToString} from "../../../lib/utils";
 import TagModel from "../../Features/Tag/TagModel";
 import ContactModel from "../../Features/Contact/ContactModel";
 import ContactReplyModel from "../../Features/Contact/ContactReplyModel";
+import FavoriteModel from "../../Features/Favorite/FavoriteModel";
 
 export class TestHttpMake extends GeneratorCommand {
     protected getStub(): string {
@@ -43,10 +44,10 @@ export class TestHttpMake extends GeneratorCommand {
         const validate = Object.entries(ruleToString(compileRules(instance)));
 
         await this.generateFile('./tests/functional', {
-            model: 'ContactReplyModel',
-            queryName: 'contactReply',
-            name: 'contactReply',
-            attributes: Array.from(ContactReplyModel.$columnsDefinitions.keys())
+            model: 'FavoriteModel',
+            queryName: 'favorite',
+            name: 'favorite',
+            attributes: Array.from(FavoriteModel.$columnsDefinitions.keys())
                 .filter(x => !['createdAt', 'updatedAt', 'deletedAt'].includes(x)),
             create: {
                 validate

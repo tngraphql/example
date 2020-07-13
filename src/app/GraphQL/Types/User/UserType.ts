@@ -4,6 +4,7 @@ import {registerPaginateType} from "../PaginateType";
 import {RoleType} from "../Role/RoleType";
 import {DateTime} from "luxon";
 import {TimestampScalarType} from "../TimestampScalarType";
+import {ID} from "../UidScalerType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +17,7 @@ import {TimestampScalarType} from "../TimestampScalarType";
 export class UserType {
     static model = UserModel;
 
-    @Field()
+    @Field(returns => ID)
     id: number
 
     @Field()
