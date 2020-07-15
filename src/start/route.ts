@@ -30,11 +30,15 @@ Route.mutation('login', 'ExampleResolve.login')
 // Route.resource('tag', 'TagResolve')['modules']('Tag');
 //
 // Route.group(() => {
-//     Route.resource('contact', 'ContactResolve');
+//     Route.resource('contact', 'CategoryResolve');
 //     Route.resource('contactReply', 'ContactReplyResolve');
 // })['modules']('Contact');
 
+// Route.group(() => {
+//     Route.resource('favorite', 'FavoriteResolve');
+//     Route.query('favoritesUser', 'FavoriteResolve.favoritesUser')
+// })['modules']('Favorite');
+
 Route.group(() => {
-    Route.resource('favorite', 'FavoriteResolve');
-    Route.query('favoritesUser', 'FavoriteResolve.favoritesUser')
-})['modules']('Favorite');
+    Route.resource('category', 'CategoryResolve');
+})['modules']('Category');

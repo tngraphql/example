@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import {Sluggable} from "@tngraphql/slugify";
 
 export default class TagModel extends BaseModel {
     public static table = 'tags';
@@ -20,5 +21,20 @@ export default class TagModel extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
-    public static $columns: Pick<TagModel, 'id' | 'createdAt' | 'updatedAt'>
+    public static $columns: Pick<TagModel, 'id' | 'createdAt' | 'updatedAt'>;
+
+    public static boot() {
+        super.boot();
+
+        this.use(Sluggable);
+    }
+
+    public sluggable() {
+        return {
+            source: ['name'],
+            slugOptions: {lower: true},
+            overwrite: false,
+            column: 'slug'
+        };
+    }
 }

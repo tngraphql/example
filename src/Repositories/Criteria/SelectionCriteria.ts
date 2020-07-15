@@ -16,6 +16,7 @@ export class SelectionCriteria extends Criteria {
     }
 
     public apply(query: ModelQueryBuilderContract<LucidModel>, repository: BaseRepository) {
+        query.clearSelect();
         query.select(this._selections.columns);
         this.preloadNested(query, this._selections.preloads);
     }

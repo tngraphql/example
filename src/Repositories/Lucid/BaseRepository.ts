@@ -65,6 +65,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
     }
 
     public async all(): Promise<T[]> {
+        this.applyCriteria();
         return (await this._query);
     }
 
@@ -74,9 +75,9 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
     }
 
     public async firstBy(id: any, attribute: string = 'id', columns: string[] = ['*']) {
-        this.applyCriteria();
         this._query.where(attribute,  id)
             .select(columns)
+        this.applyCriteria();
         return (await this._query.first());
     }
 
