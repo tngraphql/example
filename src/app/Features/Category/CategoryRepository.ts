@@ -59,16 +59,6 @@ export class CategoryRepository extends BaseRepository<CategoryModel> {
                 category = await super.newQuery().findBy(attribute, id);
             }
 
-            // try {
-            //     await this.models.postCategory.destroy({
-            //         where: {
-            //             categoryId: category.id
-            //         }
-            //     });
-            // } catch (e) {
-            //     // code
-            // }
-
             await super.newQuery()
                 .where('parentId', category.id)
                 .update({parentId: category.parentId});

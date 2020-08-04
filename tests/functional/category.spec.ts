@@ -12,10 +12,9 @@ const { gql } = require('apollo-server');
 import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
-import {CATEGORY_LIST_QUERY, CATEGORY_QUERY} from "./queries/category-query";
+import {CATEGORY_LIST_QUERY, CATEGORY_QUERY} from "./gql/category-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 import CategoryModel from "../../src/app/Features/Category/CategoryModel";
-import ContactReplyModel from "../../src/app/Features/Contact/ContactReplyModel";
 
 describe('category Http', () => {
     let client: ApolloServerTestClient;
@@ -28,6 +27,7 @@ describe('category Http', () => {
 
     beforeEach(async () => {
         await seedDB();
+        authContext(null);
         await Factory.model('App/Features/Category/CategoryModel').createMany(10);
     });
 
@@ -1301,7 +1301,7 @@ describe('category Http', () => {
     });
 
     describe('category Http | update', () => {
-        it('update contact', async () => {
+        it('update category', async () => {
             authContext(await UserModel.first());
             const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
@@ -1360,7 +1360,7 @@ describe('category Http', () => {
     });
 
     describe('category Http | delete', () => {
-        it('delete contact', async () => {
+        it('delete category', async () => {
             authContext(await UserModel.first());
             const category = await Factory.model('App/Features/Category/CategoryModel').create();
 

@@ -15,8 +15,7 @@ import {ContactReplyIndexArgsType} from "../Types/ContactReply/ContactReplyIndex
 import {ContactReplyDeleteArgsType} from "../Types/ContactReply/ContactReplyDeleteArgsType";
 import {ContactReplyListArgsType} from "../Types/ContactReply/ContactReplyListArgsType";
 import {ContactReplyUpdateArgsType} from "../Types/ContactReply/ContactReplyUpdateArgsType";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import ContactReplyModel from "../ContactReplyModel";
+import {ContactUpdateArgsType} from "../Types/Contact/ContactUpdateArgsType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -50,15 +49,19 @@ export class ContactReplyResolve extends BaseResolve {
     @Mutation(returns => ContactReplyType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(ContactReplyCreateArgsType)
     @UseMiddleware('auth')
-    async create(@Args() args: ContactReplyCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: ContactReplyCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => ContactReplyType)
     @ValidateArgs(ContactReplyUpdateArgsType)
     @UseMiddleware('auth')
-    async update(@Args() args: ContactReplyUpdateArgsType) {
-        return this.repo.update(args, args.id);
+    async update(@Args() args: ContactReplyUpdateArgsType, @SelectFields() fields) {
+        const updated = await this.repo.update(args, args.id);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(updated.id);
     }
 
     @Mutation(returns => DeleteType)

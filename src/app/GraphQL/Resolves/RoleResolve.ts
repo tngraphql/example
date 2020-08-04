@@ -21,6 +21,8 @@ import {RoleCreateArgsType} from "../Types/Role/RoleCreateArgsType";
 import {RoleUpdateArgsType} from "../Types/Role/RoleUpdateArgsType";
 import {Resource} from "../../../lib/Resource";
 import {RoleDeleteArgsType} from "../Types/Role/RoleDeleteArgsType";
+import {CategoryCreateArgsType} from "../../Features/Category/Types/CategoryCreateArgsType";
+import {CategoryUpdateArgsType} from "../../Features/Category/Types/CategoryUpdateArgsType";
 
 @Resolver()
 export class RoleResolve extends BaseResolve {
@@ -49,15 +51,19 @@ export class RoleResolve extends BaseResolve {
     @Mutation(returns => RoleType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(RoleCreateArgsType)
     @UseMiddleware('auth')
-    async create(@Args() args: RoleCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: RoleCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => RoleType)
     @ValidateArgs(RoleUpdateArgsType)
     @UseMiddleware('auth')
-    async update(@Args() args: RoleUpdateArgsType) {
-        return this.repo.update(args, args.id);
+    async update(@Args() args: RoleUpdateArgsType, @SelectFields() fields) {
+        const category = await this.repo.update(args, args.id);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)

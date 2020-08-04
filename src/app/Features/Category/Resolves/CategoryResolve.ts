@@ -15,7 +15,6 @@ import {CategoryCreateArgsType} from "../Types/CategoryCreateArgsType";
 import {CategoryListArgsType} from "../Types/CategoryListArgsType";
 import {CategoryDeleteArgsType} from "../Types/CategoryDeleteArgsType";
 import {CategoryUpdateArgsType} from "../Types/CategoryUpdateArgsType";
-import CategoryModel from "../CategoryModel";
 
 /**
  * Created by Phan Trung Nguyên.

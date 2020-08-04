@@ -24,6 +24,8 @@ import {FavoriteUpdateArgsType} from "../Types/FavoriteUpdateArgsType";
 import {FavoriteDeleteArgsType} from "../Types/FavoriteDeleteArgsType";
 import {OperatorEnumType} from "../../../GraphQL/Types/OperatorEnumType";
 import FavoriteModel from "../FavoriteModel";
+import {CategoryCreateArgsType} from "../../Category/Types/CategoryCreateArgsType";
+import {CategoryUpdateArgsType} from "../../Category/Types/CategoryUpdateArgsType";
 
 @Resolver()
 export class FavoriteResolve extends BaseResolve {
@@ -70,15 +72,19 @@ export class FavoriteResolve extends BaseResolve {
 
     @Mutation(returns => FavoriteType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(FavoriteCreateArgsType)
-    async create(@Args() args: FavoriteCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: FavoriteCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => FavoriteType)
     @ValidateArgs(FavoriteUpdateArgsType)
     @UseMiddleware('auth')
-    async update(@Args() args: FavoriteUpdateArgsType) {
-        return this.repo.update(args, args.id);
+    async update(@Args() args: FavoriteUpdateArgsType, @SelectFields() fields) {
+        const category = await this.repo.update(args, args.id);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)

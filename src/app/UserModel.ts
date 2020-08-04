@@ -66,4 +66,12 @@ export class UserModel extends Auth {
 
     @hasMany(() => UserSocialModel)
     public socialAccounts: HasMany<typeof UserSocialModel>
+
+    public isOwner() {
+        return this.id === '1';
+    }
+
+    public can(ability) {
+        return true;
+    }
 }

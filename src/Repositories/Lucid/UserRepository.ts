@@ -11,10 +11,7 @@ import {ResolverData} from "@tngraphql/graphql";
 import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
-
-const ResolveLang = registerCustomInject((data: ResolverData<{lang: any}>) => {
-    return data.context.lang;
-})
+import {ResolveLang} from "../../decorators/ResolveLang";
 
 @Service()
 export class UserRepository extends BaseRepository<UserModel> {

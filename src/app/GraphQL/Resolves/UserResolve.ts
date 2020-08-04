@@ -17,6 +17,7 @@ import {UserIndexArgsType} from "../Types/User/UserIndexArgsType";
 import {IPaginateType} from "../../../Contracts/IPaginateType";
 import {SortByCriteria} from "../../../Repositories/Criteria/SortByCriteria";
 import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
+import {CategoryCreateArgsType} from "../../Features/Category/Types/CategoryCreateArgsType";
 Gate.define('admin', (user, resource) => {
     console.log({resource});
     return true;
@@ -51,8 +52,10 @@ export class UserResolve extends BaseResolve {
     }
 
     @Mutation(returns => UserType, {description: 'Tạo mới tài khoản'})
-    create(@Args() args: UserCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: UserCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => UserType)

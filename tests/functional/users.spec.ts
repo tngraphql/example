@@ -15,7 +15,7 @@ import {
     USER_QUERY,
     USER_ROLES_PERMISSION_QUERY,
     USER_ROLES_QUERY
-} from "./queries/user-query";
+} from "./gql/user-gql";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {Context} from "@tngraphql/graphql/dist/resolvers/context";
 import {Gender, UserModel} from "../../src/app/UserModel";

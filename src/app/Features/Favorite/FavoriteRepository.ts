@@ -9,10 +9,7 @@ import {registerCustomInject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
 import FavoriteModel from "./FavoriteModel";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-
-const ResolveAuth = registerCustomInject(({context}) => {
-    return context.auth;
-})
+import {ResolveAuth} from "../../../decorators/ResolveAuth";
 
 @Service()
 export class FavoriteRepository extends BaseRepository<FavoriteModel> {

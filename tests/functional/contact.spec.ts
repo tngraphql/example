@@ -12,7 +12,7 @@ const { gql } = require('apollo-server');
 import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
-import {CONTACT_LIST_QUERY, CONTACT_QUERY} from "./queries/contact-query";
+import {CONTACT_LIST_QUERY, CONTACT_QUERY} from "./gql/contact-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 import ContactModel from "../../src/app/Features/Contact/ContactModel";
 import {Mail} from "@tngraphql/mail/dist/src/Mail";

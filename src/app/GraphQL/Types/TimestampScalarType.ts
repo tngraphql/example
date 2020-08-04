@@ -12,7 +12,7 @@ export const TimestampScalarType = new GraphQLScalarType({
     description: 'Date format W3C',
 
     parseValue(value: string) {
-        return DateTime.fromSQL(value);
+        return DateTime.fromSQL(value)
     },
     serialize(value: DateTime) {
         if (!(value instanceof DateTime)) {
@@ -27,3 +27,5 @@ export const TimestampScalarType = new GraphQLScalarType({
         return null;
     },
 });
+
+export const Timestamp = TimestampScalarType;

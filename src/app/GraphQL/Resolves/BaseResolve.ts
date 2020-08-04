@@ -1,15 +1,8 @@
-import {SortByCriteria} from "../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import {Args, Ctx, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {UserType} from "../Types/User/UserType";
-import {Filter} from "../Middleware/Filter";
-import {UserIndexArgsType} from "../Types/User/UserIndexArgsType";
-import {SelectFields} from "../../../decorators/SelectFields";
-import {paginateType} from "../Types/PaginateType";
-import {UserListArgsType} from "../Types/User/UserListArgsType";
-import {IPaginateType} from "../../../Contracts/IPaginateType";
+import {Resolver} from "@tngraphql/graphql";
+import {UserModel} from "../../UserModel";
+import {ResolveAuth} from "../../../decorators/ResolveAuth";
+import {AuthorizationException, Guard} from "@tngraphql/guard/dist/src";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -21,4 +14,15 @@ import {IPaginateType} from "../../../Contracts/IPaginateType";
 @Resolver()
 export class BaseResolve {
     public repo: BaseRepository;
+
+    @ResolveAuth()
+    public user: UserModel;
+
+    public async authorize(ability, args = {}) {
+        const guard = Guard.setDefaultUser(this.user);
+
+        if (!await guard.allows(ability, args as any, this.user)) {
+            throw new AuthorizationException('This action is unauthorized.');
+        }
+    }
 }

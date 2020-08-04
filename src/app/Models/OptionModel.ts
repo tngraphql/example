@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 
@@ -8,11 +7,14 @@ export default class OptionModel extends BaseModel {
     @column({ isPrimary: true })
     public id: number
 
-    @column.dateTime({ autoCreate: true })
-    public createdAt: DateTime
+    @column()
+    public name: string;
 
-    @column.dateTime({ autoCreate: true, autoUpdate: true })
-    public updatedAt: DateTime
+    @column()
+    public value: string;
 
-    public static $columns: Pick<OptionModel, 'id' | 'createdAt' | 'updatedAt'>
+    @column()
+    public autoload: string;
+
+    public static $columns: Pick<OptionModel, 'id' | 'name' | 'value' | 'autoload'>
 }

@@ -12,6 +12,7 @@ import {IReadRepository} from "../Contracts/IReadRepository";
 import {IWriteRepository} from "../Contracts/IWriteRepository";
 import {tap} from "../../lib/utils";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
+import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 
 export abstract class BaseRepository<T extends LucidRow = LucidRow> implements IReadRepository, IWriteRepository{
     abstract model(): LucidModel;
@@ -32,8 +33,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
     protected preventCriteriaOverwriting: boolean = true;
 
     public async transaction(callback): Promise<any> {
-        const client = this.model().$adapter.modelConstructorClient(this.model(), {});
-        return client.transaction(callback);
+        return Database.transaction(callback);
     }
 
     public newQuery(): ModelQueryBuilderContract<LucidModel, T> {
@@ -147,7 +147,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
     }
 
     public async update(data: Partial<ModelAttributes<T>>, value: any, attribute: string = this.getKeyName()): Promise<T> {
-        const query = this.model().query();
+        const query = this.newQuery();
 
         return tap(await query.where(attribute, '=', value).firstOrFail(), async (value: LucidRow) => {
             value.merge(data);

@@ -63,7 +63,7 @@ export class ExampleResolve {
 
     @Mutation(returns => GraphQLString)
     async login(@Ctx() {name}) {
-        return (await UserModel.query().first()).createToken('new', ['viewUser']);
+        return (await UserModel.find(2)).createToken('new', ['viewUser']);
     }
 
     @Query()

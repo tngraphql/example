@@ -13,7 +13,7 @@ import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
 import RoleModel from "../../src/app/Models/RoleModel";
-import {ROLE_LIST_QUERY, ROLE_QUERY} from "./queries/role-query";
+import {ROLE_LIST_QUERY, ROLE_QUERY} from "./gql/role-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
 

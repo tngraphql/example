@@ -66,6 +66,11 @@ export class FilterCriteria extends Criteria {
 
         if (typeof filter.field === 'function') {
             const field = filter.field(value, filter.operator);
+
+            if (typeof field === "string" && field.includes('.')) {
+                return query[method](this.queryHas(field, filter.operator, value));
+            }
+
             if (typeof field === 'string') {
                 return query[method](builder => builder.whereRaw(field));
             }
@@ -77,7 +82,22 @@ export class FilterCriteria extends Criteria {
             return query[method](field.field, filter.operator, field.value);
         }
 
+        if (typeof filter.field === "string" && filter.field.includes('.')) {
+            return query[method](this.queryHas(filter.field, filter.operator, value));
+        }
+
         return query[method](filter.field, filter.operator, value);
+    }
+
+    protected static queryHas(field, op, value) {
+        return query => {
+            const relations = field.split('.');
+            const fieldName = relations.pop();
+
+            query.whereHas(relations.join('.'), query => {
+                query.where(query.qualifyColumn(fieldName), op, value);
+            });
+        }
     }
 
     protected static toStr(value: any[]) {

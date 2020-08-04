@@ -12,7 +12,7 @@ const { gql } = require('apollo-server');
 import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
-import {TAG_LIST_QUERY, TAG_QUERY} from "./queries/tag-query";
+import {TAG_LIST_QUERY, TAG_QUERY} from "./gql/tag-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 import TagModel from "../../src/app/Features/Tag/TagModel";
 

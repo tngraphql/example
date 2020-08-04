@@ -48,15 +48,19 @@ export class ContactResolve extends BaseResolve {
 
     @Mutation(returns => ContactType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(ContactCreateArgsType)
-    async create(@Args() args: ContactCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: ContactCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => ContactType)
     @ValidateArgs(ContactUpdateArgsType)
     @UseMiddleware('auth')
-    async update(@Args() args: ContactUpdateArgsType) {
-        return this.repo.update(args, args.id);
+    async update(@Args() args: ContactUpdateArgsType, @SelectFields() fields) {
+        const updated = await this.repo.update(args, args.id);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(updated.id);
     }
 
     @Mutation(returns => DeleteType)

@@ -21,6 +21,8 @@ import {TagListArgsType} from "../Types/TagListArgsType";
 import {TagCreateArgsType} from "../Types/TagCreateArgsType";
 import {TagDeleteArgsType} from "../Types/TagDeleteArgsType";
 import {TagUpdateArgsType} from "../Types/TagUpdateArgsType";
+import {CategoryUpdateArgsType} from "../../Category/Types/CategoryUpdateArgsType";
+import {CategoryCreateArgsType} from "../../Category/Types/CategoryCreateArgsType";
 
 @Resolver()
 export class TagResolve extends BaseResolve {
@@ -49,15 +51,19 @@ export class TagResolve extends BaseResolve {
     @Mutation(returns => TagType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(TagCreateArgsType)
     @UseMiddleware('auth')
-    async create(@Args() args: TagCreateArgsType) {
-        return this.repo.create(args);
+    async create(@Args() args: TagCreateArgsType, @SelectFields() fields) {
+        const created = await this.repo.create(args);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(created.id);
     }
 
     @Mutation(returns => TagType)
     @ValidateArgs(TagUpdateArgsType)
     @UseMiddleware('auth')
-    async update(@Args() args: TagUpdateArgsType) {
-        return this.repo.update(args, args.id);
+    async update(@Args() args: TagUpdateArgsType, @SelectFields() fields) {
+        const category = await this.repo.update(args, args.id);
+        this.repo.pushCriteria(new SelectionCriteria(fields));
+        return this.repo.firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "cross-env DEBUG=.. DB_NAME=test nyc --reporter=lcov --reporter=text mocha -r ts-node/register --exit",
     "dev": "ts-node-dev src/index.ts",
-    "ace": "ts-node ace"
+    "ace": "ts-node ace",
+    "gulp dev": "rimraf dist && gulp -f ./gulpfile.dev.js",
+    "build": "rimraf dist && gulp"
   },
   "author": "",
   "license": "ISC",
@@ -15,22 +17,25 @@
     "@adonisjs/profiler": "^2.0.0",
     "@tngraphql/auth": "^1.0.1",
     "@tngraphql/console": "^1.0.0",
-    "@tngraphql/graphql": "^1.0.4-2-alpha",
+    "@tngraphql/graphql": "^1.0.4",
     "@tngraphql/guard": "^1.0.1",
     "@tngraphql/illuminate": "^1.1.7-11-alpha",
-    "@tngraphql/lucid": "^1.0.14",
+    "@tngraphql/lucid": "^1.0.18",
     "@tngraphql/mail": "^1.0.15-alpha",
     "@tngraphql/route": "^1.0.0",
     "@tngraphql/slugify": "^1.0.5",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "continuation-local-storage": "^3.2.1",
+    "himalaya": "^1.1.0",
+    "html-to-text": "^5.1.1",
     "i18n": "^0.8.6",
     "luxon": "^1.24.1",
     "macroable": "^4.0.2",
     "mysql": "^2.18.1",
     "pino-pretty": "^4.0.0",
-    "validatorjs": "^3.18.1"
+    "validatorjs": "^3.18.1",
+    "xss": "^1.0.7"
   },
   "devDependencies": {
     "@types/chai-as-promised": "^7.1.2",
@@ -44,6 +49,8 @@
     "express": "^4.17.1",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
+    "gulp": "4",
+    "gulp-typescript": "^5.0.1",
     "mocha": "^7.1.2",
     "mssql": "^6.2.0",
     "nodemailer": "^6.4.6",

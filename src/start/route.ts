@@ -39,6 +39,16 @@ Route.mutation('login', 'ExampleResolve.login')
 //     Route.query('favoritesUser', 'FavoriteResolve.favoritesUser')
 // })['modules']('Favorite');
 
+// Route.group(() => {
+//     Route.resource('category', 'CategoryResolve');
+// })['modules']('Category');
+
 Route.group(() => {
-    Route.resource('category', 'CategoryResolve');
-})['modules']('Category');
+    Route.resource('post', 'PostResolve');
+})['modules']('Post');
+
+// Route.group(() => {
+//     Route.resource('comment', 'CommentResolve');
+//     Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
+//     Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
+// })['modules']('Comment');

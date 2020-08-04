@@ -12,7 +12,7 @@ const { gql } = require('apollo-server');
 import {expect} from "chai";
 import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
-import {FAVORITE_LIST_QUERY, FAVORITE_QUERY, FAVORITE_LIST_FOR_USER_QUERY} from "./queries/favorite-query";
+import {FAVORITE_LIST_QUERY, FAVORITE_QUERY, FAVORITE_LIST_FOR_USER_QUERY} from "./gql/favorite-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
 import FavoriteModel from "../../src/app/Features/Favorite/FavoriteModel";
 import ContactReplyModel from "../../src/app/Features/Contact/ContactReplyModel";

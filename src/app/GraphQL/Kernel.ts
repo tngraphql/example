@@ -14,6 +14,7 @@ import {Authenticate} from "@tngraphql/auth/dist/src/Middleware/Authenticate";
 import {CanMiddleware} from "@tngraphql/guard/dist/src/Middleware/CanMiddleware";
 import {SortByMiddleware} from "./Middleware/SortByMiddleware";
 import {LanguageMiddleware} from "./Middleware/LanguageMiddleware";
+import {ConfigOptionsMiddleware} from "./Middleware/ConfigOptionsMiddleware";
 
 @Service()
 export class Kernel extends GraphQLKernel {
@@ -22,7 +23,8 @@ export class Kernel extends GraphQLKernel {
      */
     protected middleware = [
         SortByMiddleware,
-        LanguageMiddleware
+        LanguageMiddleware,
+        ConfigOptionsMiddleware
     ];
 
     /**

@@ -211,7 +211,7 @@ INSERT INTO \`options\` VALUES (51, 'githubClientSecret', '', 'yes');
 INSERT INTO \`options\` VALUES (52, 'githubScopes', '', 'yes');
 INSERT INTO \`options\` VALUES (53, 'githubRedirectURL', '', 'yes');
 INSERT INTO \`options\` VALUES (54, 'autoRegister', '1', 'yes');
-INSERT INTO \`options\` VALUES (55, 'autoRegisterDisabledMessage', 'Registration is disabled for this website. Please contact the administrator for any queries.', 'yes');
+INSERT INTO \`options\` VALUES (55, 'autoRegisterDisabledMessage', 'Registration is disabled for this website. Please contact the administrator for any gql.', 'yes');
 INSERT INTO \`options\` VALUES (56, 'socialRegisterRole', '3', 'yes');
 `;
         await Promise.all(data.split(';').filter(x => !!x.trim()).map(value => {
