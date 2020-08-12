@@ -51,7 +51,7 @@ export class CategoryRepository extends BaseRepository<CategoryModel> {
         let category = typeof id === "string" ? null : id;
 
         if ( categoryId === '1') {
-            throw new Error('Bạn không thể xóa danh mục này.');
+            throw new Error('Bạn không thể xóa chuyên mục này.');
         }
 
         return this.transaction(async () => {
