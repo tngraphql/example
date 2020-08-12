@@ -73,6 +73,10 @@ export function getField(fields, model: LucidModel): ISelection {
 
                 result.push(relation.localKey);
 
+                if (['belongsTo'].includes(relation.type)) {
+                    result.push(relation.foreignKey);
+                }
+
                 preloads.push({
                     name: field
                 });
@@ -83,6 +87,9 @@ export function getField(fields, model: LucidModel): ISelection {
 
                 const relatedModel = relation.relatedModel();
                 result.push(relation.localKey);
+                if (['belongsTo'].includes(relation.type)) {
+                    result.push(relation.foreignKey);
+                }
 
                 preloads.push({
                     name: field,
