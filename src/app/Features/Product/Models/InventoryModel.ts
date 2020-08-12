@@ -18,7 +18,7 @@ export class InventoryModel extends BaseModel {
     @column({consume: value => String(value)})
     public productBranchId: string;
 
-    @column()
+    @column({defaultValue: 0})
     public quantity: number;
 
     @column()

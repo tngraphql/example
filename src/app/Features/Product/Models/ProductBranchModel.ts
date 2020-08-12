@@ -12,6 +12,7 @@ import {HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relation
 import {ProductBranchToAttributeModel} from "./ProductBranchToAttributeModel";
 import {ProductImageModel} from "./ProductImageModel";
 import {InventoryModel} from "./InventoryModel";
+import {converBoolean} from "../../../../lib/utils";
 
 export class ProductBranchModel extends BaseModel {
     public static table = 'product_branch';
@@ -25,7 +26,10 @@ export class ProductBranchModel extends BaseModel {
     @column()
     public code: string;
 
-    @column()
+    @column({
+        prepare: value => converBoolean(value, 2, 1),
+        consume: value => Number(value) === 2
+    })
     public isMaster: boolean;
 
     @column()

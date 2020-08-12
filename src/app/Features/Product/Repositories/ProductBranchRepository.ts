@@ -14,12 +14,16 @@ import Arr from "../../../../lib/Arr";
 import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 import {ProductBranchToAttributeModel} from "../Models/ProductBranchToAttributeModel";
 import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
+import {ProductImageRepository} from "./ProductImageRepository";
 
 @Service()
 export class ProductBranchRepository extends BaseRepository<ProductBranchModel> {
 
     @Inject(type => ProductBranchToAttributeRepository)
-    protected productBranchToAttribute: ProductBranchToAttributeRepository
+    protected productBranchToAttribute: ProductBranchToAttributeRepository;
+
+    @Inject(type => ProductImageRepository)
+    protected productImage: ProductImageRepository
 
     public model(): LucidModel {
         return ProductBranchModel;
@@ -77,8 +81,15 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
     async create(data: any): Promise<ProductBranchModel> {
         const instance = await super.create(data);
 
+        await this.productBranchToAttribute.sync(data.attributes, instance);
 
-        await this.productBranchToAttribute.listAsync(data.attributes, instance);
+        //
+        await this.productImage.sync(data.images, instance)
+        //
+        await instance.related('inventory').create({
+            ...data.inventory,
+            productMasterId: instance.productMasterId
+        });
 
         return instance;
     }
