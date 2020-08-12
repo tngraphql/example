@@ -391,10 +391,10 @@
     smpltmpl "^1.0.2"
     snake-case "^3.0.3"
 
-"@tngraphql/graphql@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@tngraphql/graphql/-/graphql-1.0.4.tgz#a9a1723236d323a1a2cab36753f5688df250f59c"
-  integrity sha512-ChhjjOv4YGFeRQvUdL7BZPMtubFMDXKJli8k+jwgfDrR3QHqeCHVro7i/0/BO0M9RETW+kONYsi5+qHwAVomBg==
+"@tngraphql/graphql@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@tngraphql/graphql/-/graphql-1.0.6.tgz#2432924e962f53f2ff7b6e2607bf75253561980c"
+  integrity sha512-iL2Opl1v2xIbCQmVrDzfx2RZhKLf+CzReoVLbG/+c8UBeh3QcB9x4Ut9Wjb7YThnFmEupmf8HqZYnxaEAxuseQ==
   dependencies:
     "@poppinss/dev-utils" "^1.0.4"
     "@poppinss/utils" "^2.1.2"
@@ -416,10 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.7-11-alpha":
-  version "1.1.7-11-alpha"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.7-11-alpha.tgz#2c8e38ab56f54c8bfd67df201603013673063a83"
-  integrity sha512-IukkPzMUKx9aTvddi00uluU/husz846muBomE3acx0QldJARhiTPNvhGgoEgosM9eSvMCSeGPmjga6v0MJpgDg==
+"@tngraphql/illuminate@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.8.tgz#78b4c3ff10c2c2ab4e5848abe400b08af351d111"
+  integrity sha512-+Dm3LfmQ6d0PzKt73IfsXg9R/D1BtRh17ZGcCHdlvstPuBcRQIt92+D15VeKGSjcwAbv7v335JUHXStFobECGQ==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"

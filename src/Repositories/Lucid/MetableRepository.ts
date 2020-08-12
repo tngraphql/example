@@ -5,6 +5,7 @@ import * as util from "util";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel/BaseModel";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
+import {LucidRow} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -14,7 +15,7 @@ import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
  */
 
 @Service()
-export class MetableRepository extends BaseRepository<RoleModel> {
+export class MetableRepository<T extends LucidRow = LucidRow> extends BaseRepository<T> {
     protected instanceKey = 'categoryId';
 
     public model(): LucidModel {

@@ -1244,12 +1244,11 @@ describe('category Http', () => {
     });
 
     describe('category Http | create', () => {
-        describe('category Http | create', () => {
-            it('create category', async () => {
-                authContext(await UserModel.first());
+        it('create category', async () => {
+            authContext(await UserModel.first());
 
-                const res = await client.mutate({
-                    mutation: `mutation categoryCreate(
+            const res = await client.mutate({
+                mutation: `mutation categoryCreate(
                       $name: String
                       $slug: String
                       $description: String
@@ -1284,20 +1283,19 @@ describe('category Http', () => {
                         }
                       }
                     }`,
-                    variables: {
-                        name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
-                        meta: { metaKey: "assaf", metaValue: "asfsf" }
-                    }
-                });
-
-                expect(res.errors).to.be.undefined;
-                expect(res.data.categoryCreate.slug).to.be.eq('de-xac-minh-cai-dat-thanh-cong-ban-thuc-hien-cac-buoc-sau');
-                expect(res.data.categoryCreate.languageMaster).to.be.eq(res.data.categoryCreate.id);
-                expect(res.data.categoryCreate.parentId).to.be.eq('0');
-                expect(res.data.categoryCreate.meta).to.be.length(1);
-
+                variables: {
+                    name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
+                    meta: { metaKey: "assaf", metaValue: "asfsf" }
+                }
             });
-        })
+
+            expect(res.errors).to.be.undefined;
+            expect(res.data.categoryCreate.slug).to.be.eq('de-xac-minh-cai-dat-thanh-cong-ban-thuc-hien-cac-buoc-sau');
+            expect(res.data.categoryCreate.languageMaster).to.be.eq(res.data.categoryCreate.id);
+            expect(res.data.categoryCreate.parentId).to.be.eq('0');
+            expect(res.data.categoryCreate.meta).to.be.length(1);
+
+        });
     });
 
     describe('category Http | update', () => {

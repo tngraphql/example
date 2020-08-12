@@ -34,7 +34,7 @@ export class MetaType {
                     try {
                         djson = JSON.parse(data);
                     } catch (e) {
-                        console.log(e);
+                        // console.log(e);
                     }
 
                     return { guid, data: djson, title, thumbnailId: value.thumbnailId };

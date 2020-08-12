@@ -3,8 +3,43 @@ import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 
 export default class MediaModel extends BaseModel {
-    @column({ isPrimary: true })
-    public id: number
+    static table = 'media';
+
+    @column({ isPrimary: true, consume: value => String(value) })
+    public id: string
+
+    @column()
+    public status: string;
+
+    @column()
+    public title: string;
+
+    @column()
+    public folderName: string;
+
+    @column()
+    public guid: string;
+
+    @column()
+    public src: string;
+
+    @column()
+    public srcMd5: string;
+
+    @column()
+    public rootId: string;
+
+    @column()
+    public filesize: string;
+
+    @column()
+    public mineType: string;
+
+    @column()
+    public data: string;
+
+    @column({columnName: 'data'})
+    public thumbnail: string;
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
@@ -12,5 +47,5 @@ export default class MediaModel extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
-    public static $columns: Pick<MediaModel, 'id' | 'createdAt' | 'updatedAt'>
+    public static $columns: Pick<MediaModel, 'id' | 'status' | 'title' | 'folderName' | 'guid' | 'src' | 'srcMd5' | 'rootId' | 'filesize' | 'mineType' | 'data' | 'createdAt' | 'updatedAt'>
 }
