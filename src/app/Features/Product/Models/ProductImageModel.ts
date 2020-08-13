@@ -5,10 +5,10 @@
  * Time: 9:32 AM
  */
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {belongsTo, column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import MediaModel from "../../../Models/MediaModel";
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import {BelongsTo, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {Str} from "../../../../lib/Str";
 
 export class ProductImageModel extends BaseModel {
@@ -38,8 +38,8 @@ export class ProductImageModel extends BaseModel {
     @column.dateTime({autoCreate: true, autoUpdate: true})
     public updatedAt: DateTime;
 
-    @hasOne(() => MediaModel, {
+    @belongsTo(() => MediaModel, {
         foreignKey: 'thumbnailId',
     })
-    public thumbnail: HasOne<typeof MediaModel>
+    public thumbnail: BelongsTo<typeof MediaModel>
 }

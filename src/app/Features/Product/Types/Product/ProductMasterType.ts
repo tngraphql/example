@@ -131,8 +131,8 @@ export class ProductMasterType {
     public branches: string;
 
     //todo chưa có attribute
-    @Field()
-    public attributeGroups: string;
+    @Field(returns => [ProductBranchType], {description: 'Các thuộc tính sản phẩm'})
+    public attributeGroups: ProductBranchType[];
 
     @Field(returns => [ProductMasterMetaType], {description: 'Trường tùy chỉnh.'})
     public meta: ProductMasterMetaType[];

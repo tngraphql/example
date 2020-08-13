@@ -5,10 +5,10 @@
  * Time: 9:27 AM
  */
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasMany, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {belongsTo, column, hasMany, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import {ProductMasterModel} from "./ProductMasterModel";
-import {HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import {BelongsTo, HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {ProductBranchToAttributeModel} from "./ProductBranchToAttributeModel";
 import {ProductImageModel} from "./ProductImageModel";
 import {InventoryModel} from "./InventoryModel";
@@ -93,8 +93,8 @@ export class ProductBranchModel extends BaseModel {
     @column.dateTime()
     public deletedAt: DateTime;
 
-    @hasOne(() => ProductMasterModel)
-    public master: HasOne<typeof ProductMasterModel>
+    @belongsTo(() => ProductMasterModel)
+    public master: BelongsTo<typeof ProductMasterModel>
 
     @hasMany(() => ProductBranchModel, {foreignKey: 'productMasterId', localKey: 'productMasterId'})
     public branches: HasMany<typeof ProductBranchModel>
@@ -104,7 +104,7 @@ export class ProductBranchModel extends BaseModel {
         localKey: 'productMasterId',
         onQuery(query) {
             query.groupBy('productMasterId')
-            query.count('* as total');
+            query.selectRaw('COUNT(*) as total');
         }
     })
     public branchCount: any;
