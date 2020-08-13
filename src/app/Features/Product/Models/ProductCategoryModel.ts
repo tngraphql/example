@@ -6,13 +6,14 @@
  */
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {Str} from "../../../../lib/Str";
 
 export class ProductCategoryModel extends BaseModel {
     public static table = 'product_category';
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productMasterId: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public categoryId: string;
 }

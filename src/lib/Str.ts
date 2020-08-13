@@ -24,4 +24,11 @@ export class Str {
     public static ucFirst(str: string): string {
         return str.replace(/^\w/, (c) => c.toUpperCase());
     }
+
+    public static toString(val) {
+        if (val === null || typeof val === "undefined") {
+            return val;
+        }
+        return String(val);
+    }
 }

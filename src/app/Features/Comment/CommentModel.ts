@@ -7,6 +7,7 @@ import {BelongsTo, HasOne, MorphOne, MorphTo} from "@tngraphql/lucid/build/src/C
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 import {PostModel} from "../Post/PostModel";
 import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
+import {Str} from "../../../lib/Str";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -18,7 +19,7 @@ import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
 export default class CommentModel extends BaseModel {
     public static table = 'comments';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string
 
     @column()
@@ -33,10 +34,10 @@ export default class CommentModel extends BaseModel {
     @column()
     public authorIp: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public authorId: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public parentId: string;
 
     @column()
@@ -48,7 +49,7 @@ export default class CommentModel extends BaseModel {
     @column()
     public commentableType: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public commentableId: string;
 
     @column.dateTime()

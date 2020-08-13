@@ -16,12 +16,13 @@ import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 import PostmetaModel from "./PostmetaModel";
 import {LanguageMixin} from "../../../lib/LanguageMixin";
 import {converBoolean} from "../../../lib/utils";
+import {Str} from "../../../lib/Str";
 
 
 class PostModel extends BaseModel {
     public static table = 'posts';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
@@ -39,10 +40,10 @@ class PostModel extends BaseModel {
     @column()
     public name: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public authorId: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public parentId: string;
 
     @column()
@@ -78,10 +79,10 @@ class PostModel extends BaseModel {
     @column()
     public seoKeyword: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public language: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public languageMaster: string;
 
     @column.dateTime()
@@ -133,7 +134,7 @@ class PostModel extends BaseModel {
     })
     public meta: HasMany<typeof PostmetaModel>
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public thumbnailId: string;
 
     public thumbnail;

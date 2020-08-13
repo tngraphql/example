@@ -7,15 +7,16 @@
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
+import {Str} from "../../../../lib/Str";
 
 export class InventoryModel extends BaseModel {
     public static table = 'inventories';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public productMasterId: string;
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public productBranchId: string;
 
     @column({defaultValue: 0})

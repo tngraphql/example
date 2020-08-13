@@ -19,6 +19,8 @@ import FavoriteModel from "../../Features/Favorite/FavoriteModel";
 import CategoryModel from "../../Features/Category/CategoryModel";
 import {PostModel} from "../../Features/Post/PostModel";
 import CommentModel from "../../Features/Comment/CommentModel";
+import {ProductTypeModel} from "../../Features/Product/Models/ProductTypeModel";
+import {ProductVendorModel} from "../../Features/Product/Models/ProductVendorModel";
 
 export class TestHttpMake extends GeneratorCommand {
     protected getStub(): string {
@@ -47,10 +49,10 @@ export class TestHttpMake extends GeneratorCommand {
         const validate = Object.entries(ruleToString(compileRules(instance)));
 
         await this.generateFile('./tests/functional', {
-            model: 'CommentModel',
-            queryName: 'comment',
-            name: 'comment',
-            attributes: Array.from(CommentModel.$columnsDefinitions.keys())
+            model: 'ProductVendorModel',
+            queryName: 'productVendor',
+            name: 'productVendor',
+            attributes: Array.from(ProductVendorModel.$columnsDefinitions.keys())
                 .filter(x => !['createdAt', 'updatedAt', 'deletedAt'].includes(x)),
             create: {
                 validate

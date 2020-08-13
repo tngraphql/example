@@ -13,11 +13,12 @@ import {ProductBranchToAttributeModel} from "./ProductBranchToAttributeModel";
 import {ProductImageModel} from "./ProductImageModel";
 import {InventoryModel} from "./InventoryModel";
 import {converBoolean} from "../../../../lib/utils";
+import {Str} from "../../../../lib/Str";
 
 export class ProductBranchModel extends BaseModel {
     public static table = 'product_branch';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
@@ -27,10 +28,10 @@ export class ProductBranchModel extends BaseModel {
     public code: string;
 
     @column({
-        prepare: value => converBoolean(value, 2, 1),
-        consume: value => Number(value) === 2
+        // prepare: value => converBoolean(value, 2, 1),
+        // consume: value => Number(value) === 2
     })
-    public isMaster: boolean;
+    public isMaster: number;
 
     @column()
     public fullname: string;
@@ -41,13 +42,13 @@ export class ProductBranchModel extends BaseModel {
     @column()
     public unitName: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productMasterId: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productTypeId: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productVendorId: string;
 
     @column()

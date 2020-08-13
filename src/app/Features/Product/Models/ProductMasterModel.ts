@@ -28,11 +28,12 @@ import {ProductBranchModel} from "./ProductBranchModel";
 import TagModel from "../../Tag/TagModel";
 import {ProductTagModel} from "./ProductTagModel";
 import {ProductCategoryModel} from "./ProductCategoryModel";
+import {Str} from "../../../../lib/Str";
 
 export class ProductMasterModel extends BaseModel {
     public static table = 'product_master';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
@@ -44,7 +45,7 @@ export class ProductMasterModel extends BaseModel {
     @column()
     public avatar: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public thumbnailId: string;
 
     @column()
@@ -71,10 +72,10 @@ export class ProductMasterModel extends BaseModel {
     @column()
     public content: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productTypeId: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productVendorId: string;
 
     @column.dateTime({autoCreate: true})

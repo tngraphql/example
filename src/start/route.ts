@@ -43,12 +43,24 @@ Route.mutation('login', 'ExampleResolve.login')
 //     Route.resource('category', 'CategoryResolve');
 // })['modules']('Category');
 
-Route.group(() => {
-    Route.resource('post', 'PostResolve');
-})['modules']('Post');
+// Route.group(() => {
+//     Route.resource('post', 'PostResolve');
+// })['modules']('Post');
 
 // Route.group(() => {
 //     Route.resource('comment', 'CommentResolve');
 //     Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
 //     Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
 // })['modules']('Comment');
+
+Route.group(() => {
+    // Route.resource('productType', 'ProductTypeResolve');
+    // Route.resource('productVendor', 'ProductVendorResolve');
+    Route.query('product_master', 'ProductMasterResolve.index');
+    Route.mutation('productCreate', 'ProductMasterResolve.create');
+    Route.mutation('productUpdate', 'ProductMasterResolve.update');
+    Route.mutation('productDelete', 'ProductMasterResolve.delete');
+    Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
+    // Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
+    // Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
+})['modules']('Product');

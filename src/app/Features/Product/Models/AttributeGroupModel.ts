@@ -8,11 +8,12 @@ import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
+import {Str} from "../../../../lib/Str";
 
 export class AttributeGroupModel extends BaseModel {
     public static table = 'attribute_group';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()

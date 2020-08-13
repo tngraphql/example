@@ -14,11 +14,12 @@ import {ProductCategoryModel} from "./ProductCategoryModel";
 import {HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {ProductTypeMetaModel} from "./ProductTypeMetaModel";
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
+import {Str} from "../../../../lib/Str";
 
 export class ProductTypeModel extends BaseModel {
     public static table = 'product_types';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
@@ -27,7 +28,7 @@ export class ProductTypeModel extends BaseModel {
     @column()
     public description: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public parentId: string;
 
     @column()
@@ -36,10 +37,10 @@ export class ProductTypeModel extends BaseModel {
     @column()
     public categoryOrder: number;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public language: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public languageMaster: string;
 
     @column()

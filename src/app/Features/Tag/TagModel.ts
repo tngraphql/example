@@ -2,11 +2,12 @@ import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 import {Sluggable} from "@tngraphql/slugify";
+import {Str} from "../../../lib/Str";
 
 export default class TagModel extends BaseModel {
     public static table = 'tags';
 
-    @column({ isPrimary: true, consume: value => String(value) })
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string
 
     @column()

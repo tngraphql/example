@@ -1,5 +1,6 @@
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
+import {Str} from "../../../lib/Str";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -11,10 +12,10 @@ import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
 export default class PostmetaModel extends BaseModel {
     public static table = 'postmeta';
 
-    @column({ isPrimary: true, consume: value => String(value) })
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public postId: string;
 
     @column()

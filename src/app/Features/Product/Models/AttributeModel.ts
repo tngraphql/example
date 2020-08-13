@@ -7,17 +7,18 @@
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
+import {Str} from "../../../../lib/Str";
 
 export class AttributeModel extends BaseModel {
     public static table = 'attributes';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
     public name: string;
 
-    @column({consume: value => String(value)})
+    @column({consume: value => Str.toString(value)})
     public attributeGroupId: string;
 
     @column.dateTime({autoCreate: true})

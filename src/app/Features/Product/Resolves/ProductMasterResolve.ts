@@ -23,6 +23,7 @@ import {ProductTypeUpdateArgsType} from "../Types/ProductType/ProductTypeUpdateA
 import {ProductMasterRepository} from "../Repositories/ProductMasterRepository";
 import {ProductMasterType} from "../Types/Product/ProductMasterType";
 import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
+import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
 
 @Resolver()
 export class ProductMasterResolve extends BaseResolve {
@@ -59,9 +60,9 @@ export class ProductMasterResolve extends BaseResolve {
     }
 
     @Mutation(returns => ProductTypeType)
-    @ValidateArgs(ProductTypeUpdateArgsType)
-    @UseMiddleware('auth')
-    async update(@Args() args: ProductTypeUpdateArgsType, @SelectFields() fields) {
+    @ValidateArgs(ProductUpdateArgsType)
+    // @UseMiddleware('auth')
+    async update(@Args() args: ProductUpdateArgsType, @SelectFields() fields) {
         const category = await this.repo.update(args as any, args.id);
         this.repo.pushCriteria(new SelectionCriteria(fields));
         return this.repo.firstBy(category.id);

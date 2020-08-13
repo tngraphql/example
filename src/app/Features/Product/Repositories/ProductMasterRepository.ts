@@ -84,7 +84,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
 
         await this.meta.sync(data.meta, instance);
 
-        await this.productBranch.listSync(data.branches, instance);
+        await this.productBranch.sync(data.branches, instance);
 
         return instance;
     }
@@ -107,7 +107,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
 
         await this.meta.sync(data.meta, instance);
 
-        await this.productBranch.listSync(data.branches, instance);
+        await this.productBranch.sync(data.branches, instance);
 
         return instance;
     }
@@ -116,6 +116,22 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
         return this.transaction(async () => {
             const instance = await super.create(data);
 
+
+            return instance;
+        });
+    }
+
+    async update(data: any, value: any, attribute: string = this.getKeyName()): Promise<ProductMasterModel> {
+        return this.transaction(async () => {
+            const instance = await super.update(data, value, attribute);
+
+            await instance.related('categories').sync(Arr.wrap(data.categories || []));
+
+            await instance.related('tags').sync(await this.tag.upsert(Arr.wrap(data.tags || [])));
+
+            await this.meta.sync(data.meta, instance);
+
+            await this.productBranch.sync(data.branches, instance);
 
             return instance;
         });

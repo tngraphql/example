@@ -4,11 +4,12 @@ import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 import {ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import PermissionModel from "./PermissionModel";
 import PermissionRoleModel from "./PermissionRoleModel";
+import {Str} from "../../lib/Str";
 
 export default class RoleModel extends BaseModel {
     public static table = 'roles';
 
-    @column({ isPrimary: true, consume: value => String(value) })
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string
 
     @column()

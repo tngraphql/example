@@ -9,23 +9,24 @@ import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import MediaModel from "../../../Models/MediaModel";
 import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import {Str} from "../../../../lib/Str";
 
 export class ProductImageModel extends BaseModel {
     public static table = 'product_image';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productMasterId?: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public productBranchId?: string;
 
     @column()
     public image?: string;
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public thumbnailId?: string;
 
     @column()

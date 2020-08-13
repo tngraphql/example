@@ -3,6 +3,7 @@ import {column, belongsTo} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import {UserModel} from "../../UserModel";
 import {BelongsTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import {Str} from "../../../lib/Str";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -14,16 +15,16 @@ import {BelongsTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/type
 export default class FavoriteModel extends BaseModel {
     public static table = 'favorites';
 
-    @column({ isPrimary: true, consume: value => String(value) })
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public favoriteableId: string
 
     @column()
     public favoriteableType: string
 
-    @column({ consume: value => String(value) })
+    @column({ consume: value => Str.toString(value) })
     public userId: string
 
     @column.dateTime({ autoCreate: true })

@@ -13,6 +13,7 @@ import UserSocialModel from "./Models/UserSocialModel";
 import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import RoleModel from "./Models/RoleModel";
 import {DateTime} from "luxon";
+import {Str} from "../lib/Str";
 
 type GENDER = '1' | '2';
 
@@ -24,7 +25,7 @@ export enum Gender {
 export class UserModel extends Auth {
     public static table = 'users';
 
-    @column({isPrimary: true, consume: value => String(value)})
+    @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
     @column()
