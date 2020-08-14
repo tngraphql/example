@@ -13,9 +13,9 @@ export class ProductInventoryInputType {
     public quantity: number;
 
     @Field(returns => GraphQLInt, {description: 'Chính sách tồn kho'})
-    public inventoryPolicy: number
+    public inventoryPolicy?: number
 
     @Field(returns => GraphQLInt, {description: 'Quản lý số lượng tồn kho'})
-    public inventoryManagement: number
+    public inventoryManagement?: number
 
 }

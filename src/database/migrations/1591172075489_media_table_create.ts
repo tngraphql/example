@@ -15,6 +15,7 @@ export default class MediaTableCreate extends BaseSchema {
   \`root_id\` int(11) DEFAULT NULL,
   \`filesize\` int(11) DEFAULT NULL,
   \`mine_type\` varchar(128) DEFAULT NULL,
+  \`folder_name\` varchar(128) DEFAULT NULL,
   \`data\` text,
   \`created_at\` datetime NOT NULL,
   \`updated_at\` datetime NOT NULL,

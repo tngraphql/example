@@ -24,7 +24,7 @@ export default class MediaModel extends BaseModel {
     @column()
     public src: string;
 
-    @column()
+    @column({columnName: 'src_md5'})
     public srcMd5: string;
 
     @column()

@@ -15,7 +15,7 @@ import _ = require('lodash');
 import {Maybe} from "@tngraphql/graphql";
 
 @Service()
-export class ProductBranchToAttributeRepository extends BaseRepository<ProductBranchToAttributeModel> {
+export class ProductBranchToAttributeRepository extends BaseRepository<ProductBranchToAttributeModel, typeof ProductBranchToAttributeModel> {
     @Inject(type => AttributeGroupRepository)
     attributeGroup: AttributeGroupRepository;
 
@@ -34,6 +34,8 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
      */
     async dataFormat(attributes: any[], instance: ProductBranchModel) {
         return attributes.reduce(async (result, attribute) => {
+            result = await result;
+
             if ( ! attribute.groupName || ! attribute.name ) {
                 return result;
             }
@@ -53,7 +55,8 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
                     name: attr.name,
                     attributeGroupId: group.id,
                     attributeId: attr.id,
-                    productMasterId: instance.productMasterId
+                    productMasterId: instance.productMasterId,
+                    productBranchId: instance.id
                 }
             );
 
@@ -72,6 +75,17 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
             return;
         }
 
+        if (!attributes.length) {
+            return this.newQuery().where('productBranchId', instance.id)
+                .delete();
+        }
+
+        const group = Object.values(_.groupBy(attributes, 'groupName'))
+            .find(x => x.length > 1);
+        if (group) {
+            throw new Error('Attribute group for product be must unique.');
+        }
+
         attributes = attributes.filter((value, index) => {
             return value.groupName && value.name;
         });
@@ -84,7 +98,7 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
 
         const allAttributes = await this.newQuery().where('productMasterId', instance.productMasterId);
 
-        const listAttributeForBranch = allAttributes.filter(x => x.productBranchId === instance.id);
+        const listAttributeForBranch = allAttributes.filter(x => x.productBranchId === instance.id)
 
         if (allAttributes.length) {
             const allGroup = [];
@@ -100,14 +114,14 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
             }
 
             if ( data.length !== allGroup.length ) {
-                throw new ValidationError(`The attribute is invalid`);
+                throw new Error(`The attribute is invalid`);
             }
 
             for(const item of data) {
                 const index = allGroup.findIndex(x => x.attributeGroupId === item.attributeGroupId);
 
                 if( index === -1 ) {
-                    throw new ValidationError(`The attribute group [${item.groupName}] does not exists.`);
+                    throw new Error(`The attribute group [${item.groupName}] does not exists.`);
                 }
             }
         }

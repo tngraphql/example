@@ -14,14 +14,14 @@ import {tap} from "../../lib/utils";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 
-export abstract class BaseRepository<T extends LucidRow = LucidRow> implements IReadRepository, IWriteRepository{
+export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends LucidModel = LucidModel> implements IReadRepository, IWriteRepository{
     abstract model(): LucidModel;
 
     constructor() {
         this.query();
     }
 
-    public _query: ModelQueryBuilderContract<LucidModel, T>;
+    public _query: ModelQueryBuilderContract<M, T>;
 
     protected _skipCriteria: boolean = false;
 
@@ -36,8 +36,8 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow> implements I
         return Database.transaction(callback);
     }
 
-    public newQuery(): ModelQueryBuilderContract<LucidModel, T> {
-        return this.model().query();
+    public newQuery(): ModelQueryBuilderContract<M, T> {
+        return this.model().query() as any;
     }
 
     public query() {

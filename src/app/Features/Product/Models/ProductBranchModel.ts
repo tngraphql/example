@@ -28,10 +28,14 @@ export class ProductBranchModel extends BaseModel {
     public code: string;
 
     @column({
-        // prepare: value => converBoolean(value, 2, 1),
-        // consume: value => Number(value) === 2
+        prepare: value => converBoolean(value, 2, 1),
+        consume: value => Number(value) === 2
     })
-    public isMaster: number;
+    public isMaster: boolean;
+
+    public static scopeIsMaster(query, value: boolean = true) {
+        return query.where('isMaster', converBoolean(value, 2, 1));
+    }
 
     @column()
     public fullname: string;
@@ -57,8 +61,15 @@ export class ProductBranchModel extends BaseModel {
     @column()
     public priceSale: number;
 
-    @column()
-    public requiresShipping: string;
+    @column({
+        prepare: value => converBoolean(value, 2, 1),
+        consume: value => Number(value) === 2
+    })
+    public requiresShipping: boolean;
+
+    public static scopeRequiresShipping(query, value: boolean = true) {
+        return query.where('requiresShipping', converBoolean(value, 2, 1));
+    }
 
     @column()
     public hsCode: string;

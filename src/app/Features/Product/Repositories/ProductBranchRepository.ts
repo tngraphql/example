@@ -4,7 +4,7 @@
  * Date: 8/6/2020
  * Time: 8:24 PM
  */
-import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
+import {Inject, InvalidArgumentException, Service, ValidationError} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {ProductMasterModel} from "../Models/ProductMasterModel";
 import {ProductBranchModel} from "../Models/ProductBranchModel";
@@ -13,14 +13,12 @@ import {ProductMasterKindEnumType} from "../Types/Product/ProductMasterKindEnumT
 import Arr from "../../../../lib/Arr";
 import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
 import {ProductImageRepository} from "./ProductImageRepository";
-
-enum IsMaster {
-    master = 2,
-    branch = 1
-}
+import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
+import _ = require('lodash');
+import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
 
 @Service()
-export class ProductBranchRepository extends BaseRepository<ProductBranchModel> {
+export class ProductBranchRepository extends BaseRepository<ProductBranchModel, typeof ProductBranchModel> {
 
     @Inject(type => ProductBranchToAttributeRepository)
     protected productBranchToAttribute: ProductBranchToAttributeRepository;
@@ -28,7 +26,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
     @Inject(type => ProductImageRepository)
     protected productImage: ProductImageRepository
 
-    public model(): LucidModel {
+    public model(): typeof ProductBranchModel {
         return ProductBranchModel;
     }
 
@@ -49,11 +47,17 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
          * Create or update branch
          */
         for await (const branch of branches) {
+            if (productMaster.kind === ProductMasterKindEnumType.single) {
+                branch.attributes = [];
+            } else if (productMaster.kind === ProductMasterKindEnumType.branch) {
+                this.validateBranch(branch);
+            }
+
             const data = Object.assign({}, branch, {
                 productMasterId: productMaster.id,
                 productVendorId: productMaster.productVendorId,
                 productTypeId: productMaster.productTypeId,
-                isMaster: branch.isMaster === IsMaster.master ? IsMaster.master : IsMaster.branch,
+                isMaster: branch.isMaster || false,
                 fullname: this.getFullName(productMaster.name, branch.attributes)
             });
 
@@ -65,6 +69,12 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
         }
 
         return res;
+    }
+
+    protected validateBranch(branch) {
+        if (!( Array.isArray(branch.attributes) && branch.attributes.length)) {
+            throw new Error('Products type required have attributes.');
+        }
     }
 
     /**
@@ -81,29 +91,32 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
         // If not product branch
         if ( ! productBranchMaster ) {
             const branchMaster: ProductBranchModel = Arr.head(branches);
-            branchMaster.isMaster = IsMaster.master;
+            branchMaster.isMaster = true;
 
             return Promise.resolve();
         }
 
-        const branchMaster: ProductBranchModel = branches.find(x => x.id === productBranchMaster.id);
-
-        // When productBranch is master, we will set isMaster is true
-        if ( branchMaster ) {
-            branchMaster.isMaster = IsMaster.master
-        };
-
-        // When product is single then should delete all branch not is master
-        // And always update to branch master
-        if (productMaster.kind !== ProductMasterKindEnumType.single) {
+        // if product is single always update to branch master
+        if (productMaster.kind === ProductMasterKindEnumType.single) {
             const branchMaster: ProductBranchModel = Arr.head(branches);
             branchMaster.id = productBranchMaster.id;
+        }
 
-            // Detach everything except the branch is master
-            await this.newQuery()
-                .where('productMasterId', productMaster.id)
-                .where('isMaster', IsMaster.branch)
-                .delete();
+        const branchMaster: ProductBranchModel = branches.find(x => x.id === productBranchMaster.id);
+
+        // When productBranch is master, we will set isMaster is master
+        if ( branchMaster ) {
+            branchMaster.isMaster = true
+        }
+
+        const changeSingleToBranch = !branchMaster
+            && !productBranchMaster.attributes.length
+            && productMaster.kind === ProductMasterKindEnumType.branch;
+
+        if (changeSingleToBranch) {
+            const branchMaster: ProductBranchModel = Arr.head(branches);
+            branchMaster.id = productBranchMaster.id;
+            branchMaster.isMaster = true
         }
     }
 
@@ -131,7 +144,8 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
      */
     public async findMaster(productMasterId: string) {
         return super.newQuery().where('productMasterId', productMasterId)
-            .where('isMaster', IsMaster.master)
+            .isMaster(true)
+            .preload('attributes')
             .first();
     }
 
@@ -157,6 +171,8 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
 
         await this.productBranchToAttribute.sync(data.attributes, instance);
 
+        await this.validateAttribute(data.attributes, instance);
+
         //
         await this.productImage.sync(data.images, instance)
         //
@@ -166,5 +182,71 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel> 
         });
 
         return instance;
+    }
+
+    async updateNameAllBranch(productMaster: ProductMasterModel) {
+        const branches = await this.newQuery()
+            .where('productMasterId', productMaster.id)
+            .preload('attributes', query => {
+                query.preload('attribute')
+                    .preload('attributeGroup')
+            })
+            .exec();
+
+        for await (const branch of branches) {
+            const attrs = branch.attributes.map(x => ({
+                name: x.attribute.name,
+                groupName: x.attributeGroup.name
+            }));
+            branch.fullname = this.getFullName(productMaster.name, attrs);
+
+            await branch.save();
+        }
+    }
+
+    protected async validateAttribute(attributes, productBranch: ProductBranchModel): Promise<void> {
+
+        const existsAttribute = await this.existsAttribute(productBranch);
+
+        if ( existsAttribute ) {
+            throw new Error(`The variant '${ existsAttribute.map((x) => (x.attribute.name)).join(' / ') }' already exists. Please change at least one option value.`);
+        }
+    }
+
+    async existsAttribute(instance: ProductBranchModel) {
+        const productBranchId = instance.id;
+
+        let allAttribute: any = await this.productBranchToAttribute.newQuery()
+            .where('productMasterId', instance.productMasterId)
+            .preload('attribute')
+            .exec();
+
+        if ( ! allAttribute || ! allAttribute.length ) {
+            return false;
+        }
+
+        allAttribute = _.orderBy(allAttribute, ['attributeGroupId']);
+        allAttribute = _.groupBy(allAttribute, 'productBranchId');
+
+        const res = allAttribute[productBranchId];
+
+        if ( ! res ) {
+            return false;
+        }
+        const oldValue = allAttribute[productBranchId].map((item) => {
+            return _.pick(item.$attributes, ['attributeGroupId', 'attributeId']);
+        });
+
+        for( const i in allAttribute ) {
+            const newValue = allAttribute[i].map((item) => {
+                return _.pick(item.$attributes, ['attributeGroupId', 'attributeId']);
+            });
+
+            if ( String(productBranchId) !== i && _.isEqualWith(oldValue, newValue) ) {
+                return res;
+            }
+        }
+
+        return false;
     }
 }

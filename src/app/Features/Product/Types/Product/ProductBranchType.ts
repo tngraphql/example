@@ -32,9 +32,7 @@ export class ProductBranchType {
     public code: string;
 
     @Field({description: 'Là sản phẩm chính',})
-    public isMaster(@Root() parent): boolean {
-        return parent.isMaster === 2;
-    };
+    public isMaster: boolean;
 
     @Field({description: 'Tên đầy đủ'})
     public fullname: string;
@@ -79,9 +77,7 @@ export class ProductBranchType {
     public inventory: ProductInventoryType;
 
     @Field({description: 'Là sản phẩm vật lý',})
-    public requiresShipping(@Root() parent): boolean {
-        return parent.requiresShipping === 2;
-    };
+    public requiresShipping: boolean;
 
     @Field({description: 'Trọng lượng'})
     public weight: number;

@@ -15,9 +15,11 @@ import Arr from "../../../../lib/Arr";
 import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
 import {ProductMetaRepository} from "./ProductMetaRepository";
 import {ProductBranchRepository} from "./ProductBranchRepository";
+import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
+import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
 
 @Service()
-export class ProductMasterRepository extends BaseRepository<ProductMasterModel> {
+export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
     @Inject(type => TagRepository)
     protected tag: TagRepository;
 
@@ -27,7 +29,10 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
     @Inject(type => ProductBranchRepository)
     protected productBranch: ProductBranchRepository;
 
-    public model(): LucidModel {
+    @Inject(type => ProductBranchToAttributeRepository)
+    protected productBranchToAttribute: ProductBranchToAttributeRepository;
+
+    public model(): typeof ProductMasterModel {
         return ProductMasterModel;
     }
 
@@ -121,9 +126,11 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
         });
     }
 
-    async update(data: any, value: any, attribute: string = this.getKeyName()): Promise<ProductMasterModel> {
+    async update(data: ProductUpdateArgsType, value: any, attribute: string = this.getKeyName()): Promise<ProductMasterModel> {
         return this.transaction(async () => {
-            const instance = await super.update(data, value, attribute);
+            const query = this.newQuery();
+            const instance = await query.where(attribute, '=', value).firstOrFail();
+            instance.merge(data);
 
             await instance.related('categories').sync(Arr.wrap(data.categories || []));
 
@@ -131,9 +138,54 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel> 
 
             await this.meta.sync(data.meta, instance);
 
-            await this.productBranch.sync(data.branches, instance);
+            if (data.branches && data.branches.length) {
+                await this.productBranch.sync(data.branches, instance);
+            }
+
+            await this.convertKind(instance, data);
+
+            await this.productBranch.updateNameAllBranch(instance);
+
+            await instance.save();
 
             return instance;
         });
+    }
+
+    /**
+     * update muiltiple branch to single product.
+     *
+     * @param instance
+     */
+    protected async convertKind(instance, data) {
+        const changes = instance.$dirty;
+
+        if (!changes.kind) {
+            return Promise.resolve();
+        }
+
+        switch (instance.kind) {
+            /**
+             * IF change to product single
+             */
+            case ProductMasterKindEnumType.single:
+                // Detach everything except the branch is master
+                await this.productBranch.newQuery()
+                    .where('productMasterId', instance.id)
+                    .isMaster(false)
+                    .delete();
+
+                // Detach all attributes
+                await this.productBranchToAttribute.newQuery()
+                    .where('productMasterId', instance.id)
+                    .delete();
+                break;
+
+            case ProductMasterKindEnumType.branch:
+                if (!(data.branches && data.branches.length)) {
+                    throw new Error('Products type required have attributes.')
+                }
+                break;
+        }
     }
 }

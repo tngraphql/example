@@ -5,7 +5,7 @@
  * Time: 9:46 AM
  */
 
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
+import {registerEnumType} from "@tngraphql/graphql";
 
 enum ProductMasterKindEnumType {
     single = 'single',
@@ -13,6 +13,6 @@ enum ProductMasterKindEnumType {
     combo = 'combo',
 }
 
-registerFilterEnumType('ProductKind', ProductMasterKindEnumType);
+registerEnumType(ProductMasterKindEnumType, {name: 'ProductKind'});
 
 export {ProductMasterKindEnumType};

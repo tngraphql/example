@@ -50,7 +50,7 @@ export class ProductMasterResolve extends BaseResolve {
         return this.repo.query().paginate(1000, args.page);
     }
 
-    @Mutation(returns => ProductTypeType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => ProductMasterType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(ProductCreateArgsType)
     // @UseMiddleware('auth')
     async create(@Args() args: ProductCreateArgsType, @SelectFields() fields) {
@@ -59,7 +59,7 @@ export class ProductMasterResolve extends BaseResolve {
         return this.repo.firstBy(created.id);
     }
 
-    @Mutation(returns => ProductTypeType)
+    @Mutation(returns => ProductMasterType)
     @ValidateArgs(ProductUpdateArgsType)
     // @UseMiddleware('auth')
     async update(@Args() args: ProductUpdateArgsType, @SelectFields() fields) {
