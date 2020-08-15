@@ -10,7 +10,7 @@ import Arr from "../../../lib/Arr";
  */
 
 export const ValueScalarType = new GraphQLScalarType({
-    name: 'Value',
+    name: 'ValueType',
 
     description: 'String Or Number Or Many String | Number',
 

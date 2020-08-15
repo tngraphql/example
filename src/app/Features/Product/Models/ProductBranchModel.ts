@@ -14,6 +14,7 @@ import {ProductImageModel} from "./ProductImageModel";
 import {InventoryModel} from "./InventoryModel";
 import {converBoolean} from "../../../../lib/utils";
 import {Str} from "../../../../lib/Str";
+import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
 
 export class ProductBranchModel extends BaseModel {
     public static table = 'product_branch';
@@ -33,8 +34,12 @@ export class ProductBranchModel extends BaseModel {
     })
     public isMaster: boolean;
 
-    public static scopeIsMaster(query, value: boolean = true) {
-        return query.where('isMaster', converBoolean(value, 2, 1));
+    public static scopeIsMaster(query, boolean: boolean = true, operation = '=') {
+        if (typeof boolean !== "boolean") {
+            throw new Error('value for isFeatured be must boolean');
+        }
+
+        return query.where('isMaster', operation, converBoolean(boolean, 2, 1));
     }
 
     @column()
@@ -67,8 +72,12 @@ export class ProductBranchModel extends BaseModel {
     })
     public requiresShipping: boolean;
 
-    public static scopeRequiresShipping(query, value: boolean = true) {
-        return query.where('requiresShipping', converBoolean(value, 2, 1));
+    public static scopeRequiresShipping(query, boolean: boolean = true, operation = '=') {
+        if (typeof boolean !== "boolean") {
+            throw new Error('value for isFeatured be must boolean');
+        }
+
+        return query.where('requiresShipping', operation, converBoolean(boolean, 2, 1));
     }
 
     @column()
@@ -103,6 +112,10 @@ export class ProductBranchModel extends BaseModel {
 
     @column.dateTime()
     public deletedAt: DateTime;
+
+    public static boot() {
+        this.uses([SoftDeletes])
+    }
 
     @belongsTo(() => ProductMasterModel)
     public master: BelongsTo<typeof ProductMasterModel>

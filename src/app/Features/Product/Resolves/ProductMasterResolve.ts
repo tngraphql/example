@@ -24,6 +24,9 @@ import {ProductMasterRepository} from "../Repositories/ProductMasterRepository";
 import {ProductMasterType} from "../Types/Product/ProductMasterType";
 import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
 import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
+import {ProductMasterIndexArgsType} from "../Types/Product/ProductMasterIndexArgsType";
+import {ProductMasterListArgsType} from "../Types/Product/ProductMasterListArgsType";
+import {ProductMasterDeleteArgsType} from "../Types/Product/ProductMasterDeleteArgsType";
 
 @Resolver()
 export class ProductMasterResolve extends BaseResolve {
@@ -33,7 +36,7 @@ export class ProductMasterResolve extends BaseResolve {
     @Query(returns => ProductMasterType, {
         description: 'Chi tiết sản phẩm'
     })
-    async index(@Args() args: ProductTypeIndexArgsType, @SelectFields() fields) {
+    async index(@Args() args: ProductMasterIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -42,17 +45,17 @@ export class ProductMasterResolve extends BaseResolve {
     }
 
     @Query(returns => paginateType(ProductMasterType))
-    async productMasterList(@Args() args: ProductTypeListArgsType, @SelectFields() fields, @Ctx() context) {
+    async productMasterList(@Args() args: ProductMasterListArgsType, @SelectFields() fields, @Ctx() context) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().paginate(1000, args.page);
+        return this.repo.query().paginate(args.limit, args.page);
     }
 
     @Mutation(returns => ProductMasterType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(ProductCreateArgsType)
-    // @UseMiddleware('auth')
+    @UseMiddleware('auth')
     async create(@Args() args: ProductCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.builderCreate(args as any);
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -61,7 +64,7 @@ export class ProductMasterResolve extends BaseResolve {
 
     @Mutation(returns => ProductMasterType)
     @ValidateArgs(ProductUpdateArgsType)
-    // @UseMiddleware('auth')
+    @UseMiddleware('auth')
     async update(@Args() args: ProductUpdateArgsType, @SelectFields() fields) {
         const category = await this.repo.update(args as any, args.id);
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -69,9 +72,9 @@ export class ProductMasterResolve extends BaseResolve {
     }
 
     @Mutation(returns => DeleteType)
-    @ValidateArgs(ProductTypeDeleteArgsType)
+    @ValidateArgs(ProductMasterDeleteArgsType)
     @UseMiddleware('auth')
-    async delete(@Args() args: ProductTypeDeleteArgsType, @Ctx() ctx) {
+    async delete(@Args() args: ProductMasterDeleteArgsType, @Ctx() ctx) {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 }

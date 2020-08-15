@@ -545,39 +545,27 @@ describe('Product Repository', () => {
         });
 
         it('when create product [groupName] be must unique', async () => {
-            const ins = await repo.builderCreate({
-                name: "milk",
-                content: 'vina milk',
-                branches: [
-                    {
-                        code: "milk",
-                        attributes: [
-                            {
-                                groupName: 'size',
-                                name: 'L'
-                            },
-                            {
-                                groupName: 'size',
-                                name: 'grow'
-                            }
-                        ]
-                    }
-                ]
-            });
-
             let err;
             try {
-                await repo.query()
-                    .pushCriteria(new SelectionCriteria({
-                        columns: ['*'],
-                        preloads: [
-                            {
-                                name: 'branches',
-                                columns: ['*']
-                            }
-                        ]
-                    }))
-                    .firstBy(ins.id)
+                await repo.builderCreate({
+                    name: "milk",
+                    content: 'vina milk',
+                    branches: [
+                        {
+                            code: "milk",
+                            attributes: [
+                                {
+                                    groupName: 'size',
+                                    name: 'L'
+                                },
+                                {
+                                    groupName: 'size',
+                                    name: 'grow'
+                                }
+                            ]
+                        }
+                    ]
+                });
             } catch (e) {
                 err = e;
             }
@@ -1048,6 +1036,56 @@ describe('Product Repository', () => {
             }
 
             expect(err).to.be.not.undefined;
+        });
+
+        it('update single when attribues', async () => {
+            const ins = await repo.builderCreate({
+                name: "milk",
+                content: 'vina milk',
+                branches: [
+                    {
+                        code: "milk"
+                    }
+                ]
+            });
+
+            await repo.update({
+                name: 'foo',
+                branches: [
+                    {
+                        attributes: [
+                            {
+                                groupName: 'size',
+                                name: 'L'
+                            }
+                        ]
+                    },
+                    {
+                        attributes: [
+                            {
+                                groupName: 'size',
+                                name: 'X'
+                            }
+                        ]
+                    }
+                ]
+            }, ins.id);
+
+            const product = await repo.query()
+                .pushCriteria(new SelectionCriteria({
+                    columns: ['*'],
+                    preloads: [
+                        {
+                            name: 'branches',
+                            columns: ['*']
+                        }
+                    ]
+                }))
+                .firstBy(ins.id)
+
+            expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
+            expect(product.branches[0].fullname).to.be.eq('foo')
+            expect(product.branches[1]).to.be.undefined
         });
     });
 });

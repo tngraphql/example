@@ -57,10 +57,15 @@ Route.group(() => {
     // Route.resource('productType', 'ProductTypeResolve');
     // Route.resource('productVendor', 'ProductVendorResolve');
     Route.query('product_master', 'ProductMasterResolve.index');
+    Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
     Route.mutation('productCreate', 'ProductMasterResolve.create');
     Route.mutation('productUpdate', 'ProductMasterResolve.update');
     Route.mutation('productDelete', 'ProductMasterResolve.delete');
-    Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
+
+    Route.query('product_branch', 'ProductBranchResolve.index');
+    Route.query('product_branchs', 'ProductBranchResolve.list');
+    Route.mutation('productBranchDelete', 'ProductBranchResolve.delete');
+
     // Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
     // Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
 })['modules']('Product');

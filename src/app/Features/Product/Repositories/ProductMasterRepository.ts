@@ -17,6 +17,7 @@ import {ProductMetaRepository} from "./ProductMetaRepository";
 import {ProductBranchRepository} from "./ProductBranchRepository";
 import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
 import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
+import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 
 @Service()
 export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
@@ -36,10 +37,10 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
         return ProductMasterModel;
     }
 
-    public async builderCreate(data: ProductCreateArgsType) {
+    public async builderCreate(data: ProductCreateArgsType): Promise<ProductMasterModel> {
         data.kind = this.getKind(data);
 
-        data.isFeatured = true;
+        data.isFeatured = false;
         data.views = 0;
         data.commentStatus = 'open';
         data.commentCount = 0;
@@ -187,5 +188,29 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
                 }
                 break;
         }
+    }
+
+    async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
+        return this.transaction(async () => {
+            let instance;
+
+            if (id instanceof BaseModel) {
+                instance = id;
+            } else {
+                const query = this.newQuery();
+
+                instance = await query.where(attribute, id).first();
+            }
+
+            if (!instance) {
+                return 0;
+            }
+
+            await instance.delete();
+
+            await this.productBranch.destroy([instance.id], 'productMasterId');
+
+            return instance;
+        })
     }
 }

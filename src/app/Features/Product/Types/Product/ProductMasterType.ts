@@ -21,8 +21,9 @@ import {TagType} from "../../../Tag/Types/TagType";
 import {ProductTypeType} from "../ProductType/ProductTypeType";
 import {ProductVendorType} from "../ProductVendor/ProductVendorType";
 import {ProductMasterMetaType} from "./ProductMasterMetaType";
-import {ProductBranchType} from "./ProductBranchType";
+import {ProductBranchType} from "../ProductBranch/ProductBranchType";
 import {MediaType} from "../../../Media/Types/MediaType";
+import {ProductCommentStatusEnumType} from "./ProductCommentStatusEnumType";
 
 @ObjectType('ProductMaster')
 export class ProductMasterType {
@@ -79,7 +80,7 @@ export class ProductMasterType {
     @Field({description: 'Số bình luận'})
     public commentCount: number;
 
-    @Field(returns => PostCommentStatusEnumType,{description: 'Trạng thái được phép bình luận'})
+    @Field(returns => ProductCommentStatusEnumType,{description: 'Trạng thái được phép bình luận'})
     public commentStatus: string;
 
     @Field(returns => HTML, {description: 'Nội dung',})

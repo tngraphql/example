@@ -10,10 +10,10 @@ import {ID} from "../../../../GraphQL/Types/UidScalerType";
 import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
 import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
 import {ProductBranchModel} from "../../Models/ProductBranchModel";
-import {ProductMasterType} from "./ProductMasterType";
-import {ProductAttributeType} from "./ProductAttributeType";
-import {ProductImageType} from "./ProductImageType";
-import {ProductInventoryType} from "./ProductInventoryType";
+import {ProductMasterType} from "../Product/ProductMasterType";
+import {ProductAttributeType} from "../Product/ProductAttributeType";
+import {ProductImageType} from "../Product/ProductImageType";
+import {ProductInventoryType} from "../Product/ProductInventoryType";
 
 @ObjectType('ProductBranch')
 export class ProductBranchType {

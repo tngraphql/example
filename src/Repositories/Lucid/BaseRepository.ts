@@ -129,7 +129,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
         const result = [];
 
         const query = this.model().query();
-        const data = await query.where(this.getKeyName(), 'in', ids);
+        const data = await query.where(attribute, 'in', ids);
 
         await Promise.all(data.map(async (x) => {
             const deleted = this.delete(x);

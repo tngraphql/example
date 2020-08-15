@@ -11,7 +11,9 @@ import {converBoolean} from "../../../../../lib/utils";
 enum ProductMasterFilterEnumType {
     id = 'id',
     name = 'name',
+    kind = 'kind',
     content = 'content',
+    description = 'description',
     productTypeId = 'productTypeId',
     productVendorId = 'productVendorId',
     imageType = 'imageType',
@@ -30,9 +32,9 @@ enum ProductMasterFilterEnumType {
 
 namespace ProductMasterFilterEnumType {
     export const isFeatured = function isFeatured(value, operation) {
-        const val = converBoolean(String(Number(eval(value))), '1', '0');
+        const val = value === true || Number(value) === 1;
 
-        return query => query.where('isFeatured', operation, val);
+        return query => query.isFeatured(val, operation);
     }
 }
 

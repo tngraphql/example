@@ -16,6 +16,9 @@ export class ProductMasterListArgsType {
     @Field(returns => Int)
     page: number;
 
+    @Field(returns => Int)
+    limit: number;
+
     @Field(returns => filterType(ProductMasterFilterEnumType))
     filter: FilterContract<typeof ProductMasterFilterEnumType>
 

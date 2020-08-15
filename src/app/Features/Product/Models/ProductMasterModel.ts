@@ -57,6 +57,13 @@ export class ProductMasterModel extends BaseModel {
     })
     public isFeatured: boolean;
 
+    public static scopeIsFeatured(query, boolean = true, operation = '=') {
+        if (typeof boolean !== "boolean") {
+            throw new Error('value for isFeatured be must boolean');
+        }
+        return query.where('isFeatured', operation, converBoolean(boolean, 1, 0));
+    }
+
     @column()
     public views: number;
 
