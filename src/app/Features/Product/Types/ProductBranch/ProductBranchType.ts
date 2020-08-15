@@ -22,9 +22,6 @@ export class ProductBranchType {
     @Field(returns => ID)
     public id: string
 
-    @Field({description: 'Tên sản phẩm'})
-    public name: string;
-
     @Field({description: 'Mã sku'})
     public sku: string;
 

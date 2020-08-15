@@ -16,6 +16,9 @@ import {ProductImageRepository} from "./ProductImageRepository";
 import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
 import _ = require('lodash');
 import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
+import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
+import {ProductMasterRepository} from "./ProductMasterRepository";
+import {Str} from "../../../../lib/Str";
 
 @Service()
 export class ProductBranchRepository extends BaseRepository<ProductBranchModel, typeof ProductBranchModel> {
@@ -25,6 +28,9 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
 
     @Inject(type => ProductImageRepository)
     protected productImage: ProductImageRepository
+
+    @Inject(type => ProductMasterRepository)
+    protected productMaster: ProductMasterRepository
 
     public model(): typeof ProductBranchModel {
         return ProductBranchModel;
@@ -248,5 +254,84 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
         }
 
         return false;
+    }
+
+    async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
+        return this.transaction(async () => {
+            let instance: ProductBranchModel;
+
+            if (id instanceof BaseModel) {
+                instance = id as any;
+            } else {
+                const query = this.newQuery();
+
+                instance = await query.where(attribute, id).first();
+            }
+
+            if (!instance) {
+                return 0;
+            }
+
+            await instance.preload('master');
+
+            const method: any = 'deleteProduct' + Str.ucFirst(instance.master.kind);
+
+            if (typeof this[method] === "function") {
+                return await this[method](instance);
+            }
+
+            return instance.delete();
+        })
+    }
+
+    /**
+     * Xóa nhánh sản phẩm của sản phẩm phân nhánh
+     * @param instance
+     */
+    protected async deleteProductBranch(instance: ProductBranchModel) {
+        const listMasterBranch: ProductBranchModel[] = await this.newQuery().where('productMasterId', instance.productMasterId)
+            .isMaster(false)
+            .orderBy('id', 'asc')
+            .exec();
+
+        /**
+         * Nếu nhánh này là nhánh thường, nên xóa đi.
+         */
+        if (!instance.isMaster) {
+            return instance.delete();
+        }
+
+        /**
+         * Nếu xóa hết các sản phẩm nhánh trên sản phẩm thì chuyển sản phẩm đó thành sản phẩm đơn
+         */
+        if ( ! listMasterBranch || ! listMasterBranch.length ) {
+            await this.productMaster.update({
+                kind: ProductMasterKindEnumType.single
+            }, instance.productMasterId);
+
+            return instance.id;
+        }
+
+        const masterBranch = _.first(listMasterBranch);
+
+        /**
+         * Chuyển cho sản phẩm nhánh tiếp theo làm sản phẩm nhánh chính.
+         */
+        await super.update({
+            isMaster: true
+        }, masterBranch.id);
+
+        return instance.delete();
+    }
+
+    /**
+     * Xóa nhánh sản phẩm của sản phẩm đơn
+     *
+     * @param instance
+     */
+    protected async deleteProductSingle(instance) {
+        await instance.master.delete();
+
+        return instance.delete();
     }
 }

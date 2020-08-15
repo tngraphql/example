@@ -34,7 +34,7 @@ async function main() {
         }
     });
 
-    await server.listen(4002);
+    await server.listen(4002, '127.0.0.1');
     console.timeEnd();
 }
 
