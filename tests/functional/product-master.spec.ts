@@ -1837,4 +1837,51 @@ describe('productMaster Http', () => {
         });
     });
 
+    describe('productMaster http | change feature', () => {
+        it('Err when not authentication', async () => {
+            const res = await client.mutate({
+                mutation: `mutation changeFeatured {
+                  productChangeFeature(id: "31", isFeatured: false) {
+                    id
+                    isFeatured
+                  }
+                }
+                `
+            });
+
+            expect(res.errors).to.be.not.undefined;
+        });
+
+        it('change featured', async () => {
+            const user = await UserModel.create({name: 'job'});
+            authContext(user);
+
+            const product = await repo.builderCreate({
+                name: "milk-1",
+                content: 'vina milk',
+                branches: [
+                    {
+                        code: "milk-1"
+                    }
+                ]
+            });
+
+            const res = await client.mutate({
+                mutation: `mutation changeFeatured($id: ID_CRYPTO) {
+                  data: productChangeFeature(id: $id, isFeatured: true) {
+                    id
+                    isFeatured
+                  }
+                }
+                `,
+                variables: {
+                    id: product.id
+                }
+            });
+
+            expect(res.errors).to.be.undefined;
+            expect(res.data.data.isFeatured).to.be.true
+        });
+    });
+
 });

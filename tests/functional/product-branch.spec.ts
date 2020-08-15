@@ -2131,4 +2131,176 @@ describe('productBranch Http', () => {
             expect(p.branches.find(x => x.isMaster)).to.be.not.undefined;
         });
     });
+
+    describe('productBranch Http | inventory adjust quantity', () => {
+        it('Err when not authentication', async () => {
+            const res = await client.mutate({
+                mutation: `mutation changeQuantity($id: ID_CRYPTO){
+                  data: inventory_adjust_quantity(productBranchId: $id, quantity: 10){
+                    id
+                    quantity
+                  }
+                }
+                `,
+                variables: {
+                    id: 123
+                }
+            });
+
+            expect(res.errors).to.be.not.undefined;
+        });
+
+        it('inventory adjust quantity', async () => {
+            const user = await UserModel.create({name: 'job'});
+            authContext(user);
+
+            const ins = await repo.builderCreate({
+                name: "milk-1",
+                content: 'vina milk',
+                branches: [
+                    {
+                        code: "milk-1",
+                        attributes: [
+                            {
+                                groupName: 'size',
+                                name: 'L'
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            const product = await repo.query()
+                .pushCriteria(new SelectionCriteria({
+                    columns: ['*'],
+                    preloads: [
+                        {
+                            name: 'branches',
+                            columns: ['*']
+                        }
+                    ]
+                }))
+                .firstBy(ins.id)
+
+            const res = await client.mutate({
+                mutation: `mutation changeQuantity($id: ID_CRYPTO){
+                  data: inventory_adjust_quantity(productBranchId: $id, quantity: 10){
+                    id
+                    quantity
+                  }
+                }
+                `,
+                variables: {
+                    id: product.branches[0].id
+                }
+            });
+
+            expect(res.errors).to.be.undefined;
+            expect(res.data.data.quantity).to.be.eq(10)
+        });
+
+        it('adjust quantity up', async () => {
+            const user = await UserModel.create({name: 'job'});
+            authContext(user);
+
+            const ins = await repo.builderCreate({
+                name: "milk-1",
+                content: 'vina milk',
+                branches: [
+                    {
+                        code: "milk-1",
+                        attributes: [
+                            {
+                                groupName: 'size',
+                                name: 'L'
+                            }
+                        ],
+                        inventory: {
+                            quantity: 10
+                        }
+                    }
+                ]
+            });
+
+            const product = await repo.query()
+                .pushCriteria(new SelectionCriteria({
+                    columns: ['*'],
+                    preloads: [
+                        {
+                            name: 'branches',
+                            columns: ['*']
+                        }
+                    ]
+                }))
+                .firstBy(ins.id)
+
+            const res = await client.mutate({
+                mutation: `mutation changeQuantity($id: ID_CRYPTO){
+                  data: inventory_adjust_quantity(productBranchId: $id, quantity: 10){
+                    id
+                    quantity
+                  }
+                }
+                `,
+                variables: {
+                    id: product.branches[0].id
+                }
+            });
+
+            expect(res.errors).to.be.undefined;
+            expect(res.data.data.quantity).to.be.eq(20)
+        });
+
+        it('adjust quantity down', async () => {
+            const user = await UserModel.create({name: 'job'});
+            authContext(user);
+
+            const ins = await repo.builderCreate({
+                name: "milk-1",
+                content: 'vina milk',
+                branches: [
+                    {
+                        code: "milk-1",
+                        attributes: [
+                            {
+                                groupName: 'size',
+                                name: 'L'
+                            }
+                        ],
+                        inventory: {
+                            quantity: 10
+                        }
+                    }
+                ]
+            });
+
+            const product = await repo.query()
+                .pushCriteria(new SelectionCriteria({
+                    columns: ['*'],
+                    preloads: [
+                        {
+                            name: 'branches',
+                            columns: ['*']
+                        }
+                    ]
+                }))
+                .firstBy(ins.id)
+
+            const res = await client.mutate({
+                mutation: `mutation changeQuantity($id: ID_CRYPTO){
+                  data: inventory_adjust_quantity(productBranchId: $id, quantity: -10){
+                    id
+                    quantity
+                  }
+                }
+                `,
+                variables: {
+                    id: product.branches[0].id
+                }
+            });
+
+            expect(res.errors).to.be.undefined;
+            expect(res.data.data.quantity).to.be.eq(0)
+        });
+    });
 });

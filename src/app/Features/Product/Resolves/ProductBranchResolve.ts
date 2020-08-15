@@ -19,11 +19,19 @@ import {ProductBranchListArgsType} from "../Types/ProductBranch/ProductBranchLis
 import {ProductBranchDeleteArgsType} from "../Types/ProductBranch/ProductBranchDeleteArgsType";
 import {ProductBranchRepository} from "../Repositories/ProductBranchRepository";
 import {ProductBranchType} from "../Types/ProductBranch/ProductBranchType";
+import {ProductInventoryType} from "../Types/Product/ProductInventoryType";
+import {InventoryArgsType} from "../Types/ProductBranch/InventoryArgsType";
+import {InventoryRepository} from "../Repositories/InventoryRepository";
+import {ProductMasterFeaturedArgsType} from "../Types/Product/ProductMasterFeaturedArgsType";
 
 @Resolver()
 export class ProductBranchResolve extends BaseResolve {
     @Inject(ProductBranchRepository)
     public repo: ProductBranchRepository;
+
+    @Inject(InventoryRepository)
+    public inventory: InventoryRepository;
+
 
     @Query(returns => ProductBranchType, {
         description: 'Chi tiết sản phẩm'
@@ -50,5 +58,16 @@ export class ProductBranchResolve extends BaseResolve {
     @UseMiddleware('auth')
     async delete(@Args() args: ProductBranchDeleteArgsType, @Ctx() ctx) {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
+    }
+
+    @Mutation(returns => ProductInventoryType, {description: 'Điều chỉnh số lượng hàng tồn kho'})
+    @ValidateArgs(InventoryArgsType)
+    // @UseMiddleware('auth')
+    async inventoryAdjustQuantity(@Args() args: InventoryArgsType, @SelectFields() fields) {
+        await this.inventory.updateQuantity(args, args.productBranchId);
+
+        return this.inventory.query()
+            .pushCriteria(new SelectionCriteria(fields))
+            .firstBy(args.productBranchId, 'productBranchId');
     }
 }

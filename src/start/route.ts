@@ -61,10 +61,12 @@ Route.group(() => {
     Route.mutation('productCreate', 'ProductMasterResolve.create');
     Route.mutation('productUpdate', 'ProductMasterResolve.update');
     Route.mutation('productDelete', 'ProductMasterResolve.delete');
+    Route.mutation('productChangeFeature', 'ProductMasterResolve.productChangeFeature');
 
     Route.query('product_branch', 'ProductBranchResolve.index');
     Route.query('product_branchs', 'ProductBranchResolve.list');
     Route.mutation('productBranchDelete', 'ProductBranchResolve.delete');
+    Route.mutation('inventory_adjust_quantity', 'ProductBranchResolve.inventoryAdjustQuantity');
 
     // Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
     // Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');

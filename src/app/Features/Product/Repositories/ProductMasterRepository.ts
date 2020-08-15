@@ -213,4 +213,16 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
             return instance;
         })
     }
+
+    /**
+     * Thay đổi sản phẩm nổi bật.
+     *
+     * @param featured
+     * @param id
+     */
+    public async changeFeatured(featured: boolean, id: string) {
+        return super.update({
+            isFeatured: featured
+        }, id);
+    }
 }

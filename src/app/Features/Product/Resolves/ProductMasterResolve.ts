@@ -27,6 +27,7 @@ import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
 import {ProductMasterIndexArgsType} from "../Types/Product/ProductMasterIndexArgsType";
 import {ProductMasterListArgsType} from "../Types/Product/ProductMasterListArgsType";
 import {ProductMasterDeleteArgsType} from "../Types/Product/ProductMasterDeleteArgsType";
+import {ProductMasterFeaturedArgsType} from "../Types/Product/ProductMasterFeaturedArgsType";
 
 @Resolver()
 export class ProductMasterResolve extends BaseResolve {
@@ -76,5 +77,19 @@ export class ProductMasterResolve extends BaseResolve {
     @UseMiddleware('auth')
     async delete(@Args() args: ProductMasterDeleteArgsType, @Ctx() ctx) {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
+    }
+
+    /**
+     * Thay đổi sản phẩm nổi bật
+     */
+    @Mutation(returns => ProductMasterType, {description: 'Thay đổi sản phẩm nổi bật'})
+    @ValidateArgs(ProductMasterFeaturedArgsType)
+    // @UseMiddleware('auth')
+    async productChangeFeature(@Args() args: ProductMasterFeaturedArgsType, @SelectFields() fields) {
+        await this.repo.changeFeatured(args.isFeatured, args.id);
+
+        return this.repo.query()
+            .pushCriteria(new SelectionCriteria(fields))
+            .firstBy(args.id);
     }
 }
