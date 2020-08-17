@@ -12,11 +12,10 @@ import {GraphQLObjectType, GraphQLOutputType, GraphQLResolveInfo} from "graphql"
 import {ISelection} from "../Contracts/SelectionCriteriaContract";
 import {GraphQLList, GraphQLNonNull} from "graphql/type/definition";
 const _ = require('lodash');
-const defaultDepth = 4;
 
 export const SelectFields = () => {
-    return createParamDecorator(({info}) => {
-        return getFields(info);
+    return createParamDecorator<{app: any}>(({info, context}) => {
+        return getFields(info, context.app.config.get('app').depthLimit);
     });
 }
 
@@ -30,7 +29,7 @@ function getType(type: GraphQLOutputType) {
     return res;
 }
 
-export function getFields(info: GraphQLResolveInfo, depth: number = defaultDepth): ISelection {
+export function getFields(info: GraphQLResolveInfo, depth: number = 5): ISelection {
     let type = getType(info.returnType);
 
     const returnType = getMetadataStorage().objectTypes.find(x => x.name === type);

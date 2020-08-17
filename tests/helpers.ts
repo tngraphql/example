@@ -306,6 +306,7 @@ export async function createServer(context = {}): Promise<ApolloServer> {
         formatError: GraphQLExceptions.handle.bind(app),
         context: ctx => {
             return merge(ctx, context, {
+                app,
                 req: {
                     bearerToken: () => null
                 }

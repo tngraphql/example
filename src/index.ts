@@ -25,13 +25,21 @@ async function main() {
     // BaseModel.$container = app;
     await kernel.handle();
 
+    const configApp = app.config.get('app');
+
     const server = new ApolloServer({
         schema: await kernel.complie(),
         formatError: GraphQLExceptions.handle.bind(app),
-        context: context => context,
-        playground: {
-            version: '1.7.10'
-        }
+        context: context => {
+            return {
+                app,
+                ...context
+            };
+        },
+        playground: configApp.playground,
+        validationRules: kernel.validationRules(),
+        introspection: configApp.introspection,
+        plugins: kernel.plugins
     });
 
     await server.listen(4002, '127.0.0.1');

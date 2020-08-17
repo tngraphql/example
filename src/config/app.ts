@@ -20,6 +20,7 @@ import {HashServiceProvider} from "@tngraphql/illuminate/dist/Hashing/HashServic
 import {GuardServiceProvider} from "@tngraphql/guard/dist/src/GuardServiceProvider";
 import {GateServiceProvider} from "../app/Providers/GateServiceProvider";
 import {MailServiceProvider} from "@tngraphql/mail";
+import {Env} from "@tngraphql/illuminate/dist/Support/Env";
 
 type AppConfig = Config | any;
 
@@ -38,9 +39,11 @@ const app: AppConfig = {
         AppServiceProvider,
         RouteServiceProvider,
     ],
-    context: context => {
-        return context;
-    }
+    playground: {
+        version: '1.7.10'
+    },
+    introspection: true,
+    depthLimit: Env.get('DEPTH_LIMIT', 6)
     // formatError
 }
 

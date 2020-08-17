@@ -15,6 +15,7 @@ import {CanMiddleware} from "@tngraphql/guard/dist/src/Middleware/CanMiddleware"
 import {SortByMiddleware} from "./Middleware/SortByMiddleware";
 import {LanguageMiddleware} from "./Middleware/LanguageMiddleware";
 import {ConfigOptionsMiddleware} from "./Middleware/ConfigOptionsMiddleware";
+import {DephLimitMiddleware} from "./Middleware/DephLimitMiddleware";
 
 @Service()
 export class Kernel extends GraphQLKernel {
@@ -22,6 +23,7 @@ export class Kernel extends GraphQLKernel {
      * global middleware
      */
     protected middleware = [
+        DephLimitMiddleware,
         SortByMiddleware,
         LanguageMiddleware,
         ConfigOptionsMiddleware
@@ -38,12 +40,24 @@ export class Kernel extends GraphQLKernel {
 
     protected nullableByDefault = true;
 
+    public _validationRules = [
+        // function() {
+        //     return depthLimit(this.app.config.get('app').depthLimit)
+        // }
+    ];
+
+    public plugins: any[] = [];
+
     constructor(app: Application) {
         super(app);
+    }
 
-        // for (let item in this.routeMiddleware) {
-        //     const md = this.routeMiddleware[item];
-        //     md.prototype.app = this.app;
-        // }
+    public validationRules() {
+        return this._validationRules.map(x => {
+            if (typeof x === "function") {
+                return x.bind(this)();
+            }
+            return x;
+        })
     }
 }
