@@ -20,7 +20,7 @@
     "@tngraphql/graphql": "^1.0.6",
     "@tngraphql/guard": "^1.0.1",
     "@tngraphql/illuminate": "^1.1.8",
-    "@tngraphql/lucid": "^1.0.18",
+    "@tngraphql/lucid": "^1.0.19",
     "@tngraphql/mail": "^1.0.15-alpha",
     "@tngraphql/route": "^1.0.0",
     "@tngraphql/slugify": "^1.0.5",
