@@ -1,5 +1,5 @@
 import {ObjectType} from "@tngraphql/graphql";
-import {MetaType} from "../../../GraphQL/Types/MetaType";
+import {MetaType} from "../../../../GraphQL/Types/MetaType";
 
 /**
  * Created by Phan Trung Nguyên.

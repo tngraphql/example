@@ -1,8 +1,8 @@
 import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {filterType} from "../../../GraphQL/Types/FilterType";
 import {FilterContract} from "../../../../Contracts/FilterContract";
-import {PostFilterEnumType} from "./PostFilterEnumType";
-import {PostSortInputType} from "./PostSortInputType";
+import {MenuFilterEnumType} from "./MenuFilterEnumType";
+import {MenuSortInputType} from "./MenuSortInputType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -12,18 +12,18 @@ import {PostSortInputType} from "./PostSortInputType";
  */
 
 @ArgsType()
-export class PostListArgsType {
+export class MenuListArgsType {
     @Field(returns => Int)
     page: number;
 
     @Field(returns => Int)
     limit: number = 20;
 
-    @Field(returns => filterType(PostFilterEnumType))
-    filter: FilterContract<typeof PostFilterEnumType>
+    @Field(returns => filterType(MenuFilterEnumType))
+    filter: FilterContract<typeof MenuFilterEnumType>
 
-    @Field(returns => [PostSortInputType],{description: 'order'})
-    sortBy: PostSortInputType
+    @Field(returns => [MenuSortInputType],{description: 'order'})
+    sortBy: MenuSortInputType
 
     where: any;
 

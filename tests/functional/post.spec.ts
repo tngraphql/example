@@ -14,9 +14,9 @@ import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
 import {POST_LIST_QUERY, POST_QUERY} from "./gql/post-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {PostModel} from "../../src/app/Features/Post/PostModel";
-import {PostStatusEnumType} from "../../src/app/Features/Post/Types/PostStatusEnumType";
-import {PostCommentStatusEnumType} from "../../src/app/Features/Post/Types/PostCommentStatusEnumType";
+import {PostModel} from "../../src/app/Features/Post/Models/PostModel";
+import {PostStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostStatusEnumType";
+import {PostCommentStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostCommentStatusEnumType";
 import {DateTime} from "luxon";
 
 describe('post Http', () => {

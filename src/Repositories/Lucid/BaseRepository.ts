@@ -150,7 +150,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
         const query = this.newQuery();
 
         return tap(await query.where(attribute, '=', value).firstOrFail(), async (value: LucidRow) => {
-            value.merge(data);
+            value.merge(data, true);
             return value.save();
         });
     }

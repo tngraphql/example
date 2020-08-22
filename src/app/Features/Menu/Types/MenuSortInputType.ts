@@ -8,49 +8,25 @@ import {SortEnumType} from "../../../GraphQL/Types/SortEnumType";
  * Time: 9:46 AM
  */
 
-@InputType('PostSort')
-export class PostSortInputType {
+@InputType('MenuSort')
+export class MenuSortInputType {
     @Field(returns => SortEnumType)
     public id: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public format: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public views: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public postStatus: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public commentStatus: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public commentCount: SortEnumType
 
     @Field(returns => SortEnumType)
     public name: SortEnumType
 
     @Field(returns => SortEnumType)
-    public authorId: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public slug: SortEnumType
+    public status: SortEnumType
 
     @Field(returns => SortEnumType)
     public description: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public content: SortEnumType
 
     @Field(returns => SortEnumType)
     public language: SortEnumType
 
     @Field(returns => SortEnumType)
     public languageMaster: SortEnumType
-
-    @Field(returns => SortEnumType)
-    public publishedAt: SortEnumType
 
     @Field(returns => SortEnumType)
     public createdAt: SortEnumType

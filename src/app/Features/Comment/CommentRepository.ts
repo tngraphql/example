@@ -14,7 +14,7 @@ import {CommentStatusEnumType} from "./Types/CommentStatusEnumType";
 import {ConfigOptions} from "../../../lib/ConfigOptions";
 import {DateTime} from "luxon";
 import {TagRepository} from "../Tag/Repositories/Lucid/TagRepository";
-import {PostRepository} from "../Post/PostRepository";
+import {PostRepository} from "../Post/Repositories/PostRepository";
 import {Str} from "../../../lib/Str";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {tap} from "../../../lib/utils";

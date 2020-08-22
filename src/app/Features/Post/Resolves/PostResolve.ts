@@ -8,14 +8,14 @@ import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCrit
 import {paginateType} from "../../../GraphQL/Types/PaginateType";
 import {DeleteType} from "../../../GraphQL/Types/DeleteType";
 import {Resource} from "../../../../lib/Resource";
-import {PostRepository} from "../PostRepository";
-import {PostType} from "../Types/PostType";
-import {PostIndexArgsType} from "../Types/PostIndexArgsType";
-import {PostListArgsType} from "../Types/PostListArgsType";
-import {PostCreateArgsType} from "../Types/PostCreateArgsType";
-import {PostUpdateArgsType} from "../Types/PostUpdateArgsType";
-import {PostDeleteArgsType} from "../Types/PostDeleteArgsType";
-import {PostChangeFeatureArgsType} from "../Types/PostChangeFeatureArgsType";
+import {PostRepository} from "../Repositories/PostRepository";
+import {PostType} from "../Types/Post/PostType";
+import {PostIndexArgsType} from "../Types/Post/PostIndexArgsType";
+import {PostListArgsType} from "../Types/Post/PostListArgsType";
+import {PostCreateArgsType} from "../Types/Post/PostCreateArgsType";
+import {PostUpdateArgsType} from "../Types/Post/PostUpdateArgsType";
+import {PostDeleteArgsType} from "../Types/Post/PostDeleteArgsType";
+import {PostChangeFeatureArgsType} from "../Types/Post/PostChangeFeatureArgsType";
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117

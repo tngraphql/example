@@ -8,14 +8,14 @@ import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {Rules} from "@tngraphql/illuminate";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {PostModel} from "../PostModel";
+import {MenuModel} from "../MenuModel";
 
 @ArgsType()
-export class PostDeleteArgsType {
+export class MenuDeleteArgsType {
     @Field(returns => [ID])
     @Rules([
         'required',
-        Rule.exists(PostModel.getTable(), 'id')
+        Rule.exists(MenuModel.getTable(), 'id')
     ], ({lang}) => ({'exists': lang.t('The selected id does not exist or has been deleted.')}))
     public id: number;
 }

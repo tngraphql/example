@@ -16,7 +16,7 @@ import {ContentFormatEnumType} from "../../../../GraphQL/Types/ContentFormatEnum
 import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
 import {htmlField} from "../../../../../lib/utils";
 import {FavoriteType} from "../../../Favorite/Types/FavoriteType";
-import {PostCommentStatusEnumType} from "../../../Post/Types/PostCommentStatusEnumType";
+import {PostCommentStatusEnumType} from "../../../Post/Types/Post/PostCommentStatusEnumType";
 import {TagType} from "../../../Tag/Types/TagType";
 import {ProductTypeType} from "../ProductType/ProductTypeType";
 import {ProductVendorType} from "../ProductVendor/ProductVendorType";

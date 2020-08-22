@@ -43,9 +43,10 @@ Route.mutation('login', 'ExampleResolve.login')
 //     Route.resource('category', 'CategoryResolve');
 // })['modules']('Category');
 
-// Route.group(() => {
-//     Route.resource('post', 'PostResolve');
-// })['modules']('Post');
+Route.group(() => {
+    Route.resource('post', 'PostResolve');
+    Route.resource('page', 'PageResolve');
+})['modules']('Post');
 
 // Route.group(() => {
 //     Route.resource('comment', 'CommentResolve');
@@ -53,21 +54,23 @@ Route.mutation('login', 'ExampleResolve.login')
 //     Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
 // })['modules']('Comment');
 
-Route.group(() => {
-    // Route.resource('productType', 'ProductTypeResolve');
-    // Route.resource('productVendor', 'ProductVendorResolve');
-    Route.query('product_master', 'ProductMasterResolve.index');
-    Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
-    Route.mutation('productCreate', 'ProductMasterResolve.create');
-    Route.mutation('productUpdate', 'ProductMasterResolve.update');
-    Route.mutation('productDelete', 'ProductMasterResolve.delete');
-    Route.mutation('productChangeFeature', 'ProductMasterResolve.productChangeFeature');
+// Route.group(() => {
+//     Route.resource('productType', 'ProductTypeResolve');
+//     Route.resource('productVendor', 'ProductVendorResolve');
+//
+//     Route.query('product_master', 'ProductMasterResolve.index');
+//     Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
+//     Route.mutation('productCreate', 'ProductMasterResolve.create');
+//     Route.mutation('productUpdate', 'ProductMasterResolve.update');
+//     Route.mutation('productDelete', 'ProductMasterResolve.delete');
+//     Route.mutation('productChangeFeature', 'ProductMasterResolve.productChangeFeature');
+//
+//     Route.query('product_branch', 'ProductBranchResolve.index');
+//     Route.query('product_branchs', 'ProductBranchResolve.list');
+//     Route.mutation('productBranchDelete', 'ProductBranchResolve.delete');
+//     Route.mutation('inventory_adjust_quantity', 'ProductBranchResolve.inventoryAdjustQuantity');
+// })['modules']('Product');
 
-    Route.query('product_branch', 'ProductBranchResolve.index');
-    Route.query('product_branchs', 'ProductBranchResolve.list');
-    Route.mutation('productBranchDelete', 'ProductBranchResolve.delete');
-    Route.mutation('inventory_adjust_quantity', 'ProductBranchResolve.inventoryAdjustQuantity');
-
-    // Route.mutation('commentPostCreate', 'CommentResolve.commentPostCreate');
-    // Route.mutation('commentPostUpdate', 'CommentResolve.commentPostUpdate');
-})['modules']('Product');
+// Route.group(() => {
+//     Route.resource('menu', 'MenuResolve');
+// })['modules']('Menu');

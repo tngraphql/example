@@ -14,7 +14,7 @@ import {CommentableEnumType} from "../../src/app/Features/Comment/Types/Commenta
 import {expect} from 'chai';
 import {OptionRepository} from "../../src/Repositories/Lucid/OptionRepository";
 import {CommentStatusEnumType} from "../../src/app/Features/Comment/Types/CommentStatusEnumType";
-import {PostModel} from "../../src/app/Features/Post/PostModel";
+import {PostModel} from "../../src/app/Features/Post/Models/PostModel";
 import CommentModel from "../../src/app/Features/Comment/CommentModel";
 
 describe('User Repository', () => {

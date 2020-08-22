@@ -446,10 +446,10 @@
     uuid "^7.0.3"
     validatorjs "^3.18.1"
 
-"@tngraphql/lucid@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.18.tgz#3d12cbce5e2cb6d252bfa9853c7e424151d70208"
-  integrity sha512-3txRFoyMQ862c2ffs1oDr8gadmjMSW+HX0dw8IYRbk7E+xLAtJijOwPwXypL/8UDhSEKGunrVWhEyBM8NFAwEA==
+"@tngraphql/lucid@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.19.tgz#311b9c32e8577c839d972a25a19315b0b561a42a"
+  integrity sha512-Hj3KdETimz7cDP3EfJHKRFN7ehJEFiIXmpQ41rHWfgleIBaEn2N2D6VpahZbRyBGDBamKmArj3XxXo/X+fGsiA==
   dependencies:
     "@poppinss/hooks" "^1.0.5"
     "@poppinss/utils" "^2.2.0"

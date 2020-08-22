@@ -43,6 +43,9 @@ export class FavoriteCreateArgsType {
                     'exists': lang.t('You are trying to favorite a page that doesn\'t exist.')
                 };
                 break;
+            default:
+                throw new Error('favorite create cannot handle: ' + args.favoriteableType);
+                break;
         }
         return {}
     })

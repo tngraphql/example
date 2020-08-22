@@ -1,8 +1,8 @@
 import {ArgsType, Field} from "@tngraphql/graphql";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
+import {ID} from "../../../../GraphQL/Types/UidScalerType";
 import {Rules} from "@tngraphql/illuminate";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {PostModel} from "../PostModel";
+import {PostModel} from "../../Models/PostModel";
 import {GraphQLBoolean} from "graphql";
 
 /**

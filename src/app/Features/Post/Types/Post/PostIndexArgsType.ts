@@ -1,6 +1,6 @@
 import {ArgsType, Field} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {filterType} from "../../../GraphQL/Types/FilterType";
+import {FilterContract} from "../../../../../Contracts/FilterContract";
+import {filterType} from "../../../../GraphQL/Types/FilterType";
 import {PostFilterEnumType} from "./PostFilterEnumType";
 import {PostSortInputType} from "./PostSortInputType";
 

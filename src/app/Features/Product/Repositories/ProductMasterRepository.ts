@@ -18,6 +18,7 @@ import {ProductBranchRepository} from "./ProductBranchRepository";
 import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
 import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
+import {Str} from "../../../../lib/Str";
 
 @Service()
 export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
@@ -45,19 +46,14 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
         data.commentStatus = 'open';
         data.commentCount = 0;
 
+        const method = 'builderCreate' + Str.ucFirst(data.kind);
+
+        if (typeof this[method] !== "function") {
+            throw new Error('product create cannot handle: ' + data.kind);
+        }
+
         return this.transaction(async () => {
-            switch (data.kind) {
-                case ProductMasterKindEnumType.single:
-                    return this.builderCreateSingle(data);
-                    break;
-                case ProductMasterKindEnumType.branch:
-                    return this.builderCreateBranch(data);
-                    break;
-                case ProductMasterKindEnumType.combo:
-                    break;
-                default:
-                    break;
-            }
+            return this[method](data);
         });
     }
 

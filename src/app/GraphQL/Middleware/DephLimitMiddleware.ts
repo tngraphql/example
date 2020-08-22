@@ -49,7 +49,7 @@ export function depthLimit(info: GraphQLResolveInfo, depth: number = 5) {
     }
 
     for (let node of info.fieldNodes) {
-        determineDepth(node, info.fragments, depthSoFar, depth, info.operation.name.value);
+        determineDepth(node, info.fragments, depthSoFar, depth, info.operation.name && info.operation.name.value);
     }
 }
 
