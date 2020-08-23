@@ -41,7 +41,7 @@ export class ProductBranchResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().first();
+        return this.repo.first();
     }
 
     @Query(returns => paginateType(ProductBranchType))
@@ -49,8 +49,14 @@ export class ProductBranchResolve extends BaseResolve {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
+        this.repo._query.join(
+            'product_master',
+            'product_branch.product_master_id',
+            '=',
+            'product_master.id'
+        ).whereNull('product_master.deleted_at')
 
-        return this.repo.query().paginate(args.limit, args.page);
+        return this.repo.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => DeleteType)

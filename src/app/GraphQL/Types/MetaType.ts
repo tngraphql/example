@@ -1,14 +1,13 @@
-import {Field, ObjectType, Root} from "@tngraphql/graphql";
-import {ID} from "./UidScalerType";
-import {Any} from "./ScalarType/AnyScalerType";
-import MediaModel from "../../Models/MediaModel";
-
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117
  * Date: 7/13/2020
  * Time: 4:54 PM
  */
+import {Field, ObjectType, Root} from "@tngraphql/graphql";
+import {ID} from "./UidScalerType";
+import {Any} from "./ScalarType/AnyScalerType";
+import MediaModel from "../../Models/MediaModel";
 
 @ObjectType('Meta')
 export class MetaType {

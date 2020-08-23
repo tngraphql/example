@@ -16,6 +16,6 @@ enum LanguageFilterEnumType {
     updatedAt = 'updatedAt',
 }
 
-registerFilterEnumType('Tag', LanguageFilterEnumType);
+registerFilterEnumType('Language', LanguageFilterEnumType);
 
 export {LanguageFilterEnumType};

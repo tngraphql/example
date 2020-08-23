@@ -20,6 +20,9 @@ export class UserType {
     @Field(returns => ID)
     id: number
 
+    @Field({description: 'Token login.'})
+    public token?: string
+
     @Field()
     public phone: string;
 

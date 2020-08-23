@@ -14,13 +14,7 @@ import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Rela
 import RoleModel from "./Models/RoleModel";
 import {DateTime} from "luxon";
 import {Str} from "../lib/Str";
-
-type GENDER = '1' | '2';
-
-export enum Gender {
-    male = '1',
-    famale = '2'
-}
+import {GenderEnumType} from "./GraphQL/Types/GenderEnumType";
 
 export class UserModel extends Auth {
     public static table = 'users';
@@ -40,14 +34,14 @@ export class UserModel extends Auth {
     @column()
     public avatar: string;
 
-    @column()
-    public dob: string;
+    @column.date()
+    public dob: DateTime;
 
     @column()
     public email: string;
 
     @column()
-    public gender: GENDER;
+    public gender: GenderEnumType;
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime

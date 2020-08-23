@@ -4,6 +4,7 @@ import {UserModel} from "../../UserModel";
 import {ResolveAuth} from "../../../decorators/ResolveAuth";
 import {AuthorizationException, Guard} from "@tngraphql/guard/dist/src";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
+import {ResolveLang} from "../../../decorators/ResolveLang";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -18,6 +19,9 @@ export class BaseResolve {
 
     @ResolveAuth()
     public auth: RequestGuard;
+
+    @ResolveLang()
+    public lang: any;
 
     public async authorize(ability, args = {}) {
         const guard = Guard.setDefaultUser(await this.auth.user());

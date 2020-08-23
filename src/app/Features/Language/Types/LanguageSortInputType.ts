@@ -8,7 +8,7 @@ import {SortEnumType} from "../../../GraphQL/Types/SortEnumType";
  * Time: 9:46 AM
  */
 
-@InputType('TagSort')
+@InputType('LanguageSort')
 export class LanguageSortInputType {
     @Field(returns => SortEnumType)
     id: SortEnumType

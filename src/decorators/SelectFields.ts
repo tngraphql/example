@@ -62,18 +62,18 @@ export function getField(fields, model: LucidModel): ISelection {
                 result.push(field);
                 continue;
             }
-            result.push(model.primaryKey);
+            result.push(model.qualifyColumn(model.primaryKey));
 
             if (model.$hasColumn(field)) {
-                result.push(field);
+                result.push(model.qualifyColumn(field));
             }
             if (model.$hasRelation(field)) {
                 const relation: any = getRelation(model, field);
 
-                result.push(relation.localKey);
+                result.push(model.qualifyColumn(relation.localKey));
 
                 if (['belongsTo'].includes(relation.type)) {
-                    result.push(relation.foreignKey);
+                    result.push(model.qualifyColumn(relation.foreignKey));
                 }
 
                 preloads.push({
@@ -85,9 +85,9 @@ export function getField(fields, model: LucidModel): ISelection {
                 const relation: any = getRelation(model, field);
 
                 const relatedModel = relation.relatedModel();
-                result.push(relation.localKey);
+                result.push(model.qualifyColumn(relation.localKey));
                 if (['belongsTo'].includes(relation.type)) {
-                    result.push(relation.foreignKey);
+                    result.push(model.qualifyColumn(relation.foreignKey));
                 }
 
                 preloads.push({
@@ -97,6 +97,9 @@ export function getField(fields, model: LucidModel): ISelection {
             }
         }
     }
+
+    console.log(Array.from(new Set(result)));
+
 
     return {
         columns: Array.from(new Set(result)),

@@ -40,4 +40,31 @@ export class Str {
     public static uuid(): string {
         return uuid.v4();
     }
+
+    public static trimUrl(x) {
+        return x.replace(/^\/+|\/+$/gm, '');
+    }
+
+    public static async radomString(length = 16) {
+        let str: string = '';
+
+        while ( str.length < length ) {
+            const size = length - str.length;
+            const bytes = await this.randomBytes(size);
+
+            str += bytes.toString('base64').replace(/\/|\+|\=/g, '').substr(0, size);
+        }
+
+        return str;
+    }
+
+    public static async randomBytes(size): Promise<Buffer> {
+        const a: Promise<Buffer> = new Promise((resolve) => {
+            require('crypto').randomBytes(size, function(err, buffer) {
+                resolve(buffer);
+            });
+        });
+
+        return a;
+    }
 }

@@ -7,7 +7,7 @@
 import {GraphQLScalarType} from "graphql";
 
 export const JSONScalarType = new GraphQLScalarType({
-    name: 'Any',
+    name: 'Json',
 
     description: 'JSON data',
 

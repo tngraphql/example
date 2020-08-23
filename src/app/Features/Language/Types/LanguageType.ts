@@ -3,7 +3,7 @@ import {ID} from "../../../GraphQL/Types/UidScalerType";
 import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
 import {DateTime} from "luxon";
 import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
-import LanguageModel from "../LanguageModel";
+import {LanguageModel} from "../LanguageModel";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -12,7 +12,7 @@ import LanguageModel from "../LanguageModel";
  * Time: 4:54 PM
  */
 
-@ObjectType('Tag')
+@ObjectType('Language')
 export class LanguageType {
     static model = LanguageModel
 
