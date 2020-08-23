@@ -3,10 +3,11 @@ import {Rules} from "@tngraphql/illuminate";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import {ID} from "../../../../GraphQL/Types/UidScalerType";
 import {MetaInput} from "../../../../GraphQL/Types/Input/MetaInput";
-import {PostModel} from "../../Models/PostModel";
+import {PostModel} from "../../PostModel";
 import {PostStatusEnumType} from "./PostStatusEnumType";
 import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {GraphQLString} from "graphql";
+import CategoryModel from "../../../Category/CategoryModel";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -69,7 +70,7 @@ export class PostUpdateArgsType {
     public tags?: string[];
 
     @Field(returns => [ID], {description: 'Chọn danh mục bài viết.', defaultValue: '1'})
-    @Rules(['filled'])
+    @Rules(['filled', Rule.exists(CategoryModel.getTable(), 'id')])
     public categories?: string[];
 
     @Field({description: 'Seo title'})

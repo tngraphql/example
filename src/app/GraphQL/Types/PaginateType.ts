@@ -15,6 +15,8 @@ export function registerPaginateType(target: any): void {
 
     @ObjectType(pageTypeName, {description: 'Phân trang'})
     class PageType implements IPaginateType {
+        static isPageType = true;
+
         @Field(returns => Int, {description: 'Số mục bắt đầu'})
         from: number;
 

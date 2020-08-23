@@ -14,10 +14,11 @@ import {CommentableEnumType} from "../../src/app/Features/Comment/Types/Commenta
 import {expect} from 'chai';
 import {OptionRepository} from "../../src/Repositories/Lucid/OptionRepository";
 import {CommentStatusEnumType} from "../../src/app/Features/Comment/Types/CommentStatusEnumType";
-import {PostModel} from "../../src/app/Features/Post/Models/PostModel";
+import {PostModel} from "../../src/app/Features/Post/PostModel";
 import CommentModel from "../../src/app/Features/Comment/CommentModel";
+import {ConfigOptions} from "../../src/lib/ConfigOptions";
 
-describe('User Repository', () => {
+describe('Comment Repository', () => {
     describe('Create', () => {
         let app: Application;
         let context;

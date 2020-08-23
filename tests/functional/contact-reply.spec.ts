@@ -120,7 +120,6 @@ describe('contactReply Http', () => {
                 });
                 expect(res.errors).to.undefined;
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
-                console.log('contactReply', contactReply.message, res.data.contactReply);
                 expect(res.data.contactReply.message).to.eq(contactReply.message);
             })
         

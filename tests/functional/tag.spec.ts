@@ -27,7 +27,7 @@ describe('tag Http', () => {
 
     beforeEach(async () => {
         await seedDB();
-        authContext(await UserModel.first());
+        authContext(null);
         await Factory.model('App/Features/Tag/TagModel').createMany(3);
     });
 
@@ -263,15 +263,6 @@ describe('tag Http', () => {
         });
 
         describe('tag Http | list | base', () => {
-            it('should response error when is not login', async () => {
-                authContext(null);
-                const res = await client.query({
-                    query: TAG_LIST_QUERY
-                });
-                expect(res.errors).to.not.undefined;
-                expect(res.errors[0]['code']).to.eq('E_AUTHENTICATION');
-            });
-
             it('should reponse list tag', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(5);
                 const tags = await TagModel.query();
@@ -478,7 +469,11 @@ describe('tag Http', () => {
     });
 
     describe('tag Http | create', () => {
+        beforeEach(async () => {
+            authContext(await UserModel.first())
+        });
         it('create tag', async () => {
+            authContext(await UserModel.first())
             const res = await client.mutate({
                 mutation: `mutation tagCreate(
                       $name: String
@@ -527,6 +522,9 @@ describe('tag Http', () => {
     });
 
     describe('tag Http | update', () => {
+        beforeEach(async () => {
+            authContext(await UserModel.first())
+        });
         it('update tag', async () => {
             const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
@@ -551,6 +549,9 @@ describe('tag Http', () => {
     });
 
     describe('tag Http | delete', () => {
+        beforeEach(async () => {
+            authContext(await UserModel.first())
+        });
         it('delete tag', async () => {
             const tag = await Factory.model('App/Features/Tag/TagModel').create();
 

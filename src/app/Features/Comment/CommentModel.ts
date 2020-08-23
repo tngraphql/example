@@ -5,7 +5,7 @@ import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
 import {UserModel} from "../../UserModel";
 import {BelongsTo, HasOne, MorphOne, MorphTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
-import {PostModel} from "../Post/Models/PostModel";
+import {PostModel} from "../Post/PostModel";
 import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
 import {Str} from "../../../lib/Str";
 

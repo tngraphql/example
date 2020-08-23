@@ -11,7 +11,7 @@ import { ServiceProvider } from '@tngraphql/illuminate';
 import {Database} from "@tngraphql/lucid";
 import {DateTime} from "luxon";
 import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
-import {PostModel} from "../Features/Post/Models/PostModel";
+import {PostModel} from "../Features/Post/PostModel";
 
 export class AppServiceProvider extends ServiceProvider {
     register(): void {

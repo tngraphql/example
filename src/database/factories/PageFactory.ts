@@ -8,12 +8,12 @@
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 import {DateTime} from "luxon";
 
-Factory.blueprint('App/Features/Post/PostModel', (faker, index, data) => {
+Factory.blueprint('App/Features/Post/PageModel', (faker, index, data) => {
     return {
         name: faker.name(),
         authorId: data.authorId || 1,
         parentId: data.parentId || '0',
-        type: 'post',
+        type: 'page',
         description: faker.name(),
         content: faker.name(),
         postStatus: data.postStatus || 'publish',
@@ -21,7 +21,7 @@ Factory.blueprint('App/Features/Post/PostModel', (faker, index, data) => {
         commentCount: data.commentCount || '0',
         format: data.format || '1',
         thumbnailId: data.thumbnailId || '1',
-        isFeatured: data.isFeatured || false,
+        isFeatured: data.isFeatured || '0',
         publishedAt: data.publishedAt || DateTime.local(),
         views: data.views || '0',
         seoTitle: faker.name(),

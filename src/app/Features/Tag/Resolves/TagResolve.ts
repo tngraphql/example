@@ -30,7 +30,6 @@ export class TagResolve extends BaseResolve {
     public repo: TagRepository;
 
     @Query(returns => TagType)
-    @UseMiddleware('auth')
     async index(@Args() args: TagIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
@@ -40,7 +39,6 @@ export class TagResolve extends BaseResolve {
     }
 
     @Query(returns => paginateType(TagType))
-    @UseMiddleware('auth')
     async list(@Args() args: TagListArgsType, @SelectFields() fields, @Ctx() context) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));

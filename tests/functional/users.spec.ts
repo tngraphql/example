@@ -692,7 +692,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['4','3','2','1']);
             });
 
             it('should sort by id without error', async () => {
@@ -710,7 +710,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['4','3','2','1']);
             });
 
             it('should sort by phone without error', async () => {
@@ -728,7 +728,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([4,3,2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['4','3','2','1']);
                 // expect(res.data.user.id).to.eq(user.id);
             });
 
@@ -748,7 +748,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['3','2','1']);
             });
 
             it('should sort by email without error', async () => {
@@ -767,7 +767,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['3','2','1']);
             });
 
             it('should sort by gender without error', async () => {
@@ -786,7 +786,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([3,1,2]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['3','1','2']);
             });
 
             it('should sort by roleId DESC without error', async () => {
@@ -804,7 +804,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['2','1']);
             });
 
             it('should sort by roleId ASC without error', async () => {
@@ -822,7 +822,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['1', '2']);
             });
 
             it('should sort by roleName DESC without error', async () => {
@@ -840,7 +840,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([2,1]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['2', '1']);
             });
 
             it('should sort by roleName ASC without error', async () => {
@@ -858,7 +858,7 @@ describe('User Http', () => {
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.users.data.map(x=>x.id)).to.deep.eq([1,2]);
+                expect(res.data.users.data.map(x=>x.id)).to.deep.eq(['1', '2']);
             });
         });
     });

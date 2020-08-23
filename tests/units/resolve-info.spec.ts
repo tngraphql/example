@@ -93,6 +93,7 @@ describe('Resolve Info', () => {
 
 
         BuildContext.routeStore = undefined;
+        BuildContext.middlewareStore.register([]);
         const router = new Router();
         const container = new DefaultContainer();
         container.bind('SampleResolver', SampleResolver);

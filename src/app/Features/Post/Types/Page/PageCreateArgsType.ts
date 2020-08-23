@@ -4,11 +4,12 @@ import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import {ID} from "../../../../GraphQL/Types/UidScalerType";
 import {MetaInput} from "../../../../GraphQL/Types/Input/MetaInput";
 import {PostModel} from "../../PostModel";
-import {PostStatusEnumType} from "./PostStatusEnumType";
-import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {GraphQLString} from "graphql";
 import {DateTime} from "luxon";
 import CategoryModel from "../../../Category/CategoryModel";
+import {PostCommentStatusEnumType} from "../Post/PostCommentStatusEnumType";
+import {PageStatusEnumType} from "./PageStatusEnumType";
+import {PageModel} from "../../PageModel";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -18,7 +19,7 @@ import CategoryModel from "../../../Category/CategoryModel";
  */
 
 @ArgsType()
-export class PostCreateArgsType {
+export class PageCreateArgsType {
     @Field({description: 'Tên bài viết'})
     @Rules(args => ([
         'required',
@@ -26,16 +27,7 @@ export class PostCreateArgsType {
     ]))
     public name: string
 
-    @Field({description: 'Format'})
-    public format: number;
-
-    @Field({description: 'Hình đại diện'})
-    public avatar: string;
-
-    @Field({description: 'Trạng thái của bài viết.',})
-    public thumbnailId: string;
-
-    @Field(returns => PostStatusEnumType, {defaultValue: 'publish', description: 'Trạng thái của bài viết.',})
+    @Field(returns => PageStatusEnumType, {defaultValue: 'publish', description: 'Trạng thái của bài viết.',})
     public postStatus: string = 'publish';
 
     @Field({description: 'Mật khẩu của bài viết nếu có.',})
@@ -57,7 +49,7 @@ export class PostCreateArgsType {
     @Rules(args => {
         if ( String(args.parentId) !== '0' ) {
             return [
-                Rule.exists(PostModel.getTable(), 'id')
+                Rule.exists(PageModel.getTable(), 'id')
             ]
         }
         return [];
@@ -76,7 +68,7 @@ export class PostCreateArgsType {
 
     @Field(returns => [ID], {description: 'Chọn danh mục bài viết.', defaultValue: '1'})
     @Rules([
-        'required',
+        'filled',
         Rule.exists(CategoryModel.getTable(), 'id')
     ])
     public categories: string[];

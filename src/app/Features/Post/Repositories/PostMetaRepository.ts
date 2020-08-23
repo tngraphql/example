@@ -6,7 +6,7 @@
  */
 import {MetableRepository} from "../../../../Repositories/Lucid/MetableRepository";
 import {Service} from "@tngraphql/illuminate";
-import PostmetaModel from "../Models/PostmetaModel";
+import PostmetaModel from "../PostmetaModel";
 
 @Service()
 export class PostMetaRepository extends MetableRepository {

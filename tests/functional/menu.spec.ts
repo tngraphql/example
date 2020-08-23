@@ -46,8 +46,6 @@ describe('menu Http', () => {
                     query: MENU_QUERY
                 });
 
-                console.log(res.errors);
-
                 expect(res.errors).to.undefined;
                 expect(res.data.menu.id).to.eq(menu.id);
             });
@@ -421,7 +419,6 @@ describe('menu Http', () => {
                     query: MENU_LIST_QUERY
                 });
 
-                console.log(res.errors);
                 expect(res.errors).to.undefined;
                 expect(res.data.menus.data).to.length(menus.length);
                 expect(res.data.menus.total).to.eq(menus.length);

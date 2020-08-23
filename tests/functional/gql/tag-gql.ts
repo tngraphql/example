@@ -33,12 +33,12 @@ query tags(
 
 
 export const TAG_QUERY = gql`
-query contact($filter: ContactFilter, $sortBy: [ContactSort]) {
-  contact(filter: $filter, sortBy: $sortBy) {
+query contact($filter: TagFilter, $sortBy: [TagSort]) {
+  tag(filter: $filter, sortBy: $sortBy) {
     id
     name
+    slug
     createdAt
     updatedAt
   }
-}
-`;
+}`;

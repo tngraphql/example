@@ -14,7 +14,7 @@ import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
 import {UserModel} from "../../src/app/UserModel";
 import {POST_LIST_QUERY, POST_QUERY} from "./gql/post-gql";
 import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {PostModel} from "../../src/app/Features/Post/Models/PostModel";
+import {PostModel} from "../../src/app/Features/Post/PostModel";
 import {PostStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostStatusEnumType";
 import {PostCommentStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostCommentStatusEnumType";
 import {DateTime} from "luxon";
@@ -38,6 +38,7 @@ describe('post Http', () => {
         await resetTables();
         authContext(null);
         await Factory.model('App/Features/Post/PostModel').reset();
+        await Factory.get('post_category').reset();
     });
 
     describe('post Http | Index', () => {
@@ -159,6 +160,8 @@ describe('post Http', () => {
         
             it('should filter views without error', async () => {
                 const post = await Factory.model('App/Features/Post/PostModel').create({views: 1});
+                post.views = 1;
+                await post.save();
 
                 const res = await client.query({
                     query: POST_QUERY,
@@ -267,6 +270,8 @@ describe('post Http', () => {
         
             it('should filter commentCount without error', async () => {
                 const post = await Factory.model('App/Features/Post/PostModel').create({commentCount: 1});
+                post.commentCount = 1;
+                await post.save();
 
                 const res = await client.query({
                     query: POST_QUERY,
@@ -917,7 +922,7 @@ describe('post Http', () => {
             });
         
             it('should filter isFeatured without error', async () => {
-                const post = await Factory.model('App/Features/Post/PostModel').create({isFeatured: '1'});
+                const post = await Factory.model('App/Features/Post/PostModel').create({isFeatured: true});
 
                 const res = await client.query({
                     query: POST_LIST_QUERY,
@@ -936,6 +941,8 @@ describe('post Http', () => {
         
             it('should filter views without error', async () => {
                 const post = await Factory.model('App/Features/Post/PostModel').create({views: 2});
+                post.views = 2;
+                await post.save();
 
                 const res = await client.query({
                     query: POST_LIST_QUERY,
@@ -1044,6 +1051,8 @@ describe('post Http', () => {
         
             it('should filter commentCount without error', async () => {
                 const post = await Factory.model('App/Features/Post/PostModel').create({commentCount: 1});
+                post.commentCount = 1;
+                await post.save();
 
                 const res = await client.query({
                     query: POST_LIST_QUERY,
@@ -1592,7 +1601,7 @@ describe('post Http', () => {
     describe('post Http | create', () => {
         describe('post Http | create', () => {
             it('post category', async () => {
-                const user = await UserModel.create({name: 'job'});
+                const user = await UserModel.query().where('id', 1).first();
                 authContext(user);
                 const category = [
                     await Factory.model('App/Features/Category/CategoryModel').create(),
@@ -1614,7 +1623,7 @@ describe('post Http', () => {
                       $description: String
                       $content: String
                       $tags: [String]
-                      $categories: [ID_CRYPTO] = [false]
+                      $categories: [ID_CRYPTO]
                       $seoTitle: String
                       $seoDescription: String
                       $seoKeyword: String
@@ -1682,7 +1691,7 @@ describe('post Http', () => {
 
     describe('post Http | update', () => {
         it('update post', async () => {
-            authContext(await UserModel.first());
+            authContext(await UserModel.query().where('id', 1).first());
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const category = [
                 await Factory.model('App/Features/Category/CategoryModel').create(),
@@ -1765,13 +1774,12 @@ describe('post Http', () => {
                 }
             });
             expect(res.errors).to.be.undefined;
-            console.log(res.data.data);
         });
     });
 
     describe('post Http | delete', () => {
         it('delete post', async () => {
-            authContext(await UserModel.first());
+            authContext(await UserModel.query().where('id', 1).first());
             const post = await Factory.model('App/Features/Post/PostModel').create();
 
             const res = await client.mutate({

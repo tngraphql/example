@@ -14,6 +14,7 @@ import {tap} from "../../../../lib/utils";
 import {LucidRow} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 import {ConfigOptions} from "../../../../lib/ConfigOptions";
 import {OptionRepository} from "../../../../Repositories/Lucid/OptionRepository";
+import {Str} from "../../../../lib/Str";
 
 @Service()
 export class MenuRepository extends BaseRepository<MenuModel, typeof MenuModel> {
@@ -114,5 +115,31 @@ export class MenuRepository extends BaseRepository<MenuModel, typeof MenuModel> 
         await this.item.newQuery().where('menuId', instance.id)
             .whereNotIn('id', _.map(menuItems, 'id'))
             .delete();
+    }
+
+    /**
+     * Thêm page vào menu. Nếu menu đó cho phép tự động thêm.
+     *
+     * @param data
+     */
+    async appendMenu(data): Promise<void> {
+        const menus = await this.newQuery().automanticallyMenu(true);
+
+        if ( ! menus ) {
+            return;
+        }
+
+        for( const menu of menus ) {
+            await this.item.create({
+                id: Str.uuid(),
+                menuId: menu.id,
+                title: data.name,
+                target: 'self',
+                objectType: 'page',
+                objectId: data.id,
+                parentId: '0',
+                sort: 0
+            });
+        }
     }
 }

@@ -1,4 +1,5 @@
 import {registerCustomInject} from "@tngraphql/illuminate";
+import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -7,6 +8,6 @@ import {registerCustomInject} from "@tngraphql/illuminate";
  * Time: 2:48 PM
  */
 
-export const ResolveAuth = registerCustomInject(({context}) => {
+export const ResolveAuth = registerCustomInject<{auth: RequestGuard}>(({context}) => {
     return context.auth;
 })

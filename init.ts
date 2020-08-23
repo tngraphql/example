@@ -11,6 +11,7 @@ import {Kernel} from "./src/app/GraphQL/Kernel";
 import {Application} from "@tngraphql/illuminate";
 import { requireAll } from '@poppinss/utils/build'
 import {resetTables} from "./tests/helpers";
+import {ConfigOptions} from "./src/lib/ConfigOptions";
 
 chai.config.includeStack = true;
 chai.should();
@@ -48,4 +49,8 @@ after(async () => {
     // const {cleanup} = require('./tests/helpers');
     //
     // await cleanup();
+});
+
+beforeEach(async () => {
+    await ConfigOptions.clearCache();
 });

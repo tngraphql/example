@@ -35,7 +35,7 @@ export class ContactRepository extends BaseRepository<ContactModel> {
 
             const user = await this.user.firstBy('1', 'id', ['id', 'name', 'email']);
 
-            await Mail.to(4).send(new ContactMail(data));
+            await Mail.to(user).send(new ContactMail(data));
 
             return contact;
         })

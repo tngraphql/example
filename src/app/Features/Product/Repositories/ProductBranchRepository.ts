@@ -274,6 +274,11 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
 
             await instance.preload('master');
 
+            // master has been deleted
+            if (!instance.master) {
+                return instance.delete();
+            }
+
             const method: any = 'deleteProduct' + Str.ucFirst(instance.master.kind);
 
             if (typeof this[method] === "function") {

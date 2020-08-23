@@ -8,14 +8,14 @@ import {createParamDecorator} from "@tngraphql/graphql";
 import {getMetadataStorage} from "@tngraphql/graphql/dist/metadata/getMetadataStorage";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import {IFieldSelection, ResolveInfo} from "../lib/ResolveInfo";
-import {GraphQLObjectType, GraphQLOutputType, GraphQLResolveInfo} from "graphql";
+import {GraphQLOutputType, GraphQLResolveInfo} from "graphql";
 import {ISelection} from "../Contracts/SelectionCriteriaContract";
 import {GraphQLList, GraphQLNonNull} from "graphql/type/definition";
 const _ = require('lodash');
 
 export const SelectFields = () => {
     return createParamDecorator<{app: any}>(({info, context}) => {
-        return getFields(info, context.app.config.get('app').depthLimit);
+        return getFields(info, context.app ? context.app.config.get('app').depthLimit : 5);
     });
 }
 
@@ -34,7 +34,7 @@ export function getFields(info: GraphQLResolveInfo, depth: number = 5): ISelecti
 
     const returnType = getMetadataStorage().objectTypes.find(x => x.name === type);
 
-    const isPaginate: boolean = returnType?.target?.name === 'PageType';
+    const isPaginate: boolean = returnType?.target['isPageType'] === true;
 
     if (isPaginate) {
         const fields = getFieldSelection(info, depth + 1);

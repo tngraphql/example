@@ -22,6 +22,7 @@ import {graphql} from "graphql";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {HasOne} from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import {BuildContext} from "@tngraphql/graphql/dist/schema/build-context";
 
 describe('Select Fields', () => {
     let info;
@@ -95,6 +96,7 @@ describe('Select Fields', () => {
         router.query('sampleArrayQuery', 'SampleResolver.sampleArrayQuery');
         router.query('stringQuery', 'SampleResolver.stringQuery');
 
+        BuildContext.middlewareStore.register([]);
         schema = await buildSchema({
             router,
             container

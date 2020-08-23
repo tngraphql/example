@@ -10,12 +10,14 @@ import {belongsTo, column, hasOne, morphTo} from "@tngraphql/lucid/build/src/Orm
 import {DateTime} from "luxon";
 import {Str} from "../../../lib/Str";
 import CategoryModel from "../Category/CategoryModel";
-import {PostModel} from "../Post/Models/PostModel";
+import {PostModel} from "../Post/PostModel";
 import {ProductMasterModel} from "../Product/Models/ProductMasterModel";
 import TagModel from "../Tag/TagModel";
 import {ProductTypeModel} from "../Product/Models/ProductTypeModel";
 import {MenuModel} from "./MenuModel";
 import {BelongsTo, MorphTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import {PageModel} from "../Post/PageModel";
+import {MenuItemTypeEnumType} from "./Types/Enum/MenuItemTypeEnumType";
 
 export class MenuItemModel extends BaseModel {
     static table = 'menu_items';
@@ -61,11 +63,12 @@ export class MenuItemModel extends BaseModel {
 
     public static boot() {
         this.morphMap({
-            category: () => CategoryModel,
-            post: () => PostModel,
-            productMaster: () => ProductMasterModel,
-            productType: () => ProductTypeModel,
-            tag: () => TagModel
+            [MenuItemTypeEnumType.category]: () => CategoryModel,
+            [MenuItemTypeEnumType.post]: () => PostModel,
+            [MenuItemTypeEnumType.page]: () => PageModel,
+            [MenuItemTypeEnumType.product]: () => ProductMasterModel,
+            [MenuItemTypeEnumType.productType]: () => ProductTypeModel,
+            [MenuItemTypeEnumType.tag]: () => TagModel
         });
 
         this.addGlobalScope('defaultSelect', query => {

@@ -5,6 +5,7 @@
  * Time: 1:59 PM
  */
 const slug = require('sluglife');
+const uuid = require('uuid');
 
 export class Str {
     public static slug(str: string, options: { [key: string]: any } = { lower: true }): string {
@@ -30,5 +31,13 @@ export class Str {
             return val;
         }
         return String(val);
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    public static uuid(): string {
+        return uuid.v4();
     }
 }

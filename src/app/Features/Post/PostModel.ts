@@ -8,15 +8,15 @@ import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {belongsTo, column, hasMany, hasOne, manyToMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
 import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import CategoryModel from "../../Category/CategoryModel";
+import CategoryModel from "../Category/CategoryModel";
 import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import TagModel from "../../Tag/TagModel";
-import {UserModel} from "../../../UserModel";
+import TagModel from "../Tag/TagModel";
+import {UserModel} from "../../UserModel";
 import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
 import PostmetaModel from "./PostmetaModel";
-import {LanguageMixin} from "../../../../lib/LanguageMixin";
-import {converBoolean} from "../../../../lib/utils";
-import {Str} from "../../../../lib/Str";
+import {LanguageMixin} from "../../../lib/LanguageMixin";
+import {converBoolean} from "../../../lib/utils";
+import {Str} from "../../../lib/Str";
 
 
 class PostModel extends BaseModel {

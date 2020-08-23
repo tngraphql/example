@@ -6,7 +6,7 @@
  */
 import {Inject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {PostModel} from "../Models/PostModel";
+import {PostModel} from "../PostModel";
 import {ResolveAuth} from "../../../../decorators/ResolveAuth";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {PostCreateArgsType} from "../Types/Post/PostCreateArgsType";
@@ -35,7 +35,9 @@ export class PostRepository extends BaseRepository<PostModel> {
     }
 
     async create(data: PostCreateArgsType): Promise<PostModel> {
-        data.authorId = await this.auth.id();
+        if (await this.auth.check()) {
+            data.authorId = await this.auth.id();
+        }
 
         return this.transaction(async () => {
             if ( data.postStatus === PostStatusEnumType.publish ) {

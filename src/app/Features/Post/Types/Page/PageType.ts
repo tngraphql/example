@@ -3,19 +3,19 @@ import {DateTime} from "luxon";
 import {ID} from "../../../../GraphQL/Types/UidScalerType";
 import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
 import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
-import {PostModel} from "../../PostModel";
+import {PageModel} from "../../PageModel";
 import {CategoryType} from "../../../Category/Types/CategoryType";
 import {UserType} from "../../../../GraphQL/Types/User/UserType";
 import {TagType} from "../../../Tag/Types/TagType";
-import {PostMetaType} from "./PostMetaType";
-import {PostOtherLanguageType} from "./PostOtherLanguageType";
+import {PageMetaType} from "./PageMetaType";
+import {PageOtherLanguageType} from "./PageOtherLanguageType";
 import {Str} from "../../../../../lib/Str";
 import {ContentFormatEnumType} from "../../../../GraphQL/Types/ContentFormatEnumType";
 import {htmlField} from "../../../../../lib/utils";
 import {GraphQLString} from "graphql";
 import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
-import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
-import {PostStatusEnumType} from "./PostStatusEnumType";
+import {PageStatusEnumType} from "./PageStatusEnumType";
+import {PostCommentStatusEnumType} from "../Post/PostCommentStatusEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -24,24 +24,15 @@ import {PostStatusEnumType} from "./PostStatusEnumType";
  * Time: 4:54 PM
  */
 
-@ObjectType('Post')
-export class PostType {
-    static model = PostModel
+@ObjectType('Page')
+export class PageType {
+    static model = PageModel
 
     @Field(returns => ID)
     public id: string
 
-    @Field(returns => Int, {description: 'Format'})
-    public format: number;
-
     @Field({description: 'Tên bài viết'})
     public name: string;
-
-    @Field({description: 'Nổi bật',})
-    public isFeatured: boolean;
-
-    @Field({description: 'Lượt view'})
-    public views: number;
 
     @Field(returns => ID, {description: 'ID tác giả bài viết'})
     public authorId: string;
@@ -83,7 +74,7 @@ export class PostType {
             return htmlField(parent.description, args);
         }
 
-        if ( parent.feesPost ) {
+        if ( parent.feesPage ) {
             return htmlField(parent.description, args);
         }
 
@@ -105,12 +96,6 @@ export class PostType {
         return htmlField(parent.content, {maxLength, format});
     };
 
-    @Field(returns => [CategoryType], {description: 'Danh mục bài viết '})
-    public categories: CategoryType[];
-
-    @Field(returns => [TagType], { description: 'Danh sách thẻ tag'})
-    public tags: TagType[];
-
     @Field(returns => UserType, {description: 'Tác giả bài viết.'})
     public author: UserType;
 
@@ -129,7 +114,7 @@ export class PostType {
     @Field(returns => PostCommentStatusEnumType, {description: 'Trạng thái được phép bình luận bài viết'})
     public commentStatus: string;
 
-    @Field(returns => PostStatusEnumType, {description: 'Trạng thái bài viết'})
+    @Field(returns => PageStatusEnumType, {description: 'Trạng thái bài viết'})
     public postStatus: string;
 
     @Field(returns => GraphQLString, {description: 'Mật khẩu bài post',})
@@ -153,8 +138,8 @@ export class PostType {
     @Field({description: 'Seo keyword'})
     public seoKeyword: string;
 
-    @Field(returns => [PostMetaType], {description: 'Trường tùy chỉnh.'})
-    public meta: PostMetaType[];
+    @Field(returns => [PageMetaType], {description: 'Trường tùy chỉnh.'})
+    public meta: PageMetaType[];
 
     @Field(returns => ID, {description: 'ID ngôn ngữ '})
     public language: string;
@@ -162,8 +147,8 @@ export class PostType {
     @Field(returns => ID, {description: 'ID ngôn ngữ được tạo ra đầu tiên'})
     public languageMaster: string;
 
-    @Field(returns => [PostOtherLanguageType], {description: 'Những ngôn ngữ khác'})
-    public otherLanguages: PostOtherLanguageType[];
+    @Field(returns => [PageOtherLanguageType], {description: 'Những ngôn ngữ khác'})
+    public otherLanguages: PageOtherLanguageType[];
 
     @Field(returns => TimestampScalarType, {description: 'Thời gian xuất bản'})
     public publishedAt: DateTime
@@ -178,4 +163,4 @@ export class PostType {
     public deletedAt: DateTime
 }
 
-registerPaginateType(PostType);
+registerPaginateType(PageType);

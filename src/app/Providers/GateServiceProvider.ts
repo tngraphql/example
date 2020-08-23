@@ -6,7 +6,7 @@
  */
 import {Service, ServiceProvider} from "@tngraphql/illuminate";
 import {Gate, Guard} from "@slynova/fence";
-import {PostModel} from "../Features/Post/Models/PostModel";
+import {PostModel} from "../Features/Post/PostModel";
 import {UserModel} from "../UserModel";
 
 Guard.prototype['any'] = function (any) {

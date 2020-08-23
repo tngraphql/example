@@ -1,6 +1,6 @@
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Str} from "../../../../lib/Str";
+import {Str} from "../../../lib/Str";
 
 /**
  * Created by Phan Trung Nguyên.

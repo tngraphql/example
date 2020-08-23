@@ -16,7 +16,7 @@ Factory.blueprint('post_category', async (faker, index, data) => {
         post_id = post.id;
     }
 
-    if (category_id) {
+    if (!category_id) {
         const category = await Factory.model('App/Features/Category/CategoryModel').create();
         category_id = category.id;
     }

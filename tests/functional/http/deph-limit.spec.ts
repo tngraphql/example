@@ -17,10 +17,12 @@ describe('deph limit', () => {
     let server: any;
     let app: Application;
     let config;
+    let defaultDepthLimit;
 
     before(async () => {
         app = Application.getInstance<Application>()
         config = app.config.get('app');
+        defaultDepthLimit = config.depthLimit;
 
         server = await createServer();
         client = createTestClient(server) as ApolloServerTestClient;
@@ -34,6 +36,7 @@ describe('deph limit', () => {
     afterEach(async () => {
         await resetTables();
         authContext(null);
+        config.depthLimit = defaultDepthLimit;
     });
 
     describe('panginate', () => {
