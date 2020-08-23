@@ -33,8 +33,9 @@ export class RouteServiceProvider extends RoutingServiceProvider {
      * @return void
      */
     public map() {
-        this.mapDefaultRouter();
-        // this.mapMutationRouter();
+        if (!this.app.runCmd) {
+            this.mapDefaultRouter();
+        }
     }
 
     protected mapDefaultRouter() {

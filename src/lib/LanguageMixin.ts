@@ -5,7 +5,7 @@
  * Time: 9:48 PM
  */
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import LanguageModel from "../app/Models/LanguageModel";
+import {LanguageModel} from "../app/Features/Language/LanguageModel";
 import {LucidRow} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 import {hasMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
 

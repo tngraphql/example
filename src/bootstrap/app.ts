@@ -24,6 +24,7 @@ import { Kernel as GraphQLKernel } from '../app/GraphQL/Kernel';
 // console.log = trace;
 
 const app = new Application(path.join(__dirname , '../'));
+app.runCmd = false;
 
 app.singleton('Illuminate/Foundation/GraphQL/Kernel', GraphQLKernel);
 

@@ -5,7 +5,7 @@
  * Time: 3:34 PM
  */
 import {MiddlewareInterface, NextFn} from "@tngraphql/graphql";
-import LanguageModel from "../../Models/LanguageModel";
+import {LanguageModel} from "../../Features/Language/LanguageModel";
 
 export class LanguageMiddleware implements MiddlewareInterface<{ lang: any }> {
     public async handle({context, info}, next: NextFn, args: any): Promise<any> {

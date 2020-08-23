@@ -51,6 +51,6 @@ after(async () => {
     // await cleanup();
 });
 
-beforeEach(async () => {
+afterEach(async () => {
     await ConfigOptions.clearCache();
 });
