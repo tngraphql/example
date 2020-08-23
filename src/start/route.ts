@@ -20,13 +20,26 @@ Route.mutation('login', 'ExampleResolve.login')
 // Route.query('sentmail', 'ExampleResolve.sentmail')
 
 
+// Route.query('optionDiscussion', 'OptionResolve.optionDiscussion');
+// Route.query('optionEmail', 'OptionResolve.optionEmail');
+// Route.query('optionGeneral', 'OptionResolve.optionGeneral');
+// Route.query('optionLanguage', 'OptionResolve.optionLanguage');
+// Route.query('options', 'OptionResolve.options');
+//
+//
+// Route.mutation('optionDiscussionUpdate', 'OptionResolve.optionDiscussionUpdate');
+// Route.mutation('optionEmailUpdate', 'OptionResolve.optionEmailUpdate');
+// Route.mutation('optionGeneralUpdate', 'OptionResolve.optionGeneralUpdate');
+// Route.mutation('optionSocialUpdate', 'OptionResolve.optionSocialUpdate');
+// Route.mutation('optionThemeUpdate', 'OptionResolve.optionThemeUpdate');
+//
+//
 // Route.query('profile', 'UserResolve.profile')
 // Route.resource('user', 'UserResolve')
 //
-//
 // Route.resource('role', 'RoleResolve')
 // Route.resource('permission', 'PermissionResolve')
-//
+
 // Route.resource('tag', 'TagResolve')['modules']('Tag');
 //
 // Route.group(() => {
@@ -79,3 +92,4 @@ Route.mutation('login', 'ExampleResolve.login')
 Route.group(() => {
     Route.resource('language', 'LanguageResolve');
 })['modules']('Language');
+

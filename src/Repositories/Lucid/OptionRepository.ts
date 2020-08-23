@@ -36,4 +36,10 @@ export class OptionRepository extends BaseRepository<OptionModel> {
             await ConfigOptions.init();
         });
     }
+
+    public getAllOptions() {
+        return this.newQuery().exec().then(data => {
+            return _.mapValues(_.keyBy(data, 'name'), 'value');
+        });
+    }
 }
