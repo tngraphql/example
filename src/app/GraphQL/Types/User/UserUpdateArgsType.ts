@@ -33,7 +33,6 @@ export class UserUpdateArgsType {
     @Field({description: 'Ảnh đại diện'})
     public avatar: string
 
-    // @ts-ignore
     @Field(returns => GenderEnumType, {description: 'giới tính: 1-Nam, 2-Nữ', defaultValue: '1'})
     public gender: GenderEnumType
 

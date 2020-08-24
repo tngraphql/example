@@ -5,6 +5,7 @@ import {RoleType} from "../Role/RoleType";
 import {DateTime} from "luxon";
 import {TimestampScalarType} from "../TimestampScalarType";
 import {ID} from "../UidScalerType";
+import {GenderEnumType} from "../GenderEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -23,22 +24,25 @@ export class UserType {
     @Field({description: 'Token login.'})
     public token?: string
 
-    @Field()
+    @Field({description: 'Số điện thoại'})
     public phone: string;
 
-    @Field()
+    @Field({description: 'Họ và Tên'})
     public name: string;
 
-    @Field()
+    @Field(returns => [RoleType], {description: 'Quyền'})
+    roles: RoleType[]
+
+    @Field({description: 'Ảnh đại diện'})
     public avatar: string;
 
-    @Field()
-    public dob: string;
+    @Field(returns => TimestampScalarType, {description: 'Ngày sinh'})
+    public dob: DateTime;
 
-    @Field()
+    @Field({description: 'Email người dùng'})
     public email: string;
 
-    @Field()
+    @Field(returns => GenderEnumType, {description: 'Giới tính'})
     public gender: string;
 
     @Field(returns => TimestampScalarType)
@@ -49,9 +53,6 @@ export class UserType {
 
     @Field(returns => TimestampScalarType)
     public deletedAt: DateTime;
-
-    @Field(returns => [RoleType])
-    roles: RoleType[]
 }
 
 registerPaginateType(UserType);

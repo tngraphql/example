@@ -5,5 +5,6 @@
 	"The selected id does not exist or has been deleted.": "id đã chọn không tồn tại hoặc đã bị xóa.",
 	"You are trying to favorite a post that doesn't exist.": "You are trying to favorite a post that doesn't exist.",
 	"Phone format is invalid.": "Phone format is invalid.",
-	"Phone format is invalid.123": "Phone format is invalid.123"
+	"Phone format is invalid.123": "Phone format is invalid.123",
+	"Please select a role.": "Please select a role."
 }

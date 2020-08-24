@@ -25,6 +25,9 @@ import {UserResetPasswordArgsType} from "../Types/User/UserResetPasswordArgsType
 import {UserProfileArgsType} from "../Types/User/UserProfileArgsType";
 import {UserUpdateArgsType} from "../Types/User/UserUpdateArgsType";
 import {UserChangePasswordArgsType} from "../Types/User/UserChangePasswordArgsType";
+import {Resource} from "../../../lib/Resource";
+import {UserDeleteArgsType} from "../Types/User/UserDeleteArgsType";
+
 Gate.define('admin', (user, resource) => {
     console.log({resource});
     return true;
@@ -72,6 +75,7 @@ export class UserResolve extends BaseResolve {
     }
 
     @Mutation(returns => UserType, {description: 'Tạo mới tài khoản'})
+    @ValidateArgs(UserCreateArgsType)
     @UseMiddleware('auth')
     async create(@Args() args: UserCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.create(args);
@@ -82,6 +86,7 @@ export class UserResolve extends BaseResolve {
     }
 
     @Mutation(returns => UserType, {description: 'Cập nhật người dùng'})
+    @ValidateArgs(UserUpdateArgsType)
     @UseMiddleware('auth')
     async update(@Args() args: UserUpdateArgsType, @SelectFields() fields) {
         const instance = await this.repo.update(args, args.id);
@@ -93,8 +98,8 @@ export class UserResolve extends BaseResolve {
 
     @Mutation(returns => DeleteType)
     @UseMiddleware('auth')
-    async delete() {
-
+    async delete(@Args() args: UserDeleteArgsType, @Ctx() ctx) {
+        return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 
     @Mutation(returns => UserType, {description: 'Cập nhật thông tin cá nhân'})
