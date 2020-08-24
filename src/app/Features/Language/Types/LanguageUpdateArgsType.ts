@@ -4,11 +4,12 @@
  * Date: 6/10/2020
  * Time: 7:43 PM
  */
-import {ArgsType, Field} from "@tngraphql/graphql";
+import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {Rules} from "@tngraphql/illuminate";
 import {ID} from "../../../GraphQL/Types/UidScalerType";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import {LanguageModel} from "../LanguageModel";
+import {LanguageStatusEnumType} from "./LanguageStatusEnumType";
 
 @ArgsType()
 export class LanguageUpdateArgsType {
@@ -19,19 +20,54 @@ export class LanguageUpdateArgsType {
     ])
     public id: string
 
-    @Field({description: 'Tên thẻ nhãn'})
-    @Rules(args => ([
+    @Field({description: 'Têm ngôn ngữ'})
+    @Rules([
         'filled',
-        'between:2,255',
-        Rule.unique(LanguageModel.getTable(), 'name').ignore(args.id)
-    ]))
+        'max:500'
+    ])
     public name: string
 
-    @Field({description: 'slug là phiên bản thân thiện với URL của tên.'})
+    @Field({description: 'Mã ngôn ngữ vi_VN '})
     @Rules(args => ([
         'filled',
         'alpha_dash',
-        Rule.unique(LanguageModel.getTable(), 'slug').ignore(args.id)
+        'max:20',
+        Rule.unique(LanguageModel.getTable(), 'locale').ignore(args.id)
     ]))
-    public slug: string
+    public locale: string
+
+    @Field({description: 'Mã ngôn ngữ '})
+    @Rules(args => ([
+        'filled',
+        'alpha_dash',
+        'max:20',
+        Rule.unique(LanguageModel.getTable(), 'code').ignore(args.id)
+    ]))
+    public code: string
+
+    @Field(returns => Int,{description: '1: left to right, 2 right to left'})
+    @Rules([
+        'filled',
+        'max:3',
+        'in:1,2'
+    ])
+    public direction: number
+
+    @Field({description: 'Lá cờ'})
+    @Rules([
+        'filled'
+    ])
+    public flag: string
+
+    @Field(returns => Int,{description: 'Vị trí'})
+    @Rules([
+        'max:10'
+    ])
+    public position: number
+
+    @Field({description: 'Có đặt ngôn ngữ hiện tại làm ngôn ngữ mặc định không?'})
+    public default: boolean
+
+    @Field(returns => LanguageStatusEnumType)
+    public status: LanguageStatusEnumType
 }

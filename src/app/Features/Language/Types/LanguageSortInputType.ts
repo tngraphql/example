@@ -11,17 +11,35 @@ import {SortEnumType} from "../../../GraphQL/Types/SortEnumType";
 @InputType('LanguageSort')
 export class LanguageSortInputType {
     @Field(returns => SortEnumType)
-    id: SortEnumType
+    public id: SortEnumType
 
     @Field(returns => SortEnumType)
-    name: SortEnumType
+    public name: SortEnumType
 
     @Field(returns => SortEnumType)
-    slug: SortEnumType
+    public locale: SortEnumType
 
     @Field(returns => SortEnumType)
-    createdAt: SortEnumType
+    public code: SortEnumType
 
     @Field(returns => SortEnumType)
-    updatedAt: SortEnumType
+    public direction: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public flag: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public position: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public default: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public createdAt: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public updatedAt: SortEnumType
+
+    @Field(returns => SortEnumType)
+    public deletedAt: SortEnumType
 }

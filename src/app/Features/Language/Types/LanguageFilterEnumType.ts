@@ -11,9 +11,16 @@ import {registerFilterEnumType} from "../../../GraphQL/Types/FilterType";
 enum LanguageFilterEnumType {
     id = 'id',
     name = 'name',
-    slug = 'slug',
+    locale = 'locale',
+    code = 'code',
+    direction = 'direction',
+    flag = 'flag',
+    position = 'position',
+    default = 'default',
     createdAt = 'createdAt',
     updatedAt = 'updatedAt',
+    deletedAt = 'deletedAt',
+
 }
 
 registerFilterEnumType('Language', LanguageFilterEnumType);
