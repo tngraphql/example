@@ -16,6 +16,7 @@ import {CommentRepository} from "../CommentRepository";
 import {CommentPostCreateArgsType} from "../Types/CommentPostCreateArgsType";
 import {CommentPostUpdateArgsType} from "../Types/CommentPostUpdateArgsType";
 import {CommentableEnumType} from "../Types/CommentableEnumType";
+import {ISelection} from "../../../../Contracts/SelectionCriteriaContract";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -38,7 +39,7 @@ export class CommentResolve extends BaseResolve {
     }
 
     @Query(returns => paginateType(CommentType))
-    async list(@Args() args: CommentListArgsType, @SelectFields() fields, @Ctx() context) {
+    async list(@Args() args: CommentListArgsType, @SelectFields() fields: ISelection, @Ctx() context) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));

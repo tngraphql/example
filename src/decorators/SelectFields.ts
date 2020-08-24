@@ -62,6 +62,7 @@ export function getField(fields, model: LucidModel): ISelection {
                 result.push(field);
                 continue;
             }
+
             result.push(model.qualifyColumn(model.primaryKey));
 
             if (model.$hasColumn(field)) {
@@ -84,10 +85,18 @@ export function getField(fields, model: LucidModel): ISelection {
             if (model.$hasRelation(field)) {
                 const relation: any = getRelation(model, field);
 
-                const relatedModel = relation.relatedModel();
+                let relatedModel = relation.relatedModel();
                 result.push(model.qualifyColumn(relation.localKey));
                 if (['belongsTo'].includes(relation.type)) {
                     result.push(model.qualifyColumn(relation.foreignKey));
+                }
+
+                if (relation.type === 'morphTo') {
+                    preloads.push({
+                        name: field
+                    });
+
+                    continue;
                 }
 
                 preloads.push({
