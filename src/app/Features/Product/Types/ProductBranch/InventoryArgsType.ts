@@ -16,7 +16,7 @@ export class InventoryArgsType {
     @Field(returns => ID)
     @Rules([
         'required',
-        Rule.exists(InventoryModel.getTable(), 'id')
+        Rule.exists(InventoryModel.getTable(), 'product_branch_id')
     ], ({lang}) => ({'exists': lang.t('The selected id does not exist or has been deleted.')}))
     public productBranchId: string;
 
