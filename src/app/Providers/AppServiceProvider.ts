@@ -12,6 +12,7 @@ import {Database} from "@tngraphql/lucid";
 import {DateTime} from "luxon";
 import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
 import {PostModel} from "../Features/Post/PostModel";
+import {TransactionClient} from "@tngraphql/lucid/build/src/TransactionClient";
 
 export class AppServiceProvider extends ServiceProvider {
     register(): void {
@@ -22,6 +23,8 @@ export class AppServiceProvider extends ServiceProvider {
 
             return `${this.toISODate(opts)}T${this.toISOTime(opts)}`;
         }
+
+        TransactionClient.defaultMaxListeners = 30;
 
         Relation.morphMap({
             'post': () => PostModel,
