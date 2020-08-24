@@ -8,6 +8,7 @@ import {PostStatusEnumType} from "./PostStatusEnumType";
 import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {GraphQLString} from "graphql";
 import CategoryModel from "../../../Category/CategoryModel";
+import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -32,13 +33,13 @@ export class PostUpdateArgsType {
     ]))
     public name?: string
 
-    @Field({description: 'Format'})
+    @Field(returns => Int,{description: 'Format'})
     public format?: number;
 
     @Field({description: 'Hình đại diện'})
     public avatar?: string;
 
-    @Field({description: 'Trạng thái của bài viết.',})
+    @Field(returns => ID, {description: 'Trạng thái của bài viết.',})
     public thumbnailId?: string;
 
     @Field(returns => PostStatusEnumType, {defaultValue: 'publish', description: 'Trạng thái của bài viết.',})
@@ -59,10 +60,10 @@ export class PostUpdateArgsType {
     @Field({description: 'Slug'})
     public slug?: string;
 
-    @Field({description: 'Mô tả'})
+    @Field(returns => HTML, {description: 'Mô tả'})
     public description?: string;
 
-    @Field({description: 'Nội dung',})
+    @Field(returns => HTML, {description: 'Nội dung',})
     @Rules(['filled'])
     public content?: string;
 

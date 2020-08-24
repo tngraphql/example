@@ -9,6 +9,7 @@ import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {GraphQLString} from "graphql";
 import {DateTime} from "luxon";
 import CategoryModel from "../../../Category/CategoryModel";
+import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -26,13 +27,13 @@ export class PostCreateArgsType {
     ]))
     public name: string
 
-    @Field({description: 'Format'})
+    @Field(returns => Int, {description: 'Format'})
     public format: number;
 
     @Field({description: 'Hình đại diện'})
     public avatar: string;
 
-    @Field({description: 'Trạng thái của bài viết.',})
+    @Field(returns => ID, {description: 'Trạng thái của bài viết.',})
     public thumbnailId: string;
 
     @Field(returns => PostStatusEnumType, {defaultValue: 'publish', description: 'Trạng thái của bài viết.',})
@@ -64,10 +65,10 @@ export class PostCreateArgsType {
     })
     public parentId: string = '0';
 
-    @Field({description: 'Mô tả'})
+    @Field(returns => HTML, {description: 'Mô tả'})
     public description: string;
 
-    @Field({description: 'Nội dung',})
+    @Field(returns => HTML, {description: 'Nội dung',})
     @Rules(['required'])
     public content: string;
 

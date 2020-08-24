@@ -13,8 +13,8 @@ import CategoryModel from "../../Category/CategoryModel";
  */
 
 @ArgsType()
-export class CategoryUpdateArgsType {
-    @Field(returns => ID, {description: 'ID. contact'})
+export class CommentUpdateArgsType {
+    @Field( {description: 'ID. contact'})
     @Rules([
         'required',
         Rule.exists(CategoryModel.getTable(), 'id')

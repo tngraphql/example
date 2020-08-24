@@ -1,6 +1,5 @@
 import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
 import CommentModel from "../CommentModel";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import {CommentStatusEnumType} from "./CommentStatusEnumType";
@@ -15,7 +14,7 @@ import {CommentableEnumType} from "./CommentableEnumType";
 
 @ArgsType()
 export class CommentPostUpdateArgsType {
-    @Field(returns => ID, {description: 'ID bình luận.',})
+    @Field({description: 'ID bình luận.',})
     @Rules(args => [
         'required',
         Rule.exists(CommentModel.getTable(), 'id').where('commentable_type', CommentableEnumType.post)

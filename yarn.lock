@@ -416,10 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.8.tgz#78b4c3ff10c2c2ab4e5848abe400b08af351d111"
-  integrity sha512-+Dm3LfmQ6d0PzKt73IfsXg9R/D1BtRh17ZGcCHdlvstPuBcRQIt92+D15VeKGSjcwAbv7v335JUHXStFobECGQ==
+"@tngraphql/illuminate@^1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.9.tgz#75d37d053f5390c56dbbda37d8ca115941d3afbf"
+  integrity sha512-Roy/G3hPrOUcDFKmAp1xFePrymud3B3b1kimRw9ZVA2iD7n3lQoBOCvTgIkYjZzWpObEzKtm9TSoq5XljOtQgg==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"
@@ -446,10 +446,10 @@
     uuid "^7.0.3"
     validatorjs "^3.18.1"
 
-"@tngraphql/lucid@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.19.tgz#311b9c32e8577c839d972a25a19315b0b561a42a"
-  integrity sha512-Hj3KdETimz7cDP3EfJHKRFN7ehJEFiIXmpQ41rHWfgleIBaEn2N2D6VpahZbRyBGDBamKmArj3XxXo/X+fGsiA==
+"@tngraphql/lucid@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.20.tgz#be9a201c9e14221b2526ec9215b89d536fa057ef"
+  integrity sha512-FT7qhk7+VjoIz92/XSpmRtWgLcs2+1zsiA60GXKjhfkRpLY0AK0lwFH4PUVHU6J8oKo5d4gudr62k/MNBWUgdw==
   dependencies:
     "@poppinss/hooks" "^1.0.5"
     "@poppinss/utils" "^2.2.0"
