@@ -39,7 +39,7 @@ export class FavoriteResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().first();
+        return this.repo.first();
     }
 
     @Query(returns => paginateType(FavoriteType))
@@ -48,7 +48,7 @@ export class FavoriteResolve extends BaseResolve {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.query().paginate(args.limit, args.page);
+        return this.repo.paginate(args.limit, args.page);
     }
 
     @Query(returns => paginateType(FavoriteType), {description: 'Danh sách yêu thích của người dùng'})
@@ -67,7 +67,7 @@ export class FavoriteResolve extends BaseResolve {
                 }
             ].filter(x => !!x)
         }));
-        return this.repo.query().paginate(args.limit, args.page);
+        return this.repo.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => FavoriteType, {description: 'Tạo mới tài khoản'})

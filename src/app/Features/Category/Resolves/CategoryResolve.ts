@@ -33,7 +33,7 @@ export class CategoryResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().first();
+        return this.repo.first();
     }
 
     @Query(returns => paginateType(CategoryType))
@@ -42,7 +42,7 @@ export class CategoryResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().paginate(1000, args.page);
+        return this.repo.paginate(1000, args.page);
     }
 
     @Mutation(returns => CategoryType, {description: 'Tạo mới tài khoản'})

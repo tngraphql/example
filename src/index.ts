@@ -16,6 +16,17 @@ import { GraphQLExceptions } from './app/Exceptions/GraphQLExceptions';
 
 const app: Application = require('./bootstrap/app');
 
+const log = console.log;
+function trace() {
+    try {
+        throw new Error();
+    } catch (e) {
+        log.apply(log, [e.stack.split('\n')[2].trim(),'\n', ...arguments]);
+    }
+}
+
+console.log = trace;
+
 async function main() {
     console.time();
     app.autoload(path.join(app.getBasePath(), 'app'), 'App');

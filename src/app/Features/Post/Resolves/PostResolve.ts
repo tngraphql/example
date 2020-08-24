@@ -33,7 +33,7 @@ export class PostResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().first();
+        return this.repo.first();
     }
 
     @Query(returns => paginateType(PostType))
@@ -44,7 +44,7 @@ export class PostResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().paginate(args.limit, args.page);
+        return this.repo.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => PostType, {description: 'Tạo mới tài khoản'})

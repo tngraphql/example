@@ -16,6 +16,7 @@ import {GraphQLString} from "graphql";
 import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
 import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {PostStatusEnumType} from "./PostStatusEnumType";
+import {MediaType} from "../../../Media/Types/MediaType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -55,9 +56,8 @@ export class PostType {
     @Field(returns => ID)
     public thumbnailId: string;
 
-    // todo chưa có thumbnail
-    @Field()
-    public thumbnail: string;
+    @Field(returns => MediaType)
+    public thumbnail: MediaType;
 
     @Field()
     public slug(@Root() parent): string {

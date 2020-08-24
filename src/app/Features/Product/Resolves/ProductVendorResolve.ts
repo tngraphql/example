@@ -34,7 +34,7 @@ export class ProductVendorResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().first();
+        return this.repo.first();
     }
 
     @Query(returns => paginateType(ProductVendorType))
@@ -43,7 +43,7 @@ export class ProductVendorResolve extends BaseResolve {
         this.repo.pushCriteria(new FilterCriteria(args.filter));
         this.repo.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.query().paginate(args.limit, args.page);
+        return this.repo.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => ProductVendorType, {description: 'Tạo mới tài khoản'})

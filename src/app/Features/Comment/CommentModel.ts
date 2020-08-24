@@ -68,11 +68,10 @@ export default class CommentModel extends BaseModel {
         this.uses([SoftDeletes]);
     }
 
-    @hasOne(() => UserModel, {
-        localKey: 'authorId',
-        foreignKey: 'id'
+    @belongsTo(() => UserModel, {
+        foreignKey: 'authorId'
     })
-    public author: HasOne<typeof UserModel>
+    public author: BelongsTo<typeof UserModel>
 
     @morphTo({
         type: 'commentableType',

@@ -98,9 +98,6 @@ export function getField(fields, model: LucidModel): ISelection {
         }
     }
 
-    console.log(Array.from(new Set(result)));
-
-
     return {
         columns: Array.from(new Set(result)),
         preloads
