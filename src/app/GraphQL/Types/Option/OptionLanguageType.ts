@@ -4,7 +4,7 @@
  * Date: 8/23/2020
  * Time: 9:57 AM
  */
-import {Field, Int, InterfaceType, ObjectType} from "@tngraphql/graphql";
+import {Field, Int, InterfaceType, ObjectType, Root} from "@tngraphql/graphql";
 import {ID} from "../UidScalerType";
 
 @ObjectType('OptionLanguage')
@@ -14,7 +14,9 @@ export class OptionLanguageType {
     public defaultLanguage: string;
 
     @Field({ description: 'Ẩn ngôn ngữ mặc định khỏi url'})
-    public hideDefaultLanguage: boolean;
+    public hideDefaultLanguage(@Root() parent): boolean {
+        return !! Number(parent.hideDefaultLanguage);
+    }
 
     @Field(returns => Int,{description: 'Hiển thị ngôn ngữ: 1- all name and flag, 2: name only, 3: flag only'})
     public displayLanguage: number;
@@ -23,6 +25,8 @@ export class OptionLanguageType {
     public hideLanguage: string[];
 
     @Field({description: 'Show ra ngôn ngữ mặc định nếu nó không tồn tại trong ngôn ngữ hiện tại.'})
-    public showItemDefaultLanguage: boolean;
+    public showItemDefaultLanguage(@Root() parent): boolean {
+        return !! Number(parent.showItemDefaultLanguage);
+    }
 
 }

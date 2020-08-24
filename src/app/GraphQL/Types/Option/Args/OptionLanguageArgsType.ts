@@ -9,7 +9,7 @@ import { ID } from '../../UidScalerType';
 
 @ArgsType()
 export class OptionLanguageArgsType {
-    @Field({description: 'Ngôn ngữ mặc định'})
+    @Field(returns => ID, {description: 'Ngôn ngữ mặc định'})
     public defaultLanguage: string;
 
     @Field({ description: 'Ẩn ngôn ngữ mặc định khỏi url'})
@@ -19,9 +19,10 @@ export class OptionLanguageArgsType {
     public displayLanguage: number;
 
     @Field(returns => [ID],{description: 'Ẩn ngôn ngữ ( Ẩn các ngôn ngữ mà bạn không muốn hiển thị hoặc đang trong quá trình dịch )'})
-    public hideLanguage: string[];
+    public hideLanguage(value): string {
+        return JSON.stringify(value);
+    }
 
     @Field({description: 'Show ra ngôn ngữ mặc định nếu nó không tồn tại trong ngôn ngữ hiện tại.'})
     public showItemDefaultLanguage: boolean;
-
 }

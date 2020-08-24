@@ -20,6 +20,9 @@ import {OptionSocialArgsType} from "../Types/Option/Args/OptionSocialArgsType";
 import {OptionThemeType} from "../Types/Option/OptionThemeType";
 import {OptionThemeArgsType} from "../Types/Option/Args/OptionThemeArgsType";
 import {OptionLanguageType} from "../Types/Option/OptionLanguageType";
+import {OptionLanguageArgsType} from "../Types/Option/Args/OptionLanguageArgsType";
+import {ConfigOptions} from "../../../lib/ConfigOptions";
+import {convertHtmlToJson} from "../../../lib/utils";
 
 const {omit} = require('lodash');
 
@@ -30,7 +33,7 @@ export class OptionResolve extends BaseResolve {
 
     @Query(returns => OptionDiscussionType, {description: 'Cài đặt bình luận'})
     async optionDiscussion() {
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Query(returns => OptionEmailType, {description: 'Cài đặt email'})
@@ -39,22 +42,22 @@ export class OptionResolve extends BaseResolve {
             return omit(await this.repo.getAllOptions(), 'SMTPPassword');
         }
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Query(returns => OptionGeneralType, {description: 'Cài đặt chung'})
     async optionGeneral() {
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Query(returns => OptionLanguageType, {description: 'Cài đặt ngôn ngữ'})
     async optionLanguage() {
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Query(returns => OptionsType, {description: 'Cài đặt'})
     async options() {
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Mutation(returns => OptionDiscussionType, {
@@ -63,7 +66,7 @@ export class OptionResolve extends BaseResolve {
     async optionDiscussionUpdate(@Args() args: OptionDiscussionArgsType, @Ctx() context) {
         await this.repo.saveSetting(args);
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Mutation(returns => OptionEmailType, {
@@ -72,7 +75,7 @@ export class OptionResolve extends BaseResolve {
     async optionEmailUpdate(@Args() args: OptionEmailArgsType, @Ctx() context) {
         await this.repo.saveSetting(args);
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Mutation(returns => OptionGeneralType, {
@@ -81,7 +84,7 @@ export class OptionResolve extends BaseResolve {
     async optionGeneralUpdate(@Args() args: OptionGeneralArgsType, @Ctx() context) {
         await this.repo.saveSetting(args);
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Mutation(returns => OptionSocialType, {
@@ -90,16 +93,29 @@ export class OptionResolve extends BaseResolve {
     async optionSocialUpdate(@Args() args: OptionSocialArgsType, @Ctx() context) {
         await this.repo.saveSetting(args);
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
     @Mutation(returns => OptionThemeType, {
         description: 'Cập nhật giao diện website'
     })
     async optionThemeUpdate(@Args() args: OptionThemeArgsType, @Ctx() context) {
+        if ( args.metaHeadHTML ) {
+            args.metaHeadJSON = JSON.stringify(convertHtmlToJson(args.metaHeadHTML));
+        }
+        if ( args.metaFooterHTML ) {
+            args.metaFooterJSON = JSON.stringify(convertHtmlToJson(args.metaFooterHTML));
+        }
+
         await this.repo.saveSetting(args);
 
-        return this.repo.getAllOptions();
+        return ConfigOptions.getOptions();
     }
 
+    @Mutation(returns => OptionLanguageType, {description: 'Cập nhật cài đặt ngôn ngữ'})
+    async languageConfigUpdate(@Args() args: OptionLanguageArgsType) {
+        await this.repo.saveSetting(args);
+
+        return ConfigOptions.getOptions();
+    }
 }

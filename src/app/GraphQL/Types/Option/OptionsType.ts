@@ -65,4 +65,15 @@ export class OptionsType {
     public autoRegister(@Root() parent): boolean {
         return !! parent.autoRegister;
     }
+
+    // language
+    @Field({ description: 'Ẩn ngôn ngữ mặc định khỏi url'})
+    public hideDefaultLanguage(@Root() parent): boolean {
+        return !! Number(parent.hideDefaultLanguage);
+    }
+
+    @Field({description: 'Show ra ngôn ngữ mặc định nếu nó không tồn tại trong ngôn ngữ hiện tại.'})
+    public showItemDefaultLanguage(@Root() parent): boolean {
+        return !! Number(parent.showItemDefaultLanguage);
+    }
 }

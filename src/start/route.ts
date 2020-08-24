@@ -34,6 +34,7 @@ Route.mutation('optionEmailUpdate', 'OptionResolve.optionEmailUpdate');
 Route.mutation('optionGeneralUpdate', 'OptionResolve.optionGeneralUpdate');
 Route.mutation('optionSocialUpdate', 'OptionResolve.optionSocialUpdate');
 Route.mutation('optionThemeUpdate', 'OptionResolve.optionThemeUpdate');
+Route.mutation('languageConfigUpdate', 'OptionResolve.languageConfigUpdate');
 
 Route.resource('user', 'UserResolve')
 Route.query('profile', 'UserResolve.profile')

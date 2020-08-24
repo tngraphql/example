@@ -10,13 +10,23 @@ import {ArgsType, Field} from "@tngraphql/graphql";
 export class OptionThemeArgsType {
 
     @Field({description: 'Meta Head'})
-    public metaHeadHTML: string
+    public metaHeadHTML(value): string{
+        if ( ! value ) {
+            return value;
+        }
+        return value.trim();
+    }
 
     @Field({description: 'Meta Head'})
-    public metaHeadJSON: string
+    public metaHeadJSON: string;
 
     @Field({description: 'Meta Footer'})
-    public metaFooterHTML: string
+    public metaFooterHTML(value): string{
+        if ( ! value ) {
+            return value;
+        }
+        return value.trim();
+    }
 
     @Field({description: 'Meta Footer'})
     public metaFooterJSON: string
