@@ -6,42 +6,31 @@
  */
 import {LanguageModel} from "./LanguageModel";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import {Service} from "@tngraphql/illuminate";
+import {Inject, Service} from "@tngraphql/illuminate";
 import Arr from "../../../lib/Arr";
 import _ = require('lodash');
+import {OptionRepository} from "../../../Repositories/Lucid/OptionRepository";
 
 @Service()
 export class LanguageRepository extends BaseRepository<LanguageModel> {
+    @Inject(type => OptionRepository)
+    protected option: OptionRepository;
+
     public model(): typeof LanguageModel {
         return LanguageModel;
     }
 
-    public async upsert(tagsName: string[]): Promise<any[]> {
-        tagsName = _.uniq(Arr.array_wrap(tagsName));
+    async update(data, value: any, attribute: string = this.getKeyName()): Promise<LanguageModel> {
+        return this.transaction(async () => {
+            const instance = await super.update(data, value, attribute);
 
-        if ( ! tagsName.length ) {
-            return [];
-        }
-
-        const listTag = await this.newQuery().whereIn('name', tagsName);
-
-        type K<T> = T[];
-
-        const res: K<string|number> = [];
-
-        for( const name of tagsName ) {
-            const tag = listTag.find(tag => tag.name === name);
-
-            if ( tag ) {
-                res.push(tag.id);
-            } else {
-                // Nếu tag chưa tồn tại, chúng ta tạo mới tag.
-                const tagNew = await this.create({name});
-
-                res.push(tagNew.id);
+            if (data.default) {
+                await this.option.saveSetting({
+                    defaultLanguage: instance.id
+                });
             }
-        }
 
-        return res;
+            return instance;
+        })
     }
 }
