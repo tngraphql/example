@@ -38,4 +38,7 @@ export class RoleCreateArgsType {
 
     @Field(returns => [GraphQLString], {description: 'Quyền hạn của role'})
     public permissions: string
+
+    @Field({description: 'Sét nhóm quyền này thành nhóm mặc định.'})
+    public isDefault: boolean
 }

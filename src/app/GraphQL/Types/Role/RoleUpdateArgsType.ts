@@ -31,5 +31,8 @@ export class RoleUpdateArgsType {
     public description: string
 
     @Field(returns => [GraphQLString])
-    public permissions: string
+    public permissions: string;
+
+    @Field({description: 'Sét nhóm quyền này thành nhóm mặc định.'})
+    public isDefault: boolean
 }

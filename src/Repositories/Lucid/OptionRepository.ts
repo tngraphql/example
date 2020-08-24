@@ -9,6 +9,7 @@ import {Service} from "@tngraphql/illuminate";
 import OptionModel from "../../app/Models/OptionModel";
 import * as _ from 'lodash';
 import {ConfigOptions} from "../../lib/ConfigOptions";
+import {tap} from "../../lib/utils";
 
 @Service()
 export class OptionRepository extends BaseRepository<OptionModel> {
@@ -24,11 +25,15 @@ export class OptionRepository extends BaseRepository<OptionModel> {
                 names = _.keyBy(options, 'name');
             }
 
-            await Promise.all(_.map(data, (value, name) => {
+            await Promise.all(_.map(data, async (value, name) => {
                 if ( ! names[name] ) {
                     return this.create({name, value, autoload: 'yes'});
                 }
-                return this.model().updateOrCreate({name}, {value});
+
+                return tap(names[name], instance => {
+                    instance.value = value;
+                    return instance.save();
+                });
             }));
 
             await ConfigOptions.clearCache();
