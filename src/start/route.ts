@@ -96,6 +96,7 @@ Route.group(() => {
 
 Route.group(() => {
     Route.resource('menu', 'MenuResolve');
+    Route.query('menuNavigation', 'MenuResolve.menuNavigation');
 })['modules']('Menu');
 
 Route.group(() => {

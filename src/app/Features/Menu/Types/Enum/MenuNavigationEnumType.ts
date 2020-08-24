@@ -8,9 +8,9 @@
 import {registerEnumType} from "@tngraphql/graphql";
 
 enum MenuNavigationEnumType {
-    main = 'main', // Main Navigation
-    header = 'header', // Header Navigation
-    footer = 'footer', // footer Navigation
+    main = 'mainNavigation', // Main Navigation
+    header = 'headerNavigation', // Header Navigation
+    footer = 'footerNavigation', // footer Navigation
 }
 
 registerEnumType(MenuNavigationEnumType, {

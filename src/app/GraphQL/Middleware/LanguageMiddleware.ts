@@ -13,7 +13,8 @@ export class LanguageMiddleware implements MiddlewareInterface<{ lang: any }> {
             return next();
         }
 
-        const language = await LanguageModel.query().where('locale', context.lang.locale);
+        const language = await LanguageModel.query().where('locale', context.lang.locale).first();
+        context.lang.id = language.id;
         context.language = language;
 
         await next();
