@@ -6,6 +6,7 @@
  */
 import {Field, InterfaceType, ObjectType, Root} from "@tngraphql/graphql";
 import {ID} from "../UidScalerType";
+import {GraphQLBoolean} from "graphql";
 
 @ObjectType('OptionGeneral')
 @InterfaceType()
