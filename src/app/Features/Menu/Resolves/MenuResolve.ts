@@ -46,7 +46,6 @@ export class MenuResolve extends BaseResolve {
     ) {
         navigation = await ConfigOptions.getOption(navigation);
         const defaultLanguage = await ConfigOptions.getOption('defaultLanguage');
-        console.log({navigation, defaultLanguage}, this.lang.id)
 
         const query = this.repo.query();
 

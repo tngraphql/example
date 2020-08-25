@@ -19,6 +19,8 @@ import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepo
 import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {Str} from "../../../../lib/Str";
+import {ResolveAuth} from "../../../../decorators/ResolveAuth";
+import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 
 @Service()
 export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
@@ -33,6 +35,9 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
 
     @Inject(type => ProductBranchToAttributeRepository)
     protected productBranchToAttribute: ProductBranchToAttributeRepository;
+
+    @ResolveAuth()
+    public auth: RequestGuard
 
     public model(): typeof ProductMasterModel {
         return ProductMasterModel;

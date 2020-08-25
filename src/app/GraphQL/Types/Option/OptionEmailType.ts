@@ -24,7 +24,9 @@ export class OptionEmailType {
     public SMTPUsername: string
 
     @Field({description: 'password'})
-    public SMTPPassword: string
+    public SMTPPassword(): string {
+        return null;
+    }
 
     @Field({description: 'Sender name'})
     public SMTPSenderName: string

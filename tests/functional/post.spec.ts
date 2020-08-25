@@ -1612,16 +1612,16 @@ describe('post Http', () => {
                 const res = await client.mutate({
                     mutation: `mutation postCreate(
                       $name: String
-                      $format: Float
+                      $format: Int
                       $avatar: String
-                      $thumbnailId: String
+                      $thumbnailId: ID_CRYPTO
                       $postStatus: PostStatus = publish
                       $postPassword: String
                       $commentStatus: PostCommentStatus = open
                       $slug: String
                       $parentId: String = "0"
-                      $description: String
-                      $content: String
+                      $description: Html
+                      $content: Html
                       $tags: [String]
                       $categories: [ID_CRYPTO]
                       $seoTitle: String
@@ -1702,15 +1702,15 @@ describe('post Http', () => {
                 mutation: `mutation postUpdate(
                   $id: ID_CRYPTO
                   $name: String
-                  $format: Float
+                  $format: Int
                   $avatar: String
-                  $thumbnailId: String
+                  $thumbnailId: ID_CRYPTO
                   $postStatus: PostStatus
                   $postPassword: String
                   $commentStatus: PostCommentStatus
                   $slug: String
-                  $description: String
-                  $content: String
+                  $description: Html
+                  $content: Html
                   $tags: [String]
                   $categories: [ID_CRYPTO]
                   $seoTitle: String

@@ -63,18 +63,18 @@ export function getField(fields, model: LucidModel): ISelection {
                 continue;
             }
 
-            result.push(model.qualifyColumn(model.primaryKey));
+            result.push((model.primaryKey));
 
             if (model.$hasColumn(field)) {
-                result.push(model.qualifyColumn(field));
+                result.push((field));
             }
             if (model.$hasRelation(field)) {
                 const relation: any = getRelation(model, field);
 
-                result.push(model.qualifyColumn(relation.localKey));
+                result.push((relation.localKey));
 
                 if (['belongsTo'].includes(relation.type)) {
-                    result.push(model.qualifyColumn(relation.foreignKey));
+                    result.push((relation.foreignKey));
                 }
 
                 preloads.push({
@@ -86,12 +86,12 @@ export function getField(fields, model: LucidModel): ISelection {
                 const relation: any = getRelation(model, field);
 
                 let relatedModel = relation.relatedModel();
-                result.push(model.qualifyColumn(relation.localKey));
+                result.push((relation.localKey));
                 if (['belongsTo'].includes(relation.type)) {
-                    result.push(model.qualifyColumn(relation.foreignKey));
+                    result.push((relation.foreignKey));
                 }
 
-                if (relation.type === 'morphTo') {
+                if (relation.model === relatedModel) {
                     preloads.push({
                         name: field
                     });

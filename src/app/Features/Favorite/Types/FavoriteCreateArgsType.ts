@@ -1,7 +1,7 @@
 import {ArgsType, Field} from "@tngraphql/graphql";
 import {Rules} from "@tngraphql/illuminate";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {FavoriteTypeEnum} from "./FavoriteTypeEnum";
+import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
 import FavoriteModel from "../FavoriteModel";
 import {ID} from "../../../GraphQL/Types/UidScalerType";
 
@@ -17,7 +17,7 @@ export class FavoriteCreateArgsType {
     @Field(returns => ID)
     @Rules(args => {
         const rules = [];
-        if (args.favoriteableType === FavoriteTypeEnum.product) {
+        if (args.favoriteableType === FavoriteTypeEnumType.product) {
             rules.push(Rule.exists('productMaster', 'id'));
         }
 
@@ -27,18 +27,18 @@ export class FavoriteCreateArgsType {
         ];
     }, ({lang}, args) => {
         switch (args.favoriteableType) {
-            case FavoriteTypeEnum.product:
+            case FavoriteTypeEnumType.product:
                 return {
                     'exists': lang.t('You are trying to favorite a product that doesn\'t exist.'),
                 };
                 break;
 
-            case FavoriteTypeEnum.post:
+            case FavoriteTypeEnumType.post:
                 return {
                     'exists': lang.t('You are trying to favorite a post that doesn\'t exist.')
                 };
                 break;
-            case FavoriteTypeEnum.page:
+            case FavoriteTypeEnumType.page:
                 return {
                     'exists': lang.t('You are trying to favorite a page that doesn\'t exist.')
                 };
@@ -51,7 +51,7 @@ export class FavoriteCreateArgsType {
     })
     public favoriteableId: string
 
-    @Field(returns => FavoriteTypeEnum)
+    @Field(returns => FavoriteTypeEnumType)
     @Rules([
         'required'
     ])

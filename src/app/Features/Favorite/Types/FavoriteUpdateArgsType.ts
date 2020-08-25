@@ -3,7 +3,7 @@ import {Rules} from "@tngraphql/illuminate";
 import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
 import FavoriteModel from "../FavoriteModel";
 import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {FavoriteTypeEnum} from "./FavoriteTypeEnum";
+import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -24,7 +24,7 @@ export class FavoriteUpdateArgsType {
     @Field(returns => ID)
     public favoriteableId: string
 
-    @Field(returns => FavoriteTypeEnum)
+    @Field(returns => FavoriteTypeEnumType)
     public favoriteableType: string
 
     @Field(returns => ID)

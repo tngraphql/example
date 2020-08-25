@@ -7,7 +7,7 @@
  */
 
 module.exports = {
-    timeout: 125000,
+    timeout: 225000,
     require: ['ts-node/register','reflect-metadata'],
     file: './init.ts',
     exit: true,

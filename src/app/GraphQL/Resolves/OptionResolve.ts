@@ -73,6 +73,10 @@ export class OptionResolve extends BaseResolve {
         description: 'Cập nhật cấu hình SMTP Email'
     })
     async optionEmailUpdate(@Args() args: OptionEmailArgsType, @Ctx() context) {
+        if (!args.SMTPPassword) {
+            delete args.SMTPPassword;
+        }
+
         await this.repo.saveSetting(args);
 
         return ConfigOptions.getOptions();

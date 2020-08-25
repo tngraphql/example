@@ -6,8 +6,6 @@
  */
 import {ArgsType, Field, Int} from "@tngraphql/graphql";
 import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {GENDER, UserModel} from "../../../UserModel";
 
 @ArgsType()
 export class UserResetPasswordArgsType {

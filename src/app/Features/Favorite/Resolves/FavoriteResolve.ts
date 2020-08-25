@@ -23,9 +23,6 @@ import {FavoriteCreateArgsType} from "../Types/FavoriteCreateArgsType";
 import {FavoriteUpdateArgsType} from "../Types/FavoriteUpdateArgsType";
 import {FavoriteDeleteArgsType} from "../Types/FavoriteDeleteArgsType";
 import {OperatorEnumType} from "../../../GraphQL/Types/OperatorEnumType";
-import FavoriteModel from "../FavoriteModel";
-import {CategoryCreateArgsType} from "../../Category/Types/CategoryCreateArgsType";
-import {CategoryUpdateArgsType} from "../../Category/Types/CategoryUpdateArgsType";
 
 @Resolver()
 export class FavoriteResolve extends BaseResolve {

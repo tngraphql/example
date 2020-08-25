@@ -37,26 +37,27 @@ export class ProductBranchResolve extends BaseResolve {
         description: 'Chi tiết sản phẩm'
     })
     async index(@Args() args: ProductBranchIndexArgsType, @SelectFields() fields) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
 
-        return this.repo.first();
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
+
+        return query.first();
     }
 
     @Query(returns => paginateType(ProductBranchType))
     async list(@Args() args: ProductBranchListArgsType, @SelectFields() fields, @Ctx() context) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        this.repo._query.join(
-            'product_master',
-            'product_branch.product_master_id',
-            '=',
-            'product_master.id'
-        ).whereNull('product_master.deleted_at')
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
 
-        return this.repo.paginate(args.limit, args.page);
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
+        query._query.whereHas('master');
+
+        return query.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => DeleteType)

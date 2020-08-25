@@ -36,20 +36,26 @@ export class ProductMasterResolve extends BaseResolve {
         description: 'Chi tiết sản phẩm'
     })
     async index(@Args() args: ProductMasterIndexArgsType, @SelectFields() fields) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
 
-        return this.repo.first();
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
+
+        return query.first();
     }
 
     @Query(returns => paginateType(ProductMasterType))
     async productMasterList(@Args() args: ProductMasterListArgsType, @SelectFields() fields, @Ctx() context) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
 
-        return this.repo.paginate(args.limit, args.page);
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
+
+        return query.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => ProductMasterType, {description: 'Tạo mới tài khoản'})
@@ -57,8 +63,11 @@ export class ProductMasterResolve extends BaseResolve {
     @UseMiddleware('auth')
     async create(@Args() args: ProductCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.builderCreate(args as any);
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.firstBy(created.id);
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
+
+        query.pushCriteria(new SelectionCriteria(fields));
+        return query.firstBy(created.id);
     }
 
     @Mutation(returns => ProductMasterType)
@@ -66,8 +75,11 @@ export class ProductMasterResolve extends BaseResolve {
     @UseMiddleware('auth')
     async update(@Args() args: ProductUpdateArgsType, @SelectFields() fields) {
         const category = await this.repo.update(args as any, args.id);
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.firstBy(category.id);
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
+
+        query.pushCriteria(new SelectionCriteria(fields));
+        return query.firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)
@@ -86,7 +98,10 @@ export class ProductMasterResolve extends BaseResolve {
     async productChangeFeature(@Args() args: ProductMasterFeaturedArgsType, @SelectFields() fields) {
         await this.repo.changeFeatured(args.isFeatured, args.id);
 
-        return this.repo.query()
+        const query = this.repo.query();
+        query._query.auth = await this.auth.user();
+
+        return query
             .pushCriteria(new SelectionCriteria(fields))
             .firstBy(args.id);
     }

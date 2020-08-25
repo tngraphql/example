@@ -7,7 +7,7 @@
 
 import {registerEnumType} from "@tngraphql/graphql";
 
-export enum FavoriteTypeEnum {
+export enum FavoriteTypeEnumType {
     // Yêu thích bài viết
     post = 'post',
 
@@ -18,4 +18,4 @@ export enum FavoriteTypeEnum {
     product = 'product'
 }
 
-registerEnumType(FavoriteTypeEnum, {name: 'FavoriteTypeEnum'});
+registerEnumType(FavoriteTypeEnumType, {name: 'FavoriteTypeEnum'});

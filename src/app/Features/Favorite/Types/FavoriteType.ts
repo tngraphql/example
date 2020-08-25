@@ -4,8 +4,11 @@ import {ID} from "../../../GraphQL/Types/UidScalerType";
 import FavoriteModel from "../FavoriteModel";
 import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
 import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
-import {FavoriteTypeEnum} from "./FavoriteTypeEnum";
+import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
 import {UserType} from "../../../GraphQL/Types/User/UserType";
+import {ProductMasterType} from "../../Product/Types/Product/ProductMasterType";
+import {PostType} from "../../Post/Types/Post/PostType";
+import {PageType} from "../../Post/Types/Page/PageType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -24,17 +27,17 @@ export class FavoriteType {
     @Field(returns => ID)
     public favoriteableId: string;
 
-    @Field(returns => FavoriteTypeEnum)
+    @Field(returns => FavoriteTypeEnumType)
     public favoriteableType: string;
 
-    @Field(returns => UserType)
-    public product: UserType
+    @Field(returns => ProductMasterType)
+    public product: ProductMasterType
 
-    @Field(returns => UserType)
-    public post: UserType
+    @Field(returns => PostType)
+    public post: PostType
 
-    @Field(returns => UserType)
-    public page: UserType
+    @Field(returns => PageType)
+    public page: PageType
 
     @Field(returns => ID)
     public userId: string;

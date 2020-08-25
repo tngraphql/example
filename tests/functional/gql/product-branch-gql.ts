@@ -8,13 +8,13 @@ const {gql} = require('apollo-server');
 
 
 export const PRODUCT_BRANCH_LIST_QUERY = `
-query product_branchs(
+query product_branches(
   $filter: ProductBranchFilter
   $sortBy: [ProductBranchSort]
   $page: Int
   $limit: Int
 ) {
-  data: product_branchs(
+  data: product_branches(
     filter: $filter
     sortBy: $sortBy
     page: $page

@@ -5,12 +5,15 @@
  * Time: 10:01 AM
  */
 import {ArgsType, Field} from "@tngraphql/graphql";
+import {GraphQLString} from "graphql";
 
 @ArgsType()
 export class OptionThemeArgsType {
 
-    @Field({description: 'Meta Head'})
-    public metaHeadHTML(value): string{
+    @Field(returns => GraphQLString, {description: 'Meta Head'})
+    public metaHeadHTML: string;
+
+    public getMetaHeadHTML(value): string {
         if ( ! value ) {
             return value;
         }
@@ -20,8 +23,10 @@ export class OptionThemeArgsType {
     @Field({description: 'Meta Head'})
     public metaHeadJSON: string;
 
-    @Field({description: 'Meta Footer'})
-    public metaFooterHTML(value): string{
+    @Field(returns => GraphQLString, {description: 'Meta Footer'})
+    public metaFooterHTML: string;
+
+    public getMetaFooterHTML(value): string{
         if ( ! value ) {
             return value;
         }

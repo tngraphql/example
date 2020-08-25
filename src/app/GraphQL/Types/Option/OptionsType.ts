@@ -76,4 +76,10 @@ export class OptionsType {
     public showItemDefaultLanguage(@Root() parent): boolean {
         return !! Number(parent.showItemDefaultLanguage);
     }
+
+    // Email
+    @Field({description: 'password'})
+    public SMTPPassword(): string {
+        return null;
+    }
 }

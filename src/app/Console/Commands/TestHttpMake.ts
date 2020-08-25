@@ -36,7 +36,7 @@ export class TestHttpMake extends GeneratorCommand {
 
     async handle(...args: any[]): Promise<any> {
 
-        const instance = handlerRulers(RoleCreateArgsType, args)
+        const instance = handlerRulers(RoleCreateArgsType, args, {})
         const validate = Object.entries(ruleToString(compileRules(instance)));
 
         await this.generateFile('./tests/functional', {

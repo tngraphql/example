@@ -13,6 +13,7 @@ import {DateTime} from "luxon";
 import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
 import {PostModel} from "../Features/Post/PostModel";
 import {TransactionClient} from "@tngraphql/lucid/build/src/TransactionClient";
+import {ProductMasterModel} from "../Features/Product/Models/ProductMasterModel";
 
 export class AppServiceProvider extends ServiceProvider {
     register(): void {
@@ -28,7 +29,7 @@ export class AppServiceProvider extends ServiceProvider {
 
         Relation.morphMap({
             'post': () => PostModel,
-            'product': () => PostModel
+            'product': () => ProductMasterModel
         })
     }
 

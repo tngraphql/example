@@ -16,12 +16,16 @@ import {
     USER_ROLES_PERMISSION_QUERY,
     USER_ROLES_QUERY
 } from "./gql/user-gql";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {Context} from "@tngraphql/graphql/dist/resolvers/context";
-import {Gender, UserModel} from "../../src/app/UserModel";
+import {UserModel} from "../../src/app/UserModel";
 import RoleModel from "../../src/app/Models/RoleModel";
 import RoleUserModel from "../../src/app/Models/RoleUserModel";
+import {GenderEnumType} from "../../src/app/GraphQL/Types/GenderEnumType";
 const { gql } = require('apollo-server');
+
+const UserGender = {
+    '2': 'female',
+    '1': 'male'
+}
 
 describe('User Http', () => {
     let client: ApolloServerTestClient;
@@ -71,7 +75,7 @@ describe('User Http', () => {
                 expect(res.data.user.avatar).to.eq(user.avatar);
                 // expect(res.data.user.dob).to.eq(user.dob);
                 expect(res.data.user.email).to.eq(user.email);
-                expect(res.data.user.gender).to.eq(user.gender);
+                expect(res.data.user.gender).to.eq(UserGender[user.gender]);
             });
 
             it('should response first user using order by', async () => {
@@ -107,7 +111,7 @@ describe('User Http', () => {
                 expect(res.data.user.avatar).to.eq(user.avatar);
                 // expect(res.data.user.dob).to.eq(user.dob);
                 expect(res.data.user.email).to.eq(user.email);
-                expect(res.data.user.gender).to.eq(user.gender);
+                expect(res.data.user.gender).to.eq(UserGender[user.gender]);
             });
 
             it('should response user filter', async () => {
@@ -228,14 +232,14 @@ describe('User Http', () => {
             });
 
             it('should filter gender without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male})
 
                 const res = await client.query({
                     query: USER_QUERY,
                     variables: {
                         "filter": {
                             "field": "gender",
-                            "value": Gender.male,
+                            "value": GenderEnumType.male,
                             "operator": "eq"
                         }
                     }
@@ -243,11 +247,11 @@ describe('User Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.user.id).to.eq(user.id);
-                expect(res.data.user.gender).to.eq(user.gender);
+                expect(res.data.user.gender).to.eq(UserGender[user.gender]);
             });
 
             it('should filter roleId without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male});
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -267,7 +271,7 @@ describe('User Http', () => {
             });
 
             it('should filter roleName without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male})
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -384,9 +388,9 @@ describe('User Http', () => {
 
             it('should sort by gender without error', async () => {
                 await UserModel.truncate(true);
-                await UserModel.create({name: 'job',email: 'a1@gmail.com', gender: Gender.male});
-                await UserModel.create({name: 'job',email: 'a2@gmail.com', gender: Gender.male});
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                await UserModel.create({name: 'job',email: 'a1@gmail.com', gender: GenderEnumType.male});
+                await UserModel.create({name: 'job',email: 'a2@gmail.com', gender: GenderEnumType.male});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
 
                 const res = await client.query({
                     query: USER_QUERY,
@@ -402,7 +406,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleId without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -420,7 +424,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleName without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -495,7 +499,7 @@ describe('User Http', () => {
                 await UserModel.create({name: 'job2'});
                 await UserModel.create({name: 'job3'});
                 const user = await UserModel.create({name: 'job4', phone: '132545646', avatar: './image.jpg',
-                    email: 'asd@gmail.com', gender: Gender.famale});
+                    email: 'asd@gmail.com', gender: GenderEnumType.female});
 
                 const res = await client.query({
                     query: USER_LIST_QUERY
@@ -514,7 +518,7 @@ describe('User Http', () => {
                 expect(userJob.avatar).to.eq(user.avatar);
                 // expect(userJob.dob).to.eq(user.dob);
                 expect(userJob.email).to.eq(user.email);
-                expect(userJob.gender).to.eq(user.gender);
+                expect(userJob.gender).to.eq(UserGender[user.gender]);
             });
 
             it('should response user paginate', async () => {
@@ -522,7 +526,7 @@ describe('User Http', () => {
                 const user1 = await UserModel.create({name: 'job2'});
                 const user2 = await UserModel.create({name: 'job3'});
                 const user = await UserModel.create({name: 'job4', phone: '132545646', avatar: './image.jpg',
-                    email: 'asd@gmail.com', gender: Gender.famale});
+                    email: 'asd@gmail.com', gender: GenderEnumType.female});
 
                 const res = await client.query({
                     query: USER_LIST_QUERY,
@@ -617,14 +621,14 @@ describe('User Http', () => {
             });
 
             it('should filter gender without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male})
 
                 const res = await client.query({
                     query: USER_LIST_QUERY,
                     variables: {
                         "filter": {
                             "field": "gender",
-                            "value": Gender.male,
+                            "value": GenderEnumType.male,
                             "operator": "eq"
                         }
                     }
@@ -632,11 +636,11 @@ describe('User Http', () => {
 
                 expect(res.errors).to.undefined;
                 expect(res.data.users.data[0].id).to.eq(user.id);
-                expect(res.data.users.data[0].gender).to.eq(user.gender);
+                expect(res.data.users.data[0].gender).to.eq(UserGender[user.gender]);
             });
 
             it('should filter roleId without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male})
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -656,7 +660,7 @@ describe('User Http', () => {
             });
 
             it('should filter roleName without error', async () => {
-                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: Gender.male})
+                const user = await UserModel.create({name: 'job', email: 'job@gmail.com', gender: GenderEnumType.male})
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -772,9 +776,9 @@ describe('User Http', () => {
 
             it('should sort by gender without error', async () => {
                 await UserModel.truncate(true);
-                await UserModel.create({name: 'job',email: 'a1@gmail.com', gender: Gender.male});
-                await UserModel.create({name: 'job',email: 'a2@gmail.com', gender: Gender.male});
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                await UserModel.create({name: 'job',email: 'a1@gmail.com', gender: GenderEnumType.male});
+                await UserModel.create({name: 'job',email: 'a2@gmail.com', gender: GenderEnumType.male});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
 
                 const res = await client.query({
                     query: USER_LIST_QUERY,
@@ -790,7 +794,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleId DESC without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -808,7 +812,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleId ASC without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -826,7 +830,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleName DESC without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 
@@ -844,7 +848,7 @@ describe('User Http', () => {
             });
 
             it('should sort by roleName ASC without error', async () => {
-                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: Gender.famale});
+                const user = await UserModel.create({name: 'job',email: 'a3@gmail.com', gender: GenderEnumType.female});
                 const role = await RoleModel.create({name: 'super'});
                 const role_user = await RoleUserModel.create({roleId: role.id, userId: user.id});
 

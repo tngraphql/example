@@ -160,9 +160,15 @@ export class ProductMasterModel extends BaseModel {
     @morphOne(() => FavoriteModel, {
         name: 'favoriteable',
         async onQuery(query) {
-            if (query.auth && await query.auth.check()) {
-                query.where(query.qualifyColumn('userId'), await query.auth.id());
-            }
+            let userId = null;
+
+            query.withGlobalScope('auth', builder => {
+                if (builder.auth) {
+                    userId = builder.auth.id;
+                }
+
+                query.where(query.qualifyColumn('userId'), userId);
+            });
         }
     })
     public favorite: MorphOne<typeof FavoriteModel>
