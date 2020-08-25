@@ -7,15 +7,14 @@ import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
 import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
 import {UserType} from "../../../GraphQL/Types/User/UserType";
 import {ProductMasterType} from "../../Product/Types/Product/ProductMasterType";
-import {PostType} from "../../Post/Types/Post/PostType";
-import {PageType} from "../../Post/Types/Page/PageType";
-
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117
  * Date: 7/11/2020
  * Time: 4:54 PM
  */
+import {PostType} from "../../Post/Types/Post/PostType";
+import {PageType} from "../../Post/Types/Page/PageType";
 
 @ObjectType('Favorite')
 export class FavoriteType {
