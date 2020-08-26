@@ -11,7 +11,8 @@ import {OptionGeneralType} from "./OptionGeneralType";
 import {OptionLanguageType} from "./OptionLanguageType";
 import {OptionSocialType} from "./OptionSocialType";
 import {OptionEmailType} from "./OptionEmailType";
-import {GraphQLBoolean} from "graphql";
+import {OptionThemeType} from "./OptionThemeType";
+import {JSONType} from "../ScalarType/JsonScalerType";
 
 @ObjectType({
     implements: [
@@ -20,6 +21,7 @@ import {GraphQLBoolean} from "graphql";
         OptionLanguageType,
         OptionSocialType,
         OptionEmailType,
+        OptionThemeType
     ]
 })
 export class OptionsType {
@@ -81,5 +83,14 @@ export class OptionsType {
     @Field({description: 'password'})
     public SMTPPassword(): string {
         return null;
+    }
+
+    // theme
+    @Field(returns => JSONType,{description: 'Theme social',})
+    public themeSocials(@Root() parent) {
+        if ( ! parent.themeSocials ) {
+            return {};
+        }
+        return parent.themeSocials;
     }
 }

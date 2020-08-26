@@ -104,3 +104,20 @@ Route.group(() => {
     Route.resource('language', 'LanguageResolve');
 })['modules']('Language');
 
+Route.group(() => {
+    Route.resource('order', 'OrderResolve');
+    Route.resource('shippingMethod', 'ShippingMethodResolve')
+    Route.resource('shippingZone', 'ShippingZoneResolve');
+
+    Route.query('shipping_zone', 'ShippingZoneResolve.index');
+    Route.query('shipping_zones', 'ShippingZoneResolve.list');
+
+    Route.query('shipping_method', 'ShippingMethodResolve.index')
+    Route.query('shipping_methods', 'ShippingMethodResolve.list')
+
+    Route.query('shipping_location', 'ShippingLocationResolve.index')
+    Route.query('shipping_locations', 'ShippingLocationResolve.list')
+
+    Route.mutation('order', 'OrderResolve.order');
+    Route.query('orderStatus', 'OrderResolve.orderStatus');
+})['modules']('Order');

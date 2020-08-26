@@ -22,7 +22,7 @@ export default class TagModel extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
-    public static $columns: Pick<TagModel, 'id' | 'createdAt' | 'updatedAt'>;
+    public static $columns: Pick<TagModel, 'id' | 'name' | 'slug' | 'createdAt' | 'updatedAt'>;
 
     public static boot() {
         super.boot();
