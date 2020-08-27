@@ -17,6 +17,9 @@ export class OrderShippingType {
     @Field(returns => ID)
     public id: string
 
+    @Field(returns => ID, {})
+    public orderId: string
+
     @Field({description: 'Tên'})
     public name: string
 

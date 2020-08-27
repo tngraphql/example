@@ -30,8 +30,8 @@ export class CartItem {
             this[i] = data[i];
         }
 
-        console.log(this);
-        console.log(data);
+        // console.log(this);
+        // console.log(data);
 
         this.de = _.debounce((name, qty) => {
             callback && callback();
@@ -39,7 +39,37 @@ export class CartItem {
         }, 300);
     }
 
+    public getData() {
+        const res =  _.pick(this, [
+            'id',
+            'orderId',
+            'productBranchId',
+            'sku',
+            'code',
+            'name',
+            'image',
+            'price',
+            'quantity',
+            'total',
+            'discount',
+            'discountType',
+            'tax',
+            'reward',
+            'type',
+            'items',
+            'methodId',
+            'methodType',
+            'createdAt',
+            'updatedAt',
+        ]);
+        res.total = this.getTotal();
+        return res;
+    }
+
     public getId() {
+        if (this.id === undefined) {
+            return undefined;
+        }
         return String(this.id);
     }
 

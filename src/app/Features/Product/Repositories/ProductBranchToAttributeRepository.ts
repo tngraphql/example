@@ -4,7 +4,7 @@
  * Date: 8/11/2020
  * Time: 5:37 PM
  */
-import {Inject, InvalidArgumentException, Service, ValidationError} from "@tngraphql/illuminate";
+import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {ProductBranchToAttributeModel} from "../Models/ProductBranchToAttributeModel";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";

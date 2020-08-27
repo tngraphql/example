@@ -4,7 +4,7 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Inject, Service, ValidationError} from "@tngraphql/illuminate";
+import {Inject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
 import CategoryModel from "./CategoryModel";
 import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";

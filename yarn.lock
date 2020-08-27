@@ -360,10 +360,10 @@
   dependencies:
     node-exceptions "^3.0.0"
 
-"@tngraphql/auth@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.1.tgz#a55664cb4b82b316d5419ecc284003f7fd4dc9d1"
-  integrity sha512-oGcoh2iy51ZzdgsvoUIAn8jZIFj2UVLeJDCX5/N7cSeAtciN6zaKHT3Yv1lE1oYxUnnsXOakwlAqKHA1BOO0UA==
+"@tngraphql/auth@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.3.tgz#602c81674a12d9fdbf2c7a18722dd31d55533a8f"
+  integrity sha512-LT2PC/bEpyfag2EbQkjKrf/xLt6+cc/3ulovKWKENgUEKfuTDuCieX5T5sFr+rm9dZDZZBktZSObpo/ngf/hfw==
   dependencies:
     bcrypt "^4.0.1"
     hybrid-crypto-js "^0.2.2"
@@ -416,10 +416,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.9.tgz#75d37d053f5390c56dbbda37d8ca115941d3afbf"
-  integrity sha512-Roy/G3hPrOUcDFKmAp1xFePrymud3B3b1kimRw9ZVA2iD7n3lQoBOCvTgIkYjZzWpObEzKtm9TSoq5XljOtQgg==
+"@tngraphql/illuminate@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.10.tgz#d05ba56b8a34664dcd1fe6bba3f955c6458ba2fd"
+  integrity sha512-iqyaCQR1vEQANhMGnpB3UDbxvBd/4pRA+Bctm9hDAY0w+kNwUDRnINwjtJymRvEu323gstr/r+hFeefnvP8lyQ==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"
@@ -446,10 +446,10 @@
     uuid "^7.0.3"
     validatorjs "^3.18.1"
 
-"@tngraphql/lucid@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.20.tgz#be9a201c9e14221b2526ec9215b89d536fa057ef"
-  integrity sha512-FT7qhk7+VjoIz92/XSpmRtWgLcs2+1zsiA60GXKjhfkRpLY0AK0lwFH4PUVHU6J8oKo5d4gudr62k/MNBWUgdw==
+"@tngraphql/lucid@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@tngraphql/lucid/-/lucid-1.0.21.tgz#be8b2940603f9a6a97b0c14b83d01e870c2585a5"
+  integrity sha512-TfWkgQ2XebuxUin66asfvbXGtL0qCKkgVSOi8MIbY1oRrGVNUxW4+h/Ni4Q1+7bimATgQS5VFTBtCe1jUzhd9Q==
   dependencies:
     "@poppinss/hooks" "^1.0.5"
     "@poppinss/utils" "^2.2.0"

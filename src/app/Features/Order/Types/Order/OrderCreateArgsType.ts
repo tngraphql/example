@@ -21,7 +21,7 @@ export class OrderCreateArgsType {
     @Field(returns => ID, {description: 'Trạng thái'})
     @Rules([
         'required',
-        Rule.exists(OrderStatusModel, 'id')
+        Rule.exists(OrderStatusModel.getTable(), 'id')
     ])
     public orderStatusId: string;
 
@@ -36,11 +36,11 @@ export class OrderCreateArgsType {
 
     @Field(returns => ID, {description: 'Khách hàng',})
     @Rules([
-        Rule.exists(UserModel, 'id')
+        Rule.exists(UserModel.getTable(), 'id')
     ])
     public customerId: string
 
-    @Field({description: 'Nhóm khách hàng',})
+    @Field(returns => ID, {description: 'Nhóm khách hàng',})
     @Rules([
         // Rule.exists(CustomGroupModel, 'id')
     ])

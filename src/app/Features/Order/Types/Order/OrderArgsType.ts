@@ -22,7 +22,7 @@ export class OrderArgsType {
 
     @Field(returns => ID, {description: 'Khách hàng',})
     @Rules([
-        Rule.exists(UserModel, 'id')
+        Rule.exists(UserModel.getTable(), 'id')
     ])
     public customerId: string
 
@@ -30,7 +30,7 @@ export class OrderArgsType {
     public discount: number
     public discountType: number
 
-    @Field({description: 'Nhóm khách hàng',})
+    @Field(returns => ID, {description: 'Nhóm khách hàng',})
     @Rules([
         // Rule.exists(CustomGroupModel, 'id')
     ])

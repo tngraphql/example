@@ -41,8 +41,6 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
         data.code = 'D' + this.autoCode();
 
         return this.transaction(async () => {
-            const instance = await super.create(data);
-
             const cart = new Cart(data.items);
             for( const i in _.omit(data, ['items']) ) {
                 cart[i] = data[i];
@@ -51,7 +49,7 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
                 cart.taxes = false;
             }
 
-            const order = await super.create({
+            const instance = await super.create({
                 ...cart,
                 total: cart.getTotal(),
                 totalOrigin: cart.getTotalOrigin()
@@ -94,8 +92,6 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
         data.code = 'D' + this.autoCode();
 
         return this.transaction(async () => {
-            const instance = await super.create(data);
-
             const cart = new Cart(data.items);
             for( const i in _.omit(data, ['items']) ) {
                 cart[i] = data[i];
@@ -104,11 +100,10 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
                 cart.taxes = false;
             }
 
-            const order = await super.create({
+            const instance = await super.create({
                 ...cart,
                 total: cart.getTotal(),
                 totalOrigin: cart.getTotalOrigin()
-
             });
 
             await instance.related('billingAddress').create(_.omit(data.billingAddress, 'id'));
@@ -116,9 +111,8 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
             await instance.related('items').createMany(
                 cart.items.map(item => {
                     return {
-                        ...item,
-                        type: 'product',
-                        total: item.getTotal()
+                        ...item.getData(),
+                        type: 'product'
                     }
                 })
             );
@@ -171,7 +165,8 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
             // Cập nhật vận chuyển.
             if ( data.shipping ) {
                 await instance.related('shipping').updateOrCreate({
-                    id: data.shipping.id
+                    type: 'shipping',
+                    orderId: instance.id
                 }, {
                     ...data.shipping,
                     type: 'shipping'

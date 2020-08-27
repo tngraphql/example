@@ -5,7 +5,7 @@
  * Time: 4:01 PM
  */
 
-import {Inject, Service, ValidationError} from "@tngraphql/illuminate";
+import {Inject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import {ProductMasterModel} from "../Models/ProductMasterModel";
@@ -21,6 +21,7 @@ import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {Str} from "../../../../lib/Str";
 import {ResolveAuth} from "../../../../decorators/ResolveAuth";
 import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
+import {ValidationException} from "@tngraphql/illuminate/dist/Foundation/Validate/ValidationException";
 
 @Service()
 export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
@@ -54,7 +55,10 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
         const method = 'builderCreate' + Str.ucFirst(data.kind);
 
         if (typeof this[method] !== "function") {
-            throw new Error('product create cannot handle: ' + data.kind);
+            throw ValidationException.withMessages({
+                'kind': 'product create cannot handle: ' + data.kind
+            });
+            // throw new Error('product create cannot handle: ' + data.kind);
         }
 
         return this.transaction(async () => {
@@ -99,7 +103,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
     protected async builderCreateSingle(data: ProductCreateArgsType) {
         const instance = await super.create(data);
         if (data.branches.length > 1) {
-            throw new ValidationError('???');
+            throw new Error('???');
         }
 
         const categories = data.categories || ['1'];

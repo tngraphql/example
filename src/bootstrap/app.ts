@@ -2,6 +2,7 @@ import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
 import { Kernel as ConsoleKernel } from '../app/Console/Kernel';
 import { Kernel as GraphQLKernel } from '../app/GraphQL/Kernel';
+import {HandlerException} from "../app/Exceptions/HandlerException";
 
 /**
  * (c) Phan Trung Nguyên <nguyenpl117@gmail.com>
@@ -29,6 +30,8 @@ app.runCmd = false;
 app.singleton('Illuminate/Foundation/GraphQL/Kernel', GraphQLKernel);
 
 app.singleton('Illuminate/Foundation/Console/Kernel', ConsoleKernel);
+
+app.singleton('ExceptionHandler', HandlerException);
 
 app.alias('Illuminate/Foundation/Console/Kernel', 'ace');
 

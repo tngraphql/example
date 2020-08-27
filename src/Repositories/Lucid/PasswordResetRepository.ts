@@ -5,7 +5,7 @@
  * Time: 11:23 AM
  */
 import {BaseRepository} from "./BaseRepository";
-import {Service, ValidationError} from "@tngraphql/illuminate";
+import {Service} from "@tngraphql/illuminate";
 import {ResolveLang} from "../../decorators/ResolveLang";
 import PasswordResetModel from "../../app/Models/PasswordResetModel";
 import {ConfigOptions} from "../../lib/ConfigOptions";

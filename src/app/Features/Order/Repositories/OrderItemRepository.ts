@@ -9,6 +9,7 @@ import {Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {OrderItemModel} from "../Models/OrderItemModel";
 import {OrderModel} from "../Models/OrderModel";
+import {CartItem} from "../Lib/CartItem";
 
 @Service()
 export class OrderItemRepository extends BaseRepository<OrderItemModel, typeof OrderItemModel>  {
@@ -16,20 +17,33 @@ export class OrderItemRepository extends BaseRepository<OrderItemModel, typeof O
         return OrderItemModel;
     }
 
-    async sync(order: OrderModel, data) {
+    async sync(order: OrderModel, data: CartItem[]) {
         const itemIds = [];
 
-        for (let item of data) {
-            itemIds.push(item.id);
+        for await (let item of data) {
+            let orderItem;
 
-            await order.related('items').updateOrCreate({
-                orderId: order.id
-            }, {
-                ...item,
-                total: item.getTotal(),
-                type: 'product'
-            });
+            if (!item.id) {
+                orderItem = await order.related('items').create({
+                    ...item.getData(),
+                    type: 'product'
+                });
+
+            } else {
+                orderItem = await order.related('items').updateOrCreate({
+                    orderId: order.id,
+                    type: 'product',
+                    id: item.id
+                }, {
+                    ...item.getData(),
+                    type: 'product'
+                });
+            }
+
+            itemIds.push(orderItem.id);
         };
+
+        console.log(itemIds);
 
         await this.newQuery()
             .whereNotIn('id', itemIds)

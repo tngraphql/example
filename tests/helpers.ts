@@ -9,7 +9,6 @@ import {QueryClientContract} from "@tngraphql/lucid/build/src/Contracts/Database
 import {Application} from "@tngraphql/illuminate";
 import {Kernel} from "../src/app/GraphQL/Kernel";
 import {ApolloServer} from "apollo-server";
-import {GraphQLExceptions} from "../src/app/Exceptions/GraphQLExceptions";
 import {Ace} from "@tngraphql/illuminate/dist/Support/Facades/Ace";
 import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
 import {Context} from "@tngraphql/graphql/dist/resolvers/context";
@@ -303,7 +302,7 @@ export async function createServer(context = {}): Promise<ApolloServer> {
 
     return new ApolloServer({
         schema: await kernel.complie(),
-        formatError: GraphQLExceptions.handle.bind(app),
+        formatError: app.use('ExceptionHandler').render,
         context: ctx => {
             return merge(ctx, context, {
                 app,

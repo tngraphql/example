@@ -12,7 +12,6 @@ import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
 import { ApolloServer } from 'apollo-server';
 import { Kernel } from './app/GraphQL/Kernel';
-import { GraphQLExceptions } from './app/Exceptions/GraphQLExceptions';
 
 const app: Application = require('./bootstrap/app');
 
@@ -25,7 +24,7 @@ function trace() {
     }
 }
 
-// console.log = trace;
+console.log = trace;
 
 async function main() {
     console.time();
@@ -40,7 +39,7 @@ async function main() {
 
     const server = new ApolloServer({
         schema: await kernel.complie(),
-        formatError: GraphQLExceptions.handle.bind(app),
+        formatError: app.use('ExceptionHandler').render,
         context: context => {
             return {
                 app,

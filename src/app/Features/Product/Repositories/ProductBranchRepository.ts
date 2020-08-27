@@ -4,18 +4,15 @@
  * Date: 8/6/2020
  * Time: 8:24 PM
  */
-import {Inject, InvalidArgumentException, Service, ValidationError} from "@tngraphql/illuminate";
+import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {ProductMasterModel} from "../Models/ProductMasterModel";
 import {ProductBranchModel} from "../Models/ProductBranchModel";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
 import {ProductMasterKindEnumType} from "../Types/Product/ProductMasterKindEnumType";
 import Arr from "../../../../lib/Arr";
 import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
 import {ProductImageRepository} from "./ProductImageRepository";
-import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
 import _ = require('lodash');
-import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {ProductMasterRepository} from "./ProductMasterRepository";
 import {Str} from "../../../../lib/Str";

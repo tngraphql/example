@@ -104,7 +104,10 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public async create(data: Partial<ModelAttributes<T>>): Promise<T> {
-        return (await this.model().create(data)) as T;
+        const model = this.model();
+        const o = new model;
+        o.merge(data, true);
+        return (await this.model().create(o.$attributes)) as T;
     }
 
     public async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {

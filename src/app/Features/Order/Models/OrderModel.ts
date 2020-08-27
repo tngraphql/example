@@ -85,12 +85,22 @@ export class OrderModel extends BaseModel {
     @hasOne(() => OrderShippingModel)
     public shippingAddress: HasOne<typeof OrderShippingModel>
 
-    @belongsTo(() => UserModel)
+    @belongsTo(() => UserModel, {
+        foreignKey: 'customerId'
+    })
     public customer: BelongsTo<typeof UserModel>
 
-    @hasMany(() => OrderItemModel)
+    @hasMany(() => OrderItemModel, {
+        onQuery(query) {
+            query.where('type', 'product')
+        }
+    })
     public items: HasMany<typeof OrderItemModel>
 
-    @hasOne(() => OrderItemModel)
+    @hasOne(() => OrderItemModel, {
+        onQuery(query) {
+            query.where('type', 'shipping')
+        }
+    })
     public shipping: HasOne<typeof OrderItemModel>;
 }
