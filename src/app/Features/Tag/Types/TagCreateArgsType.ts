@@ -1,14 +1,13 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import TagModel from "../TagModel";
-
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117
  * Date: 6/10/2020
  * Time: 7:40 PM
  */
+import {ArgsType, Field} from "@tngraphql/graphql";
+import {Rules} from "@tngraphql/illuminate";
+import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
+import TagModel from "../TagModel";
 
 @ArgsType()
 export class TagCreateArgsType {

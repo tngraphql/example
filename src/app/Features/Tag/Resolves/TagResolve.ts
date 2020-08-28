@@ -31,19 +31,21 @@ export class TagResolve extends BaseResolve {
 
     @Query(returns => TagType)
     async index(@Args() args: TagIndexArgsType, @SelectFields() fields) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
+        const query = this.repo.query();
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
 
-        return this.repo.first();
+        return query.first();
     }
 
     @Query(returns => paginateType(TagType))
     async list(@Args() args: TagListArgsType, @SelectFields() fields, @Ctx() context) {
-        this.repo.pushCriteria(new SortByCriteria(args.order));
-        this.repo.pushCriteria(new FilterCriteria(args.filter));
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.paginate(args.limit, args.page);
+        const query = this.repo.query();
+        query.pushCriteria(new SortByCriteria(args.order));
+        query.pushCriteria(new FilterCriteria(args.filter));
+        query.pushCriteria(new SelectionCriteria(fields));
+        return query.paginate(args.limit, args.page);
     }
 
     @Mutation(returns => TagType, {description: 'Tạo mới tài khoản'})
@@ -51,8 +53,9 @@ export class TagResolve extends BaseResolve {
     @UseMiddleware('auth')
     async create(@Args() args: TagCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.create(args);
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.firstBy(created.id);
+        const query = this.repo.query();
+        query.pushCriteria(new SelectionCriteria(fields));
+        return query.firstBy(created.id);
     }
 
     @Mutation(returns => TagType)
@@ -60,8 +63,9 @@ export class TagResolve extends BaseResolve {
     @UseMiddleware('auth')
     async update(@Args() args: TagUpdateArgsType, @SelectFields() fields) {
         const category = await this.repo.update(args, args.id);
-        this.repo.pushCriteria(new SelectionCriteria(fields));
-        return this.repo.firstBy(category.id);
+        const query = this.repo.query();
+        query.pushCriteria(new SelectionCriteria(fields));
+        return query.firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)
