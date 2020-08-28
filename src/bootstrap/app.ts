@@ -25,7 +25,6 @@ import {HandlerException} from "../app/Exceptions/HandlerException";
 // console.log = trace;
 
 const app = new Application(path.join(__dirname , '../'));
-app.runCmd = false;
 
 app.singleton('Illuminate/Foundation/GraphQL/Kernel', GraphQLKernel);
 

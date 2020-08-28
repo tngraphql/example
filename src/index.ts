@@ -24,7 +24,7 @@ function trace() {
     }
 }
 
-console.log = trace;
+// console.log = trace;
 
 async function main() {
     console.time();

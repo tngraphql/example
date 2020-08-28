@@ -6,7 +6,7 @@
  */
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {belongsTo, column} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import MediaModel from "../../../Models/MediaModel";
+import MediaModel from "../../Media/MediaModel";
 import {BelongsTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {Str} from "../../../../lib/Str";
 

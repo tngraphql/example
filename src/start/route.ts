@@ -121,3 +121,11 @@ Route.group(() => {
     Route.mutation('order', 'OrderResolve.order');
     Route.query('orderStatus', 'OrderResolve.orderStatus');
 })['modules']('Order');
+
+Route.group(() => {
+    Route.query('media', 'MediaResolve.index');
+    Route.query('medias', 'MediaResolve.list');
+    Route.mutation('mediaCreate', 'MediaResolve.create');
+    Route.mutation('mediaUpdate', 'MediaResolve.update');
+    Route.mutation('mediaDelete', 'MediaResolve.delete');
+})['modules']('Media');

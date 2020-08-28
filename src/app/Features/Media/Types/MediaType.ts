@@ -7,10 +7,11 @@
 
 import {Field, ObjectType, Root} from "@tngraphql/graphql";
 import {ID} from "../../../GraphQL/Types/UidScalerType";
-import MediaModel from "../../../Models/MediaModel";
+import MediaModel from "../MediaModel";
 import {Any} from "../../../GraphQL/Types/ScalarType/AnyScalerType";
 import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
 import {DateTime} from "luxon";
+import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
 
 @ObjectType('Media')
 export class MediaType {
@@ -76,3 +77,5 @@ export class MediaType {
     @Field(returns => TimestampScalarType)
     public updatedAt: DateTime
 }
+
+registerPaginateType(MediaType);

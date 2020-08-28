@@ -7,7 +7,7 @@
 import {Field, ObjectType, Root} from "@tngraphql/graphql";
 import {ID} from "./UidScalerType";
 import {Any} from "./ScalarType/AnyScalerType";
-import MediaModel from "../../Models/MediaModel";
+import MediaModel from "../../Features/Media/MediaModel";
 
 @ObjectType('Meta')
 export class MetaType {

@@ -17,7 +17,7 @@ import {
     ManyToMany,
     MorphOne
 } from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import MediaModel from "../../../Models/MediaModel";
+import MediaModel from "../../Media/MediaModel";
 import {ProductmetaModel} from "./ProductmetaModel";
 import {InventoryModel} from "./InventoryModel";
 import {ProductImageModel} from "./ProductImageModel";

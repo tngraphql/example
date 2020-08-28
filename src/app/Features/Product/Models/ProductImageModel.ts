@@ -7,7 +7,7 @@
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {belongsTo, column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
 import {DateTime} from "luxon";
-import MediaModel from "../../../Models/MediaModel";
+import MediaModel from "../../Media/MediaModel";
 import {BelongsTo, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 import {Str} from "../../../../lib/Str";
 
