@@ -6,6 +6,7 @@
   "scripts": {
     "test": "cross-env DEBUG=.. DB_NAME=test nyc --reporter=lcov --reporter=text mocha -r ts-node/register --exit",
     "dev": "ts-node-dev src/index.ts",
+    "start": "node dist/index.js",
     "ace": "ts-node ace",
     "gulp dev": "rimraf dist && gulp -f ./gulpfile.dev.js",
     "build": "rimraf dist && gulp"
@@ -15,7 +16,7 @@
   "dependencies": {
     "@adonisjs/logger": "^1.1.9",
     "@adonisjs/profiler": "^2.0.0",
-    "@tngraphql/auth": "^1.0.3",
+    "@tngraphql/auth": "^1.0.5",
     "@tngraphql/console": "^1.0.0",
     "@tngraphql/graphql": "^1.0.6",
     "@tngraphql/guard": "^1.0.1",

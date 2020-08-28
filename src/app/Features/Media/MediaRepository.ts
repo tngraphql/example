@@ -39,11 +39,11 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
             let info: MediaModel;
             if (id instanceof BaseModel) {
                 info = id as any;
+            } else {
+                const query = this.newQuery();
+
+                info = await query.where(attribute, id).first();
             }
-
-            const query = this.newQuery();
-
-            info = await query.where(attribute, id).first();
 
             if ( info.mineType !== 'folder' ) {
                 this.unlink(info);
