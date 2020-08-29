@@ -10,10 +10,9 @@
 import 'reflect-metadata';
 import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
-import { ApolloServer } from 'apollo-server-express';
 import { Kernel } from './app/GraphQL/Kernel';
-const express = require('express');
-const exp = express();
+const express = require('express')();
+import {ApolloServer} from "apollo-server-express";
 
 const app: Application = require('./bootstrap/app');
 
@@ -30,45 +29,35 @@ function trace() {
 
 async function main() {
     console.time();
+
     app.autoload(path.join(app.getBasePath(), 'app'), 'App');
 
     const kernel: Kernel = await app.make<Kernel>('Illuminate/Foundation/GraphQL/Kernel');
 
-    // BaseModel.$container = app;
     await kernel.handle();
 
-    const configApp = app.config.get('app');
-
     // Tạo graphiql
-    exp.get('/graphiql', (req, res) => {
+    express.get('/graphiql', (req, res) => {
         res.sendFile(process.cwd() + '/graphiql.html');
     });
 
+    const config = app.config.get('graphql');
+
     const server = new ApolloServer({
         schema: await kernel.complie(),
-        formatError: app.use('ExceptionHandler').render,
-        context: context => {
-            return {
-                app,
-                ...context
-            };
-        },
-        playground: configApp.playground,
-        validationRules: kernel.validationRules(),
-        introspection: configApp.introspection,
-        plugins: kernel.plugins
-    });
+        ...config
+    })
 
-    server.applyMiddleware({ app: exp, path: process.env.GRAPHQL_PATH || '/graphql' });
+    server.applyMiddleware({ app: express, path: process.env.GRAPHQL_PATH || '/graphql' });
 
     const {media} = require('./media');
 
-    exp.use(media);
+    express.use(media);
 
-    await exp.listen(4002, '127.0.0.1');
+    await express.listen(4002, '127.0.0.1');
     console.timeEnd();
 }
 
 main().then(() => {
-    console.log(`start http://localhost:4002`);
+    console.log(`start http://localhost:4002/graphql`);
 }).catch(console.log);

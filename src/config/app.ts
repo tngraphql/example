@@ -22,9 +22,7 @@ import {GateServiceProvider} from "../app/Providers/GateServiceProvider";
 import {MailServiceProvider} from "@tngraphql/mail";
 import {Env} from "@tngraphql/illuminate/dist/Support/Env";
 
-type AppConfig = Config | any;
-
-const app: AppConfig = {
+const app = {
     providers: [
         AceServiceProvider,
         DatabaseServiceProvider,
@@ -39,12 +37,7 @@ const app: AppConfig = {
         AppServiceProvider,
         RouteServiceProvider,
     ],
-    playground: {
-        version: '1.7.10'
-    },
-    introspection: true,
-    depthLimit: Env.get('DEPTH_LIMIT', 6)
-    // formatError
+    depthLimit: Env.get('DEPTH_LIMIT', 6),
 }
 
 export = app;
