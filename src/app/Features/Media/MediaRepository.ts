@@ -60,7 +60,7 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
             }
 
             const listAllFile = await this.newQuery()
-                .where('folderName', 'like', `${f}%`)
+                .allFolder(f)
                 .exec();
 
 

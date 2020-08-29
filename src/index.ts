@@ -10,8 +10,10 @@
 import 'reflect-metadata';
 import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
 import { Kernel } from './app/GraphQL/Kernel';
+const express = require('express');
+const exp = express();
 
 const app: Application = require('./bootstrap/app');
 
@@ -37,6 +39,11 @@ async function main() {
 
     const configApp = app.config.get('app');
 
+    // Tạo graphiql
+    exp.get('/graphiql', (req, res) => {
+        res.sendFile(process.cwd() + '/graphiql.html');
+    });
+
     const server = new ApolloServer({
         schema: await kernel.complie(),
         formatError: app.use('ExceptionHandler').render,
@@ -52,7 +59,13 @@ async function main() {
         plugins: kernel.plugins
     });
 
-    await server.listen(4002, '127.0.0.1');
+    server.applyMiddleware({ app: exp, path: process.env.GRAPHQL_PATH || '/graphql' });
+
+    const {media} = require('./media');
+
+    exp.use(media);
+
+    await exp.listen(4002, '127.0.0.1');
     console.timeEnd();
 }
 

@@ -6,8 +6,8 @@ import {Str} from "../../../lib/Str";
 export default class MediaModel extends BaseModel {
     static table = 'media';
 
-    @column({ isPrimary: true, consume: value => Str.toString(value) })
-    public id: string
+    @column({isPrimary: true, consume: value => Str.toString(value)})
+    public id: string;
 
     @column()
     public status: string;
@@ -42,11 +42,18 @@ export default class MediaModel extends BaseModel {
     @column({columnName: 'data'})
     public thumbnail: string;
 
-    @column.dateTime({ autoCreate: true })
-    public createdAt: DateTime
+    @column.dateTime({autoCreate: true})
+    public createdAt: DateTime;
 
-    @column.dateTime({ autoCreate: true, autoUpdate: true })
-    public updatedAt: DateTime
+    @column.dateTime({autoCreate: true, autoUpdate: true})
+    public updatedAt: DateTime;
 
-    public static $columns: Pick<MediaModel, 'id' | 'status' | 'title' | 'folderName' | 'guid' | 'src' | 'srcMd5' | 'rootId' | 'filesize' | 'mineType' | 'data' | 'createdAt' | 'updatedAt'>
-}
+    public static $columns: Pick<MediaModel, 'id' | 'status' | 'title' | 'folderName' | 'guid' | 'src' | 'srcMd5' | 'rootId' | 'filesize' | 'mineType' | 'data' | 'createdAt' | 'updatedAt'>;
+
+    public static scopeAllFolder(query, folderName) {
+        return query.where(builder => {
+            builder.where('folderName', 'like', `${folderName} /%`)
+                .orWhere('folderName', folderName);
+        });
+    }
+};

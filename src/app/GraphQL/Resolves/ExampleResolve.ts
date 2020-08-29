@@ -48,6 +48,8 @@ class InputArgs {
     user: UserInput[]
 }
 
+var a = 0;
+
 @Resolver(of => UserType)
 export class ExampleResolve {
 
@@ -62,7 +64,8 @@ export class ExampleResolve {
 
 
     @Mutation(returns => GraphQLString)
-    async login(@Ctx() {name}) {
+    async login(@Ctx() {name, req, res}) {
+        // console.log(res.headers)
         return (await UserModel.find(1)).createToken('new', ['viewUser']);
     }
 

@@ -14,8 +14,11 @@ export class MediaCreateArgsType {
     @Field({description: 'Tên thẻ nhãn'})
     @Rules(args => ([
         'required',
+        'regex:/^([^\\\/\:\?\*\"\<\>\|]*)$/g',
         Rule.unique(MediaModel.getTable(), 'title').where('folder_name', args.folderName || null)
-    ]))
+    ]), ({lang}) => ({
+        'regex': lang.t(`A folder name can\'t contain any of the following characters`) + ': \/:*?"<>|'
+    }))
     public title: string
 
     @Field({description: 'Slug là phiên bản thân thiện với URL của tên.'})

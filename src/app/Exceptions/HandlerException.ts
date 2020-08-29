@@ -7,6 +7,7 @@
 import {Handler} from "@tngraphql/illuminate/dist/Foundation/Exceptions/Handler";
 import {GraphQLError} from "graphql";
 import {Application, Service} from "@tngraphql/illuminate";
+import {AuthenticationException} from "@tngraphql/auth/dist/src/Exception/AuthenticationException";
 
 @Service()
 export class HandlerException extends Handler {
@@ -36,7 +37,16 @@ export class HandlerException extends Handler {
      *
      * @param error
      */
-    render(error: GraphQLError): any {
+    render(error: GraphQLError | any): any {
+        if (error.originalError.sqlState) {
+            error.type = error.originalError.code;
+            error.code = error.originalError.errno;
+            error.message = 'Xin lỗi quý khách, kết nối đến hệ thống tạm thời bị gián đoạn. Vui lòng thử lại sau.';
+        }
+        if (error.originalError instanceof AuthenticationException) {
+            error.type = 'AuthException';
+            error.code = 290;
+        }
         return super.render(error);
     }
 }

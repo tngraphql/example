@@ -6,5 +6,6 @@
 	"You are trying to favorite a post that doesn't exist.": "You are trying to favorite a post that doesn't exist.",
 	"Phone format is invalid.": "Phone format is invalid.",
 	"Phone format is invalid.123": "Phone format is invalid.123",
-	"Please select a role.": "Please select a role."
+	"Please select a role.": "Please select a role.",
+	"A folder name can't contain any of the following characters": "A folder name can't contain any of the following characters"
 }

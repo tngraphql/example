@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<title>GraphQL</title>
+<head>
+    <title>GraphIQL</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #graphiql {
+            height: 100vh;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.10.2/graphiql.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.11/graphiql.min.js"></script>
+    <style>
+        .login {
+            position: fixed;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .login-body {
+            background: #ebf3fb;
+            border: solid 1px #ccc;
+            height: 190px;
+            padding: 7px;
+            width: 400px;
+            margin: 200px auto
+        }
+
+        .login input {
+            max-width: 90%;
+        }
+
+        #expand_login {
+            position: fixed;
+            left: -1px;
+            bottom: 200px;
+            width: 40px;
+            z-index: 999;
+            background-color: #fae7e7;
+            cursor: pointer;
+            border: solid 1px #f93e3e;
+            height: 80px;
+            padding-top: 15px;
+            padding-left: 2px;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(#f9f9f9, #ececec);
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .7), inset 0 1px #fff;
+            color: #555;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 5px;
+            padding: 3px 11px 5px;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 150px;
+        }
+
+        .btn:active, .btn:focus {
+            background: linear-gradient(#ececec, #d5d5d5);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, .7), inset 0 0 0 1px rgba(0, 0, 0, .1), inset 0 1px 1px 1px rgba(0, 0, 0, .12), inset 0 0 5px rgba(0, 0, 0, .1);
+        }
+    </style>
+</head>
+<form autocomplete="off" id="form-login" style="display: none" class="swagger-ui login">
+    <input type="password" style="position: fixed;left: -1000px;">
+    <div style="" class="login-body">
+        <div style="text-align: right">
+            <button type="button" title="Đóng" onclick="myClose()">&times;</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <label for="" style="width: 120px;margin:7px;display: inline-block">Email</label> <input id="username"
+                                                                                                     style="margin: 7px;width: 180px;height: 28px;font-size: 14px"
+                                                                                                     type="text"
+                                                                                                     value="nguyenpl117@gmail.com"
+                                                                                                     onfocus="this.select()">
+        </div>
+        <div>
+            <label for="" style="width: 120px;margin:7px;display: inline-block">Mật khẩu</label> <input id="password"
+                                                                                                        style="margin: 7px;width: 180px;height: 28px;font-size: 14px"
+                                                                                                        type="password"
+                                                                                                        value="123456"
+                                                                                                        onfocus="this.select()">
+        </div>
+        <div>
+            <a type="button" style="margin-left: 160px;margin-top: 15px;" id="login"
+               class="btn execute opblock-control__btn" onclick="myLogin()">Đăng nhập</a>
+        </div>
+        <!--<div>
+            <textarea name="" id="token" onfocus="this.select()"></textarea>
+        </div>
+        <div>
+            <a style="float: right" type="button" id="login" class="btn cancel body-param__example-edit button" onclick="myClose()">Copy và đóng</a>
+        </div>-->
+    </div>
+</form>
+<form autocomplete="off" id="form-create" style="display: none" class="swagger-ui login">
+    <input type="password" style="position: fixed;left: -1000px;">
+    <div style="" class="login-body">
+        <div style="text-align: right">
+            <button type="button" title="Đóng" onclick="myClose('form-create')">&times;</button>
+        </div>
+        <div style="text-align: center">
+            <strong>Tạo mới query</strong>
+        </div>
+        <div style="margin-top: 15px;">
+            <label for="" style="width: 120px;margin:7px;display: inline-block">Tên</label> <input id="query_name"
+                                                                                                   style="padding: 0 7px;margin: 7px;width: 180px;height: 28px;font-size: 14px"
+                                                                                                   type="text" value="">
+        </div>
+        <div>
+            <label for="" style="width: 120px;margin:7px;display: inline-block">&nbsp;</label> <input id="query_type"
+                                                                                                      style="margin: 7px;font-size: 14px"
+                                                                                                      type="checkbox"
+                                                                                                      value="1"> <span>Tạo Type</span>
+        </div>
+        <div>
+            <a type="button" style="margin-left: 160px;margin-top: 15px;" id="login"
+               class="btn execute opblock-control__btn" onclick="createQuery()">Đồng ý</a>
+        </div>
+        <!--<div>
+            <textarea name="" id="token" onfocus="this.select()"></textarea>
+        </div>
+        <div>
+            <a style="float: right" type="button" id="login" class="btn cancel body-param__example-edit button" onclick="myClose()">Copy và đóng</a>
+        </div>-->
+    </div>
+</form>
+<form autocomplete="off" id="form-create-mutation" style="display: none" class="swagger-ui login">
+    <input type="password" style="position: fixed;left: -1000px;">
+    <div style="" class="login-body">
+        <div style="text-align: right">
+            <button type="button" title="Đóng" onclick="myClose('form-create-mutation')">&times;</button>
+        </div>
+        <div style="text-align: center">
+            <strong>Tạo mới mutation</strong>
+        </div>
+        <div style="margin-top: 15px;">
+            <label for="" style="width: 120px;margin:7px;display: inline-block">Tên</label> <input id="mutation_name"
+                                                                                                   style="padding: 0 7px;margin: 7px;width: 180px;height: 28px;font-size: 14px"
+                                                                                                   type="text" value="">
+        </div>
+        <div>
+            <label for="" style="width: 120px;margin:7px;display: inline-block">&nbsp;</label> <input id="mutation_type"
+                                                                                                      style="margin: 7px;font-size: 14px"
+                                                                                                      type="checkbox"
+                                                                                                      value="1"> <span>Tạo Type</span>
+        </div>
+        <div>
+            <a type="button" style="margin-left: 160px;margin-top: 15px;" id="login"
+               class="btn execute opblock-control__btn" onclick="createMutation()">Đồng ý</a>
+        </div>
+        <!--<div>
+            <textarea name="" id="token" onfocus="this.select()"></textarea>
+        </div>
+        <div>
+            <a style="float: right" type="button" id="login" class="btn cancel body-param__example-edit button" onclick="myClose()">Copy và đóng</a>
+        </div>-->
+    </div>
+</form>
+<body>
+<div id="graphiql">Loading...</div>
+<script>
+    /**
+     * This GraphiQL example illustrates how to use some of GraphiQL's props
+     * in order to enable reading and updating the URL parameters, making
+     * link sharing of queries a little bit easier.
+     *
+     * This is only one example of this kind of feature, GraphiQL exposes
+     * various React params to enable interesting integrations.
+     */
+
+        // Parse the search string to get url parameters.
+    let search = window.location.search;
+    let parameters = {};
+    let access_token = '';
+    try {
+        if ( localStorage.getItem('access_token_graphiql') ) {
+            access_token = localStorage.getItem('access_token_graphiql');
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    search.substr(1).split('&').forEach(function(entry) {
+        const eq = entry.indexOf('=');
+        if ( eq >= 0 ) {
+            parameters[decodeURIComponent(entry.slice(0, eq))] =
+                decodeURIComponent(entry.slice(eq + 1));
+        }
+    });
+
+    // if variables was provided, try to format it.
+    if ( parameters.variables ) {
+        try {
+            parameters.variables =
+                JSON.stringify(JSON.parse(parameters.variables), null, 2);
+        } catch (e) {
+            // Do nothing, we want to display the invalid JSON as a string, rather
+            // than present an error.
+        }
+    }
+
+    // When the query and variables string is edited, update the URL bar so
+    // that it can be easily shared
+    function onEditQuery(newQuery) {
+        parameters.query = newQuery;
+        updateURL();
+    }
+
+    function onEditVariables(newVariables) {
+        parameters.variables = newVariables;
+        updateURL();
+    }
+
+    function onEditOperationName(newOperationName) {
+        parameters.operationName = newOperationName;
+        updateURL();
+    }
+
+    function updateURL() {
+        var newSearch = '?' + Object.keys(parameters).filter(function(key) {
+            return Boolean(parameters[key]);
+        }).map(function(key) {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]);
+        }).join('&');
+        history.replaceState(null, null, newSearch);
+    }
+
+    function getCookie(cname) {
+        var name = cname + '=';
+        var ca = document.cookie.split(';');
+        for( var i = 0; i < ca.length; i++ ) {
+            var c = ca[i];
+            while ( c.charAt(0) == ' ' ) {
+                c = c.substring(1);
+            }
+            if ( c.indexOf(name) == 0 ) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return '';
+    }
+
+    // Defines a GraphQL fetcher using the fetch API.
+    function graphQLFetcher(graphQLParams) {
+        return fetch('/graphql', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: JSON.stringify(graphQLParams),
+            credentials: 'include',
+        }).then(function(response) {
+            return response.text();
+        }).then(function(responseBody) {
+            try {
+                return JSON.parse(responseBody);
+            } catch (error) {
+                return responseBody;
+            }
+        });
+    }
+
+    var toolbar = null;
+    var timeval = setInterval(_ => {
+        if ( document.getElementsByClassName('toolbar').length ) {
+            toolbar = document.getElementsByClassName('toolbar')[0];
+            let buttonLogin = document.createElement('a');
+            buttonLogin.setAttribute('class', 'toolbar-button');
+            buttonLogin.setAttribute('onclick', 'myExpand()');
+            buttonLogin.innerText = 'Đăng nhập';
+
+            let buttonCreateQuery = document.createElement('a');
+            buttonCreateQuery.setAttribute('class', 'toolbar-button');
+            buttonCreateQuery.setAttribute('onclick', 'myExpand(\'form-create\')');
+            buttonCreateQuery.innerText = 'Create A Query';
+
+            let buttonCreateMutation = document.createElement('a');
+            buttonCreateMutation.setAttribute('class', 'toolbar-button');
+            buttonCreateMutation.setAttribute('onclick', 'myExpand(\'form-create-mutation\')');
+            buttonCreateMutation.innerText = 'Create A Mutation';
+
+
+            toolbar.appendChild(buttonLogin);
+            toolbar.appendChild(buttonCreateQuery);
+            toolbar.appendChild(buttonCreateMutation);
+            clearInterval(timeval);
+        }
+        console.log('val 1');
+    });
+
+    function myExpand(name = 'form-login') {
+        myClose();
+        myClose('form-create');
+        myClose('form-create-mutation');
+
+        document.getElementById(name).style.display = 'block';
+        // document.getElementById('expand_login').style.display = 'none';
+    }
+
+    function myClose(name = 'form-login') {
+        document.getElementById(name).style.display = 'none';
+        // document.getElementById('expand_login').style.display = 'block';
+    }
+
+    myClose();
+    myClose('form-create');
+    myClose('form-create-mutation');
+
+    function myLogin() {
+        let userName = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+        let url = '/graphql';
+
+        fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify({
+                'query': 'mutation fetchLogin($userName: String!, $password: String!) {auth(email: $userName, password: $password) {token}}',
+                'variables': { 'userName': userName, 'password': password },
+                'operationName': 'fetchLogin'
+
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            referrer: 'login', // no-referrer, *client
+        }).then(res => res.json()).then(res => {
+            if ( ! res.errors ) {
+                if ( res.data.auth ) {
+                    access_token = res.data.auth.token;
+                    localStorage.setItem('access_token_graphiql', access_token);
+                    location.href = '';
+                }
+            } else {
+                alert(res.errors[0].message);
+            }
+            console.log(res);
+        });
+    }
+
+    function createQuery() {
+        let name = document.getElementById('query_name').value;
+        let type = document.getElementById('query_type').checked;
+        let url = '/graphql';
+
+        fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify({
+                'query': 'mutation createQuery($name: String!, $type: Boolean!) {createQuery(name: $name, type:$type)}',
+                'variables': { 'name': name, 'type': type },
+                'operationName': 'createQuery'
+
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '',
+                'Authorization': 'Bearer ' + access_token
+            },
+            referrer: 'login', // no-referrer, *client
+        }).then(res => res.json()).then(res => {
+            if ( ! res.errors ) {
+                alert('Thành công');
+                myClose('form-create')
+            } else {
+                alert(res.errors[0].message);
+            }
+        });
+    }
+
+    function createMutation() {
+        let name = document.getElementById('mutation_name').value;
+        let type = document.getElementById('mutation_type').checked;
+        let url = '/graphql';
+
+        fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify({
+                'query': 'mutation createMutation($name: String!, $type: Boolean!) {createMutation(name: $name, type:$type)}',
+                'variables': { 'name': name, 'type': type },
+                'operationName': 'createMutation'
+
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '',
+                'Authorization': 'Bearer ' + access_token
+            },
+            referrer: 'login', // no-referrer, *client
+        }).then(res => res.json()).then(res => {
+            if ( ! res.errors ) {
+                alert('Thành công');
+                myClose('form-create-mutation');
+            } else {
+                alert(res.errors[0].message);
+            }
+        });
+    }
+
+    // Render <GraphiQL /> into the body.
+    ReactDOM.render(
+        React.createElement(GraphiQL, {
+            fetcher: graphQLFetcher,
+            query: parameters.query,
+            variables: parameters.variables,
+            operationName: parameters.operationName,
+            onEditQuery: onEditQuery,
+            onEditVariables: onEditVariables,
+            onEditOperationName: onEditOperationName
+        }),
+        document.getElementById('graphiql')
+    );
+</script>
+</body>
+</html>
