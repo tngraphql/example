@@ -54,7 +54,10 @@ async function main() {
 
     express.use(media);
 
-    await express.listen(4002, '127.0.0.1');
+    const port = process.env.PORT || 3000
+    const host = process.env.HOST || '127.0.0.1'
+
+    await express.listen(port, host);
     console.timeEnd();
 }
 
