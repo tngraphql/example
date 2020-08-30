@@ -330,7 +330,7 @@ describe('favorite Http', () => {
                     query: FAVORITE_LIST_QUERY
                 });
                 expect(res.errors).to.not.undefined;
-                expect(res.errors[0]['code']).to.eq('E_AUTHENTICATION');
+                expect(res.errors[0]['type']).to.eq('AuthException');
             });
 
             it('should reponse list favorite', async () => {
@@ -605,7 +605,7 @@ describe('favorite Http', () => {
                     query: FAVORITE_LIST_FOR_USER_QUERY
                 });
                 expect(res.errors).to.not.undefined;
-                expect(res.errors[0]['code']).to.eq('E_AUTHENTICATION');
+                expect(res.errors[0]['type']).to.eq('AuthException');
             });
 
             it('should reponse favoritesUser favorite', async () => {

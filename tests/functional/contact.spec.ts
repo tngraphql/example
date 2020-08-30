@@ -553,7 +553,7 @@ describe('contact Http', () => {
                     query: CONTACT_LIST_QUERY
                 });
                 expect(res.errors).to.not.undefined;
-                expect(res.errors[0]['code']).to.eq('E_AUTHENTICATION');
+                expect(res.errors[0]['type']).to.eq('AuthException');
             });
 
             it('should reponse list contact', async () => {

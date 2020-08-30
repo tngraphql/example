@@ -100,7 +100,7 @@ describe('productMaster Http', () => {
         await ProductTypeModel.truncate();
         await ProductTypeMetaModel.truncate();
         await ProductVendorModel.truncate();
-        await Factory.model('App/Models/MediaModel').reset();
+        await Factory.model('App/Features/Media/MediaModel').reset();
     });
 
     describe('productMaster Http | Index', () => {

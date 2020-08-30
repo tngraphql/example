@@ -7,7 +7,7 @@
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 import {ProductMasterKindEnumType} from "../../app/Features/Product/Types/Product/ProductMasterKindEnumType";
 
-Factory.blueprint('App/Models/MediaModel', (faker, index, data) => {
+Factory.blueprint('App/Features/Media/MediaModel', (faker, index, data) => {
     return {
         status: 1,
         title: 'Man dance copy-2',
