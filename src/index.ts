@@ -64,3 +64,8 @@ async function main() {
 main().then(() => {
     console.log(`start http://localhost:4002/graphql`);
 }).catch(console.log);
+
+process.on('uncaughtException', function(err) {
+    console.error(err.stack);
+    console.log('Node NOT Exiting...');
+});

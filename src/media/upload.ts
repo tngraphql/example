@@ -1,8 +1,8 @@
 import * as DepreciatedJimp from 'jimp';
-import {Application} from "@tngraphql/illuminate";
 import MediaModel from "../app/Features/Media/MediaModel";
 import {Str} from "../lib/Str";
 import {authMiddleware} from "./auth-middleware";
+import * as path from "path";
 
 const express = require('express');
 const fs = require('fs');
@@ -16,7 +16,7 @@ const { join, basename } = require('path');
 const cors = require('cors');
 const quality = 50;
 
-const folderUploads = Application.getInstance<Application>().basePath('../uploads/');
+const folderUploads = path.join(process.cwd(), 'uploads/')
 
 function getResizeWidthHeight(w1, h1, w2 = 800, h2 = 0) {
     if ( w1 < w2 && h1 < h2 ) {

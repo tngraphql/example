@@ -10,7 +10,8 @@
     "ace": "ts-node ace",
     "pce": "cross-env NODE_ENV=production ts-node ace",
     "gulp dev": "rimraf dist && gulp -f ./gulpfile.dev.js",
-    "build": "rimraf dist && gulp"
+    "build": "rimraf dist && gulp",
+    "migrate": "cross-env NODE_ENV=production ts-node ace migration:run"
   },
   "author": "",
   "license": "ISC",
