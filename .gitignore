@@ -18,3 +18,5 @@ coverage
 .env
 auth-public.key
 auth-private.key
+.tscache
+uploads
