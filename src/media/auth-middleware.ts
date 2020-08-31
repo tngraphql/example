@@ -4,9 +4,9 @@
  * Date: 8/29/2020
  * Time: 10:53 AM
  */
-import {Application} from "@tngraphql/illuminate";
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const {join} = require('path');
 
 export function authMiddleware(req, res, next) {
     if ( ! req.query ) {
@@ -25,7 +25,7 @@ export function authMiddleware(req, res, next) {
 
     const token = authorization.replace(/^(Bearer\s)/g, '');
 
-    const cert = fs.readFileSync(Application.getInstance<Application>().basePath('./auth-public.key')).toString('UTF-8');
+    const cert = fs.readFileSync(join(process.cwd(), 'auth-public.key')).toString('UTF-8');
 
     try {
         const verify = jwt.verify(token, cert, {algorithm: 'RS256'});

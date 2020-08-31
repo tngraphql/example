@@ -1,9 +1,3 @@
-import { Application } from '@tngraphql/illuminate';
-import * as path from 'path';
-import { Kernel as ConsoleKernel } from '../app/Console/Kernel';
-import { Kernel as GraphQLKernel } from '../app/GraphQL/Kernel';
-import {HandlerException} from "../app/Exceptions/HandlerException";
-
 /**
  * (c) Phan Trung Nguyên <nguyenpl117@gmail.com>
  * User: nguyenpl117
@@ -13,16 +7,11 @@ import {HandlerException} from "../app/Exceptions/HandlerException";
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-// const log = console.log;
-// function trace() {
-//     try {
-//         throw new Error();
-//     } catch (e) {
-//         log.apply(log, [...arguments, e.stack.split('\n')[2]]);
-//     }
-// }
-//
-// console.log = trace;
+import { Application } from '@tngraphql/illuminate';
+import * as path from 'path';
+import { Kernel as ConsoleKernel } from '../app/Console/Kernel';
+import { Kernel as GraphQLKernel } from '../app/GraphQL/Kernel';
+import {HandlerException} from "../app/Exceptions/HandlerException";
 
 const app = new Application(path.join(__dirname , '../'));
 

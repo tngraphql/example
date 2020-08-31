@@ -657,10 +657,10 @@
   dependencies:
     node-exceptions "^3.0.0"
 
-"@tngraphql/auth@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.5.tgz#c077b149c922632e3636dddc8a196fe6204c6d5e"
-  integrity sha512-M/Ym7uEZcha7eeDX6cYDpwHKMrWyh7us54MaJB4frWdMuD9DJj48zg+ax8MXECE1IkadGYkKk15ukIIm3dDIRQ==
+"@tngraphql/auth@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.6.tgz#67fc76ac952fdd5ba458bd3e340fb7c1af97b03f"
+  integrity sha512-6CuTYLp9pClP8VQOAHJ2PzuWPCXTfPKHgdanOqRKDDAEcbYL9aDQlH0H2pcfILJ54aSbzhx4KqcF5k7qlkoR6A==
   dependencies:
     bcrypt "^4.0.1"
     hybrid-crypto-js "^0.2.2"
@@ -713,10 +713,10 @@
     "@slynova/fence" "^1.0.6"
     pluralize "^8.0.0"
 
-"@tngraphql/illuminate@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.13.tgz#ce96389e48622edaac88dadeef4520f289e3bd8b"
-  integrity sha512-/qBO1zjZDSw1rSix+VQY1TcWR/Ip3NkkDVzsDD25CW5BLG5kjDLV3oPmyqbNepLw5JJLL1Lsh1hHz7+x3EiBDA==
+"@tngraphql/illuminate@^1.1.14":
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/@tngraphql/illuminate/-/illuminate-1.1.14.tgz#85f63de51b706f168ac9eaa4933a4476dc73a76c"
+  integrity sha512-XL4yeHjLxcgbW40lyWU/ShZuCOMKTa3Y4hZZgRlsL0W7ikyT5eq+nV1BPZ2tFqHcxDI3LenNrBTkFLxYhGAbmA==
   dependencies:
     "@adonisjs/env" "^1.0.12"
     "@adonisjs/events" "^1.0.7"
@@ -736,6 +736,7 @@
     log-update "^4.0.0"
     macroable "^4.0.2"
     moment "^2.24.0"
+    php-serialize "^4.0.2"
     pretty-hrtime "^1.0.3"
     randomstring "^1.1.5"
     reflect-metadata "^0.1.13"
@@ -6149,6 +6150,11 @@ phin@^2.9.1:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/phin/-/phin-2.9.3.tgz#f9b6ac10a035636fb65dfc576aaaa17b8743125c"
   integrity sha512-CzFr90qM24ju5f88quFC/6qohjC144rehe5n6DH900lgXmUe86+xCKc10ev56gRKC4/BkHUoG4uSiQgBiIXwDA==
+
+php-serialize@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/php-serialize/-/php-serialize-4.0.2.tgz#869bd4e01c2d26ac41c1d3e8058ab00ec072e3e5"
+  integrity sha512-73K9MqCnRn07sXxOht6kVLg+fg1lf/VYpecKy4n9ABcw1PJIAWfaxuQKML27EjolGHWxlXTy3rfh59AGrcUvIA==
 
 picomatch@^2.0.4, picomatch@^2.0.7:
   version "2.2.1"

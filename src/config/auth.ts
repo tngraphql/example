@@ -8,6 +8,11 @@
 import { UserModel } from '../app/UserModel';
 
 export = {
+    /**
+     * Expired time token is in `minute`.
+     */
+    expired: 60,
+
     defaults: {
         guard: 'api',
         provider: 'users'

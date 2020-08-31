@@ -7,9 +7,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import 'reflect-metadata'
-import * as path from 'path';
-const app: any = require('./src/bootstrap/app');
+require('reflect-metadata');
+const path = require('path');
+
+const app = require(path.join(process.cwd(), process.env.NODE_ENV !== 'production' ? 'src' : 'dist', 'bootstrap/app'));
 
 async function main() {
     app.autoload(path.join(app.getBasePath(), 'app'), 'App');

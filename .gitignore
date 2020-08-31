@@ -16,3 +16,5 @@ coverage
 *.key
 .nyc_output/
 .env
+auth-public.key
+auth-private.key

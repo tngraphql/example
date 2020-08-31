@@ -8,6 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
     "ace": "ts-node ace",
+    "pce": "cross-env NODE_ENV=production ts-node ace",
     "gulp dev": "rimraf dist && gulp -f ./gulpfile.dev.js",
     "build": "rimraf dist && gulp"
   },
@@ -16,11 +17,11 @@
   "dependencies": {
     "@adonisjs/logger": "^1.1.9",
     "@adonisjs/profiler": "^2.0.0",
-    "@tngraphql/auth": "^1.0.5",
+    "@tngraphql/auth": "^1.0.6",
     "@tngraphql/console": "^1.0.0",
     "@tngraphql/graphql": "^1.0.7",
     "@tngraphql/guard": "^1.0.1",
-    "@tngraphql/illuminate": "^1.1.13",
+    "@tngraphql/illuminate": "^1.1.14",
     "@tngraphql/lucid": "^1.0.21",
     "@tngraphql/mail": "^1.0.15-alpha",
     "@tngraphql/route": "^1.0.0",
