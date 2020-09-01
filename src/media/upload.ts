@@ -3,6 +3,7 @@ import MediaModel from "../app/Features/Media/MediaModel";
 import {Str} from "../lib/Str";
 import {authMiddleware} from "./auth-middleware";
 import * as path from "path";
+import {corsMiddleware} from "./cors-middleware";
 
 const express = require('express');
 const fs = require('fs');
@@ -13,7 +14,7 @@ const md5 = require('md5');
 const fileUpload = require('express-fileupload');
 const rateLimit = require('express-rate-limit');
 const { join, basename } = require('path');
-const cors = require('cors');
+const { URL } = require('url');
 const quality = 50;
 
 const folderUploads = path.join(process.cwd(), 'uploads/')
@@ -159,11 +160,14 @@ function changeName(name, w, h) {
 }
 
 function getUrlImage(urlFile) {
-    let path = `//${ process.env.BASE_URL }${ urlFile }`;
-    if ( process.env.SSR === 'true' ) {
-        path = 'https:' + path;
+    let url = process.env.APP_URL.replace(/\/$/g, '');
+
+    if (/^https?:\/\/[a-z]+/g.test(url)) {
+        const u = new URL(url);
+        return `//${u.host}${urlFile}`;
     }
-    return path;
+
+    return `//${ url }${ urlFile }`;
 }
 
 const checkSlug = function(slug) {
@@ -194,8 +198,8 @@ router.use(fileUpload({
 }));
 
 router.use('/media/upload', authMiddleware);
-router.use('/media/upload', cors);
-router.use('/upload', cors);
+router.use('/media/upload', corsMiddleware);
+router.use('/upload', corsMiddleware);
 
 const uploadFn = (req, res) => {
     if ( Object.keys(req.files).length === 0 ) {
@@ -203,6 +207,7 @@ const uploadFn = (req, res) => {
     }
 
     req.body = req.body || {};
+    console.log('upload');
 
     const sampleFile = req.files.foo || req.files.upload;
 

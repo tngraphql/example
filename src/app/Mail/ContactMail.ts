@@ -12,7 +12,7 @@ export class ContactMail extends Mailable {
     /**
      * Create a new message instance.
      */
-    public constructor(data) {
+    public constructor(protected data) {
         super();
     }
 
@@ -20,7 +20,6 @@ export class ContactMail extends Mailable {
      * Build the message.
      */
     public build(): void {
-        this.to('nguyenpl117@gmail.com')
-            .text('plain mail');
+        this.htmlView('contact',  this.data)
     }
 }

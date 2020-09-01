@@ -7,5 +7,12 @@
 	"Phone format is invalid.": "Phone format is invalid.",
 	"Phone format is invalid.123": "Phone format is invalid.123",
 	"Please select a role.": "Please select a role.",
-	"A folder name can't contain any of the following characters": "A folder name can't contain any of the following characters"
+	"A folder name can't contain any of the following characters": "A folder name can't contain any of the following characters",
+	"All rights reserved.": "Đã đăng ký bản quyền.",
+	"We can't find a user with that e-mail address.": "We can't find a user with that e-mail address.",
+	"We have e-mailed your password reset link!": "We have e-mailed your password reset link!",
+	"You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
+	"This password reset link will expire in :count minutes.": "This password reset link will expire in :count minutes.",
+	"Retype the password incorrectly.": "Retype the password incorrectly.",
+	"Your password has been reset!": "Your password has been reset!"
 }

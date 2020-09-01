@@ -16,7 +16,7 @@ export class ConfigOptionsMiddleware implements MiddlewareInterface<{ lang: any 
         }
 
         // await ConfigOptions.setCacheControl();
-        await ConfigOptions.clearCache();
+        // await ConfigOptions.clearCache();
         await ConfigOptions.init();
 
         await next();

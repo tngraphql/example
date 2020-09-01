@@ -38,6 +38,7 @@ export class HandlerException extends Handler {
      * @param error
      */
     render(error: GraphQLError | any): any {
+        console.log(error.originalError);
         if (error.originalError.sqlState) {
             error.type = error.originalError.code;
             error.code = error.originalError.errno;

@@ -9,7 +9,6 @@ import ContactModel from "./ContactModel";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
 import {UserRepository} from "../../../Repositories/Lucid/UserRepository";
 import {ContactReplyRepository} from "./ContactReplyRepository";
-import {forwardRef} from "@tngraphql/illuminate/dist/Decorators/forwardRef";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {Mail} from "@tngraphql/mail/dist/src/Mail";
 import {ContactMail} from "../../Mail/ContactMail";

@@ -11,7 +11,7 @@ export = {
     /**
      * Expired time token is in `minute`.
      */
-    expired: 60,
+    expired: 60, // 60 phút
 
     defaults: {
         guard: 'api',
@@ -28,6 +28,10 @@ export = {
             model: UserModel,
             table: '',
         }
+    },
+    passwords: {
+        // expire token reset password
+        expire: 15 // 15 phút
     },
     /*passwords: {
         users: {

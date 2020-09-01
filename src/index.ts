@@ -57,13 +57,14 @@ async function main() {
     const port = process.env.PORT || 3000
     const host = process.env.HOST || '127.0.0.1'
 
-    await express.listen(port, host);
+    await express.listen(port, host, () => {
+        console.log(`start http://localhost:${port}/graphql`);
+    });
+
     console.timeEnd();
 }
 
-main().then(() => {
-    console.log(`start http://localhost:4002/graphql`);
-}).catch(console.log);
+main().catch(console.log);
 
 process.on('uncaughtException', function(err) {
     console.error(err.stack);

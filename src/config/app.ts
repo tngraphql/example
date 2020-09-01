@@ -20,6 +20,7 @@ import {GuardServiceProvider} from "@tngraphql/guard/dist/src/GuardServiceProvid
 import {GateServiceProvider} from "../app/Providers/GateServiceProvider";
 import {MailServiceProvider} from "@tngraphql/mail";
 import {Env} from "@tngraphql/illuminate/dist/Support/Env";
+import {ViewServiceProvider} from "../app/Providers/ViewServiceProvider";
 
 const app = {
 
@@ -31,7 +32,7 @@ const app = {
      *
      */
 
-    name: Env.get('APP_NAME', ''),
+    name: Env.get('APP_NAME', 'TnGraphQL'),
 
     /**
      * --------------------------------------------------------------------------
@@ -99,6 +100,7 @@ const app = {
 
         AppServiceProvider,
         RouteServiceProvider,
+        ViewServiceProvider
     ],
 
 

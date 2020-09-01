@@ -13,35 +13,38 @@ import {Str} from "../../lib/Str";
 import {Mail} from "@tngraphql/mail/dist/src/Mail";
 import {ResetPassword} from "../../app/Mail/ResetPassword";
 import {DateTime} from "luxon";
+import {Config} from "../../lib/Config";
 
 @Service()
 export class PasswordResetRepository extends BaseRepository<PasswordResetModel> {
     @ResolveLang()
     public lang: any;
 
-    protected _expires = 1115 * 60000;
-
     public model(): typeof PasswordResetModel {
         return PasswordResetModel;
     }
 
     public async forgot(data) {
-        const created = await this.create(data);
+        return this.transaction(async () => {
+            const created = await this.create(data);
 
-        const home = await ConfigOptions.getOption('home');
+            const home = await ConfigOptions.getOption('home');
 
-        const actionUrl = Str.trimUrl(home) + '/password/reset/' + created.token;
+            const actionUrl = Str.trimUrl(home) + '/password/reset/' + created.token;
 
-        Mail.to(created).send(new ResetPassword({ actionUrl }));
+            await Mail.to(created).send(new ResetPassword({actionUrl}));
 
-        return created;
+            return created;
+        });
     }
 
     public async create(data) {
         return this.transaction(async () => {
             await this.delete(data.email);
 
-            return super.create(this.getPayload(data.email, await this.createToken()));
+            const instance = await super.create(this.getPayload(data.email, await this.createToken()));
+            instance.email = data.email;
+            return instance;
         });
     }
 
@@ -71,7 +74,9 @@ export class PasswordResetRepository extends BaseRepository<PasswordResetModel> 
      * @return boolean
      */
     public tokenExpired(createdAt: DateTime) {
-        return createdAt.plus(this._expires).diff(DateTime.local());
+        const expires = 60*1000 * Number(Config.get('auth.passwords.expire', 5));
+
+        return createdAt.plus(expires).diff(DateTime.local()).valueOf() < 0;
     }
 
     public async reset(data, callback) {

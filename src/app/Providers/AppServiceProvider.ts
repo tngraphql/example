@@ -14,6 +14,15 @@ import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
 import {PostModel} from "../Features/Post/PostModel";
 import {TransactionClient} from "@tngraphql/lucid/build/src/TransactionClient";
 import {ProductMasterModel} from "../Features/Product/Models/ProductMasterModel";
+import { Env as EnvFactory } from '@adonisjs/env/build/src/Env';
+
+EnvFactory.prototype.get = function (key, defaultValue) {
+    const value = process.env[key];
+    if (value === undefined || value === '') {
+        return defaultValue;
+    }
+    return this.castValue(value);
+}
 
 export class AppServiceProvider extends ServiceProvider {
     register(): void {

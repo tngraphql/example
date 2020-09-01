@@ -16,6 +16,7 @@ import {SortByMiddleware} from "./Middleware/SortByMiddleware";
 import {LanguageMiddleware} from "./Middleware/LanguageMiddleware";
 import {ConfigOptionsMiddleware} from "./Middleware/ConfigOptionsMiddleware";
 import {DephLimitMiddleware} from "./Middleware/DephLimitMiddleware";
+import {MailSettingsMiddleware} from "./Middleware/MailSettingsMiddleware";
 
 @Service()
 export class Kernel extends GraphQLKernel {
@@ -26,7 +27,8 @@ export class Kernel extends GraphQLKernel {
         DephLimitMiddleware,
         SortByMiddleware,
         LanguageMiddleware,
-        ConfigOptionsMiddleware
+        ConfigOptionsMiddleware,
+        MailSettingsMiddleware
     ];
 
     /**

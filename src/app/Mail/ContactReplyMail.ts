@@ -1,4 +1,5 @@
 import {Mailable} from "@tngraphql/mail";
+import {Application} from "@tngraphql/illuminate";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -6,13 +7,14 @@ import {Mailable} from "@tngraphql/mail";
  * Date: 7/11/2020
  * Time: 10:42 PM
  */
+const app = Application.getInstance();
 
 export class ContactReplyMail extends Mailable {
 
     /**
      * Create a new message instance.
      */
-    public constructor(data) {
+    public constructor(protected data) {
         super();
     }
 
@@ -20,7 +22,8 @@ export class ContactReplyMail extends Mailable {
      * Build the message.
      */
     public build(): void {
-        this.to('nguyenpl117@gmail.com')
-            .text('plain mail');
+        this.subject(app.config.get('app.name') + ' trả lời tin nhắn liên hệ.');
+        this.from(app.config.get('mail.from.address'), 'Hỗ trợ ' + app.config.get('app.name'));
+        this.htmlView('contact-reply',  this.data)
     }
 }
