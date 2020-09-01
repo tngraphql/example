@@ -1,3 +1,9 @@
+/**
+ * Created by Phan Trung Nguyên.
+ * User: nguyenpl117
+ * Date: 7/11/2020
+ * Time: 4:54 PM
+ */
 import {Arg, Ctx, Directive, Field, Int, ObjectType, Root} from "@tngraphql/graphql";
 import {DateTime} from "luxon";
 import {ID} from "../../../../GraphQL/Types/UidScalerType";
@@ -17,13 +23,6 @@ import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
 import {PostCommentStatusEnumType} from "./PostCommentStatusEnumType";
 import {PostStatusEnumType} from "./PostStatusEnumType";
 import {MediaType} from "../../../Media/Types/MediaType";
-
-/**
- * Created by Phan Trung Nguyên.
- * User: nguyenpl117
- * Date: 7/11/2020
- * Time: 4:54 PM
- */
 
 @ObjectType('Post')
 export class PostType {
@@ -72,9 +71,9 @@ export class PostType {
         @Arg('format', returns => ContentFormatEnumType, {defaultValue: 'HTML'}) format: number,
         @Ctx() ctx
     ) {
-        // Cannot determine GraphQL output type for description
-        const {auth, guard} = ctx;
+        const {auth, guard, req} = ctx;
         const args = {maxLength, format};
+
         if (await auth.id() === parent.authorId ) {
             return htmlField(parent.description, args);
         }
@@ -83,15 +82,15 @@ export class PostType {
             return htmlField(parent.description, args);
         }
 
-        if ( parent.feesPost ) {
+        if (!parent.postPassword) {
             return htmlField(parent.description, args);
         }
 
-        if ( parent.fees > 0 ) {
-            return null;
+        if (parent.postPassword === req?.headers?.password) {
+            return htmlField(parent.description, args);
         }
 
-        return htmlField(parent.description, args);
+        return null;
     };
 
     @Field(returns => HTML, {description: 'Nội dung bài viết',})
@@ -102,7 +101,26 @@ export class PostType {
         @Arg('format', returns => ContentFormatEnumType, {defaultValue: 'HTML'}) format: number,
         @Ctx() ctx
     ) {
-        return htmlField(parent.content, {maxLength, format});
+        const {auth, guard, req} = ctx;
+        const args = {maxLength, format};
+
+        if (await auth.id() === parent.authorId ) {
+            return htmlField(parent.content, args);
+        }
+
+        if ( guard.any(['post-update', 'post-delete']) ) {
+            return htmlField(parent.content, args);
+        }
+
+        if (!parent.postPassword) {
+            return htmlField(parent.content, args);
+        }
+
+        if (parent.postPassword === req?.headers?.password) {
+            return htmlField(parent.content, args);
+        }
+
+        return null;
     };
 
     @Field(returns => [CategoryType], {description: 'Danh mục bài viết '})
@@ -130,18 +148,28 @@ export class PostType {
     public commentStatus: string;
 
     @Field(returns => PostStatusEnumType, {description: 'Trạng thái bài viết'})
-    public postStatus: string;
+    public postStatus(@Root() parent): string {
+        if (parent.postPassword) {
+            return 'protected'
+        }
+
+        return parent.postStatus;
+    };
 
     @Field(returns => GraphQLString, {description: 'Mật khẩu bài post',})
     public async postPassword(
         @Root() parent,
-        @Ctx() {auth}
+        @Ctx() {auth, guard}
     ) {
-        if ( await auth.id() === '1' ) {
+        if (await auth.id() === parent.authorId ) {
             return parent.postPassword;
         }
 
-        return !! parent.postPassword;
+        if ( guard.any(['post-update', 'post-delete']) ) {
+            return parent.postPassword;
+        }
+
+        return null;
     };
 
     @Field({description: 'Seo title'})

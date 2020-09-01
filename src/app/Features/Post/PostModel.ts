@@ -157,6 +157,7 @@ class PostModel extends BaseModel {
 
         this.addGlobalScope(builder => {
             builder.where('type', 'post');
+            builder.select('postPassword');
         });
 
         this.before('create', model => {

@@ -10,6 +10,7 @@ import {registerEnumType} from "@tngraphql/graphql";
 enum PostStatusEnumType {
     publish = 'publish', // 'Trạng thái hiển thị với tất cả mọi người.'
     private = 'private', // Trạng thái riêng tư. Chỉ có quản trị viên và biên tập viên có thể xem bài đăng này.
+    protected = 'protected', // Trạng thái riêng tư. Chỉ có quản trị viên và biên tập viên có thể xem bài đăng này.
     draft = 'draft', // Trạng thái lưu nháp.
 }
 
