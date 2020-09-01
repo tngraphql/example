@@ -86,6 +86,21 @@ export class FilterCriteria extends Criteria {
             return query[method](this.queryHas(filter.field, filter.operator, value));
         }
 
+        if ([OperatorEnumType.not, OperatorEnumType.ne].includes(filter.operator as any) && value === null) {
+            const methodNotNull = method + 'NotNull';
+
+            if (typeof query[methodNotNull] === "function") {
+                return query[methodNotNull](filter.field, value);
+            }
+        }
+
+        if ([OperatorEnumType.eq, OperatorEnumType.is].includes(filter.operator as any)) {
+            const methodNull = method + 'Null';
+            if (typeof query[methodNull] === "function") {
+                return query[method](filter.field, value);
+            }
+        }
+
         return query[method](filter.field, filter.operator, value);
     }
 
