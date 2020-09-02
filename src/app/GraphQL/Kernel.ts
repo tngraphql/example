@@ -26,8 +26,8 @@ export class Kernel extends GraphQLKernel {
     protected middleware = [
         DephLimitMiddleware,
         SortByMiddleware,
-        LanguageMiddleware,
         ConfigOptionsMiddleware,
+        LanguageMiddleware,
         MailSettingsMiddleware
     ];
 
