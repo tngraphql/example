@@ -37,32 +37,6 @@ export class GateServiceProvider extends ServiceProvider {
             return user.attributes.scopes.includes('viewUser');
         });
 
-        Gate.define('post-update', (user: UserModel | any, post: PostModel | any) => {
-            if (user.isOwner()) {
-                return true;
-            }
-
-            if (user.can('post-update')) {
-                return true;
-            }
-
-            if (!post) {
-                return true;
-            }
-
-            return post.authorId === user.id;
-        });
-
-        Gate.define('post-create', (user: any, args) => {
-            if (user.isOwner()) {
-                return true;
-            }
-
-            if (user.can('post-update')) {
-                return true;
-            }
-
-            return false;
-        });
+        require(this.app.basePath('start/gate'))
     }
 }

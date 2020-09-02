@@ -30,7 +30,7 @@ export class RoleResolve extends BaseResolve {
     public repo: RoleRepository;
 
     @Query(returns => RoleType)
-    @UseMiddleware('auth')
+    @UseMiddleware('auth', 'can:role')
     async index(@Args() args: RoleIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
@@ -40,7 +40,7 @@ export class RoleResolve extends BaseResolve {
     }
 
     @Query(returns => paginateType(RoleType))
-    @UseMiddleware('auth')
+    @UseMiddleware('auth', 'can:role')
     async list(@Args() args: RoleListArgsType, @SelectFields() fields, @Ctx() context) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
@@ -50,7 +50,7 @@ export class RoleResolve extends BaseResolve {
 
     @Mutation(returns => RoleType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(RoleCreateArgsType)
-    @UseMiddleware('auth')
+    @UseMiddleware('auth', 'can:role-create')
     async create(@Args() args: RoleCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.create(args);
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -59,7 +59,7 @@ export class RoleResolve extends BaseResolve {
 
     @Mutation(returns => RoleType)
     @ValidateArgs(RoleUpdateArgsType)
-    @UseMiddleware('auth')
+    @UseMiddleware('auth', 'can:role-update')
     async update(@Args() args: RoleUpdateArgsType, @SelectFields() fields) {
         const category = await this.repo.update(args, args.id);
         this.repo.pushCriteria(new SelectionCriteria(fields));
@@ -68,7 +68,7 @@ export class RoleResolve extends BaseResolve {
 
     @Mutation(returns => DeleteType)
     @ValidateArgs(RoleDeleteArgsType)
-    @UseMiddleware('auth')
+    @UseMiddleware('auth', 'can:role-delete')
     async delete(@Args() args: RoleDeleteArgsType, @Ctx() ctx) {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }

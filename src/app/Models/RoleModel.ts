@@ -37,4 +37,26 @@ export default class RoleModel extends BaseModel {
     public permissions: ManyToMany<typeof PermissionModel>
 
     public static $columns: Pick<RoleModel, 'id' | 'name' | 'displayName' | 'description' | 'createdAt' | 'updatedAt'>
+
+    protected promiseLoadPermission;
+
+    public async cachedPermissions(): Promise<ManyToMany<typeof PermissionModel>> {
+        const role = this as RoleModel;
+
+        if (role.permissions) {
+            return role.permissions;
+        }
+
+        if (!this.promiseLoadPermission) {
+            this.promiseLoadPermission = role.preload((preloader) => {
+                preloader.preload('permissions', builder => {});
+            });
+        }
+
+        await this.promiseLoadPermission;
+
+        this.promiseLoadPermission = null;
+
+        return role.permissions;
+    }
 }

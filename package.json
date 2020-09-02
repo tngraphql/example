@@ -18,7 +18,7 @@
   "dependencies": {
     "@adonisjs/logger": "^1.1.9",
     "@adonisjs/profiler": "^2.0.0",
-    "@tngraphql/auth": "^1.0.6",
+    "@tngraphql/auth": "^1.0.7",
     "@tngraphql/console": "^1.0.0",
     "@tngraphql/graphql": "^1.0.7",
     "@tngraphql/guard": "^1.0.1",

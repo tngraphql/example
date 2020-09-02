@@ -662,10 +662,10 @@
   dependencies:
     node-exceptions "^3.0.0"
 
-"@tngraphql/auth@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.6.tgz#67fc76ac952fdd5ba458bd3e340fb7c1af97b03f"
-  integrity sha512-6CuTYLp9pClP8VQOAHJ2PzuWPCXTfPKHgdanOqRKDDAEcbYL9aDQlH0H2pcfILJ54aSbzhx4KqcF5k7qlkoR6A==
+"@tngraphql/auth@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@tngraphql/auth/-/auth-1.0.7.tgz#0de55ed7e563e052639c3838ff89494f64894593"
+  integrity sha512-JEdzec3dn/g3kSmrrQV2zOxdpHWv7VpIG55DeECHcq+anxJFjx4sX93fNUYs+sKvWs9KDPJssGlE3G4hd4fUzw==
   dependencies:
     bcrypt "^4.0.1"
     hybrid-crypto-js "^0.2.2"

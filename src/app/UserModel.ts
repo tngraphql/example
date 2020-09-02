@@ -66,7 +66,55 @@ export class UserModel extends Auth {
         return this.id === '1';
     }
 
-    public can(ability) {
-        return true;
+    protected promiseLoadRoles;
+
+    public async cachedRoles() {
+        const user = this as UserModel;
+
+        if (user.roles) {
+            return user.roles;
+        }
+
+        if (!this.promiseLoadRoles) {
+
+            this.promiseLoadRoles = user.preload((preloader) => {
+                preloader.preload('roles', builder => {
+                });
+            });
+        }
+
+        await this.promiseLoadRoles;
+
+        this.promiseLoadRoles = null;
+
+        return user.roles;
+    }
+
+    public async can(permission: string | string[], requireAll = false): Promise<boolean> {
+        if (Array.isArray(permission)) {
+            for (const permissionName of permission) {
+                const hasPerm = this.can(permissionName);
+
+                if (hasPerm && !requireAll) {
+                    return true
+                } else if (!hasPerm && requireAll) {
+                    return false
+                }
+            }
+            return requireAll;
+        } else {
+            const roles = await this.cachedRoles();
+
+            for (const role of roles) {
+                const permissions = await role.cachedPermissions();
+                for(const perm of permissions) {
+                    if (Str.is(permission, perm.name)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

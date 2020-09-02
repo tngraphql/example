@@ -14,5 +14,6 @@
 	"You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
 	"This password reset link will expire in :count minutes.": "This password reset link will expire in :count minutes.",
 	"Retype the password incorrectly.": "Retype the password incorrectly.",
-	"Your password has been reset!": "Your password has been reset!"
+	"Your password has been reset!": "Your password has been reset!",
+	"These credentials do not match our records.": "These credentials do not match our records."
 }

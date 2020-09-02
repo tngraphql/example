@@ -4,6 +4,8 @@
  * Date: 7/16/2020
  * Time: 1:59 PM
  */
+import * as _ from 'lodash';
+import Arr from "./Arr";
 const slug = require('sluglife');
 const uuid = require('uuid');
 
@@ -66,5 +68,26 @@ export class Str {
         });
 
         return a;
+    }
+
+    public static is(pattern: string | string[], value): boolean {
+        const patterns = Arr.wrap(pattern);
+        if (!patterns.length) {
+            return false;
+        }
+
+        for (let pattern of patterns) {
+            pattern = _.escapeRegExp(pattern);
+
+            pattern = pattern.replace(/\\\*/g, '.*');
+
+            const regex = new RegExp(`^${pattern}$`);
+
+            if (regex.test(value)) {
+                return true
+            }
+        }
+
+        return false;
     }
 }
