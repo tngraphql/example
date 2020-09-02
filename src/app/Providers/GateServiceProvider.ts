@@ -20,14 +20,18 @@ Guard.prototype['any'] = async function (any, resource) {
     return false;
 }
 
-Guard.prototype['none'] = function none(any) {
+Guard.prototype['none'] = async function none(any, resource) {
     if (!Array.isArray(any)) {
         any = [any];
     }
 
-    return any.filter(ability => {
-        return this.allows(ability);
-    }).length === any.length;
+    for await (const ability of any){
+        if (!await this.allows(ability, resource)) {
+            return false
+        }
+    }
+
+    return true;
 }
 
 @Service()
