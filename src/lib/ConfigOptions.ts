@@ -38,11 +38,19 @@ export class ConfigOptions {
         }, {});
     }
 
+    protected static promiseOption;
+
     public static async init(): Promise<void> {
 
         const old = await this.getOptions();
         if ( ! old ) {
-            const data = await this.getAllOptions();
+            if (!this.promiseOption) {
+                this.promiseOption = this.getAllOptions()
+            }
+
+            const data = await this.promiseOption;
+
+            this.promiseOption = null;
 
             for( const i in data ) {
                 const value = data[i];
