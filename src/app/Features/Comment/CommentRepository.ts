@@ -8,21 +8,18 @@ import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
 import CommentModel from "./CommentModel";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
 import {ResolveAuth} from "../../../decorators/ResolveAuth";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {LucidRow, ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
 import {CommentStatusEnumType} from "./Types/CommentStatusEnumType";
 import {ConfigOptions} from "../../../lib/ConfigOptions";
 import {DateTime} from "luxon";
-import {TagRepository} from "../Tag/Repositories/Lucid/TagRepository";
 import {PostRepository} from "../Post/Repositories/PostRepository";
 import {Str} from "../../../lib/Str";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {tap} from "../../../lib/utils";
+import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
 
 @Service()
 export class CommentRepository extends BaseRepository<CommentModel>  {
     @ResolveAuth()
-    protected auth: RequestGuard;
+    protected auth: AuthContract;
 
     @Inject(type => PostRepository)
     protected post: PostRepository
@@ -81,7 +78,7 @@ export class CommentRepository extends BaseRepository<CommentModel>  {
             }
 
             if ( await this.auth.check() ) {
-                data.authorId = await this.auth.id();
+                data.authorId = await this.auth.id() as string;
             }
 
             if ( data.status === CommentStatusEnumType.approved ) {

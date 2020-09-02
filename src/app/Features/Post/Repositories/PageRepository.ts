@@ -8,18 +8,18 @@ import {Inject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {PageModel} from "../PageModel";
 import {ResolveAuth} from "../../../../decorators/ResolveAuth";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import Arr from "../../../../lib/Arr";
 import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
 import {PostMetaRepository} from "./PostMetaRepository";
 import {MenuRepository} from "../../Menu/Repositories/MenuRepository";
 import {PageCreateArgsType} from "../Types/Page/PageCreateArgsType";
 import {PageUpdateArgsType} from "../Types/Page/PageUpdateArgsType";
+import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
 
 @Service()
 export class PageRepository extends BaseRepository<PageModel> {
     @ResolveAuth()
-    protected auth: RequestGuard;
+    protected auth: AuthContract;
 
     @Inject(type => PostMetaRepository)
     protected meta: PostMetaRepository
@@ -36,7 +36,7 @@ export class PageRepository extends BaseRepository<PageModel> {
 
     async create(data: PageCreateArgsType): Promise<PageModel> {
         if (await this.auth.check()) {
-            data.authorId = await this.auth.id();
+            data.authorId = await this.auth.id() as string;
         }
 
         return this.transaction(async () => {

@@ -8,13 +8,13 @@
 import {registerCustomInject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
 import FavoriteModel from "./FavoriteModel";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {ResolveAuth} from "../../../decorators/ResolveAuth";
+import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
 
 @Service()
 export class FavoriteRepository extends BaseRepository<FavoriteModel> {
     @ResolveAuth()
-    protected auth: RequestGuard;
+    protected auth: AuthContract;
 
     public model(): typeof FavoriteModel {
         return FavoriteModel;

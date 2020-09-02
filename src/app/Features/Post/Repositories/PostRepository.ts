@@ -8,7 +8,6 @@ import {Inject, Service} from "@tngraphql/illuminate";
 import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
 import {PostModel} from "../PostModel";
 import {ResolveAuth} from "../../../../decorators/ResolveAuth";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
 import {PostCreateArgsType} from "../Types/Post/PostCreateArgsType";
 import {PostUpdateArgsType} from "../Types/Post/PostUpdateArgsType";
 import {PostStatusEnumType} from "../Types/Post/PostStatusEnumType";
@@ -18,11 +17,12 @@ import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
 import {PostMetaRepository} from "./PostMetaRepository";
 import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
 import {converBoolean} from "../../../../lib/utils";
+import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
 
 @Service()
 export class PostRepository extends BaseRepository<PostModel> {
     @ResolveAuth()
-    protected auth: RequestGuard;
+    protected auth: AuthContract;
 
     @Inject(type => PostMetaRepository)
     protected meta: PostMetaRepository
@@ -36,7 +36,7 @@ export class PostRepository extends BaseRepository<PostModel> {
 
     async create(data: PostCreateArgsType): Promise<PostModel> {
         if (await this.auth.check()) {
-            data.authorId = await this.auth.id();
+            data.authorId = await this.auth.id() as string;
         }
 
         return this.transaction(async () => {
