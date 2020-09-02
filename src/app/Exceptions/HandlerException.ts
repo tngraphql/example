@@ -38,8 +38,7 @@ export class HandlerException extends Handler {
      * @param error
      */
     render(error: GraphQLError | any): any {
-        console.log(error.originalError);
-        if (error.originalError.sqlState) {
+        if (error.originalError?.sqlState) {
             error.type = error.originalError.code;
             error.code = error.originalError.errno;
             error.message = 'Xin lỗi quý khách, kết nối đến hệ thống tạm thời bị gián đoạn. Vui lòng thử lại sau.';
