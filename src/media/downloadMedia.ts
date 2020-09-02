@@ -1,6 +1,7 @@
 import {Application} from "@tngraphql/illuminate";
 import MediaModel from "../app/Features/Media/MediaModel";
 import {authMiddleware} from "./auth-middleware";
+import {corsMiddleware} from "./cors-middleware";
 
 const express = require('express');
 const fs = require('fs');
@@ -17,7 +18,7 @@ const quality = 50;
 
 const folderUploads = Application.getInstance<Application>().basePath('../uploads/');
 
-router.use('/media/download',cors);
+router.use('/media/download',corsMiddleware);
 router.use('/media/download', authMiddleware);
 
 router.all('/media/download', async (req, res) => {

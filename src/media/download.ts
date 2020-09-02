@@ -1,4 +1,5 @@
 import {Application} from "@tngraphql/illuminate";
+import {corsMiddleware} from "./cors-middleware";
 const express = require('express');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
@@ -7,10 +8,9 @@ const md5 = require('md5');
 const fileUpload = require('express-fileupload');
 const { join, basename } = require('path');
 const quality = 50;
-const cors = require('cors');
 const folderUploads = Application.getInstance<Application>().basePath('../uploads/');
 
-router.use('/download', cors);
+router.use('/download', corsMiddleware);
 
 // router.all('/download', (req, res) => {
 //     const authorization = req.query.token;

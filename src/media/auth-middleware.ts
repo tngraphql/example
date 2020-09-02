@@ -4,12 +4,21 @@
  * Date: 8/29/2020
  * Time: 10:53 AM
  */
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
-const {join} = require('path');
+import {AuthManager} from "@tngraphql/auth/dist/src/AuthManager";
+import {Application} from "@tngraphql/illuminate";
+import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
 
-export function authMiddleware(req, res, next) {
-    if ( ! req.query ) {
+export async function authMiddleware(req, res, next) {
+    req.bearerToken = () => {
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token.split(' ')[0] === 'Bearer') {
+            return req.query.token.split(' ')[1];
+        }
+        return null;
+    };
+
+    if ( ! req.bearerToken() ) {
         return res.json({
             error: true,
             message: 'Error when downloading files!',
@@ -18,19 +27,13 @@ export function authMiddleware(req, res, next) {
         });
     }
 
-    const authorization = req.query.token;
-    if ( ! authorization ) {
-        res.status(410).send('Code Expired');
-    }
+    const manage: AuthContract = new AuthManager(Application.getInstance(), {req}) as any;
 
-    const token = authorization.replace(/^(Bearer\s)/g, '');
+    req.auth = manage;
 
-    const cert = fs.readFileSync(join(process.cwd(), 'auth-public.key')).toString('UTF-8');
+    if (await manage.check()) {
+        return next();
+    };
 
-    try {
-        const verify = jwt.verify(token, cert, {algorithm: 'RS256'});
-    }catch (e) {
-        return res.status(410).send('Unauthenticated');
-    }
-    next();
+    return res.status(410).send('Unauthenticated');
 }
