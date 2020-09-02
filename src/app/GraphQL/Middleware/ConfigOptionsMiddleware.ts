@@ -14,7 +14,9 @@ export class ConfigOptionsMiddleware implements MiddlewareInterface<{ lang: any 
             return next();
         }
 
-        await ConfigOptions.setCacheControl(new PrefixingKeyValueCache(context.cache, 'options'));
+        if (context.cache) {
+            await ConfigOptions.setCacheControl(new PrefixingKeyValueCache(context.cache, 'options'));
+        }
         // await ConfigOptions.clearCache();
         await ConfigOptions.init();
 
