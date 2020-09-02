@@ -15,7 +15,7 @@ const { gql } = require('apollo-server');
 
 export class DephLimitMiddleware implements MiddlewareInterface<{app: any}> {
     public async handle({info, context}: ResolverData<{app: any}>, next: NextFn, args: any): Promise<any> {
-        if (!['Query', 'Mutation'].includes(info.parentType.toString())) {
+        if (!['Query', 'Mutation', 'Subscription'].includes(info.parentType.toString())) {
             return next();
         }
 

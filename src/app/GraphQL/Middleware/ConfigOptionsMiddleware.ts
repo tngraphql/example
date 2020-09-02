@@ -11,7 +11,7 @@ import { InMemoryLRUCache } from 'apollo-server-caching';
 
 export class ConfigOptionsMiddleware implements MiddlewareInterface<{ lang: any }> {
     public async handle({context, info}, next: NextFn, args: any): Promise<any> {
-        if (!['Query', 'Mutation'].includes(info.parentType.toString())) {
+        if (!['Query', 'Mutation', 'Subscription'].includes(info.parentType.toString())) {
             return next();
         }
 

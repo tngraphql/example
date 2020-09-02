@@ -12,7 +12,7 @@ import Arr from "../../../lib/Arr";
 export class SortByMiddleware implements MiddlewareInterface {
     public async handle(data: ResolverData<{}>, next: NextFn, args: any): Promise<any> {
 
-        if (!['Query', 'Mutation'].includes(data.info.parentType.toString())) {
+        if (!['Query', 'Mutation', 'Subscription'].includes(data.info.parentType.toString())) {
             return next();
         }
 

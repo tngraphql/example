@@ -14,7 +14,7 @@ import {Repository} from "@tngraphql/illuminate/dist/Contracts/Config/Repository
 export class MailSettingsMiddleware implements MiddlewareInterface<{ app: Application }> {
     public async handle(data, next: NextFn, args: any): Promise<any> {
 
-        if (!['Query', 'Mutation'].includes(data.info.parentType.toString())) {
+        if (!['Query', 'Mutation', 'Subscription'].includes(data.info.parentType.toString())) {
             return next();
         }
 
