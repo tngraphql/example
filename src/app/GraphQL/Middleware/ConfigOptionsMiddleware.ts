@@ -7,7 +7,6 @@
 import { PrefixingKeyValueCache } from 'apollo-server-caching';
 import {MiddlewareInterface, NextFn} from "@tngraphql/graphql";
 import {ConfigOptions} from "../../../lib/ConfigOptions";
-import { InMemoryLRUCache } from 'apollo-server-caching';
 
 export class ConfigOptionsMiddleware implements MiddlewareInterface<{ lang: any }> {
     public async handle({context, info}, next: NextFn, args: any): Promise<any> {
@@ -15,7 +14,7 @@ export class ConfigOptionsMiddleware implements MiddlewareInterface<{ lang: any 
             return next();
         }
 
-        // await ConfigOptions.setCacheControl();
+        await ConfigOptions.setCacheControl(new PrefixingKeyValueCache(context.cache, 'options'));
         // await ConfigOptions.clearCache();
         await ConfigOptions.init();
 
