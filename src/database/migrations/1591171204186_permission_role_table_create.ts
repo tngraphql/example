@@ -54,17 +54,8 @@ INSERT INTO \`permission_role\` VALUES (37, 19, 2);
 INSERT INTO \`permission_role\` VALUES (38, 20, 2);
 INSERT INTO \`permission_role\` VALUES (39, 21, 2);
 INSERT INTO \`permission_role\` VALUES (40, 4, 3);
-INSERT INTO \`permission_role\` VALUES (41, 5, 3);
-INSERT INTO \`permission_role\` VALUES (42, 6, 3);
 INSERT INTO \`permission_role\` VALUES (43, 7, 3);
-INSERT INTO \`permission_role\` VALUES (44, 8, 3);
-INSERT INTO \`permission_role\` VALUES (45, 9, 3);
-INSERT INTO \`permission_role\` VALUES (46, 13, 3);
-INSERT INTO \`permission_role\` VALUES (47, 14, 3);
-INSERT INTO \`permission_role\` VALUES (48, 15, 3);
-INSERT INTO \`permission_role\` VALUES (49, 16, 3);
-INSERT INTO \`permission_role\` VALUES (50, 17, 3);
-INSERT INTO \`permission_role\` VALUES (51, 18, 3);`
+INSERT INTO \`permission_role\` VALUES (46, 13, 3);`
         data.split(';').filter(x => !!x.trim()).forEach(value => {
             this.schema.raw(value);
         })

@@ -49,9 +49,8 @@ export class PostResolve extends BaseResolve {
 
     @Mutation(returns => PostType, {description: 'Tạo mới tài khoản'})
     @ValidateArgs(PostCreateArgsType)
-    @UseMiddleware(['auth'])
+    @UseMiddleware(['auth', 'can:post-create'])
     async create(@Args() args: PostCreateArgsType, @SelectFields() fields) {
-        await this.authorize('post-create');
         const created = await this.repo.create(args);
         this.repo.pushCriteria(new SelectionCriteria(fields));
         return this.repo.firstBy(created.id);
@@ -77,6 +76,10 @@ export class PostResolve extends BaseResolve {
     @ValidateArgs(PostDeleteArgsType)
     @UseMiddleware('auth')
     async delete(@Args() args: PostDeleteArgsType, @Ctx() ctx) {
+        const post = await this.repo.query().firstBy(args.id);
+
+        await this.authorize('post-delete', post);
+
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 
@@ -84,6 +87,10 @@ export class PostResolve extends BaseResolve {
     @ValidateArgs(PostChangeFeatureArgsType)
     @UseMiddleware('auth')
     async postChangeFeature(@Args() args: PostChangeFeatureArgsType, @SelectFields() fields) {
+        const post = await this.repo.query().firstBy(args.id);
+
+        await this.authorize('post-update', post);
+
         const category = await this.repo.changeFeatured(args.isFeatured, args.id);
 
         return this.repo

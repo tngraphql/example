@@ -6,17 +6,18 @@
  */
 import {Service, ServiceProvider} from "@tngraphql/illuminate";
 import {Gate, Guard} from "@slynova/fence";
-import {PostModel} from "../Features/Post/PostModel";
-import {UserModel} from "../UserModel";
 
-Guard.prototype['any'] = function (any) {
+Guard.prototype['any'] = async function (any, resource) {
     if (!Array.isArray(any)) {
         any = [any];
     }
 
-    return any.some(ability => {
-        return this.allows(ability);
-    })
+    for await (const ability of any) {
+        if (await this.allows(ability, resource)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 Guard.prototype['none'] = function none(any) {

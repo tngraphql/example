@@ -22,6 +22,8 @@ import {Str} from "../../../lib/Str";
 class PostModel extends BaseModel {
     public static table = 'posts';
 
+    _className: string;
+
     @column({isPrimary: true, consume: value => Str.toString(value)})
     public id: string;
 
@@ -157,7 +159,10 @@ class PostModel extends BaseModel {
 
         this.addGlobalScope(builder => {
             builder.where('type', 'post');
-            builder.select('postPassword');
+
+            if (!builder.hasAggregates && builder.knexQuery['_statements'].some(x => x.grouping === 'columns')) {
+                builder.select(builder.qualifyColumn('postPassword'), builder.qualifyColumn('authorId'));
+            }
         });
 
         this.before('create', model => {

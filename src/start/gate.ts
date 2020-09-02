@@ -54,7 +54,7 @@ Gate.define('role-create', (user: any) => {
 });
 
 
-Gate.define('post-update', async (user: UserModel | any, post: PostModel | any) => {
+Gate.define('post-update', async (user: UserModel, post: PostModel) => {
     if (user.isOwner()) {
         return true;
     }
@@ -64,10 +64,14 @@ Gate.define('post-update', async (user: UserModel | any, post: PostModel | any) 
     }
 
     if (!post) {
-        return true;
+        return false;
     }
 
-    return post.authorId === user.id;
+    if (post.authorId === user.id) {
+        return true
+    }
+
+    return false
 });
 Gate.define('post-create', async (user: any, args) => {
     if (user.isOwner()) {
@@ -76,6 +80,25 @@ Gate.define('post-create', async (user: any, args) => {
 
     if (await user.can('post-create')) {
         return true;
+    }
+
+    return false;
+});
+Gate.define('post-delete', async (user: any, post) => {
+    if (user.isOwner()) {
+        return true;
+    }
+
+    if (await user.can('post-delete')) {
+        return true;
+    }
+
+    if (!post) {
+        return false;
+    }
+
+    if (post.authorId === user.id) {
+        return true
     }
 
     return false;

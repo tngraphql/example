@@ -74,23 +74,19 @@ export class PostType {
         const {auth, guard, req} = ctx;
         const args = {maxLength, format};
 
-        if (await auth.id() === parent.authorId ) {
-            return htmlField(parent.description, args);
-        }
+        // if ( await guard.any(['post-update', 'post-delete'], parent) ) {
+        //     return htmlField(parent.description, args);
+        // }
 
-        if ( guard.any(['post-update', 'post-delete']) ) {
-            return htmlField(parent.description, args);
-        }
+        // if (!parent.postPassword) {
+        //     return htmlField(parent.description, args);
+        // }
+        //
+        // if (parent.postPassword === req?.headers?.password) {
+        //     return htmlField(parent.description, args);
+        // }
 
-        if (!parent.postPassword) {
-            return htmlField(parent.description, args);
-        }
-
-        if (parent.postPassword === req?.headers?.password) {
-            return htmlField(parent.description, args);
-        }
-
-        return null;
+        return htmlField(parent.description, args);
     };
 
     @Field(returns => HTML, {description: 'Nội dung bài viết',})
@@ -104,23 +100,19 @@ export class PostType {
         const {auth, guard, req} = ctx;
         const args = {maxLength, format};
 
-        if (await auth.id() === parent.authorId ) {
-            return htmlField(parent.content, args);
-        }
+        // if ( await guard.any(['post-update', 'post-delete'], parent) ) {
+        //     return htmlField(parent.content, args);
+        // }
 
-        if ( guard.any(['post-update', 'post-delete']) ) {
-            return htmlField(parent.content, args);
-        }
+        // if (!parent.postPassword) {
+        //     return htmlField(parent.content, args);
+        // }
+        //
+        // if (parent.postPassword === req?.headers?.password) {
+        //     return htmlField(parent.content, args);
+        // }
 
-        if (!parent.postPassword) {
-            return htmlField(parent.content, args);
-        }
-
-        if (parent.postPassword === req?.headers?.password) {
-            return htmlField(parent.content, args);
-        }
-
-        return null;
+        return htmlField(parent.content, args);
     };
 
     @Field(returns => [CategoryType], {description: 'Danh mục bài viết '})
@@ -161,11 +153,7 @@ export class PostType {
         @Root() parent,
         @Ctx() {auth, guard}
     ) {
-        if (await auth.id() === parent.authorId ) {
-            return parent.postPassword;
-        }
-
-        if ( guard.any(['post-update', 'post-delete']) ) {
+        if ( await guard.any(['post-update', 'post-delete'], parent) ) {
             return parent.postPassword;
         }
 
