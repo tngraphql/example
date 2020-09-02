@@ -10,12 +10,39 @@ import {ConfigOptions} from "../../../lib/ConfigOptions";
 
 export class LanguageMiddleware implements MiddlewareInterface<{ lang: any }> {
     public async handle({context, info}, next: NextFn, args: any): Promise<any> {
-        if (!['Query', 'Mutation'].includes(info.parentType.toString())) {
+        if (!['Query', 'Mutation', 'Subscription'].includes(info.parentType.toString())) {
             return next();
         }
 
-        const locale = context?.req?.headers?.locale;
+        if (!context.req) {
+            return next();
+        }
 
+        if (context.req.language) {
+            return next();
+        }
+
+        if (!context.req.promiseLanguage) {
+            context.req.promiseLanguage = this.getLanguage(context.req.headers?.locale);
+        }
+
+        let language = await context.req.promiseLanguage;
+        context.req.promiseLanguage = null;
+
+        if (!language) {
+            return next();
+        }
+
+        context.lang.id = language.id;
+
+        context.req.language = context.language = language;
+
+        context.lang.setLocale(language.locale);
+
+        return next();
+    }
+
+    protected async getLanguage(locale?) {
         let language;
 
         if ( ! locale ) {
@@ -31,11 +58,6 @@ export class LanguageMiddleware implements MiddlewareInterface<{ lang: any }> {
             language = await LanguageModel.query().first();
         }
 
-        context.lang.id = language.id;
-        context.language = language;
-
-        context.app.setLocale(language.locale)
-
-        return next();
+        return language;
     }
 }
