@@ -1,13 +1,13 @@
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasOne, manyToMany, morphOne, morphTo} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import {UserModel} from "../../UserModel";
-import {BelongsTo, HasOne, MorphOne, MorphTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
-import {PostModel} from "../Post/PostModel";
-import {Relation} from "@tngraphql/lucid/build/src/Orm/Relations/Base/Relation";
-import {Str} from "../../../lib/Str";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasOne, manyToMany, morphOne, morphTo } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
+import { UserModel } from '../../UserModel';
+import { BelongsTo, HasOne, MorphOne, MorphTo } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
+import { PostModel } from '../Post/PostModel';
+import { Relation } from '@tngraphql/lucid/build/src/Orm/Relations/Base/Relation';
+import { Str } from '../../../lib/Str';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -19,7 +19,7 @@ import {Str} from "../../../lib/Str";
 export default class CommentModel extends BaseModel {
     public static table = 'comments';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string
 
     @column()
@@ -34,10 +34,10 @@ export default class CommentModel extends BaseModel {
     @column()
     public authorIp: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public authorId: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public parentId: string;
 
     @column()
@@ -49,7 +49,7 @@ export default class CommentModel extends BaseModel {
     @column()
     public commentableType: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public commentableId: string;
 
     @column.dateTime()
@@ -82,7 +82,7 @@ export default class CommentModel extends BaseModel {
     })
     public responseTo: MorphTo<any>
 
-    @morphOne(() => PostModel, {name: 'commentable'})
+    @morphOne(() => PostModel, { name: 'commentable' })
     public post: MorphOne<typeof PostModel>;
 
     @hasOne(() => CommentModel, {

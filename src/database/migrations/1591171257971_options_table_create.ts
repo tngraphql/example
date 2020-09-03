@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class OptionsTableCreate extends BaseSchema {
     protected $tableName = 'options'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`options\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`name\` varchar(191) DEFAULT NULL,
@@ -65,12 +65,12 @@ INSERT INTO \`options\` VALUES (54, 'autoRegister', '1', 'yes');
 INSERT INTO \`options\` VALUES (55, 'autoRegisterDisabledMessage', 'Registration is disabled for this website. Please contact the administrator for any gql.', 'yes');
 INSERT INTO \`options\` VALUES (56, 'socialRegisterRole', '3', 'yes');
 `;
-        data.split(';').filter(x => !!x.trim()).forEach(value => {
+        data.split(';').filter(x => !! x.trim()).forEach(value => {
             this.schema.raw(value);
         })
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

@@ -4,11 +4,11 @@
  * Date: 6/10/2020
  * Time: 7:43 PM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {MenuModel} from "../MenuModel";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { MenuModel } from '../MenuModel';
 
 @ArgsType()
 export class MenuDeleteArgsType {
@@ -16,6 +16,6 @@ export class MenuDeleteArgsType {
     @Rules([
         'required',
         Rule.exists(MenuModel.getTable(), 'id')
-    ], ({lang}) => ({'exists': lang.t('The selected id does not exist or has been deleted.')}))
+    ], ({ lang }) => ({ 'exists': lang.t('The selected id does not exist or has been deleted.') }))
     public id: number;
 }

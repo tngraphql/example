@@ -5,13 +5,14 @@
  * Time: 1:59 PM
  */
 import * as _ from 'lodash';
-import Arr from "./Arr";
+import Arr from './Arr';
+
 const slug = require('sluglife');
 const uuid = require('uuid');
 
 export class Str {
     public static slug(str: string, options: { [key: string]: any } = { lower: true }): string {
-        if (!str) {
+        if ( ! str ) {
             return str;
         }
         return slug(str, options);
@@ -29,7 +30,7 @@ export class Str {
     }
 
     public static toString(val) {
-        if (val === null || typeof val === "undefined") {
+        if ( val === null || typeof val === 'undefined' ) {
             return val;
         }
         return String(val);
@@ -72,18 +73,18 @@ export class Str {
 
     public static is(pattern: string | string[], value): boolean {
         const patterns = Arr.wrap(pattern);
-        if (!patterns.length) {
+        if ( ! patterns.length ) {
             return false;
         }
 
-        for (let pattern of patterns) {
+        for( let pattern of patterns ) {
             pattern = _.escapeRegExp(pattern);
 
             pattern = pattern.replace(/\\\*/g, '.*');
 
-            const regex = new RegExp(`^${pattern}$`);
+            const regex = new RegExp(`^${ pattern }$`);
 
-            if (regex.test(value)) {
+            if ( regex.test(value) ) {
                 return true
             }
         }

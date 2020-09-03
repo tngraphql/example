@@ -1,6 +1,6 @@
-import {GraphQLScalarType, Kind} from "graphql";
-import {empty} from "../../../lib/utils";
-import Arr from "../../../lib/Arr";
+import { GraphQLScalarType, Kind } from 'graphql';
+import { empty } from '../../../lib/utils';
+import Arr from '../../../lib/Arr';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -15,11 +15,11 @@ export const ValueScalarType = new GraphQLScalarType({
     description: 'String Or Number Or Many String | Number',
 
     parseValue(value: string) {
-        if (typeof value === "boolean") {
+        if ( typeof value === 'boolean' ) {
             return value
         }
 
-        return !empty(value) ? value.toString() : value
+        return ! empty(value) ? value.toString() : value
     },
 
     serialize(value: any) {
@@ -30,12 +30,12 @@ export const ValueScalarType = new GraphQLScalarType({
         switch (ast.kind) {
             // Implement your own behavior here by returning what suits your needs
             // depending on ast.kind
-            case 'StringValue':
-                return ast.value;
-            case 'IntValue':
-                return ast.value;
-            default:
-                return ast['value'];
+        case 'StringValue':
+            return ast.value;
+        case 'IntValue':
+            return ast.value;
+        default:
+            return ast['value'];
         }
     },
 });

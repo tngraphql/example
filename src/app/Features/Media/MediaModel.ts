@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import {Str} from "../../../lib/Str";
+import { Str } from '../../../lib/Str';
 
 export default class MediaModel extends BaseModel {
     static table = 'media';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -24,7 +24,7 @@ export default class MediaModel extends BaseModel {
     @column()
     public src: string;
 
-    @column({columnName: 'src_md5'})
+    @column({ columnName: 'src_md5' })
     public srcMd5: string;
 
     @column()
@@ -39,21 +39,21 @@ export default class MediaModel extends BaseModel {
     @column()
     public data: string;
 
-    @column({columnName: 'data'})
+    @column({ columnName: 'data' })
     public thumbnail: string;
 
-    @column.dateTime({autoCreate: true})
+    @column.dateTime({ autoCreate: true })
     public createdAt: DateTime;
 
-    @column.dateTime({autoCreate: true, autoUpdate: true})
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime;
 
     public static $columns: Pick<MediaModel, 'id' | 'status' | 'title' | 'folderName' | 'guid' | 'src' | 'srcMd5' | 'rootId' | 'filesize' | 'mineType' | 'data' | 'createdAt' | 'updatedAt'>;
 
     public static scopeAllFolder(query, folderName) {
         return query.where(builder => {
-            builder.where('folderName', 'like', `${folderName} /%`)
-                .orWhere('folderName', folderName);
+            builder.where('folderName', 'like', `${ folderName } /%`)
+                   .orWhere('folderName', folderName);
         });
     }
 };

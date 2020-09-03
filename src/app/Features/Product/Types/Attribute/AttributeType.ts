@@ -4,9 +4,9 @@
  * Date: 8/13/2020
  * Time: 9:33 AM
  */
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {AttributeModel} from "../../Models/AttributeModel";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { AttributeModel } from '../../Models/AttributeModel';
 
 @ObjectType('Attribute')
 export class AttributeType {
@@ -15,6 +15,6 @@ export class AttributeType {
     @Field(returns => ID)
     public id: string;
 
-    @Field({description: 'Tên'})
+    @Field({ description: 'Tên' })
     public name: string;
 }

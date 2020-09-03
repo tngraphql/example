@@ -4,7 +4,7 @@
  * Date: 8/15/2020
  * Time: 8:47 AM
  */
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum ProductCommentStatusEnumType {
     open = 'open',
@@ -16,4 +16,4 @@ registerEnumType(ProductCommentStatusEnumType, {
     description: 'Trạng thái bình luận của bài viết'
 });
 
-export {ProductCommentStatusEnumType};
+export { ProductCommentStatusEnumType };

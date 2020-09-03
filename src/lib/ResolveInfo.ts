@@ -5,17 +5,18 @@
  * Time: 4:04 PM
  */
 
-import {empty, merge} from './utils';
-import {GraphQLResolveInfo} from "graphql";
+import { empty, merge } from './utils';
+import { GraphQLResolveInfo } from 'graphql';
 import {
     FieldNode,
     FragmentDefinitionNode,
     OperationDefinitionNode,
     SelectionSetNode
-} from "graphql/language/ast";
-import {GraphQLObjectType, GraphQLOutputType} from "graphql/type/definition";
-import {Path} from "graphql/jsutils/Path";
-import {GraphQLSchema} from "graphql/type/schema";
+} from 'graphql/language/ast';
+import { GraphQLObjectType, GraphQLOutputType } from 'graphql/type/definition';
+import { Path } from 'graphql/jsutils/Path';
+import { GraphQLSchema } from 'graphql/type/schema';
+
 const { FragmentSpreadNode, InlineFragmentNode } = require('graphql');
 const _ = require('lodash');
 

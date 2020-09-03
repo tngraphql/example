@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class AttributesTableCreate extends BaseSchema {
     protected $tableName = 'attributes'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`attributes\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`name\` varchar(191) DEFAULT NULL,
@@ -17,7 +17,7 @@ export default class AttributesTableCreate extends BaseSchema {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`)
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

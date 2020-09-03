@@ -14,13 +14,13 @@ import { ValidatorServiceProvider } from '@tngraphql/illuminate/dist/Foundation/
 import { DatabaseServiceProvider } from '@tngraphql/illuminate/dist/Database/DatabaseServiceProvider';
 import { AppServiceProvider } from '../app/Providers/AppServiceProvider';
 import { TranslationServiceProvider } from '@tngraphql/illuminate/dist/Translation/TranslationServiceProvider';
-import {AuthServiceProvider} from '@tngraphql/auth';
-import {HashServiceProvider} from "@tngraphql/illuminate/dist/Hashing/HashServiceProvider";
-import {GuardServiceProvider} from "@tngraphql/guard/dist/src/GuardServiceProvider";
-import {GateServiceProvider} from "../app/Providers/GateServiceProvider";
-import {MailServiceProvider} from "@tngraphql/mail";
-import {Env} from "@tngraphql/illuminate/dist/Support/Env";
-import {ViewServiceProvider} from "../app/Providers/ViewServiceProvider";
+import { AuthServiceProvider } from '@tngraphql/auth';
+import { HashServiceProvider } from '@tngraphql/illuminate/dist/Hashing/HashServiceProvider';
+import { GuardServiceProvider } from '@tngraphql/guard/dist/src/GuardServiceProvider';
+import { GateServiceProvider } from '../app/Providers/GateServiceProvider';
+import { MailServiceProvider } from '@tngraphql/mail';
+import { Env } from '@tngraphql/illuminate/dist/Support/Env';
+import { ViewServiceProvider } from '../app/Providers/ViewServiceProvider';
 
 const app = {
 

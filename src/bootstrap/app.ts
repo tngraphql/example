@@ -11,9 +11,9 @@ import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
 import { Kernel as ConsoleKernel } from '../app/Console/Kernel';
 import { Kernel as GraphQLKernel } from '../app/GraphQL/Kernel';
-import {HandlerException} from "../app/Exceptions/HandlerException";
+import { HandlerException } from '../app/Exceptions/HandlerException';
 
-const app = new Application(path.join(__dirname , '../'));
+const app = new Application(path.join(__dirname, '../'));
 
 app.singleton('Illuminate/Foundation/GraphQL/Kernel', GraphQLKernel);
 

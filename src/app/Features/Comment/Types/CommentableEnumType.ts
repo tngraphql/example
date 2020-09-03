@@ -5,7 +5,7 @@
  * Time: 4:17 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 export enum CommentableEnumType {
     post = 'post',

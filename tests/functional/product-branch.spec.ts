@@ -5,34 +5,35 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {PRODUCT_BRANCH_LIST_QUERY, PRODUCT_BRANCH_QUERY} from "./gql/product-branch-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {ProductBranchModel} from "../../src/app/Features/Product/Models/ProductBranchModel";
-import {Application} from "@tngraphql/illuminate";
-import {ProductMasterRepository} from "../../src/app/Features/Product/Repositories/ProductMasterRepository";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {ProductMasterModel} from "../../src/app/Features/Product/Models/ProductMasterModel";
-import {AttributeModel} from "../../src/app/Features/Product/Models/AttributeModel";
-import {AttributeGroupModel} from "../../src/app/Features/Product/Models/AttributeGroupModel";
-import {ProductBranchToAttributeModel} from "../../src/app/Features/Product/Models/ProductBranchToAttributeModel";
-import {ProductImageModel} from "../../src/app/Features/Product/Models/ProductImageModel";
-import {ProductCategoryModel} from "../../src/app/Features/Product/Models/ProductCategoryModel";
-import {InventoryModel} from "../../src/app/Features/Product/Models/InventoryModel";
-import {ProductmetaModel} from "../../src/app/Features/Product/Models/ProductmetaModel";
-import {ProductRewardModel} from "../../src/app/Features/Product/Models/ProductRewardModel";
-import {ProductTagModel} from "../../src/app/Features/Product/Models/ProductTagModel";
-import {ProductTypeModel} from "../../src/app/Features/Product/Models/ProductTypeModel";
-import {ProductTypeMetaModel} from "../../src/app/Features/Product/Models/ProductTypeMetaModel";
-import {ProductVendorModel} from "../../src/app/Features/Product/Models/ProductVendorModel";
-import {SelectionCriteria} from "../../src/Repositories/Criteria/SelectionCriteria";
-import {ProductMasterKindEnumType} from "../../src/app/Features/Product/Types/Product/ProductMasterKindEnumType";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { PRODUCT_BRANCH_LIST_QUERY, PRODUCT_BRANCH_QUERY } from './gql/product-branch-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { ProductBranchModel } from '../../src/app/Features/Product/Models/ProductBranchModel';
+import { Application } from '@tngraphql/illuminate';
+import { ProductMasterRepository } from '../../src/app/Features/Product/Repositories/ProductMasterRepository';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { ProductMasterModel } from '../../src/app/Features/Product/Models/ProductMasterModel';
+import { AttributeModel } from '../../src/app/Features/Product/Models/AttributeModel';
+import { AttributeGroupModel } from '../../src/app/Features/Product/Models/AttributeGroupModel';
+import { ProductBranchToAttributeModel } from '../../src/app/Features/Product/Models/ProductBranchToAttributeModel';
+import { ProductImageModel } from '../../src/app/Features/Product/Models/ProductImageModel';
+import { ProductCategoryModel } from '../../src/app/Features/Product/Models/ProductCategoryModel';
+import { InventoryModel } from '../../src/app/Features/Product/Models/InventoryModel';
+import { ProductmetaModel } from '../../src/app/Features/Product/Models/ProductmetaModel';
+import { ProductRewardModel } from '../../src/app/Features/Product/Models/ProductRewardModel';
+import { ProductTagModel } from '../../src/app/Features/Product/Models/ProductTagModel';
+import { ProductTypeModel } from '../../src/app/Features/Product/Models/ProductTypeModel';
+import { ProductTypeMetaModel } from '../../src/app/Features/Product/Models/ProductTypeMetaModel';
+import { ProductVendorModel } from '../../src/app/Features/Product/Models/ProductVendorModel';
+import { SelectionCriteria } from '../../src/Repositories/Criteria/SelectionCriteria';
+import { ProductMasterKindEnumType } from '../../src/app/Features/Product/Types/Product/ProductMasterKindEnumType';
 
 describe('productBranch Http', () => {
     let client: ApolloServerTestClient;
@@ -45,7 +46,7 @@ describe('productBranch Http', () => {
         server = await createServer();
         client = createTestClient(server) as ApolloServerTestClient;
         app = Application.getInstance<Application>()
-        context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+        context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
         repo = await app.make(ProductMasterRepository, context);
     });
 
@@ -54,29 +55,29 @@ describe('productBranch Http', () => {
         authContext(null);
 
         await repo.builderCreate({
-            name: "milk",
+            name: 'milk',
             content: 'vina milk',
             branches: [
                 {
-                    code: "milk"
+                    code: 'milk'
                 }
             ]
         });
         await repo.builderCreate({
-            name: "milk",
+            name: 'milk',
             content: 'vina milk',
             branches: [
                 {
-                    code: "milk1"
+                    code: 'milk1'
                 }
             ]
         });
         await repo.builderCreate({
-            name: "milk",
+            name: 'milk',
             content: 'vina milk',
             branches: [
                 {
-                    code: "milk2"
+                    code: 'milk2'
                 }
             ]
         });
@@ -118,11 +119,11 @@ describe('productBranch Http', () => {
 
             it('should response first productBranch using order by', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -131,8 +132,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -143,11 +144,11 @@ describe('productBranch Http', () => {
 
             it('should response first productBranch when authentication', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -165,14 +166,14 @@ describe('productBranch Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -181,10 +182,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": product_branch.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': product_branch.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -192,15 +193,15 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.id).to.eq(product_branch.id);
             })
-        
+
             it('should filter sku without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
                             sku: 'milk-sku',
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -209,10 +210,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "sku",
-                            "value": product_branch.sku,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'sku',
+                            'value': product_branch.sku,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -220,14 +221,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.sku).to.eq(product_branch.sku);
             })
-        
+
             it('should filter code without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -236,10 +237,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "code",
-                            "value": product_branch.code,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'code',
+                            'value': product_branch.code,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -247,14 +248,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.code).to.eq(product_branch.code);
             })
-        
+
             it('should filter fullname without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -263,10 +264,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "fullname",
-                            "value": product_branch.fullname,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'fullname',
+                            'value': product_branch.fullname,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -274,14 +275,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.fullname).to.eq(product_branch.fullname);
             })
-        
+
             it('should filter productMasterId without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -290,10 +291,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "productMasterId",
-                            "value": product_branch.productMasterId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'productMasterId',
+                            'value': product_branch.productMasterId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -301,14 +302,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.productMasterId).to.eq(product_branch.productMasterId);
             })
-        
+
             it('should filter price without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -319,10 +320,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "price",
-                            "value": product_branch.price,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'price',
+                            'value': product_branch.price,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -330,14 +331,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.price).to.eq(product_branch.price);
             })
-        
+
             it('should filter priceSale without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -348,10 +349,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "priceSale",
-                            "value": product_branch.priceSale,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'priceSale',
+                            'value': product_branch.priceSale,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -362,16 +363,16 @@ describe('productBranch Http', () => {
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -383,8 +384,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -396,13 +397,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc id without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -414,8 +415,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -424,16 +425,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.id).to.eq(product_branch.id);
             })
-        
+
             it('should sort by desc sku without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -445,8 +446,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "sku": SortEnumType.DESC
+                        'sortBy': [{
+                            'sku': SortEnumType.DESC
                         }]
                     }
                 });
@@ -458,13 +459,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc sku without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -476,8 +477,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "sku": SortEnumType.ASC
+                        'sortBy': [{
+                            'sku': SortEnumType.ASC
                         }]
                     }
                 });
@@ -486,16 +487,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.sku).to.eq(product_branch.sku);
             })
-        
+
             it('should sort by desc code without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -507,8 +508,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "code": SortEnumType.DESC
+                        'sortBy': [{
+                            'code': SortEnumType.DESC
                         }]
                     }
                 });
@@ -520,13 +521,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc code without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -538,8 +539,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "code": SortEnumType.ASC
+                        'sortBy': [{
+                            'code': SortEnumType.ASC
                         }]
                     }
                 });
@@ -548,16 +549,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.code).to.eq(product_branch.code);
             })
-        
+
             it('should sort by desc isMaster without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -569,8 +570,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "isMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'isMaster': SortEnumType.DESC
                         }]
                     }
                 });
@@ -582,13 +583,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc isMaster without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -600,8 +601,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "isMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'isMaster': SortEnumType.ASC
                         }]
                     }
                 });
@@ -610,16 +611,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.isMaster).to.eq(product_branch.isMaster);
             })
-        
+
             it('should sort by desc fullname without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -631,8 +632,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "fullname": SortEnumType.DESC
+                        'sortBy': [{
+                            'fullname': SortEnumType.DESC
                         }]
                     }
                 });
@@ -644,13 +645,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc fullname without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -662,8 +663,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "fullname": SortEnumType.ASC
+                        'sortBy': [{
+                            'fullname': SortEnumType.ASC
                         }]
                     }
                 });
@@ -672,16 +673,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.fullname).to.eq(product_branch.fullname);
             })
-        
+
             it('should sort by desc unitValue without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -693,8 +694,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitValue": SortEnumType.DESC
+                        'sortBy': [{
+                            'unitValue': SortEnumType.DESC
                         }]
                     }
                 });
@@ -706,13 +707,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc unitValue without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -724,8 +725,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitValue": SortEnumType.ASC
+                        'sortBy': [{
+                            'unitValue': SortEnumType.ASC
                         }]
                     }
                 });
@@ -734,16 +735,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.unitValue).to.eq(product_branch.unitValue);
             })
-        
+
             it('should sort by desc unitName without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -755,8 +756,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitName": SortEnumType.DESC
+                        'sortBy': [{
+                            'unitName': SortEnumType.DESC
                         }]
                     }
                 });
@@ -768,13 +769,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc unitName without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -786,8 +787,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitName": SortEnumType.ASC
+                        'sortBy': [{
+                            'unitName': SortEnumType.ASC
                         }]
                     }
                 });
@@ -796,16 +797,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.unitName).to.eq(product_branch.unitName);
             })
-        
+
             it('should sort by desc productMasterId without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -817,8 +818,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "productMasterId": SortEnumType.DESC
+                        'sortBy': [{
+                            'productMasterId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -830,13 +831,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc productMasterId without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -848,8 +849,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "productMasterId": SortEnumType.ASC
+                        'sortBy': [{
+                            'productMasterId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -858,16 +859,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.productMasterId).to.eq(product_branch.productMasterId);
             })
-        
+
             it('should sort by desc price without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -879,8 +880,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "price": SortEnumType.DESC
+                        'sortBy': [{
+                            'price': SortEnumType.DESC
                         }]
                     }
                 });
@@ -892,13 +893,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc price without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -910,8 +911,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "price": SortEnumType.ASC
+                        'sortBy': [{
+                            'price': SortEnumType.ASC
                         }]
                     }
                 });
@@ -920,16 +921,16 @@ describe('productBranch Http', () => {
                 expect(res.data.data.id).to.eq(product_branch.id);
                 expect(res.data.data.price).to.eq(product_branch.price);
             })
-        
+
             it('should sort by desc priceSale without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -941,8 +942,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "priceSale": SortEnumType.DESC
+                        'sortBy': [{
+                            'priceSale': SortEnumType.DESC
                         }]
                     }
                 });
@@ -954,13 +955,13 @@ describe('productBranch Http', () => {
 
             it('should sort by asc priceSale without error', async () => {
                 await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -972,8 +973,8 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "priceSale": SortEnumType.ASC
+                        'sortBy': [{
+                            'priceSale': SortEnumType.ASC
                         }]
                     }
                 });
@@ -992,14 +993,14 @@ describe('productBranch Http', () => {
 
         describe('productBranch Http | list | base', () => {
             it('should reponse list product_branch', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1018,14 +1019,14 @@ describe('productBranch Http', () => {
             });
 
             it('should response productBranch paginate', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1050,14 +1051,14 @@ describe('productBranch Http', () => {
         });
 
         describe('productBranch Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1066,10 +1067,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": product_branch.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': product_branch.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1077,14 +1078,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
             });
-        
+
             it('should filter sku without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1095,10 +1096,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "sku",
-                            "value": product_branch.sku,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'sku',
+                            'value': product_branch.sku,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1106,14 +1107,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].sku).to.eq(product_branch.sku)
             });
-        
+
             it('should filter code without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1122,10 +1123,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "code",
-                            "value": product_branch.code,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'code',
+                            'value': product_branch.code,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1133,14 +1134,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].code).to.eq(product_branch.code)
             });
-        
+
             it('should filter fullname without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1149,10 +1150,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "fullname",
-                            "value": product_branch.fullname,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'fullname',
+                            'value': product_branch.fullname,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1160,14 +1161,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].fullname).to.eq(product_branch.fullname)
             });
-        
+
             it('should filter productMasterId without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1176,10 +1177,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "productMasterId",
-                            "value": product_branch.productMasterId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'productMasterId',
+                            'value': product_branch.productMasterId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1187,14 +1188,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].productMasterId).to.eq(product_branch.productMasterId)
             });
-        
+
             it('should filter price without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1205,10 +1206,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "price",
-                            "value": product_branch.price,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'price',
+                            'value': product_branch.price,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1216,14 +1217,14 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].price).to.eq(product_branch.price)
             });
-        
+
             it('should filter priceSale without error', async () => {
                 await repo.builderCreate({
-                    name: "milk-1",
+                    name: 'milk-1',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk-1"
+                            code: 'milk-1'
                         }
                     ]
                 });
@@ -1234,10 +1235,10 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "priceSale",
-                            "value": product_branch.priceSale,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'priceSale',
+                            'value': product_branch.priceSale,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -1245,20 +1246,20 @@ describe('productBranch Http', () => {
                 expect(res.data.data.data[0].id).to.eq(product_branch.id)
                 expect(res.data.data.data[0].priceSale).to.eq(product_branch.priceSale)
             });
-        
+
         });
 
         describe('productBranch Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1270,25 +1271,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1300,25 +1301,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by sku desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1330,25 +1331,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "sku": SortEnumType.DESC
+                        'sortBy': [{
+                            'sku': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by sku asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1360,25 +1361,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "sku": SortEnumType.ASC
+                        'sortBy': [{
+                            'sku': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by code desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1390,25 +1391,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "code": SortEnumType.DESC
+                        'sortBy': [{
+                            'code': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by code asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1420,25 +1421,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "code": SortEnumType.ASC
+                        'sortBy': [{
+                            'code': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by isMaster desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1450,25 +1451,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "isMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'isMaster': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by isMaster asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1480,25 +1481,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "isMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'isMaster': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by fullname desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1510,25 +1511,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "fullname": SortEnumType.DESC
+                        'sortBy': [{
+                            'fullname': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by fullname asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1540,25 +1541,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "fullname": SortEnumType.ASC
+                        'sortBy': [{
+                            'fullname': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by unitValue desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1570,25 +1571,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitValue": SortEnumType.DESC
+                        'sortBy': [{
+                            'unitValue': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by unitValue asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1600,25 +1601,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitValue": SortEnumType.ASC
+                        'sortBy': [{
+                            'unitValue': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by unitName desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1630,25 +1631,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitName": SortEnumType.DESC
+                        'sortBy': [{
+                            'unitName': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by unitName asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1660,25 +1661,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "unitName": SortEnumType.ASC
+                        'sortBy': [{
+                            'unitName': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by productMasterId desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1690,25 +1691,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "productMasterId": SortEnumType.DESC
+                        'sortBy': [{
+                            'productMasterId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by productMasterId asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1720,25 +1721,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "productMasterId": SortEnumType.ASC
+                        'sortBy': [{
+                            'productMasterId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by price desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1750,25 +1751,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "price": SortEnumType.DESC
+                        'sortBy': [{
+                            'price': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by price asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1780,25 +1781,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "price": SortEnumType.ASC
+                        'sortBy': [{
+                            'price': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by priceSale desc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1810,25 +1811,25 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "priceSale": SortEnumType.DESC
+                        'sortBy': [{
+                            'priceSale': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by priceSale asc when sortBy as array', async () => {
-               await Promise.all(
-                    [1,2,3,4,5].map(x => {
+                await Promise.all(
+                    [1, 2, 3, 4, 5].map(x => {
                         return repo.builderCreate({
-                            name: "milk-1-"+x,
+                            name: 'milk-1-' + x,
                             content: 'content',
                             branches: [
                                 {
-                                    code: "milk-1-"+x
+                                    code: 'milk-1-' + x
                                 }
                             ]
                         });
@@ -1840,16 +1841,16 @@ describe('productBranch Http', () => {
                 const res = await client.query({
                     query: PRODUCT_BRANCH_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "priceSale": SortEnumType.ASC
+                        'sortBy': [{
+                            'priceSale': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.data.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.data.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 
@@ -1873,30 +1874,30 @@ describe('productBranch Http', () => {
         });
 
         it('should delete all product', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1"
+                        code: 'milk-1'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation productBranchDelete($id: [ID_CRYPTO]) {
@@ -1918,15 +1919,15 @@ describe('productBranch Http', () => {
         });
 
         it('should delete branch for product', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -1935,7 +1936,7 @@ describe('productBranch Http', () => {
                         ]
                     },
                     {
-                        code: "milk-2",
+                        code: 'milk-2',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -1947,16 +1948,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation productBranchDelete($id: [ID_CRYPTO]) {
@@ -1973,31 +1974,31 @@ describe('productBranch Http', () => {
             });
 
             const p = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                .pushCriteria(new SelectionCriteria({
+                                    columns: ['*'],
+                                    preloads: [
+                                        {
+                                            name: 'branches',
+                                            columns: ['*']
+                                        }
+                                    ]
+                                }))
+                                .firstBy(ins.id)
 
             expect(res.errors).to.be.undefined;
             expect(p.branches).to.be.length(1);
         });
 
         it('should move branch master to branch next and delete branch instance', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2006,7 +2007,7 @@ describe('productBranch Http', () => {
                         ]
                     },
                     {
-                        code: "milk-2",
+                        code: 'milk-2',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2015,7 +2016,7 @@ describe('productBranch Http', () => {
                         ]
                     },
                     {
-                        code: "milk-3",
+                        code: 'milk-3',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2027,16 +2028,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation productBranchDelete($id: [ID_CRYPTO]) {
@@ -2052,16 +2053,16 @@ describe('productBranch Http', () => {
                 }
             });
             const p = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                .pushCriteria(new SelectionCriteria({
+                                    columns: ['*'],
+                                    preloads: [
+                                        {
+                                            name: 'branches',
+                                            columns: ['*']
+                                        }
+                                    ]
+                                }))
+                                .firstBy(ins.id)
 
             expect(res.errors).to.be.undefined;
             expect(p.branches).to.be.length(2);
@@ -2069,15 +2070,15 @@ describe('productBranch Http', () => {
         });
 
         it('should move kind branch to single when delete all branch', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2089,16 +2090,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation productBranchDelete($id: [ID_CRYPTO]) {
@@ -2114,16 +2115,16 @@ describe('productBranch Http', () => {
                 }
             });
             const p = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                .pushCriteria(new SelectionCriteria({
+                                    columns: ['*'],
+                                    preloads: [
+                                        {
+                                            name: 'branches',
+                                            columns: ['*']
+                                        }
+                                    ]
+                                }))
+                                .firstBy(ins.id)
 
             expect(res.errors).to.be.undefined;
             expect(p.kind).to.be.eq(ProductMasterKindEnumType.single)
@@ -2151,15 +2152,15 @@ describe('productBranch Http', () => {
         });
 
         it('inventory adjust quantity', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2171,16 +2172,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation changeQuantity($id: ID_CRYPTO){
@@ -2200,15 +2201,15 @@ describe('productBranch Http', () => {
         });
 
         it('adjust quantity up', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2223,16 +2224,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation changeQuantity($id: ID_CRYPTO){
@@ -2252,15 +2253,15 @@ describe('productBranch Http', () => {
         });
 
         it('adjust quantity down', async () => {
-            const user = await UserModel.create({name: 'job'});
+            const user = await UserModel.create({ name: 'job' });
             authContext(user);
 
             const ins = await repo.builderCreate({
-                name: "milk-1",
+                name: 'milk-1',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk-1",
+                        code: 'milk-1',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -2275,16 +2276,16 @@ describe('productBranch Http', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             const res = await client.mutate({
                 mutation: `mutation changeQuantity($id: ID_CRYPTO){

@@ -1,7 +1,7 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {ProductVendorModel} from "../../Models/ProductVendorModel";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { ProductVendorModel } from '../../Models/ProductVendorModel';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -12,7 +12,7 @@ import {ProductVendorModel} from "../../Models/ProductVendorModel";
 
 @ArgsType()
 export class ProductVendorCreateArgsType {
-    @Field({description: 'Tên danh mục'})
+    @Field({ description: 'Tên danh mục' })
     @Rules(args => ([
         'required',
         'between:2,255',

@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class RoleUserTableCreate extends BaseSchema {
     protected $tableName = 'role_user'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`role_user\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`user_id\` int(11) DEFAULT NULL,
@@ -16,7 +16,7 @@ export default class RoleUserTableCreate extends BaseSchema {
         this.schema.raw(`INSERT INTO \`role_user\` VALUES (1, 1, 1);`)
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

@@ -5,16 +5,17 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {CATEGORY_LIST_QUERY, CATEGORY_QUERY} from "./gql/category-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import CategoryModel from "../../src/app/Features/Category/CategoryModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { CATEGORY_LIST_QUERY, CATEGORY_QUERY } from './gql/category-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import CategoryModel from '../../src/app/Features/Category/CategoryModel';
 
 describe('category Http', () => {
     let client: ApolloServerTestClient;
@@ -60,8 +61,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -85,17 +86,17 @@ describe('category Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": category.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': category.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -103,17 +104,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.id).to.eq(category.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": category.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': category.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -121,17 +122,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.name).to.eq(category.name);
             })
-        
+
             it('should filter description without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": category.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': category.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -139,17 +140,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.description).to.eq(category.description);
             })
-        
+
             it('should filter slug without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": category.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': category.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -157,17 +158,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.slug).to.eq(category.slug);
             })
-        
+
             it('should filter languageMaster without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": category.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': category.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -175,17 +176,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.languageMaster).to.eq(category.languageMaster);
             })
-        
+
             it('should filter seoTitle without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoTitle",
-                            "value": category.seoTitle,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoTitle',
+                            'value': category.seoTitle,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -193,17 +194,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoTitle).to.eq(category.seoTitle);
             })
-        
+
             it('should filter seoDescription without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoDescription",
-                            "value": category.seoDescription,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoDescription',
+                            'value': category.seoDescription,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -211,17 +212,17 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoDescription).to.eq(category.seoDescription);
             })
-        
+
             it('should filter seoKeyword without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoKeyword",
-                            "value": category.seoKeyword,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoKeyword',
+                            'value': category.seoKeyword,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -229,11 +230,11 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoKeyword).to.eq(category.seoKeyword);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -242,8 +243,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -261,8 +262,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -271,7 +272,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.id).to.eq(category.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -280,8 +281,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -299,8 +300,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -309,7 +310,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.name).to.eq(category.name);
             })
-        
+
             it('should sort by desc description without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -318,8 +319,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -337,8 +338,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
@@ -347,7 +348,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.description).to.eq(category.description);
             })
-        
+
             it('should sort by desc parentId without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -356,8 +357,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.DESC
+                        'sortBy': [{
+                            'parentId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -375,8 +376,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.ASC
+                        'sortBy': [{
+                            'parentId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -385,7 +386,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.parentId).to.eq(category.parentId);
             })
-        
+
             it('should sort by desc slug without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -394,8 +395,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
@@ -413,8 +414,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
@@ -423,7 +424,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.slug).to.eq(category.slug);
             })
-        
+
             it('should sort by desc categoryOrder without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -432,8 +433,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.DESC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.DESC
                         }]
                     }
                 });
@@ -451,8 +452,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.ASC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.ASC
                         }]
                     }
                 });
@@ -461,7 +462,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.categoryOrder).to.eq(category.categoryOrder);
             })
-        
+
             it('should sort by desc language without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -470,8 +471,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
@@ -489,8 +490,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
@@ -499,7 +500,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.language).to.eq(category.language);
             })
-        
+
             it('should sort by desc languageMaster without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -508,8 +509,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
@@ -527,8 +528,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
@@ -537,7 +538,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.languageMaster).to.eq(category.languageMaster);
             })
-        
+
             it('should sort by desc seoTitle without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -546,8 +547,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoTitle": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoTitle': SortEnumType.DESC
                         }]
                     }
                 });
@@ -565,8 +566,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoTitle": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoTitle': SortEnumType.ASC
                         }]
                     }
                 });
@@ -575,7 +576,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoTitle).to.eq(category.seoTitle);
             })
-        
+
             it('should sort by desc seoDescription without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -584,8 +585,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoDescription": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoDescription': SortEnumType.DESC
                         }]
                     }
                 });
@@ -603,8 +604,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoDescription": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoDescription': SortEnumType.ASC
                         }]
                     }
                 });
@@ -613,7 +614,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoDescription).to.eq(category.seoDescription);
             })
-        
+
             it('should sort by desc seoKeyword without error', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(3);
 
@@ -622,8 +623,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoKeyword": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoKeyword': SortEnumType.DESC
                         }]
                     }
                 });
@@ -641,8 +642,8 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoKeyword": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoKeyword': SortEnumType.ASC
                         }]
                     }
                 });
@@ -651,7 +652,7 @@ describe('category Http', () => {
                 expect(res.data.category.id).to.eq(category.id);
                 expect(res.data.category.seoKeyword).to.eq(category.seoKeyword);
             })
-        
+
         });
     });
 
@@ -677,17 +678,17 @@ describe('category Http', () => {
         });
 
         describe('category Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": category.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': category.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -695,17 +696,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].id).to.eq(category.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": category.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': category.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -713,17 +714,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].name).to.eq(category.name)
             });
-        
+
             it('should filter description without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": category.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': category.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -731,17 +732,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].description).to.eq(category.description)
             });
-        
+
             it('should filter slug without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": category.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': category.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -749,17 +750,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].slug).to.eq(category.slug)
             });
-        
+
             it('should filter categoryOrder without error', async () => {
-                const category = await Factory.model('App/Features/Category/CategoryModel').create({categoryOrder: 2});
+                const category = await Factory.model('App/Features/Category/CategoryModel').create({ categoryOrder: 2 });
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "categoryOrder",
-                            "value": category.categoryOrder,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'categoryOrder',
+                            'value': category.categoryOrder,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -774,10 +775,10 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": category.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': category.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -785,17 +786,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].languageMaster).to.eq(category.languageMaster)
             });
-        
+
             it('should filter seoTitle without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoTitle",
-                            "value": category.seoTitle,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoTitle',
+                            'value': category.seoTitle,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -803,17 +804,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].seoTitle).to.eq(category.seoTitle)
             });
-        
+
             it('should filter seoDescription without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoDescription",
-                            "value": category.seoDescription,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoDescription',
+                            'value': category.seoDescription,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -821,17 +822,17 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].seoDescription).to.eq(category.seoDescription)
             });
-        
+
             it('should filter seoKeyword without error', async () => {
                 const category = await Factory.model('App/Features/Category/CategoryModel').create();
 
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoKeyword",
-                            "value": category.seoKeyword,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoKeyword',
+                            'value': category.seoKeyword,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -839,11 +840,11 @@ describe('category Http', () => {
                 expect(res.data.categories.data[0].id).to.eq(category.id)
                 expect(res.data.categories.data[0].seoKeyword).to.eq(category.seoKeyword)
             });
-        
+
         });
 
         describe('category Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -852,14 +853,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -870,16 +871,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -888,14 +889,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -906,16 +907,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by description desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -924,14 +925,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by description asc when sortBy as array', async () => {
@@ -942,16 +943,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by parentId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -960,14 +961,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.DESC
+                        'sortBy': [{
+                            'parentId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by parentId asc when sortBy as array', async () => {
@@ -978,16 +979,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.ASC
+                        'sortBy': [{
+                            'parentId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by slug desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -996,14 +997,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by slug asc when sortBy as array', async () => {
@@ -1014,16 +1015,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by categoryOrder desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1032,14 +1033,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.DESC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by categoryOrder asc when sortBy as array', async () => {
@@ -1050,16 +1051,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.ASC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by language desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1068,14 +1069,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by language asc when sortBy as array', async () => {
@@ -1086,16 +1087,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by languageMaster desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1104,14 +1105,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by languageMaster asc when sortBy as array', async () => {
@@ -1122,16 +1123,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by seoTitle desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1140,14 +1141,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoTitle": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoTitle': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by seoTitle asc when sortBy as array', async () => {
@@ -1158,16 +1159,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoTitle": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoTitle': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by seoDescription desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1176,14 +1177,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoDescription": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoDescription': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by seoDescription asc when sortBy as array', async () => {
@@ -1194,16 +1195,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoDescription": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoDescription': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by seoKeyword desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Category/CategoryModel').createMany(5);
 
@@ -1212,14 +1213,14 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoKeyword": SortEnumType.DESC
+                        'sortBy': [{
+                            'seoKeyword': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by seoKeyword asc when sortBy as array', async () => {
@@ -1230,16 +1231,16 @@ describe('category Http', () => {
                 const res = await client.query({
                     query: CATEGORY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "seoKeyword": SortEnumType.ASC
+                        'sortBy': [{
+                            'seoKeyword': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.categories.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.categories.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 
@@ -1285,7 +1286,7 @@ describe('category Http', () => {
                     }`,
                 variables: {
                     name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
-                    meta: { metaKey: "assaf", metaValue: "asfsf" }
+                    meta: { metaKey: 'assaf', metaValue: 'asfsf' }
                 }
             });
 
@@ -1346,7 +1347,7 @@ describe('category Http', () => {
                     id: category.id,
                     name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
                     slug: 'de-xac-minh-cai-dat-thanh-cong-ban-thuc-hien-cac-buoc-sau',
-                    meta: { metaKey: "assaf", metaValue: "asfsf" }
+                    meta: { metaKey: 'assaf', metaValue: 'asfsf' }
                 }
             });
             expect(res.errors).to.be.undefined;

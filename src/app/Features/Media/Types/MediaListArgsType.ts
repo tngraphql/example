@@ -4,11 +4,11 @@
  * Date: 6/5/2020
  * Time: 9:42 AM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {filterType} from "../../../GraphQL/Types/FilterType";
-import {MediaFilterEnumType} from "./MediaFilterEnumType";
-import {MediaSortInputType} from "./MediaSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { filterType } from '../../../GraphQL/Types/FilterType';
+import { MediaFilterEnumType } from './MediaFilterEnumType';
+import { MediaSortInputType } from './MediaSortInputType';
 
 @ArgsType()
 export class MediaListArgsType {
@@ -21,7 +21,7 @@ export class MediaListArgsType {
     @Field(returns => filterType(MediaFilterEnumType))
     filter: FilterContract<typeof MediaFilterEnumType>
 
-    @Field(returns => [MediaSortInputType],{description: 'order'})
+    @Field(returns => [MediaSortInputType], { description: 'order' })
     sortBy: MediaSortInputType
 
     @Field()

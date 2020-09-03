@@ -4,26 +4,26 @@
  * Date: 8/23/2020
  * Time: 11:01 AM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
 
 @ArgsType()
 export class UserResetPasswordArgsType {
-    @Field({description: 'Token'})
+    @Field({ description: 'Token' })
     @Rules([
         'required',
         'string'
     ])
     public token: string
 
-    @Field({description: 'E-Mail Address'})
+    @Field({ description: 'E-Mail Address' })
     @Rules([
         'required',
         'email'
     ])
     public email: string
 
-    @Field({description: 'Mật khẩu'})
+    @Field({ description: 'Mật khẩu' })
     @Rules(args => {
         args.password_confirmation = args.passwordConfirmation;
         return [
@@ -32,12 +32,12 @@ export class UserResetPasswordArgsType {
             'between:6,32',
             'confirmed'
         ]
-    }, ({lang}) => ({
+    }, ({ lang }) => ({
         'confirmed': lang.t('Retype the password incorrectly.')
     }))
     public password: string
 
-    @Field({description: 'Nhập lại mật khẩu'})
+    @Field({ description: 'Nhập lại mật khẩu' })
     @Rules([
         'required',
         'string',

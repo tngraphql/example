@@ -5,7 +5,7 @@
  * Time: 9:09 AM
  */
 
-import {Env} from "@tngraphql/illuminate/dist/Support/Env";
+import { Env } from '@tngraphql/illuminate/dist/Support/Env';
 
 export = {
     default: 'smtp',

@@ -5,15 +5,15 @@
  * Time: 8:20 PM
  */
 
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Str} from "../../../../lib/Str";
-import {DateTime} from "luxon";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { Str } from '../../../../lib/Str';
+import { DateTime } from 'luxon';
 
 export class OrderStatusModel extends BaseModel {
     static table = 'order_status';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()

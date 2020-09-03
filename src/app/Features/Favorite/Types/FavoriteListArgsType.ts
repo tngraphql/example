@@ -1,8 +1,8 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {FavoriteFilterEnumType} from "./FavoriteFilterEnumType";
-import {filterType} from "../../../GraphQL/Types/FilterType";
-import {FavoriteSortInputType} from "./FavoriteSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { FavoriteFilterEnumType } from './FavoriteFilterEnumType';
+import { filterType } from '../../../GraphQL/Types/FilterType';
+import { FavoriteSortInputType } from './FavoriteSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -22,7 +22,7 @@ export class FavoriteListArgsType {
     @Field(returns => filterType(FavoriteFilterEnumType))
     filter: FilterContract<typeof FavoriteFilterEnumType>
 
-    @Field(returns => [FavoriteSortInputType],{description: 'order'})
+    @Field(returns => [FavoriteSortInputType], { description: 'order' })
     sortBy: FavoriteSortInputType
 
     where: any;

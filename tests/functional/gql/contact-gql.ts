@@ -5,7 +5,7 @@
  * Time: 6:12 PM
  */
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const CONTACT_LIST_QUERY = gql`
 query contacts(

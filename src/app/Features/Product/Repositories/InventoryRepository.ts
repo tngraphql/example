@@ -4,10 +4,10 @@
  * Date: 8/15/2020
  * Time: 8:31 PM
  */
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {AttributeModel} from "../Models/AttributeModel";
-import {InventoryModel} from "../Models/InventoryModel";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { AttributeModel } from '../Models/AttributeModel';
+import { InventoryModel } from '../Models/InventoryModel';
 
 
 @Service()
@@ -15,6 +15,7 @@ export class InventoryRepository extends BaseRepository<AttributeModel, typeof I
     public model(): typeof InventoryModel {
         return InventoryModel;
     }
+
     /**
      * Cập nhật số lượng tồn kho
      *

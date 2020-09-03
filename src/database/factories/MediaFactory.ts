@@ -5,7 +5,7 @@
  * Time: 11:36 AM
  */
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
-import {ProductMasterKindEnumType} from "../../app/Features/Product/Types/Product/ProductMasterKindEnumType";
+import { ProductMasterKindEnumType } from '../../app/Features/Product/Types/Product/ProductMasterKindEnumType';
 
 Factory.blueprint('App/Features/Media/MediaModel', (faker, index, data) => {
     return {

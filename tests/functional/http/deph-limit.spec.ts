@@ -4,13 +4,14 @@
  * Date: 8/17/2020
  * Time: 8:37 AM
  */
-import {ApolloServerTestClient} from "../../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../../helpers";
+import { ApolloServerTestClient } from '../../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {DEPH_LIMIT_PAGE} from "../gql/deph-limit.gql";
-import {Application} from "@tngraphql/illuminate";
+import { expect } from 'chai';
+import { DEPH_LIMIT_PAGE } from '../gql/deph-limit.gql';
+import { Application } from '@tngraphql/illuminate';
 
 describe('deph limit', () => {
     let client: ApolloServerTestClient;
@@ -66,7 +67,7 @@ query menus {
             });
 
             expect(res.errors).to.be.not.undefined;
-            expect(res.errors[0].message).to.be.eq("'menus' exceeds maximum operation depth of " + config.depthLimit);
+            expect(res.errors[0].message).to.be.eq('\'menus\' exceeds maximum operation depth of ' + config.depthLimit);
         });
 
         it('should success query', async () => {
@@ -118,7 +119,7 @@ query menus {
             });
 
             expect(res.errors).to.be.not.undefined;
-            expect(res.errors[0].message).to.be.eq("'menus' exceeds maximum operation depth of " + config.depthLimit);
+            expect(res.errors[0].message).to.be.eq('\'menus\' exceeds maximum operation depth of ' + config.depthLimit);
         });
 
         it('should success query', async () => {

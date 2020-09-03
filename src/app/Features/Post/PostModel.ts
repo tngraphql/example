@@ -4,19 +4,19 @@
  * Date: 7/16/2020
  * Time: 10:53 AM
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasMany, hasOne, manyToMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import CategoryModel from "../Category/CategoryModel";
-import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import TagModel from "../Tag/TagModel";
-import {UserModel} from "../../UserModel";
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
-import PostmetaModel from "./PostmetaModel";
-import {LanguageMixin} from "../../../lib/LanguageMixin";
-import {converBoolean} from "../../../lib/utils";
-import {Str} from "../../../lib/Str";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasMany, hasOne, manyToMany } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
+import CategoryModel from '../Category/CategoryModel';
+import { HasMany, ManyToMany } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import TagModel from '../Tag/TagModel';
+import { UserModel } from '../../UserModel';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
+import PostmetaModel from './PostmetaModel';
+import { LanguageMixin } from '../../../lib/LanguageMixin';
+import { converBoolean } from '../../../lib/utils';
+import { Str } from '../../../lib/Str';
 
 
 class PostModel extends BaseModel {
@@ -24,7 +24,7 @@ class PostModel extends BaseModel {
 
     _className: string;
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -37,7 +37,7 @@ class PostModel extends BaseModel {
     public isFeatured: boolean;
 
     public static scopeIsFeatured(query, boolean = true, operation = '=') {
-        if (typeof boolean !== "boolean") {
+        if ( typeof boolean !== 'boolean' ) {
             throw new Error('value for isFeatured be must boolean');
         }
         return query.where('isFeatured', operation, converBoolean(boolean, 1, 0));
@@ -49,10 +49,10 @@ class PostModel extends BaseModel {
     @column()
     public name: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public authorId: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public parentId: string;
 
     @column()
@@ -88,19 +88,19 @@ class PostModel extends BaseModel {
     @column()
     public seoKeyword: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public language: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public languageMaster: string;
 
     @column.dateTime()
     public publishedAt: DateTime;
 
-    @column.dateTime({autoCreate: true})
+    @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
-    @column.dateTime({autoCreate: true, autoUpdate: true})
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime;
 
     @column.dateTime()
@@ -143,7 +143,7 @@ class PostModel extends BaseModel {
     })
     public meta: HasMany<typeof PostmetaModel>
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public thumbnailId: string;
 
     public thumbnail;
@@ -160,7 +160,7 @@ class PostModel extends BaseModel {
         this.addGlobalScope(builder => {
             builder.where('type', 'post');
 
-            if (!builder.hasAggregates && builder.knexQuery['_statements'].some(x => x.grouping === 'columns')) {
+            if ( ! builder.hasAggregates && builder.knexQuery['_statements'].some(x => x.grouping === 'columns') ) {
                 builder.select(builder.qualifyColumn('postPassword'), builder.qualifyColumn('authorId'));
             }
         });
@@ -169,17 +169,17 @@ class PostModel extends BaseModel {
             model.$setAttribute('type', 'post');
             model.$setAttribute('commentCount', '0');
             model.$setAttribute('views', 0);
-            if (!model.format) {
+            if ( ! model.format ) {
                 model.$setAttribute('format', 1);
             }
-            if (!model.isFeatured) {
+            if ( ! model.isFeatured ) {
                 model.$setAttribute('isFeatured', 0);
             }
-            if (!model.parentId) {
+            if ( ! model.parentId ) {
                 model.$setAttribute('parentId', '0');
             }
         })
     }
 }
 
-export {PostModel};
+export { PostModel };

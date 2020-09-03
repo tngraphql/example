@@ -4,26 +4,27 @@
  * Date: 5/29/2020
  * Time: 6:53 AM
  */
-import {createParamDecorator} from "@tngraphql/graphql";
-import {getMetadataStorage} from "@tngraphql/graphql/dist/metadata/getMetadataStorage";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {IFieldSelection, ResolveInfo} from "../lib/ResolveInfo";
-import {GraphQLOutputType, GraphQLResolveInfo} from "graphql";
-import {ISelection} from "../Contracts/SelectionCriteriaContract";
-import {GraphQLList, GraphQLNonNull} from "graphql/type/definition";
+import { createParamDecorator } from '@tngraphql/graphql';
+import { getMetadataStorage } from '@tngraphql/graphql/dist/metadata/getMetadataStorage';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { IFieldSelection, ResolveInfo } from '../lib/ResolveInfo';
+import { GraphQLOutputType, GraphQLResolveInfo } from 'graphql';
+import { ISelection } from '../Contracts/SelectionCriteriaContract';
+import { GraphQLList, GraphQLNonNull } from 'graphql/type/definition';
+
 const _ = require('lodash');
 
 export const SelectFields = () => {
-    return createParamDecorator<{app: any}>(({info, context}) => {
+    return createParamDecorator<{ app: any }>(({ info, context }) => {
         return getFields(info, context.app ? context.app.config.get('app').depthLimit : 5);
     });
 }
 
 function getType(type: GraphQLOutputType) {
     let res = type.toString();
-    if (type instanceof GraphQLNonNull) {
+    if ( type instanceof GraphQLNonNull ) {
         return getType(type.ofType);
-    } else if (type instanceof GraphQLList) {
+    } else if ( type instanceof GraphQLList ) {
         return getType(type.ofType);
     }
     return res;
@@ -36,7 +37,7 @@ export function getFields(info: GraphQLResolveInfo, depth: number = 5): ISelecti
 
     const isPaginate: boolean = returnType?.target['isPageType'] === true;
 
-    if (isPaginate) {
+    if ( isPaginate ) {
         const fields = getFieldSelection(info, depth + 1);
 
         const model = returnType.fields.find(x => x.name === 'data').getType()['model'];
@@ -65,15 +66,15 @@ export function getField(fields, model: LucidModel): ISelection {
 
             result.push((model.primaryKey));
 
-            if (model.$hasColumn(field)) {
+            if ( model.$hasColumn(field) ) {
                 result.push((field));
             }
-            if (model.$hasRelation(field)) {
+            if ( model.$hasRelation(field) ) {
                 const relation: any = getRelation(model, field);
 
                 result.push((relation.localKey));
 
-                if (['belongsTo'].includes(relation.type)) {
+                if ( ['belongsTo'].includes(relation.type) ) {
                     result.push((relation.foreignKey));
                 }
 
@@ -82,16 +83,16 @@ export function getField(fields, model: LucidModel): ISelection {
                 });
             }
         } else {
-            if (model.$hasRelation(field)) {
+            if ( model.$hasRelation(field) ) {
                 const relation: any = getRelation(model, field);
 
                 let relatedModel = relation.relatedModel();
                 result.push((relation.localKey));
-                if (['belongsTo'].includes(relation.type)) {
+                if ( ['belongsTo'].includes(relation.type) ) {
                     result.push((relation.foreignKey));
                 }
 
-                if (relation.model === relatedModel) {
+                if ( relation.model === relatedModel ) {
                     preloads.push({
                         name: field
                     });

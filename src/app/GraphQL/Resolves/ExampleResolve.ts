@@ -23,16 +23,16 @@ import { UserModel } from '../../UserModel';
 import { Rules } from '@tngraphql/illuminate/dist/Decorators/Rules';
 import { ValidateArgs } from '@tngraphql/illuminate/dist/Decorators/ValidateArgs';
 import { Inject } from '@tngraphql/illuminate';
-import {GraphQLString} from "graphql";
-import {Mailable} from "@tngraphql/mail";
-import {Mail} from "@tngraphql/mail/dist/src/Mail";
-import {TestEmail} from "../../Mail/TestEmail";
-import {UserType} from "../Types/User/UserType";
+import { GraphQLString } from 'graphql';
+import { Mailable } from '@tngraphql/mail';
+import { Mail } from '@tngraphql/mail/dist/src/Mail';
+import { TestEmail } from '../../Mail/TestEmail';
+import { UserType } from '../Types/User/UserType';
 
 @InputType()
 class UserInput {
     @Field()
-    @Rules( 'in:123')
+    @Rules('in:123')
     name: string
 }
 
@@ -57,14 +57,14 @@ export class ExampleResolve {
     // @UseMiddleware('auth')
     @UseMiddleware('acl:viewUser')
     @ValidateArgs(InputArgs)
-    async index(@Args(returns => InputArgs) args: InputArgs, @Ctx() {auth, guard}) {
+    async index(@Args(returns => InputArgs) args: InputArgs, @Ctx() { auth, guard }) {
         // await guard.allows('viewUser');
         return UserModel.all();
     }
 
 
     @Mutation(returns => GraphQLString)
-    async login(@Ctx() {name, req, res}) {
+    async login(@Ctx() { name, req, res }) {
         // console.log(res.headers)
         return (await UserModel.find(1)).createToken('new', ['viewUser']);
     }
@@ -84,7 +84,6 @@ export class ExampleResolve {
         // console.log('Preview URL: ', nodemailer.getTestMessageUrl(info));
         return nodemailer.getTestMessageUrl(info);
     }
-
 
 
     // @FieldResolver()

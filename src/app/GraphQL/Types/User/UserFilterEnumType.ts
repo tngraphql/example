@@ -4,9 +4,9 @@
  * Date: 5/25/2020
  * Time: 9:07 PM
  */
-import {registerFilterEnumType} from "../FilterType";
-import RoleModel from "../../../Models/RoleModel";
-import RoleUserModel from "../../../Models/RoleUserModel";
+import { registerFilterEnumType } from '../FilterType';
+import RoleModel from '../../../Models/RoleModel';
+import RoleUserModel from '../../../Models/RoleUserModel';
 
 enum UserFilterEnumType {
     id = 'id',
@@ -30,9 +30,9 @@ namespace UserFilterEnumType {
             query.whereExists(builder => {
                 builder.model = RoleModel;
                 builder.from(RoleModel.getTable())
-                    .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
-                    .whereRaw(`${RoleUserModel.getTable()}.user_id = ${query.model.getTable()}.id`)
-                    .where(`${RoleModel.getTable()}.id`, operation, value);
+                       .innerJoin(RoleUserModel.getTable(), `${ RoleUserModel.getTable() }.role_id`, '=', `${ RoleModel.getTable() }.id`)
+                       .whereRaw(`${ RoleUserModel.getTable() }.user_id = ${ query.model.getTable() }.id`)
+                       .where(`${ RoleModel.getTable() }.id`, operation, value);
             }, 1)
         }
     }
@@ -42,9 +42,9 @@ namespace UserFilterEnumType {
             query.whereExists(builder => {
                 builder.model = RoleModel;
                 builder.from(RoleModel.getTable())
-                    .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
-                    .whereRaw(`${RoleUserModel.getTable()}.user_id = ${query.model.getTable()}.id`)
-                    .where(`${RoleModel.getTable()}.name`, operation, value);
+                       .innerJoin(RoleUserModel.getTable(), `${ RoleUserModel.getTable() }.role_id`, '=', `${ RoleModel.getTable() }.id`)
+                       .whereRaw(`${ RoleUserModel.getTable() }.user_id = ${ query.model.getTable() }.id`)
+                       .where(`${ RoleModel.getTable() }.name`, operation, value);
             }, 1)
         }
     }
@@ -52,4 +52,4 @@ namespace UserFilterEnumType {
 
 registerFilterEnumType('User', UserFilterEnumType);
 
-export {UserFilterEnumType}
+export { UserFilterEnumType }

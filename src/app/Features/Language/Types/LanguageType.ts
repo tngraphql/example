@@ -1,11 +1,11 @@
-import {Field, Int, ObjectType, Root} from "@tngraphql/graphql";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
-import {DateTime} from "luxon";
-import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
-import {LanguageModel} from "../LanguageModel";
-import {ConfigOptions} from "../../../../lib/ConfigOptions";
-import {GraphQLBoolean} from "graphql";
+import { Field, Int, ObjectType, Root } from '@tngraphql/graphql';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../GraphQL/Types/TimestampScalarType';
+import { DateTime } from 'luxon';
+import { registerPaginateType } from '../../../GraphQL/Types/PaginateType';
+import { LanguageModel } from '../LanguageModel';
+import { ConfigOptions } from '../../../../lib/ConfigOptions';
+import { GraphQLBoolean } from 'graphql';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -21,25 +21,25 @@ export class LanguageType {
     @Field(returns => ID)
     public id: string
 
-    @Field({description: 'Tên ngôn ngữ '})
+    @Field({ description: 'Tên ngôn ngữ ' })
     public name: string
 
-    @Field({description: 'Mã ngôn ngữ vi_VN '})
+    @Field({ description: 'Mã ngôn ngữ vi_VN ' })
     public locale: string
 
-    @Field({description: 'Mã ngôn ngữ '})
+    @Field({ description: 'Mã ngôn ngữ ' })
     public code: string
 
-    @Field(returns => Int,{description: 'Viết trừ trái sang phải hoặc ngược lại'})
+    @Field(returns => Int, { description: 'Viết trừ trái sang phải hoặc ngược lại' })
     public direction: number
 
-    @Field({description: 'Lá cờ'})
+    @Field({ description: 'Lá cờ' })
     public flag: string
 
-    @Field(returns => Int,{description: 'Vị trí'})
+    @Field(returns => Int, { description: 'Vị trí' })
     public position: number
 
-    @Field(returns => GraphQLBoolean, {description: 'Là ngôn ngữ mặc định?'})
+    @Field(returns => GraphQLBoolean, { description: 'Là ngôn ngữ mặc định?' })
     public async default(@Root() parent): Promise<boolean> {
         return String(parent.id) === String(await ConfigOptions.getOption('defaultLanguage'));
     }

@@ -4,12 +4,12 @@
  * Date: 8/26/2020
  * Time: 11:23 AM
  */
-import {Arg, Ctx, Directive, Field, Int, ObjectType, Root} from "@tngraphql/graphql";
-import {OrderStatusModel} from "../../Models/OrderStatusModel";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
-import {DateTime} from "luxon";
-import {OrderBillingModel} from "../../Models/OrderBillingModel";
+import { Arg, Ctx, Directive, Field, Int, ObjectType, Root } from '@tngraphql/graphql';
+import { OrderStatusModel } from '../../Models/OrderStatusModel';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../../GraphQL/Types/TimestampScalarType';
+import { DateTime } from 'luxon';
+import { OrderBillingModel } from '../../Models/OrderBillingModel';
 
 @ObjectType()
 export class OrderBillingAddressType {
@@ -18,25 +18,25 @@ export class OrderBillingAddressType {
     @Field(returns => ID)
     public id: string
 
-    @Field(returns => ID, {description: 'ID đơn hàng'})
+    @Field(returns => ID, { description: 'ID đơn hàng' })
     public orderId: string
 
-    @Field({description: 'Quốc gia'})
+    @Field({ description: 'Quốc gia' })
     public country: string
 
-    @Field({description: 'Công ty'})
+    @Field({ description: 'Công ty' })
     public company: string
 
-    @Field({description: 'Thành phố'})
+    @Field({ description: 'Thành phố' })
     public city: string
 
-    @Field({description: 'Địa chỉ'})
+    @Field({ description: 'Địa chỉ' })
     public address: string
 
-    @Field({description: 'Địa chỉ'})
+    @Field({ description: 'Địa chỉ' })
     public address2: string
 
-    @Field({description: 'Số điện thoại'})
+    @Field({ description: 'Số điện thoại' })
     public phone: string
 
     @Field()
@@ -45,10 +45,10 @@ export class OrderBillingAddressType {
     @Field()
     public posCode: string
 
-    @Field({description: 'Họ tên'})
+    @Field({ description: 'Họ tên' })
     public name: string
 
-    @Field({description: 'Phương thức thanh toán'})
+    @Field({ description: 'Phương thức thanh toán' })
     public paymentMethod: string
 
     @Field(returns => TimestampScalarType)

@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class PermissionRoleTableCreate extends BaseSchema {
     protected $tableName = 'permission_role'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`permission_role\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`permission_id\` int(11) DEFAULT NULL,
@@ -56,12 +56,12 @@ INSERT INTO \`permission_role\` VALUES (39, 21, 2);
 INSERT INTO \`permission_role\` VALUES (40, 4, 3);
 INSERT INTO \`permission_role\` VALUES (43, 7, 3);
 INSERT INTO \`permission_role\` VALUES (46, 13, 3);`
-        data.split(';').filter(x => !!x.trim()).forEach(value => {
+        data.split(';').filter(x => !! x.trim()).forEach(value => {
             this.schema.raw(value);
         })
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

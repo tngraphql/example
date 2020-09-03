@@ -5,17 +5,17 @@
  * Time: 4:06 PM
  */
 
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
 
-const {gql} = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import RoleModel from "../../src/app/Models/RoleModel";
-import {ROLE_LIST_QUERY, ROLE_QUERY} from "./gql/role-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
+const { gql } = require('apollo-server');
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import RoleModel from '../../src/app/Models/RoleModel';
+import { ROLE_LIST_QUERY, ROLE_QUERY } from './gql/role-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
 
 describe('role Http', () => {
     let client: ApolloServerTestClient;
@@ -55,8 +55,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -85,10 +85,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": role.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': role.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -103,10 +103,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": role.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': role.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -121,10 +121,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "displayName",
-                            "value": role.displayName,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'displayName',
+                            'value': role.displayName,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -139,10 +139,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": role.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': role.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -163,8 +163,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -182,8 +182,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -201,8 +201,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -220,8 +220,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -239,8 +239,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "displayName": SortEnumType.DESC
+                        'sortBy': [{
+                            'displayName': SortEnumType.DESC
                         }]
                     }
                 });
@@ -258,8 +258,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "displayName": SortEnumType.ASC
+                        'sortBy': [{
+                            'displayName': SortEnumType.ASC
                         }]
                     }
                 });
@@ -277,8 +277,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -296,8 +296,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
@@ -356,17 +356,17 @@ describe('role Http', () => {
         });
 
         describe('role Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const role = await Factory.model('App/Models/RoleModel').create();
 
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": role.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': role.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -381,10 +381,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": role.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': role.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -399,10 +399,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "displayName",
-                            "value": role.displayName,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'displayName',
+                            'value': role.displayName,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -417,10 +417,10 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": role.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': role.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -441,8 +441,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -459,8 +459,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -477,8 +477,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -495,8 +495,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -513,8 +513,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "displayName": SortEnumType.DESC
+                        'sortBy': [{
+                            'displayName': SortEnumType.DESC
                         }]
                     }
                 });
@@ -531,8 +531,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "displayName": SortEnumType.ASC
+                        'sortBy': [{
+                            'displayName': SortEnumType.ASC
                         }]
                     }
                 });
@@ -549,8 +549,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -567,8 +567,8 @@ describe('role Http', () => {
                 const res = await client.query({
                     query: ROLE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });

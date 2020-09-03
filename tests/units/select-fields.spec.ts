@@ -5,7 +5,7 @@
  * Time: 6:34 PM
  */
 
-import {expect} from 'chai';
+import { expect } from 'chai';
 import {
     buildSchema,
     Field,
@@ -14,15 +14,15 @@ import {
     ObjectType,
     Query,
     Resolver
-} from "@tngraphql/graphql";
-import {Router} from "@tngraphql/route";
-import {DefaultContainer} from "@tngraphql/graphql/dist/utils/container";
-import {getField, getFieldSelection, SelectFields} from "../../src/decorators/SelectFields";
-import {graphql} from "graphql";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {HasOne} from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
-import {BuildContext} from "@tngraphql/graphql/dist/schema/build-context";
+} from '@tngraphql/graphql';
+import { Router } from '@tngraphql/route';
+import { DefaultContainer } from '@tngraphql/graphql/dist/utils/container';
+import { getField, getFieldSelection, SelectFields } from '../../src/decorators/SelectFields';
+import { graphql } from 'graphql';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { BuildContext } from '@tngraphql/graphql/dist/schema/build-context';
 
 describe('Select Fields', () => {
     let info;
@@ -33,7 +33,7 @@ describe('Select Fields', () => {
         class User extends BaseModel {
             public static table = 'users'
 
-            @column({isPrimary: true})
+            @column({ isPrimary: true })
             id: string;
 
             @column()
@@ -107,7 +107,7 @@ describe('Select Fields', () => {
         it('should getFieldSelection without error', async () => {
             const result = await graphql(schema, `{sampleQuery{id}}`);
 
-            expect(getFieldSelection(info)).to.deep.eq({id: true});
+            expect(getFieldSelection(info)).to.deep.eq({ id: true });
         });
     });
 
@@ -119,7 +119,7 @@ describe('Select Fields', () => {
             class Profile extends BaseModel {
                 public static table = 'profiles'
 
-                @column({isPrimary: true})
+                @column({ isPrimary: true })
                 id: string;
 
                 @column()
@@ -129,13 +129,13 @@ describe('Select Fields', () => {
             class User extends BaseModel {
                 public static table = 'users'
 
-                @column({isPrimary: true})
+                @column({ isPrimary: true })
                 id: string;
 
                 @column()
                 localKey: string;
 
-                @hasOne(() => Profile, {foreignKey: 'userId', localKey: 'localKey'})
+                @hasOne(() => Profile, { foreignKey: 'userId', localKey: 'localKey' })
                 profile: HasOne<typeof Profile>;
             }
 
@@ -144,40 +144,40 @@ describe('Select Fields', () => {
         });
 
         it('should getField without error', async () => {
-            expect(getField({id: true, name: true}, UserModel)).to.deep.eq({columns: ['id'], preloads: []})
-            expect(getField({id: true, name: true}, undefined)).to.deep.eq({columns: ['id', 'name'], preloads: []})
+            expect(getField({ id: true, name: true }, UserModel)).to.deep.eq({ columns: ['id'], preloads: [] })
+            expect(getField({ id: true, name: true }, undefined)).to.deep.eq({ columns: ['id', 'name'], preloads: [] })
         });
 
         it('should get primary key', async () => {
-            expect(getField({name: true}, UserModel)).to.deep.eq({columns: ['id'], preloads: []})
+            expect(getField({ name: true }, UserModel)).to.deep.eq({ columns: ['id'], preloads: [] })
         });
 
         it('should get relation', async () => {
-            expect(getField({name: true, profile: true}, UserModel)).to.deep.eq({
+            expect(getField({ name: true, profile: true }, UserModel)).to.deep.eq({
                 columns: ['id', 'localKey'], preloads: [
                     {
-                        name: "profile"
+                        name: 'profile'
                     }
                 ]
             })
         });
 
         it('should get local key', async () => {
-            expect(getField({name: true, profile: true}, UserModel)).to.deep.eq({
+            expect(getField({ name: true, profile: true }, UserModel)).to.deep.eq({
                 columns: ['id', 'localKey'], preloads: [
                     {
-                        name: "profile",
+                        name: 'profile',
                     }
                 ]
             })
         });
 
         it('should get relation nested', async () => {
-            expect(getField({name: true, profile: {id: true}}, UserModel)).to.deep.eq({
+            expect(getField({ name: true, profile: { id: true } }, UserModel)).to.deep.eq({
                 columns: ['id', 'localKey'],
                 preloads: [
                     {
-                        name: "profile",
+                        name: 'profile',
                         columns: ['id'],
                         preloads: []
                     }
@@ -189,12 +189,12 @@ describe('Select Fields', () => {
     describe('Select Fields | Decorator Select Fields', () => {
         it('should getField without error', async () => {
             const result = await graphql(schema, `{sampleQuery{id}}`);
-            expect(fields).to.deep.eq({columns: ['id'], preloads: []});
+            expect(fields).to.deep.eq({ columns: ['id'], preloads: [] });
         });
 
         it('should getField without error, return array type', async () => {
             const result = await graphql(schema, `{sampleArrayQuery{id}}`);
-            expect(fields).to.deep.eq({columns: ['id'], preloads: []});
+            expect(fields).to.deep.eq({ columns: ['id'], preloads: [] });
         });
     });
 });

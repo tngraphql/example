@@ -1,20 +1,20 @@
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {ContactRepository} from "../ContactRepository";
-import {ContactType} from "../Types/Contact/ContactType";
-import {ContactIndexArgsType} from "../Types/Contact/ContactIndexArgsType";
-import {ContactListArgsType} from "../Types/Contact/ContactListArgsType";
-import {ContactCreateArgsType} from "../Types/Contact/ContactCreateArgsType";
-import {ContactUpdateArgsType} from "../Types/Contact/ContactUpdateArgsType";
-import {ContactDeleteArgsType} from "../Types/Contact/ContactDeleteArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { ContactRepository } from '../ContactRepository';
+import { ContactType } from '../Types/Contact/ContactType';
+import { ContactIndexArgsType } from '../Types/Contact/ContactIndexArgsType';
+import { ContactListArgsType } from '../Types/Contact/ContactListArgsType';
+import { ContactCreateArgsType } from '../Types/Contact/ContactCreateArgsType';
+import { ContactUpdateArgsType } from '../Types/Contact/ContactUpdateArgsType';
+import { ContactDeleteArgsType } from '../Types/Contact/ContactDeleteArgsType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -46,7 +46,7 @@ export class ContactResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => ContactType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => ContactType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(ContactCreateArgsType)
     async create(@Args() args: ContactCreateArgsType, @SelectFields() fields) {
         const created = await this.repo.create(args);

@@ -7,16 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import {Application, Service} from '@tngraphql/illuminate';
-import {Acl} from './Middleware/Acl';
-import {GraphQLKernel} from '@tngraphql/illuminate/dist/Foundation/GraphQL/GraphQLKernel'
-import {Authenticate} from "@tngraphql/auth/dist/src/Middleware/Authenticate";
-import {CanMiddleware} from "@tngraphql/guard/dist/src/Middleware/CanMiddleware";
-import {SortByMiddleware} from "./Middleware/SortByMiddleware";
-import {LanguageMiddleware} from "./Middleware/LanguageMiddleware";
-import {ConfigOptionsMiddleware} from "./Middleware/ConfigOptionsMiddleware";
-import {DephLimitMiddleware} from "./Middleware/DephLimitMiddleware";
-import {MailSettingsMiddleware} from "./Middleware/MailSettingsMiddleware";
+import { Application, Service } from '@tngraphql/illuminate';
+import { Acl } from './Middleware/Acl';
+import { GraphQLKernel } from '@tngraphql/illuminate/dist/Foundation/GraphQL/GraphQLKernel'
+import { Authenticate } from '@tngraphql/auth/dist/src/Middleware/Authenticate';
+import { CanMiddleware } from '@tngraphql/guard/dist/src/Middleware/CanMiddleware';
+import { SortByMiddleware } from './Middleware/SortByMiddleware';
+import { LanguageMiddleware } from './Middleware/LanguageMiddleware';
+import { ConfigOptionsMiddleware } from './Middleware/ConfigOptionsMiddleware';
+import { DephLimitMiddleware } from './Middleware/DephLimitMiddleware';
+import { MailSettingsMiddleware } from './Middleware/MailSettingsMiddleware';
 
 @Service()
 export class Kernel extends GraphQLKernel {
@@ -56,7 +56,7 @@ export class Kernel extends GraphQLKernel {
 
     public validationRules() {
         return this._validationRules.map(x => {
-            if (typeof x === "function") {
+            if ( typeof x === 'function' ) {
                 return x.bind(this)();
             }
             return x;

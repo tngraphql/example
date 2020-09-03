@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {ProductMasterFilterEnumType} from "./ProductMasterFilterEnumType";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {ProductMasterSortInputType} from "./ProductMasterSortInputType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { ProductMasterFilterEnumType } from './ProductMasterFilterEnumType';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { ProductMasterSortInputType } from './ProductMasterSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class ProductMasterIndexArgsType {
     @Field(returns => filterType(ProductMasterFilterEnumType))
     filter: FilterContract<typeof ProductMasterFilterEnumType>
 
-    @Field(returns => [ProductMasterSortInputType], {description: 'order'})
+    @Field(returns => [ProductMasterSortInputType], { description: 'order' })
     sortBy: ProductMasterSortInputType
 
     where: any;

@@ -5,14 +5,14 @@
  * Time: 9:44 AM
  */
 
-import {Field, ObjectType, Root} from "@tngraphql/graphql";
-import {OptionDiscussionType} from "./OptionDiscussionType";
-import {OptionGeneralType} from "./OptionGeneralType";
-import {OptionLanguageType} from "./OptionLanguageType";
-import {OptionSocialType} from "./OptionSocialType";
-import {OptionEmailType} from "./OptionEmailType";
-import {OptionThemeType} from "./OptionThemeType";
-import {JSONType} from "../ScalarType/JsonScalerType";
+import { Field, ObjectType, Root } from '@tngraphql/graphql';
+import { OptionDiscussionType } from './OptionDiscussionType';
+import { OptionGeneralType } from './OptionGeneralType';
+import { OptionLanguageType } from './OptionLanguageType';
+import { OptionSocialType } from './OptionSocialType';
+import { OptionEmailType } from './OptionEmailType';
+import { OptionThemeType } from './OptionThemeType';
+import { JSONType } from '../ScalarType/JsonScalerType';
 
 @ObjectType({
     implements: [
@@ -31,62 +31,62 @@ export class OptionsType {
         return !! Number(parent.defaultCommentStatus);
     }
 
-    @Field({description: 'Yêu cầu phải kiểm duyệt trước khi đăng bình luận.',})
+    @Field({ description: 'Yêu cầu phải kiểm duyệt trước khi đăng bình luận.', })
     public commentModeration(@Root() parent): boolean {
         return !! Number(parent.commentModeration);
     }
 
     // OptionGeneralType
-    @Field({description: 'Có được phép đăng ký thành viên',})
+    @Field({ description: 'Có được phép đăng ký thành viên', })
     public usersCanRegister(@Root() parent): boolean {
         return !! Number(parent.usersCanRegister);
     }
 
     // OptionSocialType
-    @Field({description: 'Configure social login options',})
+    @Field({ description: 'Configure social login options', })
     public socialLogin(@Root() parent): boolean {
         return !! parent.socialLogin;
     }
 
-    @Field({description: 'Enable/disable & configure app credentials for Facebook login',})
+    @Field({ description: 'Enable/disable & configure app credentials for Facebook login', })
     public facebookLoginEnable(@Root() parent): boolean {
         return !! parent.facebookLoginEnable;
     }
 
-    @Field({description: 'Enable/disable & configure app credentials for Google login',})
+    @Field({ description: 'Enable/disable & configure app credentials for Google login', })
     public googleLoginEnable(@Root() parent): boolean {
         return !! parent.googleLoginEnable;
     }
 
-    @Field({description: 'Enable/disable & configure app credentials for Github login',})
+    @Field({ description: 'Enable/disable & configure app credentials for Github login', })
     public githubLoginEnable(@Root() parent): boolean {
         return !! parent.githubLoginEnable;
     }
 
-    @Field({description: 'Auto-register users?',})
+    @Field({ description: 'Auto-register users?', })
     public autoRegister(@Root() parent): boolean {
         return !! parent.autoRegister;
     }
 
     // language
-    @Field({ description: 'Ẩn ngôn ngữ mặc định khỏi url'})
+    @Field({ description: 'Ẩn ngôn ngữ mặc định khỏi url' })
     public hideDefaultLanguage(@Root() parent): boolean {
         return !! Number(parent.hideDefaultLanguage);
     }
 
-    @Field({description: 'Show ra ngôn ngữ mặc định nếu nó không tồn tại trong ngôn ngữ hiện tại.'})
+    @Field({ description: 'Show ra ngôn ngữ mặc định nếu nó không tồn tại trong ngôn ngữ hiện tại.' })
     public showItemDefaultLanguage(@Root() parent): boolean {
         return !! Number(parent.showItemDefaultLanguage);
     }
 
     // Email
-    @Field({description: 'password'})
+    @Field({ description: 'password' })
     public SMTPPassword(): string {
         return null;
     }
 
     // theme
-    @Field(returns => JSONType,{description: 'Theme social',})
+    @Field(returns => JSONType, { description: 'Theme social', })
     public themeSocials(@Root() parent) {
         if ( ! parent.themeSocials ) {
             return {};

@@ -4,17 +4,17 @@
  * Date: 8/15/2020
  * Time: 10:42 PM
  */
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {MenuModel} from "../MenuModel";
-import {MenuItemRepository} from "./MenuItemRepository";
-import Arr from "../../../../lib/Arr";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { MenuModel } from '../MenuModel';
+import { MenuItemRepository } from './MenuItemRepository';
+import Arr from '../../../../lib/Arr';
 import _ = require('lodash');
-import {tap} from "../../../../lib/utils";
-import {LucidRow} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {ConfigOptions} from "../../../../lib/ConfigOptions";
-import {OptionRepository} from "../../../../Repositories/Lucid/OptionRepository";
-import {Str} from "../../../../lib/Str";
+import { tap } from '../../../../lib/utils';
+import { LucidRow } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { ConfigOptions } from '../../../../lib/ConfigOptions';
+import { OptionRepository } from '../../../../Repositories/Lucid/OptionRepository';
+import { Str } from '../../../../lib/Str';
 
 @Service()
 export class MenuRepository extends BaseRepository<MenuModel, typeof MenuModel> {
@@ -102,7 +102,7 @@ export class MenuRepository extends BaseRepository<MenuModel, typeof MenuModel> 
                 'sort'
             ])
 
-            if (itemsGroup[item.id]) {
+            if ( itemsGroup[item.id] ) {
                 await tap(_.head(itemsGroup[item.id]), async (value: LucidRow) => {
                     value.merge(values);
                     return value.save();
@@ -113,8 +113,8 @@ export class MenuRepository extends BaseRepository<MenuModel, typeof MenuModel> 
         }
 
         await this.item.newQuery().where('menuId', instance.id)
-            .whereNotIn('id', _.map(menuItems, 'id'))
-            .delete();
+                  .whereNotIn('id', _.map(menuItems, 'id'))
+                  .delete();
     }
 
     /**

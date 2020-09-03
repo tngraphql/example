@@ -5,29 +5,29 @@
  * Time: 10:47 AM
  */
 
-import {resetTables, seedDB} from "../helpers";
-import {Application} from "@tngraphql/illuminate";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {UserModel} from "../../src/app/UserModel";
-import {ProductMasterModel} from "../../src/app/Features/Product/Models/ProductMasterModel";
-import {AttributeModel} from "../../src/app/Features/Product/Models/AttributeModel";
-import {AttributeGroupModel} from "../../src/app/Features/Product/Models/AttributeGroupModel";
-import {ProductBranchModel} from "../../src/app/Features/Product/Models/ProductBranchModel";
-import {ProductBranchToAttributeModel} from "../../src/app/Features/Product/Models/ProductBranchToAttributeModel";
-import {ProductImageModel} from "../../src/app/Features/Product/Models/ProductImageModel";
-import {ProductCategoryModel} from "../../src/app/Features/Product/Models/ProductCategoryModel";
-import {InventoryModel} from "../../src/app/Features/Product/Models/InventoryModel";
-import {ProductmetaModel} from "../../src/app/Features/Product/Models/ProductmetaModel";
-import {ProductRewardModel} from "../../src/app/Features/Product/Models/ProductRewardModel";
-import {ProductTagModel} from "../../src/app/Features/Product/Models/ProductTagModel";
-import {ProductTypeModel} from "../../src/app/Features/Product/Models/ProductTypeModel";
-import {ProductTypeMetaModel} from "../../src/app/Features/Product/Models/ProductTypeMetaModel";
-import {ProductVendorModel} from "../../src/app/Features/Product/Models/ProductVendorModel";
-import {ProductMasterRepository} from "../../src/app/Features/Product/Repositories/ProductMasterRepository";
-import {expect} from 'chai';
-import {ProductMasterKindEnumType} from "../../src/app/Features/Product/Types/Product/ProductMasterKindEnumType";
-import {SelectionCriteria} from "../../src/Repositories/Criteria/SelectionCriteria";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
+import { resetTables, seedDB } from '../helpers';
+import { Application } from '@tngraphql/illuminate';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { UserModel } from '../../src/app/UserModel';
+import { ProductMasterModel } from '../../src/app/Features/Product/Models/ProductMasterModel';
+import { AttributeModel } from '../../src/app/Features/Product/Models/AttributeModel';
+import { AttributeGroupModel } from '../../src/app/Features/Product/Models/AttributeGroupModel';
+import { ProductBranchModel } from '../../src/app/Features/Product/Models/ProductBranchModel';
+import { ProductBranchToAttributeModel } from '../../src/app/Features/Product/Models/ProductBranchToAttributeModel';
+import { ProductImageModel } from '../../src/app/Features/Product/Models/ProductImageModel';
+import { ProductCategoryModel } from '../../src/app/Features/Product/Models/ProductCategoryModel';
+import { InventoryModel } from '../../src/app/Features/Product/Models/InventoryModel';
+import { ProductmetaModel } from '../../src/app/Features/Product/Models/ProductmetaModel';
+import { ProductRewardModel } from '../../src/app/Features/Product/Models/ProductRewardModel';
+import { ProductTagModel } from '../../src/app/Features/Product/Models/ProductTagModel';
+import { ProductTypeModel } from '../../src/app/Features/Product/Models/ProductTypeModel';
+import { ProductTypeMetaModel } from '../../src/app/Features/Product/Models/ProductTypeMetaModel';
+import { ProductVendorModel } from '../../src/app/Features/Product/Models/ProductVendorModel';
+import { ProductMasterRepository } from '../../src/app/Features/Product/Repositories/ProductMasterRepository';
+import { expect } from 'chai';
+import { ProductMasterKindEnumType } from '../../src/app/Features/Product/Types/Product/ProductMasterKindEnumType';
+import { SelectionCriteria } from '../../src/Repositories/Criteria/SelectionCriteria';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 
 describe('Product Repository', () => {
     describe('Create', () => {
@@ -37,7 +37,7 @@ describe('Product Repository', () => {
 
         before(async () => {
             app = Application.getInstance<Application>()
-            context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+            context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
             repo = await app.make(ProductMasterRepository, context);
         });
 
@@ -68,26 +68,26 @@ describe('Product Repository', () => {
 
         it('create a product single', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.single)
             expect(product.name).to.be.eq('milk')
@@ -98,31 +98,31 @@ describe('Product Repository', () => {
             const category = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 categories: [category.id],
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'categories',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'categories',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.categories[0].id).to.be.eq(category.id);
         });
@@ -132,31 +132,31 @@ describe('Product Repository', () => {
             const category2 = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 categories: [category.id, category2.id],
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'categories',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'categories',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.categories[0].id).to.be.eq(category.id);
             expect(product.categories[1].id).to.be.eq(category2.id);
@@ -166,32 +166,32 @@ describe('Product Repository', () => {
             const category = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 categories: [category.id],
                 tags: ['milk'],
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'tags',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'tags',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.tags[0].name).to.be.eq('milk');
         });
@@ -200,32 +200,32 @@ describe('Product Repository', () => {
             const category = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 categories: [category.id],
                 tags: ['milk', 'canxi'],
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'tags',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'tags',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.tags[0].name).to.be.eq('milk');
             expect(product.tags[1].name).to.be.eq('canxi');
@@ -235,31 +235,31 @@ describe('Product Repository', () => {
             const vendor = await Factory.model('App/Features/Product/Models/ProductVendorModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 productVendorId: vendor.id,
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'vendor',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'vendor',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.vendor.name).to.be.eq(vendor.name);
         });
@@ -268,38 +268,38 @@ describe('Product Repository', () => {
             const thumb = await Factory.model('App/Models/MediaModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 thumbnailId: thumb.id,
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'thumbnail',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'thumbnail',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.thumbnail.id).to.be.eq(thumb.id);
         });
 
         it('create product single have meta', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 meta: [
                     {
@@ -309,26 +309,26 @@ describe('Product Repository', () => {
                 ],
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'meta',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'meta',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.meta[0].metaKey).to.be.eq('__weight');
             expect(product.meta[0].metaValue).to.be.eq('150');
@@ -338,11 +338,11 @@ describe('Product Repository', () => {
             const thumb = await Factory.model('App/Models/MediaModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         images: [
                             {
                                 image: thumb.guid,
@@ -354,22 +354,22 @@ describe('Product Repository', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*'],
-                            preloads: [
-                                {
-                                    name: 'images',
-                                    columns: ['*']
-                                }
-                            ]
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*'],
+                                                  preloads: [
+                                                      {
+                                                          name: 'images',
+                                                          columns: ['*']
+                                                      }
+                                                  ]
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.branches[0].images[0].thumbnailId).to.be.eq(thumb.id);
             expect(product.branches[0].images[0].image).to.be.eq(thumb.guid);
@@ -377,11 +377,11 @@ describe('Product Repository', () => {
 
         it('create product single have inventory', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         inventory: {
                             quantity: 10
                         }
@@ -390,60 +390,60 @@ describe('Product Repository', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*'],
-                            preloads: [
-                                {
-                                    name: 'inventory',
-                                    columns: ['*']
-                                }
-                            ]
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*'],
+                                                  preloads: [
+                                                      {
+                                                          name: 'inventory',
+                                                          columns: ['*']
+                                                      }
+                                                  ]
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.branches[0].inventory.quantity).to.be.eq(10);
         });
 
         it('create product single have requiresShipping', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         requiresShipping: true
                     }
                 ]
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.branches[0].requiresShipping).to.be.true
         });
 
         it('create a product branch', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -455,16 +455,16 @@ describe('Product Repository', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.name).to.be.eq('milk')
@@ -473,11 +473,11 @@ describe('Product Repository', () => {
 
         it('create product branch multiple attributes', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -493,16 +493,16 @@ describe('Product Repository', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.name).to.be.eq('milk')
@@ -513,12 +513,12 @@ describe('Product Repository', () => {
             const vendor = await Factory.model('App/Features/Product/Models/ProductVendorModel').create();
 
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 productVendorId: vendor.id,
                 branches: [
                     {
-                        code: "milk",
+                        code: 'milk',
                         attributes: [
                             {
                                 groupName: 'size',
@@ -530,16 +530,16 @@ describe('Product Repository', () => {
             });
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.branches[0].productVendorId).to.be.eq(vendor.id)
         });
@@ -548,11 +548,11 @@ describe('Product Repository', () => {
             let err;
             try {
                 await repo.builderCreate({
-                    name: "milk",
+                    name: 'milk',
                     content: 'vina milk',
                     branches: [
                         {
-                            code: "milk",
+                            code: 'milk',
                             attributes: [
                                 {
                                     groupName: 'size',
@@ -581,7 +581,7 @@ describe('Product Repository', () => {
 
         before(async () => {
             app = Application.getInstance<Application>()
-            context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+            context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
             repo = await app.make(ProductMasterRepository, context);
         });
         beforeEach(async () => {
@@ -611,11 +611,11 @@ describe('Product Repository', () => {
 
         it('update product', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -625,16 +625,16 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.single)
             expect(product.name).to.be.eq('foo')
@@ -643,11 +643,11 @@ describe('Product Repository', () => {
 
         it('update category for product', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -660,31 +660,31 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'categories',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'categories',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.categories[0].id).to.be.eq(category.id);
         });
 
         it('update tag for product', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -695,31 +695,31 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        },
-                        {
-                            name: 'tags',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              },
+                                              {
+                                                  name: 'tags',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.tags[0].name).to.be.eq('milk');
         });
 
         it('update images for product', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -741,22 +741,22 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*'],
-                            preloads: [
-                                {
-                                    name: 'images',
-                                    columns: ['*']
-                                }
-                            ]
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*'],
+                                                  preloads: [
+                                                      {
+                                                          name: 'images',
+                                                          columns: ['*']
+                                                      }
+                                                  ]
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.branches[0].images[0].thumbnailId).to.be.eq(thumb.id);
             expect(product.branches[0].images[0].image).to.be.eq(thumb.guid);
@@ -764,11 +764,11 @@ describe('Product Repository', () => {
 
         it('update product single to branch should err when not branch', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -789,11 +789,11 @@ describe('Product Repository', () => {
 
         it('update product single to branch should err when not exists attributes', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -819,11 +819,11 @@ describe('Product Repository', () => {
 
         it('canot update to branch when not exists kind', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -843,27 +843,27 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.single)
         });
 
         it('update product single to branch when have one attribute', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -884,16 +884,16 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.branches[0].fullname).to.be.eq('foo-L')
@@ -901,11 +901,11 @@ describe('Product Repository', () => {
 
         it('update product single to branch when have many attributes', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -930,16 +930,16 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.branches[0].fullname).to.be.eq('foo-L-Red')
@@ -947,11 +947,11 @@ describe('Product Repository', () => {
 
         it('update product single to branch when have many branches', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -980,16 +980,16 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.branches[0].fullname).to.be.eq('foo-L')
@@ -998,11 +998,11 @@ describe('Product Repository', () => {
 
         it('should not update product when attributes not unique', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -1040,11 +1040,11 @@ describe('Product Repository', () => {
 
         it('update single when attribues', async () => {
             const ins = await repo.builderCreate({
-                name: "milk",
+                name: 'milk',
                 content: 'vina milk',
                 branches: [
                     {
-                        code: "milk"
+                        code: 'milk'
                     }
                 ]
             });
@@ -1072,16 +1072,16 @@ describe('Product Repository', () => {
             }, ins.id);
 
             const product = await repo.query()
-                .pushCriteria(new SelectionCriteria({
-                    columns: ['*'],
-                    preloads: [
-                        {
-                            name: 'branches',
-                            columns: ['*']
-                        }
-                    ]
-                }))
-                .firstBy(ins.id)
+                                      .pushCriteria(new SelectionCriteria({
+                                          columns: ['*'],
+                                          preloads: [
+                                              {
+                                                  name: 'branches',
+                                                  columns: ['*']
+                                              }
+                                          ]
+                                      }))
+                                      .firstBy(ins.id)
 
             expect(product.kind).to.be.eq(ProductMasterKindEnumType.branch)
             expect(product.branches[0].fullname).to.be.eq('foo')

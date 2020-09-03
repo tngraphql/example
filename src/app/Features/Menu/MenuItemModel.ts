@@ -5,27 +5,27 @@
  * Time: 9:28 PM
  */
 
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasOne, morphTo} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {Str} from "../../../lib/Str";
-import CategoryModel from "../Category/CategoryModel";
-import {PostModel} from "../Post/PostModel";
-import {ProductMasterModel} from "../Product/Models/ProductMasterModel";
-import TagModel from "../Tag/TagModel";
-import {ProductTypeModel} from "../Product/Models/ProductTypeModel";
-import {MenuModel} from "./MenuModel";
-import {BelongsTo, MorphTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {PageModel} from "../Post/PageModel";
-import {MenuItemTypeEnumType} from "./Types/Enum/MenuItemTypeEnumType";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasOne, morphTo } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { Str } from '../../../lib/Str';
+import CategoryModel from '../Category/CategoryModel';
+import { PostModel } from '../Post/PostModel';
+import { ProductMasterModel } from '../Product/Models/ProductMasterModel';
+import TagModel from '../Tag/TagModel';
+import { ProductTypeModel } from '../Product/Models/ProductTypeModel';
+import { MenuModel } from './MenuModel';
+import { BelongsTo, MorphTo } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { PageModel } from '../Post/PageModel';
+import { MenuItemTypeEnumType } from './Types/Enum/MenuItemTypeEnumType';
 
 export class MenuItemModel extends BaseModel {
     static table = 'menu_items';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public menuId: string;
 
     @column()
@@ -46,10 +46,10 @@ export class MenuItemModel extends BaseModel {
     @column()
     public objectType: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public objectId: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public parentId: string;
 
     @column()
@@ -72,7 +72,7 @@ export class MenuItemModel extends BaseModel {
         });
 
         this.addGlobalScope('defaultSelect', query => {
-            if (!query.hasAggregates && query.knexQuery['_statements'].some(x => x.grouping === 'columns')) {
+            if ( ! query.hasAggregates && query.knexQuery['_statements'].some(x => x.grouping === 'columns') ) {
                 query.select('objectType', 'objectId')
             }
         });
@@ -96,12 +96,12 @@ export class MenuItemModel extends BaseModel {
     })
     public post: BelongsTo<typeof PostModel>;
 
-    @belongsTo(() => CategoryModel, {foreignKey: 'objectId'})
+    @belongsTo(() => CategoryModel, { foreignKey: 'objectId' })
     public category: BelongsTo<typeof CategoryModel>;
 
-    @belongsTo(() => ProductTypeModel, {foreignKey: 'objectId'})
+    @belongsTo(() => ProductTypeModel, { foreignKey: 'objectId' })
     public productType: BelongsTo<typeof ProductTypeModel>;
 
-    @belongsTo(() => TagModel, {foreignKey: 'objectId'})
+    @belongsTo(() => TagModel, { foreignKey: 'objectId' })
     public tag: BelongsTo<typeof TagModel>;
 }

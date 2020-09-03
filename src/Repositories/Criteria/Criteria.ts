@@ -1,6 +1,6 @@
-import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {BaseRepository} from "../Lucid/BaseRepository";
+import { ModelQueryBuilderContract } from '@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { BaseRepository } from '../Lucid/BaseRepository';
 
 /**
  * Created by Phan Trung Nguyên.

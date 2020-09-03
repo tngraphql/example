@@ -1,9 +1,9 @@
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
-import {DateTime} from "luxon";
-import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
-import ContactReplyModel from "../../ContactReplyModel";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../../GraphQL/Types/TimestampScalarType';
+import { DateTime } from 'luxon';
+import { registerPaginateType } from '../../../../GraphQL/Types/PaginateType';
+import ContactReplyModel from '../../ContactReplyModel';
 
 /**
  * Created by Phan Trung Nguyên.

@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {ProductBranchFilterEnumType} from "./ProductBranchFilterEnumType";
-import {ProductBranchSortInputType} from "./ProductBranchSortInputType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { ProductBranchFilterEnumType } from './ProductBranchFilterEnumType';
+import { ProductBranchSortInputType } from './ProductBranchSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class ProductBranchIndexArgsType {
     @Field(returns => filterType(ProductBranchFilterEnumType))
     filter: FilterContract<typeof ProductBranchFilterEnumType>
 
-    @Field(returns => [ProductBranchSortInputType], {description: 'order'})
+    @Field(returns => [ProductBranchSortInputType], { description: 'order' })
     sortBy: ProductBranchSortInputType
 
     where: any;

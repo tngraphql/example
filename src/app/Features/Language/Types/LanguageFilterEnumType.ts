@@ -6,7 +6,7 @@
  */
 
 
-import {registerFilterEnumType} from "../../../GraphQL/Types/FilterType";
+import { registerFilterEnumType } from '../../../GraphQL/Types/FilterType';
 
 enum LanguageFilterEnumType {
     id = 'id',
@@ -25,4 +25,4 @@ enum LanguageFilterEnumType {
 
 registerFilterEnumType('Language', LanguageFilterEnumType);
 
-export {LanguageFilterEnumType};
+export { LanguageFilterEnumType };

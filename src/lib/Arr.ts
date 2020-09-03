@@ -8,7 +8,7 @@ import _ = require('lodash');
 
 export default class Arr {
     public static array_wrap(value, split = ''): any[] {
-        if (Array.isArray(value)) {
+        if ( Array.isArray(value) ) {
             return value;
         }
 

@@ -5,11 +5,11 @@
  * Time: 2:03 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 export enum ContentFormatEnumType {
     TEXT = 'TEXT',
     HTML = 'HTML'
 }
 
-registerEnumType(ContentFormatEnumType, {name: 'ContentFormatEnum', description: 'Format Text'});
+registerEnumType(ContentFormatEnumType, { name: 'ContentFormatEnum', description: 'Format Text' });

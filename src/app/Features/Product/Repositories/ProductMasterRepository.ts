@@ -5,23 +5,23 @@
  * Time: 4:01 PM
  */
 
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {ProductMasterModel} from "../Models/ProductMasterModel";
-import {ProductCreateArgsType} from "../Types/Product/ProductCreateArgsType";
-import {ProductMasterKindEnumType} from "../Types/Product/ProductMasterKindEnumType";
-import Arr from "../../../../lib/Arr";
-import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
-import {ProductMetaRepository} from "./ProductMetaRepository";
-import {ProductBranchRepository} from "./ProductBranchRepository";
-import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
-import {ProductUpdateArgsType} from "../Types/Product/ProductUpdateArgsType";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {Str} from "../../../../lib/Str";
-import {ResolveAuth} from "../../../../decorators/ResolveAuth";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {ValidationException} from "@tngraphql/illuminate/dist/Foundation/Validate/ValidationException";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { ProductMasterModel } from '../Models/ProductMasterModel';
+import { ProductCreateArgsType } from '../Types/Product/ProductCreateArgsType';
+import { ProductMasterKindEnumType } from '../Types/Product/ProductMasterKindEnumType';
+import Arr from '../../../../lib/Arr';
+import { TagRepository } from '../../Tag/Repositories/Lucid/TagRepository';
+import { ProductMetaRepository } from './ProductMetaRepository';
+import { ProductBranchRepository } from './ProductBranchRepository';
+import { ProductBranchToAttributeRepository } from './ProductBranchToAttributeRepository';
+import { ProductUpdateArgsType } from '../Types/Product/ProductUpdateArgsType';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { Str } from '../../../../lib/Str';
+import { ResolveAuth } from '../../../../decorators/ResolveAuth';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { ValidationException } from '@tngraphql/illuminate/dist/Foundation/Validate/ValidationException';
 
 @Service()
 export class ProductMasterRepository extends BaseRepository<ProductMasterModel, typeof ProductMasterModel> {
@@ -54,7 +54,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
 
         const method = 'builderCreate' + Str.ucFirst(data.kind);
 
-        if (typeof this[method] !== "function") {
+        if ( typeof this[method] !== 'function' ) {
             throw ValidationException.withMessages({
                 'kind': 'product create cannot handle: ' + data.kind
             });
@@ -67,12 +67,12 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
     }
 
     protected getKind(data: ProductCreateArgsType) {
-        if (data.kind) {
+        if ( data.kind ) {
             return data.kind;
         }
 
         for( const branch of data.branches ) {
-            if ( Array.isArray(branch.attributes) && branch.attributes.length) {
+            if ( Array.isArray(branch.attributes) && branch.attributes.length ) {
                 return ProductMasterKindEnumType.branch;
             }
         }
@@ -102,7 +102,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
 
     protected async builderCreateSingle(data: ProductCreateArgsType) {
         const instance = await super.create(data);
-        if (data.branches.length > 1) {
+        if ( data.branches.length > 1 ) {
             throw new Error('???');
         }
 
@@ -144,7 +144,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
 
             await this.meta.sync(data.meta, instance);
 
-            if (data.branches && data.branches.length) {
+            if ( data.branches && data.branches.length ) {
                 await this.productBranch.sync(data.branches, instance);
             }
 
@@ -166,7 +166,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
     protected async convertKind(instance, data) {
         const changes = instance.$dirty;
 
-        if (!changes.kind) {
+        if ( ! changes.kind ) {
             return Promise.resolve();
         }
 
@@ -174,24 +174,24 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
             /**
              * IF change to product single
              */
-            case ProductMasterKindEnumType.single:
-                // Detach everything except the branch is master
-                await this.productBranch.newQuery()
-                    .where('productMasterId', instance.id)
-                    .isMaster(false)
-                    .delete();
+        case ProductMasterKindEnumType.single:
+            // Detach everything except the branch is master
+            await this.productBranch.newQuery()
+                      .where('productMasterId', instance.id)
+                      .isMaster(false)
+                      .delete();
 
-                // Detach all attributes
-                await this.productBranchToAttribute.newQuery()
-                    .where('productMasterId', instance.id)
-                    .delete();
-                break;
+            // Detach all attributes
+            await this.productBranchToAttribute.newQuery()
+                      .where('productMasterId', instance.id)
+                      .delete();
+            break;
 
-            case ProductMasterKindEnumType.branch:
-                if (!(data.branches && data.branches.length)) {
-                    throw new Error('Products type required have attributes.')
-                }
-                break;
+        case ProductMasterKindEnumType.branch:
+            if ( ! (data.branches && data.branches.length) ) {
+                throw new Error('Products type required have attributes.')
+            }
+            break;
         }
     }
 
@@ -199,7 +199,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
         return this.transaction(async () => {
             let instance;
 
-            if (id instanceof BaseModel) {
+            if ( id instanceof BaseModel ) {
                 instance = id;
             } else {
                 const query = this.newQuery();
@@ -207,7 +207,7 @@ export class ProductMasterRepository extends BaseRepository<ProductMasterModel, 
                 instance = await query.where(attribute, id).first();
             }
 
-            if (!instance) {
+            if ( ! instance ) {
                 return 0;
             }
 

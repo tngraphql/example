@@ -4,15 +4,15 @@
  * Date: 6/4/2020
  * Time: 7:31 AM
  */
-import {Field, ObjectType, Root} from "@tngraphql/graphql";
+import { Field, ObjectType, Root } from '@tngraphql/graphql';
 import { DateTime } from 'luxon'
-import {TimestampScalarType} from "../TimestampScalarType";
-import {registerPaginateType} from "../PaginateType";
-import RoleModel from "../../../Models/RoleModel";
-import {PermissionType} from "../Permission/PermissionType";
-import {ID} from "../UidScalerType";
-import {ConfigOptions} from "../../../../lib/ConfigOptions";
-import {GraphQLBoolean} from "graphql";
+import { TimestampScalarType } from '../TimestampScalarType';
+import { registerPaginateType } from '../PaginateType';
+import RoleModel from '../../../Models/RoleModel';
+import { PermissionType } from '../Permission/PermissionType';
+import { ID } from '../UidScalerType';
+import { ConfigOptions } from '../../../../lib/ConfigOptions';
+import { GraphQLBoolean } from 'graphql';
 
 @ObjectType('Role')
 export class RoleType {

@@ -5,18 +5,19 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {CONTACT_LIST_QUERY, CONTACT_QUERY} from "./gql/contact-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import ContactModel from "../../src/app/Features/Contact/ContactModel";
-import {Mail} from "@tngraphql/mail/dist/src/Mail";
-import ContactReplyModel from "../../src/app/Features/Contact/ContactReplyModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { CONTACT_LIST_QUERY, CONTACT_QUERY } from './gql/contact-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import ContactModel from '../../src/app/Features/Contact/ContactModel';
+import { Mail } from '@tngraphql/mail/dist/src/Mail';
+import ContactReplyModel from '../../src/app/Features/Contact/ContactReplyModel';
 
 Mail.fake();
 
@@ -60,8 +61,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -85,17 +86,17 @@ describe('contact Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": contact.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': contact.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -103,17 +104,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.id).to.eq(contact.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": contact.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': contact.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -121,17 +122,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.name).to.eq(contact.name);
             })
-        
+
             it('should filter email without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "email",
-                            "value": contact.email,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'email',
+                            'value': contact.email,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -139,17 +140,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.email).to.eq(contact.email);
             })
-        
+
             it('should filter phone without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "phone",
-                            "value": contact.phone,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'phone',
+                            'value': contact.phone,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -157,17 +158,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.phone).to.eq(contact.phone);
             })
-        
+
             it('should filter address without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "address",
-                            "value": contact.address,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'address',
+                            'value': contact.address,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -175,17 +176,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.address).to.eq(contact.address);
             })
-        
+
             it('should filter content without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "content",
-                            "value": contact.content,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'content',
+                            'value': contact.content,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -193,17 +194,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.content).to.eq(contact.content);
             })
-        
+
             it('should filter subject without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "subject",
-                            "value": contact.subject,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'subject',
+                            'value': contact.subject,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -211,17 +212,17 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.subject).to.eq(contact.subject);
             })
-        
+
             it('should filter status without error', async () => {
-                const contact = await Factory.model('App/Features/Contact/ContactModel').create({status: 'read'});
+                const contact = await Factory.model('App/Features/Contact/ContactModel').create({ status: 'read' });
 
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": contact.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': contact.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -229,11 +230,11 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.status).to.eq(contact.status);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -242,8 +243,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -261,8 +262,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -271,7 +272,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.id).to.eq(contact.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -280,8 +281,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -299,8 +300,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -309,7 +310,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.name).to.eq(contact.name);
             })
-        
+
             it('should sort by desc email without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -318,8 +319,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "email": SortEnumType.DESC
+                        'sortBy': [{
+                            'email': SortEnumType.DESC
                         }]
                     }
                 });
@@ -337,8 +338,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "email": SortEnumType.ASC
+                        'sortBy': [{
+                            'email': SortEnumType.ASC
                         }]
                     }
                 });
@@ -347,7 +348,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.email).to.eq(contact.email);
             })
-        
+
             it('should sort by desc phone without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -356,8 +357,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "phone": SortEnumType.DESC
+                        'sortBy': [{
+                            'phone': SortEnumType.DESC
                         }]
                     }
                 });
@@ -375,8 +376,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "phone": SortEnumType.ASC
+                        'sortBy': [{
+                            'phone': SortEnumType.ASC
                         }]
                     }
                 });
@@ -385,7 +386,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.phone).to.eq(contact.phone);
             })
-        
+
             it('should sort by desc address without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -394,8 +395,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "address": SortEnumType.DESC
+                        'sortBy': [{
+                            'address': SortEnumType.DESC
                         }]
                     }
                 });
@@ -413,8 +414,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "address": SortEnumType.ASC
+                        'sortBy': [{
+                            'address': SortEnumType.ASC
                         }]
                     }
                 });
@@ -423,7 +424,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.address).to.eq(contact.address);
             })
-        
+
             it('should sort by desc content without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -432,8 +433,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.DESC
+                        'sortBy': [{
+                            'content': SortEnumType.DESC
                         }]
                     }
                 });
@@ -451,8 +452,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.ASC
+                        'sortBy': [{
+                            'content': SortEnumType.ASC
                         }]
                     }
                 });
@@ -461,7 +462,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.content).to.eq(contact.content);
             })
-        
+
             it('should sort by desc subject without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -470,8 +471,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "subject": SortEnumType.DESC
+                        'sortBy': [{
+                            'subject': SortEnumType.DESC
                         }]
                     }
                 });
@@ -489,8 +490,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "subject": SortEnumType.ASC
+                        'sortBy': [{
+                            'subject': SortEnumType.ASC
                         }]
                     }
                 });
@@ -499,7 +500,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.subject).to.eq(contact.subject);
             })
-        
+
             it('should sort by desc status without error', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(3);
 
@@ -508,8 +509,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.DESC
+                        'sortBy': [{
+                            'status': SortEnumType.DESC
                         }]
                     }
                 });
@@ -527,8 +528,8 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.ASC
+                        'sortBy': [{
+                            'status': SortEnumType.ASC
                         }]
                     }
                 });
@@ -537,7 +538,7 @@ describe('contact Http', () => {
                 expect(res.data.contact.id).to.eq(contact.id);
                 expect(res.data.contact.status).to.eq(contact.status);
             })
-        
+
         });
     });
 
@@ -591,17 +592,17 @@ describe('contact Http', () => {
         });
 
         describe('contact Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": contact.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': contact.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -609,17 +610,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": contact.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': contact.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -627,17 +628,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].name).to.eq(contact.name)
             });
-        
+
             it('should filter email without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "email",
-                            "value": contact.email,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'email',
+                            'value': contact.email,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -645,17 +646,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].email).to.eq(contact.email)
             });
-        
+
             it('should filter phone without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "phone",
-                            "value": contact.phone,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'phone',
+                            'value': contact.phone,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -663,17 +664,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].phone).to.eq(contact.phone)
             });
-        
+
             it('should filter address without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "address",
-                            "value": contact.address,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'address',
+                            'value': contact.address,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -681,17 +682,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].address).to.eq(contact.address)
             });
-        
+
             it('should filter content without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "content",
-                            "value": contact.content,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'content',
+                            'value': contact.content,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -699,17 +700,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].content).to.eq(contact.content)
             });
-        
+
             it('should filter subject without error', async () => {
                 const contact = await Factory.model('App/Features/Contact/ContactModel').create();
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "subject",
-                            "value": contact.subject,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'subject',
+                            'value': contact.subject,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -717,17 +718,17 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].subject).to.eq(contact.subject)
             });
-        
+
             it('should filter status without error', async () => {
-                const contact = await Factory.model('App/Features/Contact/ContactModel').create({status: 'read'});
+                const contact = await Factory.model('App/Features/Contact/ContactModel').create({ status: 'read' });
 
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": contact.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': contact.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -735,11 +736,11 @@ describe('contact Http', () => {
                 expect(res.data.contacts.data[0].id).to.eq(contact.id)
                 expect(res.data.contacts.data[0].status).to.eq(contact.status)
             });
-        
+
         });
 
         describe('contact Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -748,14 +749,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -766,16 +767,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -784,14 +785,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -802,16 +803,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by email desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -820,14 +821,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "email": SortEnumType.DESC
+                        'sortBy': [{
+                            'email': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by email asc when sortBy as array', async () => {
@@ -838,16 +839,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "email": SortEnumType.ASC
+                        'sortBy': [{
+                            'email': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by phone desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -856,14 +857,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "phone": SortEnumType.DESC
+                        'sortBy': [{
+                            'phone': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by phone asc when sortBy as array', async () => {
@@ -874,16 +875,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "phone": SortEnumType.ASC
+                        'sortBy': [{
+                            'phone': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by address desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -892,14 +893,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "address": SortEnumType.DESC
+                        'sortBy': [{
+                            'address': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by address asc when sortBy as array', async () => {
@@ -910,16 +911,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "address": SortEnumType.ASC
+                        'sortBy': [{
+                            'address': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by content desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -928,14 +929,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.DESC
+                        'sortBy': [{
+                            'content': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by content asc when sortBy as array', async () => {
@@ -946,16 +947,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.ASC
+                        'sortBy': [{
+                            'content': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by subject desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -964,14 +965,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "subject": SortEnumType.DESC
+                        'sortBy': [{
+                            'subject': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by subject asc when sortBy as array', async () => {
@@ -982,16 +983,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "subject": SortEnumType.ASC
+                        'sortBy': [{
+                            'subject': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by status desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactModel').createMany(5);
 
@@ -1000,14 +1001,14 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.DESC
+                        'sortBy': [{
+                            'status': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by status asc when sortBy as array', async () => {
@@ -1018,16 +1019,16 @@ describe('contact Http', () => {
                 const res = await client.query({
                     query: CONTACT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.ASC
+                        'sortBy': [{
+                            'status': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contacts.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contacts.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 

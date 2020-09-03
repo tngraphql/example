@@ -4,30 +4,30 @@
  * Date: 7/11/2020
  * Time: 5:53 PM
  */
-import {Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {ShippingZoneRepository} from "../Repositories/ShippingZoneRepository";
-import {ShippingZoneType} from "../Types/ShippingZone/ShippingZoneType";
-import {ShippingZoneIndexArgsType} from "../Types/ShippingZone/ShippingZoneIndexArgsType";
-import {ShippingZoneListArgsType} from "../Types/ShippingZone/ShippingZoneListArgsType";
-import {ShippingZoneCreateArgsType} from "../Types/ShippingZone/ShippingZoneCreateArgsType";
-import {ShippingZoneUpdateArgsType} from "../Types/ShippingZone/ShippingZoneUpdateArgsType";
-import {ShippingZoneDeleteArgsType} from "../Types/ShippingZone/ShippingZoneDeleteArgsType";
+import { Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { ShippingZoneRepository } from '../Repositories/ShippingZoneRepository';
+import { ShippingZoneType } from '../Types/ShippingZone/ShippingZoneType';
+import { ShippingZoneIndexArgsType } from '../Types/ShippingZone/ShippingZoneIndexArgsType';
+import { ShippingZoneListArgsType } from '../Types/ShippingZone/ShippingZoneListArgsType';
+import { ShippingZoneCreateArgsType } from '../Types/ShippingZone/ShippingZoneCreateArgsType';
+import { ShippingZoneUpdateArgsType } from '../Types/ShippingZone/ShippingZoneUpdateArgsType';
+import { ShippingZoneDeleteArgsType } from '../Types/ShippingZone/ShippingZoneDeleteArgsType';
 
 @Resolver()
 export class ShippingZoneResolve extends BaseResolve {
     @Inject(ShippingZoneRepository)
     public repo: ShippingZoneRepository;
 
-    @Query(returns => ShippingZoneType, {description: 'Chi tiết menu.'})
+    @Query(returns => ShippingZoneType, { description: 'Chi tiết menu.' })
     async index(@Args() args: ShippingZoneIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
@@ -36,7 +36,7 @@ export class ShippingZoneResolve extends BaseResolve {
         return this.repo.first();
     }
 
-    @Query(returns => paginateType(ShippingZoneType), {description: 'Danh sách menu.'})
+    @Query(returns => paginateType(ShippingZoneType), { description: 'Danh sách menu.' })
     async list(@Args() args: ShippingZoneListArgsType, @SelectFields() fields, @Ctx() context) {
         // console.log(context.auth);
         this.repo.pushCriteria(new SortByCriteria(args.order));
@@ -46,7 +46,7 @@ export class ShippingZoneResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => ShippingZoneType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => ShippingZoneType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(ShippingZoneCreateArgsType)
     @UseMiddleware(['auth'])
     async create(@Args() args: ShippingZoneCreateArgsType, @SelectFields() fields) {
@@ -62,9 +62,9 @@ export class ShippingZoneResolve extends BaseResolve {
         const instance = await this.repo.update(args, args.id);
 
         return this.repo
-            .query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(instance.id);
+                   .query()
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(instance.id);
     }
 
     @Mutation(returns => DeleteType)

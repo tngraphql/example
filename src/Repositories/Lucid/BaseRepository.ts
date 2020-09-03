@@ -4,17 +4,17 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Criteria} from "../Criteria/Criteria";
-import {ModelQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {LucidRow, ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {IReadRepository} from "../Contracts/IReadRepository";
-import {IWriteRepository} from "../Contracts/IWriteRepository";
-import {tap} from "../../lib/utils";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
+import { Criteria } from '../Criteria/Criteria';
+import { ModelQueryBuilderContract } from '@tngraphql/lucid/build/src/Contracts/Model/ModelQueryBuilderContract';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { LucidRow, ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { IReadRepository } from '../Contracts/IReadRepository';
+import { IWriteRepository } from '../Contracts/IWriteRepository';
+import { tap } from '../../lib/utils';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
 
-export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends LucidModel = LucidModel> implements IReadRepository, IWriteRepository{
+export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends LucidModel = LucidModel> implements IReadRepository, IWriteRepository {
     abstract model(): LucidModel;
 
     constructor() {
@@ -56,8 +56,8 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public orderBy(column: string, direction?: 'asc' | 'desc') {
-        if (column.toLowerCase().startsWith('select')) {
-            this._query.orderByRaw(`(${column}) ${direction}`);
+        if ( column.toLowerCase().startsWith('select') ) {
+            this._query.orderByRaw(`(${ column }) ${ direction }`);
         } else {
             this._query.orderBy(column, direction);
         }
@@ -75,7 +75,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public async firstBy(id: any, attribute: string = 'id', columns: string[] = ['*']) {
-        this._query.where(attribute,  id)
+        this._query.where(attribute, id)
             .select(columns)
         this.applyCriteria();
         return (await this._query.first());
@@ -88,8 +88,8 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
         let from = (result.perPage * (result.currentPage - 1)) + 1;
 
         let to = result.perPage * result.currentPage;
-        if (to > result.total) to = result.total;
-        if (!result.total) {
+        if ( to > result.total ) to = result.total;
+        if ( ! result.total ) {
             from = to = null;
         }
 
@@ -111,7 +111,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
-        if (id instanceof BaseModel) {
+        if ( id instanceof BaseModel ) {
             return id.delete();
         }
 
@@ -119,7 +119,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
 
         const instance = await query.where(attribute, id).first();
 
-        if (!instance) {
+        if ( ! instance ) {
             return 0;
         }
 
@@ -136,7 +136,7 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
 
         await Promise.all(data.map(async (x) => {
             const deleted = this.delete(x);
-            if (deleted) {
+            if ( deleted ) {
                 result.push(x[attribute]);
             }
             return deleted;
@@ -173,12 +173,12 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public applyCriteria(): this {
-        if (this._skipCriteria === true) {
+        if ( this._skipCriteria === true ) {
             return this;
         }
 
-        for (let criteria of this.getCriteria()) {
-            if (criteria instanceof Criteria) {
+        for( let criteria of this.getCriteria() ) {
+            if ( criteria instanceof Criteria ) {
                 criteria.apply(this._query, this);
             }
         }
@@ -187,14 +187,14 @@ export abstract class BaseRepository<T extends LucidRow = LucidRow, M extends Lu
     }
 
     public pushCriteria(criteria: Criteria): this {
-        if (this.preventCriteriaOverwriting) {
+        if ( this.preventCriteriaOverwriting ) {
             // Find existing criteria
             const key = this._criteria.findIndex(value => {
                 return value.constructor === criteria.constructor;
             });
 
             // Remove old criteria
-            if (key !== -1) {
+            if ( key !== -1 ) {
                 this._criteria.splice(key, 1);
             }
         }

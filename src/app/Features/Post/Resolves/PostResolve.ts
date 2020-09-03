@@ -1,21 +1,22 @@
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {PostRepository} from "../Repositories/PostRepository";
-import {PostType} from "../Types/Post/PostType";
-import {PostIndexArgsType} from "../Types/Post/PostIndexArgsType";
-import {PostListArgsType} from "../Types/Post/PostListArgsType";
-import {PostCreateArgsType} from "../Types/Post/PostCreateArgsType";
-import {PostUpdateArgsType} from "../Types/Post/PostUpdateArgsType";
-import {PostDeleteArgsType} from "../Types/Post/PostDeleteArgsType";
-import {PostChangeFeatureArgsType} from "../Types/Post/PostChangeFeatureArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { PostRepository } from '../Repositories/PostRepository';
+import { PostType } from '../Types/Post/PostType';
+import { PostIndexArgsType } from '../Types/Post/PostIndexArgsType';
+import { PostListArgsType } from '../Types/Post/PostListArgsType';
+import { PostCreateArgsType } from '../Types/Post/PostCreateArgsType';
+import { PostUpdateArgsType } from '../Types/Post/PostUpdateArgsType';
+import { PostDeleteArgsType } from '../Types/Post/PostDeleteArgsType';
+import { PostChangeFeatureArgsType } from '../Types/Post/PostChangeFeatureArgsType';
+
 /**
  * Created by Phan Trung Nguyên.
  * User: nguyenpl117
@@ -47,7 +48,7 @@ export class PostResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => PostType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => PostType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(PostCreateArgsType)
     @UseMiddleware(['auth', 'can:post-create'])
     async create(@Args() args: PostCreateArgsType, @SelectFields() fields) {
@@ -67,9 +68,9 @@ export class PostResolve extends BaseResolve {
         const category = await this.repo.update(args, args.id);
 
         return this.repo
-            .query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(category.id);
+                   .query()
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)
@@ -94,8 +95,8 @@ export class PostResolve extends BaseResolve {
         const category = await this.repo.changeFeatured(args.isFeatured, args.id);
 
         return this.repo
-            .query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(category.id);
+                   .query()
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(category.id);
     }
 }

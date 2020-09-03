@@ -5,7 +5,7 @@
  * Time: 5:14 PM
  */
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const POST_LIST_QUERY = gql`
 query posts(

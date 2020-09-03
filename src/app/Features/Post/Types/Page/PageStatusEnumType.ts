@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum PageStatusEnumType {
     publish = 'publish', // 'Trạng thái hiển thị với tất cả mọi người.'
@@ -18,4 +18,4 @@ registerEnumType(PageStatusEnumType, {
     description: 'Trạng thái bài viết'
 });
 
-export {PageStatusEnumType};
+export { PageStatusEnumType };

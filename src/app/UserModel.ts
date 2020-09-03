@@ -7,19 +7,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import {belongsTo, column, hasMany, hasOne, manyToMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Auth} from "@tngraphql/auth/dist/src/Auth";
-import UserSocialModel from "./Models/UserSocialModel";
-import {HasMany, ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import RoleModel from "./Models/RoleModel";
-import {DateTime} from "luxon";
-import {Str} from "../lib/Str";
-import {GenderEnumType} from "./GraphQL/Types/GenderEnumType";
+import { belongsTo, column, hasMany, hasOne, manyToMany } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { Auth } from '@tngraphql/auth/dist/src/Auth';
+import UserSocialModel from './Models/UserSocialModel';
+import { HasMany, ManyToMany } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import RoleModel from './Models/RoleModel';
+import { DateTime } from 'luxon';
+import { Str } from '../lib/Str';
+import { GenderEnumType } from './GraphQL/Types/GenderEnumType';
 
 export class UserModel extends Auth {
     public static table = 'users';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -71,11 +71,11 @@ export class UserModel extends Auth {
     public async cachedRoles() {
         const user = this as UserModel;
 
-        if (user.roles) {
+        if ( user.roles ) {
             return user.roles;
         }
 
-        if (!this.promiseLoadRoles) {
+        if ( ! this.promiseLoadRoles ) {
 
             this.promiseLoadRoles = user.preload((preloader) => {
                 preloader.preload('roles', builder => {
@@ -91,13 +91,13 @@ export class UserModel extends Auth {
     }
 
     public async can(permission: string | string[], requireAll = false): Promise<boolean> {
-        if (Array.isArray(permission)) {
-            for (const permissionName of permission) {
+        if ( Array.isArray(permission) ) {
+            for( const permissionName of permission ) {
                 const hasPerm = this.can(permissionName);
 
-                if (hasPerm && !requireAll) {
+                if ( hasPerm && ! requireAll ) {
                     return true
-                } else if (!hasPerm && requireAll) {
+                } else if ( ! hasPerm && requireAll ) {
                     return false
                 }
             }
@@ -105,10 +105,10 @@ export class UserModel extends Auth {
         } else {
             const roles = await this.cachedRoles();
 
-            for (const role of roles) {
+            for( const role of roles ) {
                 const permissions = await role.cachedPermissions();
-                for(const perm of permissions) {
-                    if (Str.is(permission, perm.name)) {
+                for( const perm of permissions ) {
+                    if ( Str.is(permission, perm.name) ) {
                         return true;
                     }
                 }

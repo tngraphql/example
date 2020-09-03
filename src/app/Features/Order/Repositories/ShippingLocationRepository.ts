@@ -5,12 +5,12 @@
  * Time: 10:42 PM
  */
 
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ShippingLocationModel} from "../Models/ShippingLocationModel";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ShippingLocationModel } from '../Models/ShippingLocationModel';
 
 @Service()
-export class ShippingLocationRepository extends BaseRepository<ShippingLocationModel, typeof ShippingLocationModel>  {
+export class ShippingLocationRepository extends BaseRepository<ShippingLocationModel, typeof ShippingLocationModel> {
     model(): typeof ShippingLocationModel {
         return ShippingLocationModel;
     }

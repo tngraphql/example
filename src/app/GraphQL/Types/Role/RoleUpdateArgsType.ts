@@ -1,7 +1,7 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {GraphQLString} from "graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {UidScalarType} from "../UidScalerType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { GraphQLString } from 'graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { UidScalarType } from '../UidScalerType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -33,6 +33,6 @@ export class RoleUpdateArgsType {
     @Field(returns => [GraphQLString])
     public permissions: string;
 
-    @Field({description: 'Sét nhóm quyền này thành nhóm mặc định.'})
+    @Field({ description: 'Sét nhóm quyền này thành nhóm mặc định.' })
     public isDefault: boolean
 }

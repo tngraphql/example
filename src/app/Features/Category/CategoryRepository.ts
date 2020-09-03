@@ -4,13 +4,13 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import CategoryModel from "./CategoryModel";
-import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {CategoryMetaRepository} from "./CategoryMetaRepository";
-import {CategoryCreateArgsType} from "./Types/CategoryCreateArgsType";
-import {CategoryUpdateArgsType} from "./Types/CategoryUpdateArgsType";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import CategoryModel from './CategoryModel';
+import { ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { CategoryMetaRepository } from './CategoryMetaRepository';
+import { CategoryCreateArgsType } from './Types/CategoryCreateArgsType';
+import { CategoryUpdateArgsType } from './Types/CategoryUpdateArgsType';
 
 @Service()
 export class CategoryRepository extends BaseRepository<CategoryModel> {
@@ -47,21 +47,21 @@ export class CategoryRepository extends BaseRepository<CategoryModel> {
     }
 
     public async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
-        const categoryId = typeof id === "string" ? id : id.id;
-        let category = typeof id === "string" ? null : id;
+        const categoryId = typeof id === 'string' ? id : id.id;
+        let category = typeof id === 'string' ? null : id;
 
-        if ( categoryId === '1') {
+        if ( categoryId === '1' ) {
             throw new Error('Bạn không thể xóa chuyên mục này.');
         }
 
         return this.transaction(async () => {
-            if (!category) {
+            if ( ! category ) {
                 category = await super.newQuery().findBy(attribute, id);
             }
 
             await super.newQuery()
-                .where('parentId', category.id)
-                .update({parentId: category.parentId});
+                       .where('parentId', category.id)
+                       .update({ parentId: category.parentId });
 
             return super.delete(id, attribute);
         });

@@ -4,8 +4,8 @@
  * Date: 6/5/2020
  * Time: 9:46 AM
  */
-import {Field, InputType} from "@tngraphql/graphql";
-import {SortEnumType} from "../../../GraphQL/Types/SortEnumType";
+import { Field, InputType } from '@tngraphql/graphql';
+import { SortEnumType } from '../../../GraphQL/Types/SortEnumType';
 
 @InputType('MediaSort')
 export class MediaSortInputType {

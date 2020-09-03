@@ -10,7 +10,7 @@
 |
 */
 
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 
 export class UserSeed {
     public async run() {

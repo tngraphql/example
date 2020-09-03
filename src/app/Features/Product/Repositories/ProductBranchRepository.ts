@@ -4,18 +4,18 @@
  * Date: 8/6/2020
  * Time: 8:24 PM
  */
-import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ProductMasterModel} from "../Models/ProductMasterModel";
-import {ProductBranchModel} from "../Models/ProductBranchModel";
-import {ProductMasterKindEnumType} from "../Types/Product/ProductMasterKindEnumType";
-import Arr from "../../../../lib/Arr";
-import {ProductBranchToAttributeRepository} from "./ProductBranchToAttributeRepository";
-import {ProductImageRepository} from "./ProductImageRepository";
+import { Inject, InvalidArgumentException, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ProductMasterModel } from '../Models/ProductMasterModel';
+import { ProductBranchModel } from '../Models/ProductBranchModel';
+import { ProductMasterKindEnumType } from '../Types/Product/ProductMasterKindEnumType';
+import Arr from '../../../../lib/Arr';
+import { ProductBranchToAttributeRepository } from './ProductBranchToAttributeRepository';
+import { ProductImageRepository } from './ProductImageRepository';
 import _ = require('lodash');
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {ProductMasterRepository} from "./ProductMasterRepository";
-import {Str} from "../../../../lib/Str";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { ProductMasterRepository } from './ProductMasterRepository';
+import { Str } from '../../../../lib/Str';
 
 @Service()
 export class ProductBranchRepository extends BaseRepository<ProductBranchModel, typeof ProductBranchModel> {
@@ -35,7 +35,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
 
     public async sync(branches, productMaster: ProductMasterModel) {
         if ( ! Array.isArray(branches) ) {
-            throw new InvalidArgumentException(`branches must be Array ${branches}`);
+            throw new InvalidArgumentException(`branches must be Array ${ branches }`);
         }
 
         if ( ! productMaster || ! productMaster.id ) {
@@ -49,10 +49,10 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
         /**
          * Create or update branch
          */
-        for await (const branch of branches) {
-            if (productMaster.kind === ProductMasterKindEnumType.single) {
+        for await ( const branch of branches ) {
+            if ( productMaster.kind === ProductMasterKindEnumType.single ) {
                 branch.attributes = [];
-            } else if (productMaster.kind === ProductMasterKindEnumType.branch) {
+            } else if ( productMaster.kind === ProductMasterKindEnumType.branch ) {
                 this.validateBranch(branch);
             }
 
@@ -64,7 +64,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
                 fullname: this.getFullName(productMaster.name, branch.attributes)
             });
 
-            if (branch.id) {
+            if ( branch.id ) {
                 res.push(await this.update(data, branch.id));
             } else {
                 res.push(await this.create(data));
@@ -75,7 +75,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
     }
 
     protected validateBranch(branch) {
-        if (!( Array.isArray(branch.attributes) && branch.attributes.length)) {
+        if ( ! (Array.isArray(branch.attributes) && branch.attributes.length) ) {
             throw new Error('Products type required have attributes.');
         }
     }
@@ -100,7 +100,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
         }
 
         // if product is single always update to branch master
-        if (productMaster.kind === ProductMasterKindEnumType.single) {
+        if ( productMaster.kind === ProductMasterKindEnumType.single ) {
             const branchMaster: ProductBranchModel = Arr.head(branches);
             branchMaster.id = productBranchMaster.id;
         }
@@ -112,11 +112,11 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
             branchMaster.isMaster = true
         }
 
-        const changeSingleToBranch = !branchMaster
-            && !productBranchMaster.attributes.length
+        const changeSingleToBranch = ! branchMaster
+            && ! productBranchMaster.attributes.length
             && productMaster.kind === ProductMasterKindEnumType.branch;
 
-        if (changeSingleToBranch) {
+        if ( changeSingleToBranch ) {
             const branchMaster: ProductBranchModel = Arr.head(branches);
             branchMaster.id = productBranchMaster.id;
             branchMaster.isMaster = true
@@ -147,9 +147,9 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
      */
     public async findMaster(productMasterId: string) {
         return super.newQuery().where('productMasterId', productMasterId)
-            .isMaster(true)
-            .preload('attributes')
-            .first();
+                    .isMaster(true)
+                    .preload('attributes')
+                    .first();
     }
 
     async update(data: any, value: any, attribute: string = this.getKeyName()): Promise<ProductBranchModel> {
@@ -161,7 +161,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
 
         await instance.related('inventory').updateOrCreate({
             productBranchId: instance.id
-        },{
+        }, {
             ...data.inventory,
             productMasterId: instance.productMasterId
         });
@@ -189,14 +189,14 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
 
     async updateNameAllBranch(productMaster: ProductMasterModel) {
         const branches = await this.newQuery()
-            .where('productMasterId', productMaster.id)
-            .preload('attributes', query => {
-                query.preload('attribute')
-                    .preload('attributeGroup')
-            })
-            .exec();
+                                   .where('productMasterId', productMaster.id)
+                                   .preload('attributes', query => {
+                                       query.preload('attribute')
+                                            .preload('attributeGroup')
+                                   })
+                                   .exec();
 
-        for await (const branch of branches) {
+        for await ( const branch of branches ) {
             const attrs = branch.attributes.map(x => ({
                 name: x.attribute.name,
                 groupName: x.attributeGroup.name
@@ -220,9 +220,9 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
         const productBranchId = instance.id;
 
         let allAttribute: any = await this.productBranchToAttribute.newQuery()
-            .where('productMasterId', instance.productMasterId)
-            .preload('attribute')
-            .exec();
+                                          .where('productMasterId', instance.productMasterId)
+                                          .preload('attribute')
+                                          .exec();
 
         if ( ! allAttribute || ! allAttribute.length ) {
             return false;
@@ -257,7 +257,7 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
         return this.transaction(async () => {
             let instance: ProductBranchModel;
 
-            if (id instanceof BaseModel) {
+            if ( id instanceof BaseModel ) {
                 instance = id as any;
             } else {
                 const query = this.newQuery();
@@ -265,20 +265,20 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
                 instance = await query.where(attribute, id).first();
             }
 
-            if (!instance) {
+            if ( ! instance ) {
                 return 0;
             }
 
             await instance.preload('master');
 
             // master has been deleted
-            if (!instance.master) {
+            if ( ! instance.master ) {
                 return instance.delete();
             }
 
             const method: any = 'deleteProduct' + Str.ucFirst(instance.master.kind);
 
-            if (typeof this[method] === "function") {
+            if ( typeof this[method] === 'function' ) {
                 return await this[method](instance);
             }
 
@@ -292,14 +292,14 @@ export class ProductBranchRepository extends BaseRepository<ProductBranchModel, 
      */
     protected async deleteProductBranch(instance: ProductBranchModel) {
         const listMasterBranch: ProductBranchModel[] = await this.newQuery().where('productMasterId', instance.productMasterId)
-            .isMaster(false)
-            .orderBy('id', 'asc')
-            .exec();
+                                                                 .isMaster(false)
+                                                                 .orderBy('id', 'asc')
+                                                                 .exec();
 
         /**
          * Nếu nhánh này là nhánh thường, nên xóa đi.
          */
-        if (!instance.isMaster) {
+        if ( ! instance.isMaster ) {
             return instance.delete();
         }
 

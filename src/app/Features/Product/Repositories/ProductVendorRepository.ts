@@ -5,10 +5,10 @@
  * Time: 4:01 PM
  */
 
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ProductVendorModel} from "../Models/ProductVendorModel";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ProductVendorModel } from '../Models/ProductVendorModel';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
 
 @Service()
 export class ProductVendorRepository extends BaseRepository<ProductVendorModel> {

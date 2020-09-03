@@ -4,28 +4,29 @@
  * Date: 5/25/2020
  * Time: 8:10 AM
  */
-import {ExistsRule, UniqueRule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rules";
+import { ExistsRule, UniqueRule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rules';
 
 const htmlToText = require('html-to-text');
 const xss = require('xss');
-const {parse} = require('himalaya');
+const { parse } = require('himalaya');
 
-export const AsyncFunction = (async () => {}).constructor;
+export const AsyncFunction = (async () => {
+}).constructor;
 
 const _ = require('lodash');
 
 export function tap(value: any, callback?: (value: any) => any): Promise<any> | any {
-    if (!callback) {
+    if ( ! callback ) {
         return value;
     }
 
-    if (callback.constructor === AsyncFunction) {
+    if ( callback.constructor === AsyncFunction ) {
         return callback(value).then(() => value);
     }
 
     const r = callback(value);
 
-    if (r.constructor === Promise) {
+    if ( r.constructor === Promise ) {
         return r.then(() => value);
     }
 
@@ -54,16 +55,16 @@ export function empty(mixedVar) {
         return true;
     }
 
-    if (Array.isArray(mixedVar)) {
-        if (!mixedVar.length) {
+    if ( Array.isArray(mixedVar) ) {
+        if ( ! mixedVar.length ) {
             return true;
         }
 
-        return !mixedVar.some(x => !empty(x));
+        return ! mixedVar.some(x => ! empty(x));
     }
 
     if ( typeof mixedVar === 'object' ) {
-        return !Object.keys(mixedVar).length;
+        return ! Object.keys(mixedVar).length;
     }
 
     return false;
@@ -79,11 +80,11 @@ export function cloneObject(v) {
 }
 
 export function ruleToString(v) {
-    for(let i in v) {
+    for( let i in v ) {
         v[i] = v[i].map(x => {
-            if (x instanceof UniqueRule) {
+            if ( x instanceof UniqueRule ) {
                 return 'unique';
-            } else if (x instanceof ExistsRule) {
+            } else if ( x instanceof ExistsRule ) {
                 return 'exists';
             }
             return x;
@@ -153,17 +154,17 @@ export function htmlField(html, args) {
     }
 
     switch (args.format) {
-        case 'HTML':
-            if ( safeText !== text ) {
-                // Text was truncated, so just show what's safe:
-                return safeText;
-            } else {
-                return html;
-            }
-        case 'TEXT':
+    case 'HTML':
+        if ( safeText !== text ) {
+            // Text was truncated, so just show what's safe:
             return safeText;
-        default:
+        } else {
             return html;
+        }
+    case 'TEXT':
+        return safeText;
+    default:
+        return html;
     }
 }
 

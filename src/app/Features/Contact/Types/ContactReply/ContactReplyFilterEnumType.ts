@@ -6,7 +6,7 @@
  */
 
 
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
+import { registerFilterEnumType } from '../../../../GraphQL/Types/FilterType';
 
 enum ContactReplyFilterEnumType {
     id = 'id',
@@ -18,4 +18,4 @@ enum ContactReplyFilterEnumType {
 
 registerFilterEnumType('ContactReply', ContactReplyFilterEnumType);
 
-export {ContactReplyFilterEnumType};
+export { ContactReplyFilterEnumType };

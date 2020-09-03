@@ -4,9 +4,9 @@
  * Date: 7/14/2020
  * Time: 9:57 AM
  */
-import {MetableRepository} from "../../../Repositories/Lucid/MetableRepository";
-import {Service} from "@tngraphql/illuminate";
-import CategorymetaModel from "./CategorymetaModel";
+import { MetableRepository } from '../../../Repositories/Lucid/MetableRepository';
+import { Service } from '@tngraphql/illuminate';
+import CategorymetaModel from './CategorymetaModel';
 
 @Service()
 export class CategoryMetaRepository extends MetableRepository {

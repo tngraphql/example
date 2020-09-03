@@ -5,14 +5,14 @@
  * Time: 10:42 PM
  */
 
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ShippingZoneModel} from "../Models/ShippingZoneModel";
-import {ShippingZoneUpdateArgsType} from "../Types/ShippingZone/ShippingZoneUpdateArgsType";
-import {ShippingLocationRepository} from "./ShippingLocationRepository";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ShippingZoneModel } from '../Models/ShippingZoneModel';
+import { ShippingZoneUpdateArgsType } from '../Types/ShippingZone/ShippingZoneUpdateArgsType';
+import { ShippingLocationRepository } from './ShippingLocationRepository';
 
 @Service()
-export class ShippingZoneRepository extends BaseRepository<ShippingZoneModel, typeof ShippingZoneModel>  {
+export class ShippingZoneRepository extends BaseRepository<ShippingZoneModel, typeof ShippingZoneModel> {
     @Inject(type => ShippingLocationRepository)
     protected shippingLocation: ShippingLocationRepository
 
@@ -23,8 +23,8 @@ export class ShippingZoneRepository extends BaseRepository<ShippingZoneModel, ty
     async create(data): Promise<ShippingZoneModel> {
         return this.transaction(async () => {
             const zoneOrder = await this.query()
-                .orderBy('zoneOrder', 'desc')
-                .first();
+                                        .orderBy('zoneOrder', 'desc')
+                                        .first();
 
             data.zoneOrder = 1;
 

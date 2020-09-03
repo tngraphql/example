@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 import { ResolverData } from '@tngraphql/graphql';
-import {getMetadataStorage} from "@tngraphql/graphql/dist/metadata/getMetadataStorage";
-import {Application} from "@tngraphql/illuminate";
-import {SchemaGenerator} from "@tngraphql/graphql/dist/schema/schema-generator";
+import { getMetadataStorage } from '@tngraphql/graphql/dist/metadata/getMetadataStorage';
+import { Application } from '@tngraphql/illuminate';
+import { SchemaGenerator } from '@tngraphql/graphql/dist/schema/schema-generator';
 import * as _ from 'lodash';
 
 export class Filter {
@@ -20,7 +20,7 @@ export class Filter {
         this.app = Application.getInstance();
     }
 
-    public async handle (
+    public async handle(
         data: ResolverData,
         next: () => Promise<void>,
         allowedRoles: string[],

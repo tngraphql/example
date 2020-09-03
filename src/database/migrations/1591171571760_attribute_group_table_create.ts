@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class AttributeGroupTableCreate extends BaseSchema {
     protected $tableName = 'attribute_group'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`attribute_group\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`name\` varchar(191) DEFAULT NULL,
@@ -16,7 +16,7 @@ export default class AttributeGroupTableCreate extends BaseSchema {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`)
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

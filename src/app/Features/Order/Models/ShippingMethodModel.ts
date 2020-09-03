@@ -5,19 +5,19 @@
  * Time: 8:20 PM
  */
 
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Str} from "../../../../lib/Str";
-import {DateTime} from "luxon";
-import {converBoolean} from "../../../../lib/utils";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { Str } from '../../../../lib/Str';
+import { DateTime } from 'luxon';
+import { converBoolean } from '../../../../lib/utils';
 
 export class ShippingMethodModel extends BaseModel {
     static table = 'shipping_methods';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public zoneId: string
 
     @column()
@@ -45,7 +45,7 @@ export class ShippingMethodModel extends BaseModel {
     public isEnabled: boolean
 
     public static scopeIsEnabled(query, boolean = true, operation = '=') {
-        if (typeof boolean !== "boolean") {
+        if ( typeof boolean !== 'boolean' ) {
             throw new Error('value for isFeatured be must boolean');
         }
         return query.where('isFeatured', operation, converBoolean(boolean, 1, 0));

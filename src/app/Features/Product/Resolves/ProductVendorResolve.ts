@@ -4,24 +4,24 @@
  * Date: 7/11/2020
  * Time: 5:53 PM
  */
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {ProductVendorRepository} from "../Repositories/ProductVendorRepository";
-import {ProductVendorIndexArgsType} from "../Types/ProductVendor/ProductVendorIndexArgsType";
-import {ProductVendorType} from "../Types/ProductVendor/ProductVendorType";
-import {ProductVendorListArgsType} from "../Types/ProductVendor/ProductVendorListArgsType";
-import {ProductVendorCreateArgsType} from "../Types/ProductVendor/ProductVendorCreateArgsType";
-import {ProductVendorDeleteArgsType} from "../Types/ProductVendor/ProductVendorDeleteArgsType";
-import {ProductVendorUpdateArgsType} from "../Types/ProductVendor/ProductVendorUpdateArgsType";
-import {ProductVendorModel} from "../Models/ProductVendorModel";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { ProductVendorRepository } from '../Repositories/ProductVendorRepository';
+import { ProductVendorIndexArgsType } from '../Types/ProductVendor/ProductVendorIndexArgsType';
+import { ProductVendorType } from '../Types/ProductVendor/ProductVendorType';
+import { ProductVendorListArgsType } from '../Types/ProductVendor/ProductVendorListArgsType';
+import { ProductVendorCreateArgsType } from '../Types/ProductVendor/ProductVendorCreateArgsType';
+import { ProductVendorDeleteArgsType } from '../Types/ProductVendor/ProductVendorDeleteArgsType';
+import { ProductVendorUpdateArgsType } from '../Types/ProductVendor/ProductVendorUpdateArgsType';
+import { ProductVendorModel } from '../Models/ProductVendorModel';
 
 @Resolver()
 export class ProductVendorResolve extends BaseResolve {
@@ -46,7 +46,7 @@ export class ProductVendorResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => ProductVendorType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => ProductVendorType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(ProductVendorCreateArgsType)
     @UseMiddleware('auth')
     async create(@Args() args: ProductVendorCreateArgsType, @SelectFields() fields) {

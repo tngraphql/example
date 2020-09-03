@@ -4,26 +4,26 @@
  * Date: 6/10/2020
  * Time: 7:40 PM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {MenuStatusEnumType} from "./Enum/MenuStatusEnumType";
-import {MenuItemInputType} from "./MenuItemInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { MenuStatusEnumType } from './Enum/MenuStatusEnumType';
+import { MenuItemInputType } from './MenuItemInputType';
 
 @ArgsType()
 export class MenuCreateArgsType {
-    @Field({description: 'Tên bài viết'})
+    @Field({ description: 'Tên bài viết' })
     @Rules(args => ([
         'required',
         'max:120'
     ]))
     public name: string
 
-    @Field(returns => ID, {description: 'Id ngôn ngữ'})
+    @Field(returns => ID, { description: 'Id ngôn ngữ' })
     @Rules(['filled'])
     public language: string;
 
-    @Field(returns => ID, {description: 'ID ngôn ngữ chính.'})
+    @Field(returns => ID, { description: 'ID ngôn ngữ chính.' })
     @Rules(['filled'])
     public languageMaster: string;
 
@@ -33,6 +33,6 @@ export class MenuCreateArgsType {
     })
     public status: string;
 
-    @Field(returns => [MenuItemInputType], {description: 'Thông tin menuitem'})
+    @Field(returns => [MenuItemInputType], { description: 'Thông tin menuitem' })
     public menuItems: MenuItemInputType[];
 }

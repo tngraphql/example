@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum PostCommentStatusEnumType {
     open = 'open',
@@ -17,4 +17,4 @@ registerEnumType(PostCommentStatusEnumType, {
     description: 'Trạng thái bình luận của bài viết'
 });
 
-export {PostCommentStatusEnumType};
+export { PostCommentStatusEnumType };

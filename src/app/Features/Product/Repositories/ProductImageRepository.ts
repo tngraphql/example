@@ -4,10 +4,10 @@
  * Date: 8/11/2020
  * Time: 5:37 PM
  */
-import {InvalidArgumentException, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ProductImageModel} from "../Models/ProductImageModel";
-import {ProductBranchModel} from "../Models/ProductBranchModel";
+import { InvalidArgumentException, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ProductImageModel } from '../Models/ProductImageModel';
+import { ProductBranchModel } from '../Models/ProductBranchModel';
 import _ = require('lodash');
 
 @Service()
@@ -39,7 +39,7 @@ export class ProductImageRepository extends BaseRepository<ProductImageModel> {
         // delete all images of branch
         await this.newQuery().where('productBranchId', instance.id).delete();
 
-        if (!data.length) {
+        if ( ! data.length ) {
             return;
         }
 

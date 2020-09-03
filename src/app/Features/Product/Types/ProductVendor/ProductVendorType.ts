@@ -4,12 +4,12 @@
  * Date: 7/11/2020
  * Time: 4:54 PM
  */
-import {Field, Int, ObjectType, Root} from "@tngraphql/graphql";
-import {DateTime} from "luxon";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
-import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
-import {ProductVendorModel} from "../../Models/ProductVendorModel";
+import { Field, Int, ObjectType, Root } from '@tngraphql/graphql';
+import { DateTime } from 'luxon';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../../GraphQL/Types/TimestampScalarType';
+import { registerPaginateType } from '../../../../GraphQL/Types/PaginateType';
+import { ProductVendorModel } from '../../Models/ProductVendorModel';
 
 @ObjectType('ProductVendor')
 export class ProductVendorType {
@@ -18,7 +18,7 @@ export class ProductVendorType {
     @Field(returns => ID)
     public id: string
 
-    @Field({description: 'Tên nhà cung cấp'})
+    @Field({ description: 'Tên nhà cung cấp' })
     public name: string;
 
     @Field(returns => TimestampScalarType)

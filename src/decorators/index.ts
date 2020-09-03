@@ -7,9 +7,9 @@
 import {
     MorphOneRelationOptions,
     MorphTo,
-} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {TypedDecorator} from "@tngraphql/lucid/build/src/Contracts/Model/types";
+} from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { TypedDecorator } from '@tngraphql/lucid/build/src/Contracts/Model/types';
 
 /**
  * Decorator signature to define morph to relationship
@@ -28,8 +28,8 @@ export const morphBy: MorphByDecorator = (relatedModel, relation) => {
         Model.bootIfNotBooted();
 
         const name = relation.name;
-        const type = relation.type ? relation.type : name + "Type";
-        const id = relation.id ? relation.id : name + "Id";
+        const type = relation.type ? relation.type : name + 'Type';
+        const id = relation.id ? relation.id : name + 'Id';
         relation.localKey = relation.localKey || 'id';
 
         Model.$addRelation(property, 'morphTo', relatedModel, Object.assign({ relatedModel }, relation, {

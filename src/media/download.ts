@@ -1,5 +1,6 @@
-import {Application} from "@tngraphql/illuminate";
-import {corsMiddleware} from "./cors-middleware";
+import { Application } from '@tngraphql/illuminate';
+import { corsMiddleware } from './cors-middleware';
+
 const express = require('express');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');

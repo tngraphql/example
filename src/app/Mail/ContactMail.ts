@@ -1,4 +1,4 @@
-import {Mailable} from "@tngraphql/mail";
+import { Mailable } from '@tngraphql/mail';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -20,6 +20,6 @@ export class ContactMail extends Mailable {
      * Build the message.
      */
     public build(): void {
-        this.htmlView('contact',  this.data)
+        this.htmlView('contact', this.data)
     }
 }

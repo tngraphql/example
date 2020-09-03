@@ -5,17 +5,18 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {CONTACTREPLY_LIST_QUERY, CONTACTREPLY_QUERY} from "./gql/contact-reply-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import ContactReplyModel from "../../src/app/Features/Contact/ContactReplyModel";
-import ContactModel from "../../src/app/Features/Contact/ContactModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { CONTACTREPLY_LIST_QUERY, CONTACTREPLY_QUERY } from './gql/contact-reply-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import ContactReplyModel from '../../src/app/Features/Contact/ContactReplyModel';
+import ContactModel from '../../src/app/Features/Contact/ContactModel';
 
 describe('contactReply Http', () => {
     let client: ApolloServerTestClient;
@@ -61,8 +62,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -86,17 +87,17 @@ describe('contactReply Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": contactReply.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': contactReply.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -104,17 +105,17 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
             })
-        
+
             it('should filter message without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "message",
-                            "value": contactReply.message,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'message',
+                            'value': contactReply.message,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -122,17 +123,17 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.message).to.eq(contactReply.message);
             })
-        
+
             it('should filter contactId without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "contactId",
-                            "value": contactReply.contactId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'contactId',
+                            'value': contactReply.contactId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -140,11 +141,11 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.contactId).to.eq(contactReply.contactId);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(3);
 
@@ -153,8 +154,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -172,8 +173,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -182,7 +183,7 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
             })
-        
+
             it('should sort by desc message without error', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(3);
 
@@ -191,8 +192,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "message": SortEnumType.DESC
+                        'sortBy': [{
+                            'message': SortEnumType.DESC
                         }]
                     }
                 });
@@ -210,8 +211,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "message": SortEnumType.ASC
+                        'sortBy': [{
+                            'message': SortEnumType.ASC
                         }]
                     }
                 });
@@ -220,7 +221,7 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.message).to.eq(contactReply.message);
             })
-        
+
             it('should sort by desc contactId without error', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(3);
 
@@ -229,8 +230,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "contactId": SortEnumType.DESC
+                        'sortBy': [{
+                            'contactId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -248,8 +249,8 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "contactId": SortEnumType.ASC
+                        'sortBy': [{
+                            'contactId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -258,7 +259,7 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReply.id).to.eq(contactReply.id);
                 expect(res.data.contactReply.contactId).to.eq(contactReply.contactId);
             })
-        
+
         });
     });
 
@@ -312,17 +313,17 @@ describe('contactReply Http', () => {
         });
 
         describe('contactReply Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": contactReply.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': contactReply.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -330,17 +331,17 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReplies.data[0].id).to.eq(contactReply.id)
                 expect(res.data.contactReplies.data[0].id).to.eq(contactReply.id)
             });
-        
+
             it('should filter message without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "message",
-                            "value": contactReply.message,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'message',
+                            'value': contactReply.message,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -348,17 +349,17 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReplies.data[0].id).to.eq(contactReply.id)
                 expect(res.data.contactReplies.data[0].message).to.eq(contactReply.message)
             });
-        
+
             it('should filter contactId without error', async () => {
                 const contactReply = await Factory.model('App/Features/Contact/ContactReplyModel').create();
 
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "contactId",
-                            "value": contactReply.contactId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'contactId',
+                            'value': contactReply.contactId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -366,11 +367,11 @@ describe('contactReply Http', () => {
                 expect(res.data.contactReplies.data[0].id).to.eq(contactReply.id)
                 expect(res.data.contactReplies.data[0].contactId).to.eq(contactReply.contactId)
             });
-        
+
         });
 
         describe('contactReply Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(5);
 
@@ -379,14 +380,14 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -397,16 +398,16 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by message desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(5);
 
@@ -415,14 +416,14 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "message": SortEnumType.DESC
+                        'sortBy': [{
+                            'message': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by message asc when sortBy as array', async () => {
@@ -433,16 +434,16 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "message": SortEnumType.ASC
+                        'sortBy': [{
+                            'message': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by contactId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Contact/ContactReplyModel').createMany(5);
 
@@ -451,14 +452,14 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "contactId": SortEnumType.DESC
+                        'sortBy': [{
+                            'contactId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by contactId asc when sortBy as array', async () => {
@@ -469,16 +470,16 @@ describe('contactReply Http', () => {
                 const res = await client.query({
                     query: CONTACTREPLY_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "contactId": SortEnumType.ASC
+                        'sortBy': [{
+                            'contactId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.contactReplies.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.contactReplies.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 

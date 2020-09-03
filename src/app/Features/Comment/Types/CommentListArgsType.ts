@@ -1,8 +1,8 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {filterType} from "../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {CommentFilterEnumType} from "./CommentFilterEnumType";
-import {CommentSortInputType} from "./CommentSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { filterType } from '../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { CommentFilterEnumType } from './CommentFilterEnumType';
+import { CommentSortInputType } from './CommentSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -22,7 +22,7 @@ export class CommentListArgsType {
     @Field(returns => filterType(CommentFilterEnumType))
     filter: FilterContract<typeof CommentFilterEnumType>
 
-    @Field(returns => [CommentSortInputType],{description: 'order'})
+    @Field(returns => [CommentSortInputType], { description: 'order' })
     sortBy: CommentSortInputType
 
     where: any;

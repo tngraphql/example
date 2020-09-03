@@ -4,7 +4,7 @@
  * Date: 8/27/2020
  * Time: 5:37 PM
  */
-import {Env} from "@tngraphql/illuminate/dist/Support/Env";
+import { Env } from '@tngraphql/illuminate/dist/Support/Env';
 
 const logger = {
     /*

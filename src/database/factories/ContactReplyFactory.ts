@@ -10,6 +10,6 @@ import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 Factory.blueprint('App/Features/Contact/ContactReplyModel', (faker, index, data: any = {}) => {
     return {
         message: faker.word(),
-        contactId: String(data.id || faker.unique(faker.integer, 1, {min: 0, max: 100}).pop())
+        contactId: String(data.id || faker.unique(faker.integer, 1, { min: 0, max: 100 }).pop())
     }
 });

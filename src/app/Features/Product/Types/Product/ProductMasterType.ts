@@ -4,26 +4,26 @@
  * Date: 7/11/2020
  * Time: 4:54 PM
  */
-import {Arg, Ctx, Field, Int, ObjectType, Root} from "@tngraphql/graphql";
-import {DateTime} from "luxon";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
-import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
-import {ProductMasterModel} from "../../Models/ProductMasterModel";
-import {ProductMasterKindEnumType} from "./ProductMasterKindEnumType";
-import {Str} from "../../../../../lib/Str";
-import {ContentFormatEnumType} from "../../../../GraphQL/Types/ContentFormatEnumType";
-import {HTML} from "../../../../GraphQL/Types/ScalarType/HtmlScalerType";
-import {htmlField} from "../../../../../lib/utils";
-import {FavoriteType} from "../../../Favorite/Types/FavoriteType";
-import {PostCommentStatusEnumType} from "../../../Post/Types/Post/PostCommentStatusEnumType";
-import {TagType} from "../../../Tag/Types/TagType";
-import {ProductTypeType} from "../ProductType/ProductTypeType";
-import {ProductVendorType} from "../ProductVendor/ProductVendorType";
-import {ProductMasterMetaType} from "./ProductMasterMetaType";
-import {ProductBranchType} from "../ProductBranch/ProductBranchType";
-import {MediaType} from "../../../Media/Types/MediaType";
-import {ProductCommentStatusEnumType} from "./ProductCommentStatusEnumType";
+import { Arg, Ctx, Field, Int, ObjectType, Root } from '@tngraphql/graphql';
+import { DateTime } from 'luxon';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../../GraphQL/Types/TimestampScalarType';
+import { registerPaginateType } from '../../../../GraphQL/Types/PaginateType';
+import { ProductMasterModel } from '../../Models/ProductMasterModel';
+import { ProductMasterKindEnumType } from './ProductMasterKindEnumType';
+import { Str } from '../../../../../lib/Str';
+import { ContentFormatEnumType } from '../../../../GraphQL/Types/ContentFormatEnumType';
+import { HTML } from '../../../../GraphQL/Types/ScalarType/HtmlScalerType';
+import { htmlField } from '../../../../../lib/utils';
+import { FavoriteType } from '../../../Favorite/Types/FavoriteType';
+import { PostCommentStatusEnumType } from '../../../Post/Types/Post/PostCommentStatusEnumType';
+import { TagType } from '../../../Tag/Types/TagType';
+import { ProductTypeType } from '../ProductType/ProductTypeType';
+import { ProductVendorType } from '../ProductVendor/ProductVendorType';
+import { ProductMasterMetaType } from './ProductMasterMetaType';
+import { ProductBranchType } from '../ProductBranch/ProductBranchType';
+import { MediaType } from '../../../Media/Types/MediaType';
+import { ProductCommentStatusEnumType } from './ProductCommentStatusEnumType';
 
 @ObjectType('ProductMaster')
 export class ProductMasterType {
@@ -32,10 +32,10 @@ export class ProductMasterType {
     @Field(returns => ID)
     public id: string
 
-    @Field({description: 'Tên sản phẩm'})
+    @Field({ description: 'Tên sản phẩm' })
     public name: string;
 
-    @Field(returns => ProductMasterKindEnumType, {description: 'Loại sản phẩm'})
+    @Field(returns => ProductMasterKindEnumType, { description: 'Loại sản phẩm' })
     public kind: string;
 
     @Field()
@@ -43,10 +43,10 @@ export class ProductMasterType {
         return Str.slug(parent.name);
     };
 
-    @Field({description: 'Ảnh đại diện'})
+    @Field({ description: 'Ảnh đại diện' })
     public avatar: string;
 
-    @Field({description: 'Ảnh theo nhóm biến thể.'})
+    @Field({ description: 'Ảnh theo nhóm biến thể.' })
     public imageType: string;
 
     @Field(returns => ID)
@@ -56,71 +56,71 @@ export class ProductMasterType {
     @Field(returns => MediaType)
     public thumbnail: MediaType;
 
-    @Field(returns => HTML,{description: 'Mô tả ngắn',})
+    @Field(returns => HTML, { description: 'Mô tả ngắn', })
     public description(
         @Root() parent,
         @Arg('maxLength', returns => Int) maxLength: number,
-        @Arg('format', returns => ContentFormatEnumType, {defaultValue: 'HTML'}) format: number,
+        @Arg('format', returns => ContentFormatEnumType, { defaultValue: 'HTML' }) format: number,
         @Ctx() ctx
     ) {
-        const args = {maxLength, format};
+        const args = { maxLength, format };
 
         return htmlField(parent.description, args);
     }
 
-    @Field({description: 'Là sản phẩm nổi bật',})
+    @Field({ description: 'Là sản phẩm nổi bật', })
     public isFeatured: boolean;
 
-    @Field(returns => FavoriteType, {description: 'Yêu thích'})
+    @Field(returns => FavoriteType, { description: 'Yêu thích' })
     public favorite: FavoriteType;
 
-    @Field({description: 'Lượt view'})
+    @Field({ description: 'Lượt view' })
     public views: number;
 
-    @Field({description: 'Số bình luận'})
+    @Field({ description: 'Số bình luận' })
     public commentCount: number;
 
-    @Field(returns => ProductCommentStatusEnumType,{description: 'Trạng thái được phép bình luận'})
+    @Field(returns => ProductCommentStatusEnumType, { description: 'Trạng thái được phép bình luận' })
     public commentStatus: string;
 
-    @Field(returns => HTML, {description: 'Nội dung',})
+    @Field(returns => HTML, { description: 'Nội dung', })
     public content(
         @Root() parent,
         @Arg('maxLength', returns => Int) maxLength: number,
-        @Arg('format', returns => ContentFormatEnumType, {defaultValue: 'HTML'}) format: number,
+        @Arg('format', returns => ContentFormatEnumType, { defaultValue: 'HTML' }) format: number,
         @Ctx() ctx
     ) {
-        const args = {maxLength, format};
+        const args = { maxLength, format };
 
         return htmlField(parent.content, args);
     }
 
-    @Field(returns => [TagType],{description: 'Thẻ nhãn'})
+    @Field(returns => [TagType], { description: 'Thẻ nhãn' })
     public tags: TagType[];
 
-    @Field(returns => [ProductTypeType], {description: 'Danh mục'})
+    @Field(returns => [ProductTypeType], { description: 'Danh mục' })
     public categories: string;
 
-    @Field({description: 'Tồn kho',})
+    @Field({ description: 'Tồn kho', })
     public inventory(@Root() parent): number {
-        if (!parent.inventory) {
+        if ( ! parent.inventory ) {
             return 0;
         }
         return parent.inventory.$extras.total;
     }
 
-    @Field(returns => ID, {description: 'ID Loại sản phẩm'})
+    @Field(returns => ID, { description: 'ID Loại sản phẩm' })
     public productTypeId: string;
 
-    @Field(returns => ID, {description: 'ID Nhà cung cấp'})
+    @Field(returns => ID, { description: 'ID Nhà cung cấp' })
     public productVendorId: string;
 
-    @Field(returns => ProductVendorType, {description: 'Nhà cung cấp'})
+    @Field(returns => ProductVendorType, { description: 'Nhà cung cấp' })
     public vendor: ProductVendorType;
 
-    @Field({description: 'Tổng số sản phẩm nhánh',})
-    public branchCount(@Root() parent): number{
-        if (!parent.branchCount) {
+    @Field({ description: 'Tổng số sản phẩm nhánh', })
+    public branchCount(@Root() parent): number {
+        if ( ! parent.branchCount ) {
             return 0;
         }
 
@@ -128,17 +128,17 @@ export class ProductMasterType {
     };
 
     //todo chưa có sản phẩm nhánh
-    @Field(returns => [ProductBranchType], {description: 'Các sản phẩm nhánh'})
+    @Field(returns => [ProductBranchType], { description: 'Các sản phẩm nhánh' })
     public branches: string;
 
     //todo chưa có attribute
-    @Field(returns => [ProductBranchType], {description: 'Các thuộc tính sản phẩm'})
+    @Field(returns => [ProductBranchType], { description: 'Các thuộc tính sản phẩm' })
     public attributeGroups: ProductBranchType[];
 
-    @Field(returns => [ProductMasterMetaType], {description: 'Trường tùy chỉnh.'})
+    @Field(returns => [ProductMasterMetaType], { description: 'Trường tùy chỉnh.' })
     public meta: ProductMasterMetaType[];
 
-    @Field(returns => [ProductMasterMetaType], {description: 'Trường tùy chỉnh.'})
+    @Field(returns => [ProductMasterMetaType], { description: 'Trường tùy chỉnh.' })
     public metaCustom: ProductMasterMetaType[];
 
     @Field(returns => TimestampScalarType)

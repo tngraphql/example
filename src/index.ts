@@ -11,17 +11,19 @@ import 'reflect-metadata';
 import { Application } from '@tngraphql/illuminate';
 import * as path from 'path';
 import { Kernel } from './app/GraphQL/Kernel';
+
 const express = require('express')();
-import {ApolloServer} from "apollo-server-express";
+import { ApolloServer } from 'apollo-server-express';
 
 const app: Application = require('./bootstrap/app');
 
 const log = console.log;
+
 function trace() {
     try {
         throw new Error();
     } catch (e) {
-        log.apply(log, [e.stack.split('\n')[2].trim(),'\n', ...arguments]);
+        log.apply(log, [e.stack.split('\n')[2].trim(), '\n', ...arguments]);
     }
 }
 
@@ -50,7 +52,7 @@ async function main() {
 
     server.applyMiddleware({ app: express, path: process.env.GRAPHQL_PATH || '/graphql' });
 
-    const {media} = require('./media');
+    const { media } = require('./media');
 
     express.use(media);
 
@@ -58,7 +60,7 @@ async function main() {
     const host = process.env.HOST || '127.0.0.1'
 
     await express.listen(port, host, () => {
-        console.log(`start http://localhost:${port}/graphql`);
+        console.log(`start http://localhost:${ port }/graphql`);
     });
 
     console.timeEnd();

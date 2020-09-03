@@ -1,5 +1,5 @@
-import {Field, InputType} from "@tngraphql/graphql";
-import {SortEnumType} from "../SortEnumType";
+import { Field, InputType } from '@tngraphql/graphql';
+import { SortEnumType } from '../SortEnumType';
 
 /**
  * Created by Phan Trung Nguyên.

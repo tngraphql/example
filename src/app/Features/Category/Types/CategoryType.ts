@@ -1,11 +1,11 @@
-import {Field, Int, ObjectType} from "@tngraphql/graphql";
-import {DateTime} from "luxon";
-import CategoryModel from "../CategoryModel";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
-import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
-import {CategoryOtherLanguageType} from "./CategoryOtherLanguageType";
-import {CategoryMetaType} from "./CategoryMetaType";
+import { Field, Int, ObjectType } from '@tngraphql/graphql';
+import { DateTime } from 'luxon';
+import CategoryModel from '../CategoryModel';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../GraphQL/Types/TimestampScalarType';
+import { registerPaginateType } from '../../../GraphQL/Types/PaginateType';
+import { CategoryOtherLanguageType } from './CategoryOtherLanguageType';
+import { CategoryMetaType } from './CategoryMetaType';
 
 /**
  * Created by Phan Trung Nguyên.

@@ -5,9 +5,9 @@
  * Time: 7:54 AM
  */
 
-import {expect} from 'chai';
-import {ResolveInfo} from "../../src/lib/ResolveInfo";
-import {graphql} from "graphql";
+import { expect } from 'chai';
+import { ResolveInfo } from '../../src/lib/ResolveInfo';
+import { graphql } from 'graphql';
 
 import {
     buildSchema,
@@ -19,10 +19,10 @@ import {
     ObjectType,
     Query,
     Resolver
-} from "@tngraphql/graphql";
-import {DefaultContainer, IOCContainer} from "@tngraphql/graphql/dist/utils/container";
-import {Router} from "@tngraphql/route";
-import {BuildContext} from "@tngraphql/graphql/dist/schema/build-context";
+} from '@tngraphql/graphql';
+import { DefaultContainer, IOCContainer } from '@tngraphql/graphql/dist/utils/container';
+import { Router } from '@tngraphql/route';
+import { BuildContext } from '@tngraphql/graphql/dist/schema/build-context';
 
 describe('Resolve Info', () => {
     let info;
@@ -50,7 +50,7 @@ describe('Resolve Info', () => {
             nested: SampleNestedObject;
         }
 
-        @ObjectType({implements: SampleInterface})
+        @ObjectType({ implements: SampleInterface })
         class SampleObject implements SampleInterface {
             interfaceStringField: string;
 
@@ -136,7 +136,7 @@ describe('Resolve Info', () => {
             }
         }`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(4)).to.deep.eq({id: true});
+        expect(rinfo.getFieldSelection(4)).to.deep.eq({ id: true });
     });
 
     it('should get field without error', async () => {
@@ -156,19 +156,23 @@ describe('Resolve Info', () => {
     it('should correctly get field', async () => {
         const result = await graphql(schema, `{sampleQuery{id name}}`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(4)).to.deep.eq({id: true, name: true});
+        expect(rinfo.getFieldSelection(4)).to.deep.eq({ id: true, name: true });
     });
 
     it('should correctly get field nested', async () => {
         const result = await graphql(schema, `{sampleQuery{id name nested{id}}}`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(4)).to.deep.eq({id: true, name: true, nested: {id: true}});
+        expect(rinfo.getFieldSelection(4)).to.deep.eq({ id: true, name: true, nested: { id: true } });
     });
 
     it('should correctly get field nested to nested', async () => {
         const result = await graphql(schema, `{sampleQuery{id name nested{id nested{id}}}}`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(4)).to.deep.eq({id: true, name: true, nested: {id: true, nested: {id: true}}});
+        expect(rinfo.getFieldSelection(4)).to.deep.eq({
+            id: true,
+            name: true,
+            nested: { id: true, nested: { id: true } }
+        });
     });
 
     it('should correctly get field union type', async () => {
@@ -188,12 +192,16 @@ describe('Resolve Info', () => {
               }
         }}`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(4)).to.deep.eq({"id":true,"nested":{"id":true,"nested":{"id":true,"nested":{"id":true}}},"__typename":true})
+        expect(rinfo.getFieldSelection(4)).to.deep.eq({
+            'id': true,
+            'nested': { 'id': true, 'nested': { 'id': true, 'nested': { 'id': true } } },
+            '__typename': true
+        })
     });
 
     it('should correctly get field depth', async () => {
         const result = await graphql(schema, `{sampleQuery{id name nested{id nested{id}}}}`);
         const rinfo = new ResolveInfo(info);
-        expect(rinfo.getFieldSelection(1)).to.deep.eq({id: true, name: true, nested: {id: true, nested: true}});
+        expect(rinfo.getFieldSelection(1)).to.deep.eq({ id: true, name: true, nested: { id: true, nested: true } });
     });
 });

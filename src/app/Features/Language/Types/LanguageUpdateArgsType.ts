@@ -4,30 +4,30 @@
  * Date: 6/10/2020
  * Time: 7:43 PM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {LanguageModel} from "../LanguageModel";
-import {LanguageStatusEnumType} from "./LanguageStatusEnumType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { LanguageModel } from '../LanguageModel';
+import { LanguageStatusEnumType } from './LanguageStatusEnumType';
 
 @ArgsType()
 export class LanguageUpdateArgsType {
-    @Field(returns => ID, {description: 'ID. tag'})
+    @Field(returns => ID, { description: 'ID. tag' })
     @Rules([
         'required',
         Rule.exists(LanguageModel.getTable(), 'id')
     ])
     public id: string
 
-    @Field({description: 'Têm ngôn ngữ'})
+    @Field({ description: 'Têm ngôn ngữ' })
     @Rules([
         'filled',
         'max:500'
     ])
     public name: string
 
-    @Field({description: 'Mã ngôn ngữ vi_VN '})
+    @Field({ description: 'Mã ngôn ngữ vi_VN ' })
     @Rules(args => ([
         'filled',
         'alpha_dash',
@@ -36,7 +36,7 @@ export class LanguageUpdateArgsType {
     ]))
     public locale: string
 
-    @Field({description: 'Mã ngôn ngữ '})
+    @Field({ description: 'Mã ngôn ngữ ' })
     @Rules(args => ([
         'filled',
         'alpha_dash',
@@ -45,7 +45,7 @@ export class LanguageUpdateArgsType {
     ]))
     public code: string
 
-    @Field(returns => Int,{description: '1: left to right, 2 right to left'})
+    @Field(returns => Int, { description: '1: left to right, 2 right to left' })
     @Rules([
         'filled',
         'max:3',
@@ -53,19 +53,19 @@ export class LanguageUpdateArgsType {
     ])
     public direction: number
 
-    @Field({description: 'Lá cờ'})
+    @Field({ description: 'Lá cờ' })
     @Rules([
         'filled'
     ])
     public flag: string
 
-    @Field(returns => Int,{description: 'Vị trí'})
+    @Field(returns => Int, { description: 'Vị trí' })
     @Rules([
         'max:10'
     ])
     public position: number
 
-    @Field({description: 'Có đặt ngôn ngữ hiện tại làm ngôn ngữ mặc định không?'})
+    @Field({ description: 'Có đặt ngôn ngữ hiện tại làm ngôn ngữ mặc định không?' })
     public default: boolean
 
     @Field(returns => LanguageStatusEnumType)

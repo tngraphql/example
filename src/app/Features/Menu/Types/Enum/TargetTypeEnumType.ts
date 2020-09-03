@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum TargetTypeEnumType {
     blank = 'blank', // Mở cửa sổ mới
@@ -19,4 +19,4 @@ registerEnumType(TargetTypeEnumType, {
     description: 'Loại liên kết menu.'
 });
 
-export {TargetTypeEnumType};
+export { TargetTypeEnumType };

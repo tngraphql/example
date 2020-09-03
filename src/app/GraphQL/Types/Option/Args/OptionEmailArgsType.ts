@@ -4,30 +4,30 @@
  * Date: 8/23/2020
  * Time: 10:00 AM
  */
-import {ArgsType, Field, Int, InterfaceType, ObjectType} from "@tngraphql/graphql";
+import { ArgsType, Field, Int, InterfaceType, ObjectType } from '@tngraphql/graphql';
 
 @ArgsType()
 export class OptionEmailArgsType {
 
-    @Field({description: 'Host'})
+    @Field({ description: 'Host' })
     public SMTPHost: string
 
-    @Field({description: 'Encryption'})
+    @Field({ description: 'Encryption' })
     public SMTPEncryption: string
 
-    @Field({description: 'port'})
+    @Field({ description: 'port' })
     public SMTPPort: string
 
-    @Field({description: 'username'})
+    @Field({ description: 'username' })
     public SMTPUsername: string
 
-    @Field({description: 'password'})
+    @Field({ description: 'password' })
     public SMTPPassword: string
 
-    @Field({description: 'Sender name'})
+    @Field({ description: 'Sender name' })
     public SMTPSenderName: string
 
-    @Field({description: 'Sender email'})
+    @Field({ description: 'Sender email' })
     public SMTPSenderEmail: string
 }
 

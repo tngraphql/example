@@ -5,7 +5,7 @@
  * Time: 9:46 AM
  */
 
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
+import { registerFilterEnumType } from '../../../../GraphQL/Types/FilterType';
 
 enum ProductTypeFilterEnumType {
     id = 'id',
@@ -26,4 +26,4 @@ enum ProductTypeFilterEnumType {
 
 registerFilterEnumType('ProductType', ProductTypeFilterEnumType);
 
-export {ProductTypeFilterEnumType};
+export { ProductTypeFilterEnumType };

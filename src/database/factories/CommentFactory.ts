@@ -6,8 +6,8 @@
  */
 
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
-import {DateTime} from "luxon";
-import {CommentStatusEnumType} from "../../app/Features/Comment/Types/CommentStatusEnumType";
+import { DateTime } from 'luxon';
+import { CommentStatusEnumType } from '../../app/Features/Comment/Types/CommentStatusEnumType';
 
 Factory.blueprint('App/Features/Comment/CommentModel', (faker, index, data) => {
     return {

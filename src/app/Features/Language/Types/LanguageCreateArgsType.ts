@@ -1,8 +1,8 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {LanguageModel} from "../LanguageModel";
-import {LanguageStatusEnumType} from "./LanguageStatusEnumType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { LanguageModel } from '../LanguageModel';
+import { LanguageStatusEnumType } from './LanguageStatusEnumType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -13,14 +13,14 @@ import {LanguageStatusEnumType} from "./LanguageStatusEnumType";
 
 @ArgsType()
 export class LanguageCreateArgsType {
-    @Field({description: 'Têm ngôn ngữ'})
+    @Field({ description: 'Têm ngôn ngữ' })
     @Rules([
         'required',
         'max:500'
     ])
     public name: string
 
-    @Field({description: 'Mã ngôn ngữ vi_VN '})
+    @Field({ description: 'Mã ngôn ngữ vi_VN ' })
     @Rules([
         'required',
         'alpha_dash',
@@ -29,7 +29,7 @@ export class LanguageCreateArgsType {
     ])
     public locale: string
 
-    @Field({description: 'Mã ngôn ngữ '})
+    @Field({ description: 'Mã ngôn ngữ ' })
     @Rules([
         'required',
         'alpha_dash',
@@ -38,7 +38,7 @@ export class LanguageCreateArgsType {
     ])
     public code: string
 
-    @Field(returns => Int,{description: '1: left to right, 2 right to left'})
+    @Field(returns => Int, { description: '1: left to right, 2 right to left' })
     @Rules([
         'required',
         'max:3',
@@ -46,19 +46,19 @@ export class LanguageCreateArgsType {
     ])
     public direction: number
 
-    @Field({description: 'Lá cờ'})
+    @Field({ description: 'Lá cờ' })
     @Rules([
         'required'
     ])
     public flag: string
 
-    @Field(returns => Int,{description: 'Vị trí'})
+    @Field(returns => Int, { description: 'Vị trí' })
     @Rules([
         'max:10'
     ])
     public position: number
 
-    @Field({description: 'Có đặt ngôn ngữ hiện tại làm ngôn ngữ mặc định không?'})
+    @Field({ description: 'Có đặt ngôn ngữ hiện tại làm ngôn ngữ mặc định không?' })
     public default: boolean
 
     @Field(returns => LanguageStatusEnumType)

@@ -4,9 +4,9 @@
  * Date: 8/26/2020
  * Time: 11:33 AM
  */
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
-import {converBoolean} from "../../../../../lib/utils";
-import {UserModel} from "../../../../UserModel";
+import { registerFilterEnumType } from '../../../../GraphQL/Types/FilterType';
+import { converBoolean } from '../../../../../lib/utils';
+import { UserModel } from '../../../../UserModel';
 
 enum ShippingMethodFilterEnumType {
     id = 'id',
@@ -25,4 +25,4 @@ enum ShippingMethodFilterEnumType {
 
 registerFilterEnumType('ShippingMethod', ShippingMethodFilterEnumType);
 
-export {ShippingMethodFilterEnumType};
+export { ShippingMethodFilterEnumType };

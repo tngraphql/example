@@ -4,14 +4,14 @@
  * Date: 8/6/2020
  * Time: 7:50 PM
  */
-import {Field, InputType} from "@tngraphql/graphql";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
+import { Field, InputType } from '@tngraphql/graphql';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
 
 @InputType('ProductImageInput')
 export class ProductImageInputType {
-    @Field({description: 'Hình ảnh.'})
+    @Field({ description: 'Hình ảnh.' })
     public image: string
 
-    @Field(returns => ID,{description: 'Id thumbnail'})
+    @Field(returns => ID, { description: 'Id thumbnail' })
     public thumbnailId: string
 }

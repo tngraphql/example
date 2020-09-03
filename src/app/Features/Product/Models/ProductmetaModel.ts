@@ -4,16 +4,16 @@
  * Date: 8/4/2020
  * Time: 9:35 AM
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import MediaModel from "../../Media/MediaModel";
-import {BelongsTo} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {Str} from "../../../../lib/Str";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import MediaModel from '../../Media/MediaModel';
+import { BelongsTo } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { Str } from '../../../../lib/Str';
 
 export class ProductmetaModel extends BaseModel {
     public static table = 'productmeta';
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public productMasterId: string;
 
     @column()

@@ -1,5 +1,5 @@
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {ID} from "./UidScalerType";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { ID } from './UidScalerType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -13,9 +13,9 @@ export class OtherLanguageType {
     @Field(returns => ID)
     public id: string
 
-    @Field(returns => ID, {description: 'ID ngôn ngữ '})
+    @Field(returns => ID, { description: 'ID ngôn ngữ ' })
     public language: string;
 
-    @Field(returns => ID, {description: 'ID ngôn ngữ được tạo ra đầu tiên'})
+    @Field(returns => ID, { description: 'ID ngôn ngữ được tạo ra đầu tiên' })
     public languageMaster: string;
 }

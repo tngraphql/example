@@ -1,10 +1,10 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {filterType} from "../FilterType";
-import {UserFilterEnumType} from "../User/UserFilterEnumType";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {UserSortInputType} from "../User/UserSortInputType";
-import {RoleFilterEnumType} from "./RoleFilterEnumType";
-import {RoleSortInputType} from "./RoleSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { filterType } from '../FilterType';
+import { UserFilterEnumType } from '../User/UserFilterEnumType';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { UserSortInputType } from '../User/UserSortInputType';
+import { RoleFilterEnumType } from './RoleFilterEnumType';
+import { RoleSortInputType } from './RoleSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -24,7 +24,7 @@ export class RoleListArgsType {
     @Field(returns => filterType(RoleFilterEnumType))
     filter: FilterContract<typeof RoleFilterEnumType>
 
-    @Field(returns => [RoleSortInputType],{description: 'order'})
+    @Field(returns => [RoleSortInputType], { description: 'order' })
     sortBy: RoleSortInputType
 
     where: any;

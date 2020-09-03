@@ -5,11 +5,11 @@
  * Time: 9:07 PM
  */
 
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {filterType} from "../FilterType";
-import {UserSortInputType} from "./UserSortInputType";
-import {UserFilterEnumType} from "./UserFilterEnumType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { filterType } from '../FilterType';
+import { UserSortInputType } from './UserSortInputType';
+import { UserFilterEnumType } from './UserFilterEnumType';
 
 @ArgsType()
 export class UserListArgsType {
@@ -22,7 +22,7 @@ export class UserListArgsType {
     @Field(returns => filterType(UserFilterEnumType))
     filter: FilterContract<typeof UserFilterEnumType>
 
-    @Field(returns => [UserSortInputType],{description: 'order'})
+    @Field(returns => [UserSortInputType], { description: 'order' })
     sortBy: UserSortInputType
 
     where: any;

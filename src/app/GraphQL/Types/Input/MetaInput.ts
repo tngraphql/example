@@ -4,14 +4,14 @@
  * Date: 7/13/2020
  * Time: 5:05 PM
  */
-import {Field, InputType} from "@tngraphql/graphql";
-import {Any} from "../ScalarType/AnyScalerType";
+import { Field, InputType } from '@tngraphql/graphql';
+import { Any } from '../ScalarType/AnyScalerType';
 
 @InputType()
 export class MetaInput {
-    @Field({description: 'key'})
+    @Field({ description: 'key' })
     public metaKey: string;
 
-    @Field(returns => Any, {description: 'Giá trị'})
+    @Field(returns => Any, { description: 'Giá trị' })
     public metaValue: string;
 }

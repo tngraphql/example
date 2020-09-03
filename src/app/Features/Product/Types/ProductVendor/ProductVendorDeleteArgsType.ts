@@ -4,11 +4,11 @@
  * Date: 6/10/2020
  * Time: 7:43 PM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {ProductVendorModel} from "../../Models/ProductVendorModel";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { ProductVendorModel } from '../../Models/ProductVendorModel';
 
 @ArgsType()
 export class ProductVendorDeleteArgsType {
@@ -16,6 +16,6 @@ export class ProductVendorDeleteArgsType {
     @Rules([
         'required',
         Rule.exists(ProductVendorModel.getTable(), 'id')
-    ], ({lang}) => ({'exists': lang.t('The selected id does not exist or has been deleted.')}))
+    ], ({ lang }) => ({ 'exists': lang.t('The selected id does not exist or has been deleted.') }))
     public id: number;
 }

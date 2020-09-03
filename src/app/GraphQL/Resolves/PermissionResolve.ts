@@ -4,16 +4,16 @@
  * Date: 7/11/2020
  * Time: 4:14 PM
  */
-import {Args, Ctx, Query, Resolver} from "@tngraphql/graphql";
-import {BaseResolve} from "./BaseResolve";
-import {Inject} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
-import {RoleListArgsType} from "../Types/Role/RoleListArgsType";
-import {PermissionRepository} from "../../../Repositories/Lucid/PermissionRepository";
-import {PermissionType} from "../Types/Permission/PermissionType";
+import { Args, Ctx, Query, Resolver } from '@tngraphql/graphql';
+import { BaseResolve } from './BaseResolve';
+import { Inject } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../Repositories/Criteria/SelectionCriteria';
+import { RoleListArgsType } from '../Types/Role/RoleListArgsType';
+import { PermissionRepository } from '../../../Repositories/Lucid/PermissionRepository';
+import { PermissionType } from '../Types/Permission/PermissionType';
 
 @Resolver()
 export class PermissionResolve extends BaseResolve {

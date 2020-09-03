@@ -5,11 +5,11 @@
  * Time: 9:08 PM
  */
 
-import {Field, InputType} from "@tngraphql/graphql";
-import {SortEnumType} from "../SortEnumType";
-import RoleModel from "../../../Models/RoleModel";
-import RoleUserModel from "../../../Models/RoleUserModel";
-import {UserModel} from "../../../UserModel";
+import { Field, InputType } from '@tngraphql/graphql';
+import { SortEnumType } from '../SortEnumType';
+import RoleModel from '../../../Models/RoleModel';
+import RoleUserModel from '../../../Models/RoleUserModel';
+import { UserModel } from '../../../UserModel';
 
 @InputType('UserSort')
 export class UserSortInputType {
@@ -48,17 +48,17 @@ export class UserSortInputType {
 
     resolveRoleId() {
         return RoleModel.query()
-            .select(`${RoleModel.getTable()}.id`)
-            .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
-            .whereRaw(`${RoleUserModel.getTable()}.user_id = ${UserModel.getTable()}.id`)
-            .toSQL().sql
+                        .select(`${ RoleModel.getTable() }.id`)
+                        .innerJoin(RoleUserModel.getTable(), `${ RoleUserModel.getTable() }.role_id`, '=', `${ RoleModel.getTable() }.id`)
+                        .whereRaw(`${ RoleUserModel.getTable() }.user_id = ${ UserModel.getTable() }.id`)
+                        .toSQL().sql
     }
 
     resolveRoleName() {
         return RoleModel.query()
-            .select(`${RoleModel.getTable()}.name`)
-            .innerJoin(RoleUserModel.getTable(), `${RoleUserModel.getTable()}.role_id`, '=', `${RoleModel.getTable()}.id`)
-            .whereRaw(`${RoleUserModel.getTable()}.user_id = ${UserModel.getTable()}.id`)
-            .toSQL().sql
+                        .select(`${ RoleModel.getTable() }.name`)
+                        .innerJoin(RoleUserModel.getTable(), `${ RoleUserModel.getTable() }.role_id`, '=', `${ RoleModel.getTable() }.id`)
+                        .whereRaw(`${ RoleUserModel.getTable() }.user_id = ${ UserModel.getTable() }.id`)
+                        .toSQL().sql
     }
 }

@@ -4,10 +4,11 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import MediaModel from "./MediaModel";
-import {Application, Service} from "@tngraphql/illuminate";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import MediaModel from './MediaModel';
+import { Application, Service } from '@tngraphql/illuminate';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+
 const fs = require('fs');
 
 @Service()
@@ -21,11 +22,11 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
             const instance = await this.newQuery().where(attribute, '=', value).firstOrFail();
             instance.merge(data, true);
 
-            const {title: folderName} = instance.$dirty;
-            if (folderName) {
+            const { title: folderName } = instance.$dirty;
+            if ( folderName ) {
                 await this.newQuery().where('folderName', instance.$original.title)
-                    .update({folderName})
-                    .exec();
+                          .update({ folderName })
+                          .exec();
             }
 
             await instance.save();
@@ -37,7 +38,7 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
     async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
         return this.transaction(async () => {
             let info: MediaModel;
-            if (id instanceof BaseModel) {
+            if ( id instanceof BaseModel ) {
                 info = id as any;
             } else {
                 const query = this.newQuery();
@@ -60,8 +61,8 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
             }
 
             const listAllFile = await this.newQuery()
-                .allFolder(f)
-                .exec();
+                                          .allFolder(f)
+                                          .exec();
 
 
             await super.delete(info);
@@ -94,7 +95,7 @@ export class MediaRepository extends BaseRepository<MediaModel, typeof MediaMode
                     // @ts-ignore
                     const pathFile = path.join(folderUploads + decodeURI(item.src), '..', value.file);
 
-                    if ( !files.includes(pathFile) ) {
+                    if ( ! files.includes(pathFile) ) {
                         files.push(pathFile);
 
                         fs.unlinkSync(pathFile);

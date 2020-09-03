@@ -4,49 +4,49 @@
  * Date: 9/2/2020
  * Time: 9:05 PM
  */
-import {Gate} from "@tngraphql/guard/dist/src";
-import {UserModel} from "../app/UserModel";
-import {PostModel} from "../app/Features/Post/PostModel";
+import { Gate } from '@tngraphql/guard/dist/src';
+import { UserModel } from '../app/UserModel';
+import { PostModel } from '../app/Features/Post/PostModel';
 
 Gate.define('role', async (user: any) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('role\*')) {
+    if ( await user.can('role\*') ) {
         return true;
     }
 
     return false;
 });
 Gate.define('role-delete', async (user: any) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('role-delete')) {
+    if ( await user.can('role-delete') ) {
         return true;
     }
 
     return false;
 });
 Gate.define('role-update', async (user: any) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('role-update')) {
+    if ( await user.can('role-update') ) {
         return true;
     }
 
     return false;
 });
 Gate.define('role-create', (user: any) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (user.can('role-create')) {
+    if ( user.can('role-create') ) {
         return true;
     }
 
@@ -55,49 +55,49 @@ Gate.define('role-create', (user: any) => {
 
 
 Gate.define('post-update', async (user: UserModel, post: PostModel) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('post-update')) {
+    if ( await user.can('post-update') ) {
         return true;
     }
 
-    if (!post) {
+    if ( ! post ) {
         return false;
     }
 
-    if (post.authorId === user.id) {
+    if ( post.authorId === user.id ) {
         return true
     }
 
     return false
 });
 Gate.define('post-create', async (user: any, args) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('post-create')) {
+    if ( await user.can('post-create') ) {
         return true;
     }
 
     return false;
 });
 Gate.define('post-delete', async (user: any, post) => {
-    if (user.isOwner()) {
+    if ( user.isOwner() ) {
         return true;
     }
 
-    if (await user.can('post-delete')) {
+    if ( await user.can('post-delete') ) {
         return true;
     }
 
-    if (!post) {
+    if ( ! post ) {
         return false;
     }
 
-    if (post.authorId === user.id) {
+    if ( post.authorId === user.id ) {
         return true
     }
 

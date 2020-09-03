@@ -6,7 +6,7 @@
  */
 
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
-import {ProductMasterKindEnumType} from "../../app/Features/Product/Types/Product/ProductMasterKindEnumType";
+import { ProductMasterKindEnumType } from '../../app/Features/Product/Types/Product/ProductMasterKindEnumType';
 
 Factory.blueprint('App/Features/Product/Models/ProductMasterModel', (faker, index, data) => {
     return {

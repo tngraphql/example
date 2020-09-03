@@ -4,19 +4,19 @@
  * Date: 5/30/2020
  * Time: 7:37 PM
  */
-import {resetTables, seedDB} from "../helpers";
-import {Application} from "@tngraphql/illuminate";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {CommentRepository} from "../../src/app/Features/Comment/CommentRepository";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {UserModel} from "../../src/app/UserModel";
-import {CommentableEnumType} from "../../src/app/Features/Comment/Types/CommentableEnumType";
-import {expect} from 'chai';
-import {OptionRepository} from "../../src/Repositories/Lucid/OptionRepository";
-import {CommentStatusEnumType} from "../../src/app/Features/Comment/Types/CommentStatusEnumType";
-import {PostModel} from "../../src/app/Features/Post/PostModel";
-import CommentModel from "../../src/app/Features/Comment/CommentModel";
-import {ConfigOptions} from "../../src/lib/ConfigOptions";
+import { resetTables, seedDB } from '../helpers';
+import { Application } from '@tngraphql/illuminate';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { CommentRepository } from '../../src/app/Features/Comment/CommentRepository';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { UserModel } from '../../src/app/UserModel';
+import { CommentableEnumType } from '../../src/app/Features/Comment/Types/CommentableEnumType';
+import { expect } from 'chai';
+import { OptionRepository } from '../../src/Repositories/Lucid/OptionRepository';
+import { CommentStatusEnumType } from '../../src/app/Features/Comment/Types/CommentStatusEnumType';
+import { PostModel } from '../../src/app/Features/Post/PostModel';
+import CommentModel from '../../src/app/Features/Comment/CommentModel';
+import { ConfigOptions } from '../../src/lib/ConfigOptions';
 
 describe('Comment Repository', () => {
     describe('Create', () => {
@@ -26,7 +26,7 @@ describe('Comment Repository', () => {
 
         before(async () => {
             app = Application.getInstance<Application>()
-            context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+            context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
             repo = await app.make(CommentRepository, context);
         });
         beforeEach(async () => {
@@ -45,7 +45,7 @@ describe('Comment Repository', () => {
                 commentableType: CommentableEnumType.post,
                 body: 'nikk'
             });
-            const data = await CommentModel.findBy('id',res.id);
+            const data = await CommentModel.findBy('id', res.id);
             const posted = await PostModel.findBy('id', post.id);
 
             expect(data.id).to.be.not.undefined;
@@ -59,13 +59,13 @@ describe('Comment Repository', () => {
         it('create comment when commentModeration is true', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 1});
+            await config.saveSetting({ commentModeration: 1 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
                 body: 'nikk'
             });
-            const data = await CommentModel.findBy('id',res.id);
+            const data = await CommentModel.findBy('id', res.id);
 
             expect(data.id).to.be.not.undefined;
             expect(data.status).to.be.eq(CommentStatusEnumType.pending);
@@ -75,7 +75,7 @@ describe('Comment Repository', () => {
         it('create comment when setting commentBlacklistKeys is nikk', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentBlacklistKeys: 'nikk'});
+            await config.saveSetting({ commentBlacklistKeys: 'nikk' });
             const data = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -105,7 +105,7 @@ spam`
         it('create comment when setting commentModerationKeys', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModerationKeys: 'nikk'});
+            await config.saveSetting({ commentModerationKeys: 'nikk' });
             const data = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -140,7 +140,7 @@ spam`
 
         before(async () => {
             app = Application.getInstance<Application>()
-            context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+            context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
             repo = await app.make(CommentRepository, context);
         });
         beforeEach(async () => {
@@ -155,7 +155,7 @@ spam`
         it('comment update body', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 1});
+            await config.saveSetting({ commentModeration: 1 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -165,7 +165,7 @@ spam`
             const res2 = await repo.update({
                 body: 'vikk'
             }, res.id);
-            const data = await CommentModel.findBy('id',res2.id);
+            const data = await CommentModel.findBy('id', res2.id);
 
             expect(res2.id).to.be.eq(res.id);
             expect(res2.body).to.be.eq('vikk');
@@ -175,7 +175,7 @@ spam`
         it('comment update status. change status to approved', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 1});
+            await config.saveSetting({ commentModeration: 1 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -185,7 +185,7 @@ spam`
             const res2 = await repo.update({
                 status: CommentStatusEnumType.approved
             }, res.id);
-            const data = await CommentModel.findBy('id',res2.id);
+            const data = await CommentModel.findBy('id', res2.id);
             const posted = await PostModel.findBy('id', post.id);
 
             expect(res2.id).to.be.eq(res.id);
@@ -196,7 +196,7 @@ spam`
         it('comment update status. change status cancel approved', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 0});
+            await config.saveSetting({ commentModeration: 0 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -206,7 +206,7 @@ spam`
             const res2 = await repo.update({
                 status: CommentStatusEnumType.pending
             }, res.id);
-            const data = await CommentModel.findBy('id',res2.id);
+            const data = await CommentModel.findBy('id', res2.id);
             const posted = await PostModel.findBy('id', post.id);
 
             expect(res2.id).to.be.eq(res.id);
@@ -222,7 +222,7 @@ spam`
 
         before(async () => {
             app = Application.getInstance<Application>()
-            context = {context: {auth: new RequestGuard(() => UserModel.first(), {}, {} as any)}} as any;
+            context = { context: { auth: new RequestGuard(() => UserModel.first(), {}, {} as any) } } as any;
             repo = await app.make(CommentRepository, context);
         });
         beforeEach(async () => {
@@ -237,7 +237,7 @@ spam`
         it('delete a comment', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 1});
+            await config.saveSetting({ commentModeration: 1 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -252,7 +252,7 @@ spam`
         it('delete a comment have status pending', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 1});
+            await config.saveSetting({ commentModeration: 1 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,
@@ -267,7 +267,7 @@ spam`
         it('delete a comment have status approved', async () => {
             const post = await Factory.model('App/Features/Post/PostModel').create();
             const config = new OptionRepository();
-            await config.saveSetting({commentModeration: 0});
+            await config.saveSetting({ commentModeration: 0 });
             const res = await repo.create({
                 commentableId: post.id,
                 commentableType: CommentableEnumType.post,

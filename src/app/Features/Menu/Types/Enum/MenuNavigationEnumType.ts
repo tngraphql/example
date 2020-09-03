@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum MenuNavigationEnumType {
     main = 'mainNavigation', // Main Navigation
@@ -18,4 +18,4 @@ registerEnumType(MenuNavigationEnumType, {
     description: 'Loại liên kết menu.'
 });
 
-export {MenuNavigationEnumType};
+export { MenuNavigationEnumType };

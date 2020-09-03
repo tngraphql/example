@@ -5,7 +5,7 @@
  * Time: 6:45 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 export enum SortEnumType {
     ASC = 'asc',
@@ -14,4 +14,4 @@ export enum SortEnumType {
     desc = 'desc',
 }
 
-registerEnumType(SortEnumType, {name: 'SortValue'});
+registerEnumType(SortEnumType, { name: 'SortValue' });

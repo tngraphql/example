@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {PageFilterEnumType} from "./PageFilterEnumType";
-import {PageSortInputType} from "./PageSortInputType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { PageFilterEnumType } from './PageFilterEnumType';
+import { PageSortInputType } from './PageSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class PageIndexArgsType {
     @Field(returns => filterType(PageFilterEnumType))
     filter: FilterContract<typeof PageFilterEnumType>
 
-    @Field(returns => [PageSortInputType], {description: 'order'})
+    @Field(returns => [PageSortInputType], { description: 'order' })
     sortBy: PageSortInputType
 
     where: any;

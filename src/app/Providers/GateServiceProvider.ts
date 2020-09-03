@@ -4,16 +4,16 @@
  * Date: 3/30/2020
  * Time: 8:43 AM
  */
-import {Service, ServiceProvider} from "@tngraphql/illuminate";
-import {Gate, Guard} from "@slynova/fence";
+import { Service, ServiceProvider } from '@tngraphql/illuminate';
+import { Gate, Guard } from '@slynova/fence';
 
-Guard.prototype['any'] = async function (any, resource) {
-    if (!Array.isArray(any)) {
+Guard.prototype['any'] = async function(any, resource) {
+    if ( ! Array.isArray(any) ) {
         any = [any];
     }
 
-    for await (const ability of any) {
-        if (await this.allows(ability, resource)) {
+    for await ( const ability of any ) {
+        if ( await this.allows(ability, resource) ) {
             return true;
         }
     }
@@ -21,12 +21,12 @@ Guard.prototype['any'] = async function (any, resource) {
 }
 
 Guard.prototype['none'] = async function none(any, resource) {
-    if (!Array.isArray(any)) {
+    if ( ! Array.isArray(any) ) {
         any = [any];
     }
 
-    for await (const ability of any){
-        if (!await this.allows(ability, resource)) {
+    for await ( const ability of any ) {
+        if ( ! await this.allows(ability, resource) ) {
             return false
         }
     }

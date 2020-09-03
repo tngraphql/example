@@ -4,7 +4,7 @@
  * Date: 7/11/2020
  * Time: 3:03 PM
  */
-import {GraphQLScalarType} from "graphql";
+import { GraphQLScalarType } from 'graphql';
 
 export const AnyScalarType = new GraphQLScalarType({
     name: 'Any',

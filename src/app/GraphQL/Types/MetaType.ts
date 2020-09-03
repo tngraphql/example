@@ -4,20 +4,20 @@
  * Date: 7/13/2020
  * Time: 4:54 PM
  */
-import {Field, ObjectType, Root} from "@tngraphql/graphql";
-import {ID} from "./UidScalerType";
-import {Any} from "./ScalarType/AnyScalerType";
-import MediaModel from "../../Features/Media/MediaModel";
+import { Field, ObjectType, Root } from '@tngraphql/graphql';
+import { ID } from './UidScalerType';
+import { Any } from './ScalarType/AnyScalerType';
+import MediaModel from '../../Features/Media/MediaModel';
 
 @ObjectType('Meta')
 export class MetaType {
     @Field(returns => ID)
     public id: string
 
-    @Field({description: 'Key'})
+    @Field({ description: 'Key' })
     public metaKey: string;
 
-    @Field(returns => Any, {description: 'Giá trị'})
+    @Field(returns => Any, { description: 'Giá trị' })
     public async metaValue(@Root() parent) {
         try {
             const value = JSON.parse(parent.metaValue);

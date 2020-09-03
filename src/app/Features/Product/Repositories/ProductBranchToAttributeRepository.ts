@@ -4,15 +4,15 @@
  * Date: 8/11/2020
  * Time: 5:37 PM
  */
-import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {ProductBranchToAttributeModel} from "../Models/ProductBranchToAttributeModel";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {ProductBranchModel} from "../Models/ProductBranchModel";
-import {AttributeGroupRepository} from "./AttributeGroupRepository";
-import {AttributeRepository} from "./AttributeRepository";
+import { Inject, InvalidArgumentException, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { ProductBranchToAttributeModel } from '../Models/ProductBranchToAttributeModel';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { ProductBranchModel } from '../Models/ProductBranchModel';
+import { AttributeGroupRepository } from './AttributeGroupRepository';
+import { AttributeRepository } from './AttributeRepository';
 import _ = require('lodash');
-import {Maybe} from "@tngraphql/graphql";
+import { Maybe } from '@tngraphql/graphql';
 
 @Service()
 export class ProductBranchToAttributeRepository extends BaseRepository<ProductBranchToAttributeModel, typeof ProductBranchToAttributeModel> {
@@ -40,7 +40,7 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
                 return result;
             }
 
-            const group = await this.attributeGroup.firstOrCreate({name: attribute.groupName}, {name: attribute.groupName});
+            const group = await this.attributeGroup.firstOrCreate({ name: attribute.groupName }, { name: attribute.groupName });
 
             const attr = await this.attribute.firstOrCreate({
                 attributeGroupId: group.id,
@@ -71,18 +71,18 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
         }
 
         // if not attributes then out fn
-        if (!attributes) {
+        if ( ! attributes ) {
             return;
         }
 
-        if (!attributes.length) {
+        if ( ! attributes.length ) {
             return this.newQuery().where('productBranchId', instance.id)
-                .delete();
+                       .delete();
         }
 
         const group = Object.values(_.groupBy(attributes, 'groupName'))
-            .find(x => x.length > 1);
-        if (group) {
+                            .find(x => x.length > 1);
+        if ( group ) {
             throw new Error('Attribute group for product be must unique.');
         }
 
@@ -100,10 +100,10 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
 
         const listAttributeForBranch = allAttributes.filter(x => x.productBranchId === instance.id)
 
-        if (allAttributes.length) {
+        if ( allAttributes.length ) {
             const allGroup = [];
             let productBranchId;
-            for(const item of allAttributes) {
+            for( const item of allAttributes ) {
                 if ( ! productBranchId ) {
                     productBranchId = item.productBranchId;
                 }
@@ -117,11 +117,11 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
                 throw new Error(`The attribute is invalid`);
             }
 
-            for(const item of data) {
+            for( const item of data ) {
                 const index = allGroup.findIndex(x => x.attributeGroupId === item.attributeGroupId);
 
-                if( index === -1 ) {
-                    throw new Error(`The attribute group [${item.groupName}] does not exists.`);
+                if ( index === -1 ) {
+                    throw new Error(`The attribute group [${ item.groupName }] does not exists.`);
                 }
             }
         }
@@ -129,20 +129,20 @@ export class ProductBranchToAttributeRepository extends BaseRepository<ProductBr
         data = data.map(x => _.omit(x, ['name', 'groupName']));
 
         // if can't find attributes then should create many attributes
-        if (! listAttributeForBranch || !listAttributeForBranch.length) {
+        if ( ! listAttributeForBranch || ! listAttributeForBranch.length ) {
             return await instance.related('attributes').createMany(data);
         }
 
         const res = [];
 
-        for await (const item of data) {
+        for await ( const item of data ) {
             let productBranchToAttribute: Maybe<ProductBranchToAttributeModel> = _.find(listAttributeForBranch, {
                 productBranchId: item.productBranchId,
                 attributeGroupId: item.attributeGroupId,
                 attributeId: item.attributeId
             });
 
-            if (!productBranchToAttribute) {
+            if ( ! productBranchToAttribute ) {
                 productBranchToAttribute = await this.create(item);
             }
 

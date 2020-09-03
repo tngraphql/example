@@ -5,7 +5,7 @@
  * Time: 9:38 PM
  */
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const CATEGORY_LIST_QUERY = gql`
 query categories(

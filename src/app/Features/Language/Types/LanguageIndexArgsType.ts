@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {filterType} from "../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {LanguageFilterEnumType} from "./LanguageFilterEnumType";
-import {LanguageSortInputType} from "./LanguageSortInputType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { filterType } from '../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { LanguageFilterEnumType } from './LanguageFilterEnumType';
+import { LanguageSortInputType } from './LanguageSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class LanguageIndexArgsType {
     @Field(returns => filterType(LanguageFilterEnumType))
     filter: FilterContract<typeof LanguageFilterEnumType>
 
-    @Field(returns => [LanguageSortInputType], {description: 'order'})
+    @Field(returns => [LanguageSortInputType], { description: 'order' })
     sortBy: LanguageSortInputType
 
     where: any;

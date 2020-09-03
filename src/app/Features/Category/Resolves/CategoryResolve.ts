@@ -1,20 +1,20 @@
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {CategoryRepository} from "../CategoryRepository";
-import {CategoryType} from "../Types/CategoryType";
-import {CategoryIndexArgsType} from "../Types/CategoryIndexArgsType";
-import {CategoryCreateArgsType} from "../Types/CategoryCreateArgsType";
-import {CategoryListArgsType} from "../Types/CategoryListArgsType";
-import {CategoryDeleteArgsType} from "../Types/CategoryDeleteArgsType";
-import {CategoryUpdateArgsType} from "../Types/CategoryUpdateArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { CategoryRepository } from '../CategoryRepository';
+import { CategoryType } from '../Types/CategoryType';
+import { CategoryIndexArgsType } from '../Types/CategoryIndexArgsType';
+import { CategoryCreateArgsType } from '../Types/CategoryCreateArgsType';
+import { CategoryListArgsType } from '../Types/CategoryListArgsType';
+import { CategoryDeleteArgsType } from '../Types/CategoryDeleteArgsType';
+import { CategoryUpdateArgsType } from '../Types/CategoryUpdateArgsType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -45,7 +45,7 @@ export class CategoryResolve extends BaseResolve {
         return this.repo.paginate(1000, args.page);
     }
 
-    @Mutation(returns => CategoryType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => CategoryType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(CategoryCreateArgsType)
     @UseMiddleware('auth')
     async create(@Args() args: CategoryCreateArgsType, @SelectFields() fields) {

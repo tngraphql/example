@@ -5,12 +5,12 @@
  * Time: 4:06 PM
  */
 
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
 
-const {gql} = require('apollo-server');
-import {expect} from "chai";
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
+const { gql } = require('apollo-server');
+import { expect } from 'chai';
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
 
 describe('permission Http', () => {
     let client: ApolloServerTestClient;

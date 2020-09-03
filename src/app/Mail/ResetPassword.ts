@@ -4,8 +4,9 @@
  * Date: 8/23/2020
  * Time: 11:35 AM
  */
-import {Mailable} from "@tngraphql/mail";
-import {Application} from "@tngraphql/illuminate";
+import { Mailable } from '@tngraphql/mail';
+import { Application } from '@tngraphql/illuminate';
+
 const app = Application.getInstance();
 
 export class ResetPassword extends Mailable {
@@ -34,7 +35,7 @@ export class ResetPassword extends Mailable {
         ];
 
         this.data.outroLines = [
-            `This password reset link will expire in ${app.make('config').get('auth.passwords.expire')} minutes.`,
+            `This password reset link will expire in ${ app.make('config').get('auth.passwords.expire') } minutes.`,
             'If you did not request a password reset, no further action is required.',
         ]
         this.htmlView('password-reset', this.data)

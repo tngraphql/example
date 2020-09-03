@@ -1,7 +1,7 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {CommentCreateArgsType} from "./CommentCreateArgsType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { CommentCreateArgsType } from './CommentCreateArgsType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -12,14 +12,14 @@ import {CommentCreateArgsType} from "./CommentCreateArgsType";
 
 @ArgsType()
 export class CommentPostCreateArgsType extends CommentCreateArgsType {
-    @Field(returns => ID, {description: 'ID bài viết.',})
+    @Field(returns => ID, { description: 'ID bài viết.', })
     @Rules(['required'])
     public postId: string;
 
-    @Field(returns => ID, {description: 'ID bình luận cha.', defaultValue: '0'})
+    @Field(returns => ID, { description: 'ID bình luận cha.', defaultValue: '0' })
     public parentId: string;
 
-    @Field({description: 'Nội dung bình luận.',})
+    @Field({ description: 'Nội dung bình luận.', })
     @Rules(args => ([
         'required',
     ]))

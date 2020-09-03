@@ -4,18 +4,18 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {BaseRepository} from "./BaseRepository";
-import {UserModel} from "../../app/UserModel";
-import {Inject, registerCustomInject, Service} from "@tngraphql/illuminate";
-import {ResolverData} from "@tngraphql/graphql";
-import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
-import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
-import {ResolveLang} from "../../decorators/ResolveLang";
-import {PasswordResetRepository} from "./PasswordResetRepository";
-import RoleModel from "../../app/Models/RoleModel";
-import {ConfigOptions} from "../../lib/ConfigOptions";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
+import { BaseRepository } from './BaseRepository';
+import { UserModel } from '../../app/UserModel';
+import { Inject, registerCustomInject, Service } from '@tngraphql/illuminate';
+import { ResolverData } from '@tngraphql/graphql';
+import { ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
+import { Hash } from '@tngraphql/illuminate/dist/Support/Facades/Hash';
+import { ResolveLang } from '../../decorators/ResolveLang';
+import { PasswordResetRepository } from './PasswordResetRepository';
+import RoleModel from '../../app/Models/RoleModel';
+import { ConfigOptions } from '../../lib/ConfigOptions';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
 
 @Service()
 export class UserRepository extends BaseRepository<UserModel> {
@@ -37,7 +37,7 @@ export class UserRepository extends BaseRepository<UserModel> {
 
             if ( ! Array.isArray(data.roles) ) {
                 const role = await RoleModel.query().where('name', await ConfigOptions.getOption('defaultRole'))
-                    .first();
+                                            .first();
 
                 data.roles = [role.id];
             }
@@ -67,13 +67,13 @@ export class UserRepository extends BaseRepository<UserModel> {
     async delete(id: any, attribute: string = this.getKeyName()): Promise<number> {
         let instance = id;
 
-        if ( !(id instanceof BaseModel)) {
+        if ( ! (id instanceof BaseModel) ) {
             const query = this.newQuery();
 
             instance = await query.where(attribute, id).first();
         }
 
-        if (!instance) {
+        if ( ! instance ) {
             return 0;
         }
 
@@ -96,9 +96,9 @@ export class UserRepository extends BaseRepository<UserModel> {
         return this.transaction(async () => {
             return this.passwordReset.reset(data, () => {
                 return this.newQuery().where('email', data.email)
-                    .update({
-                        password: Hash.make(data.password) // bcrypt.hashSync(data.password, salt)
-                    });
+                           .update({
+                               password: Hash.make(data.password) // bcrypt.hashSync(data.password, salt)
+                           });
             });
         });
     }

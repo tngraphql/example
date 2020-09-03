@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class CommentsTableCreate extends BaseSchema {
     protected $tableName = 'comments'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`comments\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`author_name\` varchar(255) DEFAULT NULL,
@@ -30,7 +30,7 @@ export default class CommentsTableCreate extends BaseSchema {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`)
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

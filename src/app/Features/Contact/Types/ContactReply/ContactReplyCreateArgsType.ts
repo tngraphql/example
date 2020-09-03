@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import ContactModel from "../../ContactModel";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import ContactModel from '../../ContactModel';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
 
 /**
  * Created by Phan Trung Nguyên.

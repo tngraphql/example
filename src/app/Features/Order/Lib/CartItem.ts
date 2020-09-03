@@ -4,7 +4,7 @@
  * Date: 8/26/2020
  * Time: 3:12 PM
  */
-import {convertStringToNumber} from "./utils";
+import { convertStringToNumber } from './utils';
 
 const _ = require('lodash');
 
@@ -40,7 +40,7 @@ export class CartItem {
     }
 
     public getData() {
-        const res =  _.pick(this, [
+        const res = _.pick(this, [
             'id',
             'orderId',
             'productBranchId',
@@ -67,7 +67,7 @@ export class CartItem {
     }
 
     public getId() {
-        if (this.id === undefined) {
+        if ( this.id === undefined ) {
             return undefined;
         }
         return String(this.id);

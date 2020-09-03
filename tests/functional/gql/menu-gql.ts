@@ -5,7 +5,7 @@
  * Time: 5:12 PM
  */
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const MENU_LIST_QUERY = gql`
 query menus($page: Int, $sortBy: [MenuSort], $filter: MenuFilter, $limit: Int = 20) {

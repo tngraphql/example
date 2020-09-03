@@ -11,12 +11,12 @@ Factory.blueprint('post_category', async (faker, index, data) => {
     let post_id = data.post_id;
     let category_id = data.category_id;
 
-    if (!post_id) {
+    if ( ! post_id ) {
         const post = await Factory.model('App/Features/Post/PostModel').create();
         post_id = post.id;
     }
 
-    if (!category_id) {
+    if ( ! category_id ) {
         const category = await Factory.model('App/Features/Category/CategoryModel').create();
         category_id = category.id;
     }

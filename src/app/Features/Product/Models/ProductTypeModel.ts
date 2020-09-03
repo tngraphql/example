@@ -4,22 +4,22 @@
  * Date: 8/4/2020
  * Time: 9:40 AM
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasMany, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import {Sluggable} from "@tngraphql/slugify";
-import {LanguageMixin} from "../../../../lib/LanguageMixin";
-import {ProductCategoryModel} from "./ProductCategoryModel";
-import {HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {ProductTypeMetaModel} from "./ProductTypeMetaModel";
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
-import {Str} from "../../../../lib/Str";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column, hasMany, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
+import { Sluggable } from '@tngraphql/slugify';
+import { LanguageMixin } from '../../../../lib/LanguageMixin';
+import { ProductCategoryModel } from './ProductCategoryModel';
+import { HasMany, HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { ProductTypeMetaModel } from './ProductTypeMetaModel';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
+import { Str } from '../../../../lib/Str';
 
 export class ProductTypeModel extends BaseModel {
     public static table = 'product_types';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -52,10 +52,10 @@ export class ProductTypeModel extends BaseModel {
     @column()
     public seoKeyword: string;
 
-    @column.dateTime({autoCreate: true})
+    @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
-    @column.dateTime({autoCreate: true, autoUpdate: true})
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime;
 
     @column.dateTime()
@@ -66,7 +66,7 @@ export class ProductTypeModel extends BaseModel {
     }
 
     public sluggable() {
-        return  {
+        return {
             source: ['name'],
             slugOptions: { lower: true },
             overwrite: false,

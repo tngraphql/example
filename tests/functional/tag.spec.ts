@@ -5,16 +5,17 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {TAG_LIST_QUERY, TAG_QUERY} from "./gql/tag-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import TagModel from "../../src/app/Features/Tag/TagModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { TAG_LIST_QUERY, TAG_QUERY } from './gql/tag-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import TagModel from '../../src/app/Features/Tag/TagModel';
 
 describe('tag Http', () => {
     let client: ApolloServerTestClient;
@@ -56,8 +57,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -81,17 +82,17 @@ describe('tag Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": tag.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': tag.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -99,17 +100,17 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.id).to.eq(tag.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": tag.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': tag.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -117,17 +118,17 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.name).to.eq(tag.name);
             })
-        
+
             it('should filter slug without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": tag.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': tag.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -135,11 +136,11 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.slug).to.eq(tag.slug);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(3);
 
@@ -148,8 +149,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -167,8 +168,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -177,7 +178,7 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.id).to.eq(tag.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(3);
 
@@ -186,8 +187,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -205,8 +206,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -215,7 +216,7 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.name).to.eq(tag.name);
             })
-        
+
             it('should sort by desc slug without error', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(3);
 
@@ -224,8 +225,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
@@ -243,8 +244,8 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
@@ -253,7 +254,7 @@ describe('tag Http', () => {
                 expect(res.data.tag.id).to.eq(tag.id);
                 expect(res.data.tag.slug).to.eq(tag.slug);
             })
-        
+
         });
     });
 
@@ -298,17 +299,17 @@ describe('tag Http', () => {
         });
 
         describe('tag Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": tag.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': tag.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -316,17 +317,17 @@ describe('tag Http', () => {
                 expect(res.data.tags.data[0].id).to.eq(tag.id)
                 expect(res.data.tags.data[0].id).to.eq(tag.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": tag.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': tag.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -334,17 +335,17 @@ describe('tag Http', () => {
                 expect(res.data.tags.data[0].id).to.eq(tag.id)
                 expect(res.data.tags.data[0].name).to.eq(tag.name)
             });
-        
+
             it('should filter slug without error', async () => {
                 const tag = await Factory.model('App/Features/Tag/TagModel').create();
 
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": tag.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': tag.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -352,11 +353,11 @@ describe('tag Http', () => {
                 expect(res.data.tags.data[0].id).to.eq(tag.id)
                 expect(res.data.tags.data[0].slug).to.eq(tag.slug)
             });
-        
+
         });
 
         describe('tag Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(5);
 
@@ -365,14 +366,14 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -383,16 +384,16 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(5);
 
@@ -401,14 +402,14 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -419,16 +420,16 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by slug desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Tag/TagModel').createMany(5);
 
@@ -437,14 +438,14 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by slug asc when sortBy as array', async () => {
@@ -455,16 +456,16 @@ describe('tag Http', () => {
                 const res = await client.query({
                     query: TAG_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.tags.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.tags.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 

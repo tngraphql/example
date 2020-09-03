@@ -5,28 +5,28 @@
  * Time: 8:20 PM
  */
 
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasMany, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Str} from "../../../../lib/Str";
-import {DateTime} from "luxon";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import {OrderStatusModel} from "./OrderStatusModel";
-import {BelongsTo, HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {OrderBillingModel} from "./OrderBillingModel";
-import {OrderShippingModel} from "./OrderShippingModel";
-import {UserModel} from "../../../UserModel";
-import {OrderItemModel} from "./OrderItemModel";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasMany, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { Str } from '../../../../lib/Str';
+import { DateTime } from 'luxon';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
+import { OrderStatusModel } from './OrderStatusModel';
+import { BelongsTo, HasMany, HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { OrderBillingModel } from './OrderBillingModel';
+import { OrderShippingModel } from './OrderShippingModel';
+import { UserModel } from '../../../UserModel';
+import { OrderItemModel } from './OrderItemModel';
 
 export class OrderModel extends BaseModel {
     static table = 'orders';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
     public code: string
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public orderStatusId: string
 
     @column()
@@ -44,10 +44,10 @@ export class OrderModel extends BaseModel {
     @column()
     public discountType: number
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public customerId: string
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public customerGroupId: string
 
     @column()

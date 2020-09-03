@@ -5,7 +5,7 @@
  * Time: 9:19 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 export enum CommentStatusEnumType {
     pending = 'pending',

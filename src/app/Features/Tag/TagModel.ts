@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import {Sluggable} from "@tngraphql/slugify";
-import {Str} from "../../../lib/Str";
+import { Sluggable } from '@tngraphql/slugify';
+import { Str } from '../../../lib/Str';
 
 export default class TagModel extends BaseModel {
     public static table = 'tags';
@@ -33,7 +33,7 @@ export default class TagModel extends BaseModel {
     public sluggable() {
         return {
             source: ['name'],
-            slugOptions: {lower: true},
+            slugOptions: { lower: true },
             overwrite: false,
             column: 'slug'
         };

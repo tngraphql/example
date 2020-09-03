@@ -5,11 +5,11 @@
  * Time: 3:58 PM
  */
 
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {AttributeModel} from "../Models/AttributeModel";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { AttributeModel } from '../Models/AttributeModel';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
 
 @Service()
 export class AttributeRepository extends BaseRepository<AttributeModel> {

@@ -4,9 +4,9 @@
  * Date: 6/5/2020
  * Time: 9:46 AM
  */
-import {registerFilterEnumType} from "../../../GraphQL/Types/FilterType";
-import {converBoolean} from "../../../../lib/utils";
-import {UserModel} from "../../../UserModel";
+import { registerFilterEnumType } from '../../../GraphQL/Types/FilterType';
+import { converBoolean } from '../../../../lib/utils';
+import { UserModel } from '../../../UserModel';
 
 enum MenuFilterEnumType {
     id = 'id',
@@ -22,4 +22,4 @@ enum MenuFilterEnumType {
 
 registerFilterEnumType('Menu', MenuFilterEnumType);
 
-export {MenuFilterEnumType};
+export { MenuFilterEnumType };

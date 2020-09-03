@@ -12,13 +12,13 @@ import { ResolverData } from '@tngraphql/graphql';
 export class Acl {
     public app;
 
-    public async handle (
+    public async handle(
         data: ResolverData,
         next: () => Promise<void>,
         allowedRoles: string[],
     ) {
         data.info.parentType.name
-        console.log(`enforces "${allowedRoles}" roles`)
+        console.log(`enforces "${ allowedRoles }" roles`)
         await next()
     }
 }

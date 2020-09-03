@@ -5,13 +5,13 @@
  * Time: 11:03 AM
  */
 
-import {Field, ObjectType, Root} from "@tngraphql/graphql";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import MediaModel from "../MediaModel";
-import {Any} from "../../../GraphQL/Types/ScalarType/AnyScalerType";
-import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
-import {DateTime} from "luxon";
-import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
+import { Field, ObjectType, Root } from '@tngraphql/graphql';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import MediaModel from '../MediaModel';
+import { Any } from '../../../GraphQL/Types/ScalarType/AnyScalerType';
+import { TimestampScalarType } from '../../../GraphQL/Types/TimestampScalarType';
+import { DateTime } from 'luxon';
+import { registerPaginateType } from '../../../GraphQL/Types/PaginateType';
 
 @ObjectType('Media')
 export class MediaType {
@@ -55,7 +55,7 @@ export class MediaType {
         } catch (e) {
             // code
         }
-        if (data && data.sizes && data.sizes.thumbnail) {
+        if ( data && data.sizes && data.sizes.thumbnail ) {
             return data.sizes.thumbnail.guid;
         }
 

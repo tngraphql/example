@@ -5,19 +5,20 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {COMMENT_LIST_QUERY, COMMENT_POST_CREATE_GQL, COMMENT_QUERY} from "./gql/comment-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import CommentModel from "../../src/app/Features/Comment/CommentModel";
-import {CommentStatusEnumType} from "../../src/app/Features/Comment/Types/CommentStatusEnumType";
-import {DateTime} from "luxon";
-import {CommentableEnumType} from "../../src/app/Features/Comment/Types/CommentableEnumType";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { COMMENT_LIST_QUERY, COMMENT_POST_CREATE_GQL, COMMENT_QUERY } from './gql/comment-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import CommentModel from '../../src/app/Features/Comment/CommentModel';
+import { CommentStatusEnumType } from '../../src/app/Features/Comment/Types/CommentStatusEnumType';
+import { DateTime } from 'luxon';
+import { CommentableEnumType } from '../../src/app/Features/Comment/Types/CommentableEnumType';
 
 describe('comment Http', () => {
     let client: ApolloServerTestClient;
@@ -57,8 +58,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -89,10 +90,10 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": comment.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': comment.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -111,10 +112,10 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": comment.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': comment.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -129,7 +130,7 @@ describe('comment Http', () => {
                     commentableId: post.id,
                     commentableType: 'post'
                 });
-                await Factory.model('App/Features/Comment/CommentModel').createMany(5,{
+                await Factory.model('App/Features/Comment/CommentModel').createMany(5, {
                     commentableId: post.id,
                     commentableType: 'post',
                     parentId: comment.id
@@ -138,10 +139,10 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": comment.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': comment.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -151,17 +152,17 @@ describe('comment Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const comment = await Factory.model('App/Features/Comment/CommentModel').create();
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": comment.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': comment.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -169,17 +170,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.id).to.eq(comment.id);
             })
-        
+
             it('should filter authorId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({authorId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ authorId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "authorId",
-                            "value": comment.authorId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'authorId',
+                            'value': comment.authorId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -187,17 +188,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.authorId).to.eq(comment.authorId);
             })
-        
+
             it('should filter parentId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({parentId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ parentId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": comment.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': comment.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -205,17 +206,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.parentId).to.eq(comment.parentId);
             })
-        
+
             it('should filter body without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({body: 'nikk'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ body: 'nikk' });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "body",
-                            "value": comment.body,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'body',
+                            'value': comment.body,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -223,17 +224,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.body).to.eq(comment.body);
             })
-        
+
             it('should filter status without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({status: CommentStatusEnumType.trash});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ status: CommentStatusEnumType.trash });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": comment.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': comment.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -241,17 +242,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.status).to.eq(comment.status);
             })
-        
+
             it('should filter commentableType without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({commentableType: 'product'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ commentableType: 'product' });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentableType",
-                            "value": comment.commentableType,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentableType',
+                            'value': comment.commentableType,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -259,17 +260,17 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.commentableType).to.eq(comment.commentableType);
             })
-        
+
             it('should filter commentableId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({commentableId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ commentableId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentableId",
-                            "value": comment.commentableId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentableId',
+                            'value': comment.commentableId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -277,7 +278,7 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.commentableId).to.eq(comment.commentableId);
             })
-        
+
             it('should filter publishedAt without error', async () => {
                 const comment = await Factory.model('App/Features/Comment/CommentModel').create({
                     publishedAt: DateTime.fromSQL('2020-06-16 11:25:42')
@@ -286,10 +287,10 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "publishedAt",
-                            "value": '2020-06-16 11:25:42',
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'publishedAt',
+                            'value': '2020-06-16 11:25:42',
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -297,11 +298,11 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.publishedAt).to.deep.eq(comment.publishedAt);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(3);
 
@@ -310,8 +311,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -329,8 +330,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -339,7 +340,7 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.id).to.eq(comment.id);
             })
-        
+
             it('should sort by desc authorId without error', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(3);
 
@@ -348,8 +349,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.DESC
+                        'sortBy': [{
+                            'authorId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -367,8 +368,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.ASC
+                        'sortBy': [{
+                            'authorId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -377,7 +378,7 @@ describe('comment Http', () => {
                 expect(res.data.comment.id).to.eq(comment.id);
                 expect(res.data.comment.authorId).to.eq(comment.authorId);
             })
-        
+
             it('should sort by desc body without error', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(3);
 
@@ -386,8 +387,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "body": SortEnumType.DESC
+                        'sortBy': [{
+                            'body': SortEnumType.DESC
                         }]
                     }
                 });
@@ -405,8 +406,8 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "body": SortEnumType.ASC
+                        'sortBy': [{
+                            'body': SortEnumType.ASC
                         }]
                     }
                 });
@@ -459,17 +460,17 @@ describe('comment Http', () => {
         });
 
         describe('comment Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const comment = await Factory.model('App/Features/Comment/CommentModel').create();
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": comment.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': comment.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -477,17 +478,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
             });
-        
+
             it('should filter authorId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({authorId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ authorId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "authorId",
-                            "value": comment.authorId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'authorId',
+                            'value': comment.authorId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -495,17 +496,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].authorId).to.eq(comment.authorId)
             });
-        
+
             it('should filter parentId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({parentId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ parentId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": comment.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': comment.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -513,17 +514,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].parentId).to.eq(comment.parentId)
             });
-        
+
             it('should filter body without error', async () => {
                 const comment = await Factory.model('App/Features/Comment/CommentModel').create();
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "body",
-                            "value": comment.body,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'body',
+                            'value': comment.body,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -531,17 +532,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].body).to.eq(comment.body)
             });
-        
+
             it('should filter status without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({status: CommentStatusEnumType.trash});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ status: CommentStatusEnumType.trash });
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": comment.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': comment.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -549,17 +550,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].status).to.eq(comment.status)
             });
-        
+
             it('should filter commentableType without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({commentableType: CommentableEnumType.product});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ commentableType: CommentableEnumType.product });
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentableType",
-                            "value": comment.commentableType,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentableType',
+                            'value': comment.commentableType,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -567,17 +568,17 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].commentableType).to.eq(comment.commentableType)
             });
-        
+
             it('should filter commentableId without error', async () => {
-                const comment = await Factory.model('App/Features/Comment/CommentModel').create({commentableId: '2'});
+                const comment = await Factory.model('App/Features/Comment/CommentModel').create({ commentableId: '2' });
 
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentableId",
-                            "value": comment.commentableId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentableId',
+                            'value': comment.commentableId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -585,7 +586,7 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].commentableId).to.eq(comment.commentableId)
             });
-        
+
             it('should filter publishedAt without error', async () => {
                 const comment = await Factory.model('App/Features/Comment/CommentModel').create({
                     publishedAt: DateTime.fromSQL('2020-06-16 11:25:42')
@@ -594,10 +595,10 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "publishedAt",
-                            "value": comment.publishedAt,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'publishedAt',
+                            'value': comment.publishedAt,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -605,11 +606,11 @@ describe('comment Http', () => {
                 expect(res.data.comments.data[0].id).to.eq(comment.id)
                 expect(res.data.comments.data[0].publishedAt).to.deep.eq(comment.publishedAt)
             });
-        
+
         });
 
         describe('comment Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(5);
 
@@ -618,14 +619,14 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -636,16 +637,16 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by authorId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(5);
 
@@ -654,14 +655,14 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.DESC
+                        'sortBy': [{
+                            'authorId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by authorId asc when sortBy as array', async () => {
@@ -672,16 +673,16 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.ASC
+                        'sortBy': [{
+                            'authorId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by body desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(5);
 
@@ -690,14 +691,14 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "body": SortEnumType.DESC
+                        'sortBy': [{
+                            'body': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by body asc when sortBy as array', async () => {
@@ -708,16 +709,16 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "body": SortEnumType.ASC
+                        'sortBy': [{
+                            'body': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by publishedAt desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Comment/CommentModel').createMany(5);
 
@@ -726,14 +727,14 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.DESC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by publishedAt asc when sortBy as array', async () => {
@@ -744,16 +745,16 @@ describe('comment Http', () => {
                 const res = await client.query({
                     query: COMMENT_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.ASC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.comments.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.comments.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 

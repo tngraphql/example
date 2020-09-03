@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class PermissionsTableCreate extends BaseSchema {
     protected $tableName = 'permissions'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`permissions\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`name\` varchar(191) DEFAULT NULL,
@@ -37,12 +37,12 @@ INSERT INTO \`permissions\` VALUES (18, 'page-delete', 'Delete Page', 'Delete Pa
 INSERT INTO \`permissions\` VALUES (19, 'menu-create', 'Create Menu', 'Create New Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (20, 'menu-update', 'Update Menu', 'Update Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (21, 'menu-delete', 'Delete Menu', 'Delete Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');`
-        data.split(';').filter(x => !!x.trim()).forEach(value => {
+        data.split(';').filter(x => !! x.trim()).forEach(value => {
             this.schema.raw(value);
         })
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

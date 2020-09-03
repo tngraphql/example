@@ -4,7 +4,7 @@
  * Date: 7/12/2020
  * Time: 8:32 PM
  */
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const CONTACTREPLY_LIST_QUERY = gql`
 query contactReplies(

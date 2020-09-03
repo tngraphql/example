@@ -20,20 +20,20 @@ import {
     Root,
     UseMiddleware
 } from '@tngraphql/graphql';
-import {UserType} from "../Types/User/UserType";
-import {GraphQLString} from "graphql";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {UserRepository} from "../../../Repositories/Lucid/UserRepository";
-import {BaseResolve} from "./BaseResolve";
-import {SelectionCriteria} from "../../../Repositories/Criteria/SelectionCriteria";
-import {SelectFields} from "../../../decorators/SelectFields";
+import { UserType } from '../Types/User/UserType';
+import { GraphQLString } from 'graphql';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { UserRepository } from '../../../Repositories/Lucid/UserRepository';
+import { BaseResolve } from './BaseResolve';
+import { SelectionCriteria } from '../../../Repositories/Criteria/SelectionCriteria';
+import { SelectFields } from '../../../decorators/SelectFields';
 
 @Resolver()
 export class AuthResolve extends BaseResolve {
     @Inject(UserRepository)
     public repo: UserRepository;
 
-    @Mutation(returns => UserType, {description: 'Đăng nhập hệ thống.'})
+    @Mutation(returns => UserType, { description: 'Đăng nhập hệ thống.' })
     @ValidateArgs({
         email: [
             'required',
@@ -45,11 +45,11 @@ export class AuthResolve extends BaseResolve {
         ]
     })
     async authMutation(
-        @Arg('email', returns => GraphQLString, {description: 'Email đăng nhập'}) email: string,
-        @Arg('password', returns => GraphQLString, {description: 'Mật khẩu đăng nhập'}) password: string,
+        @Arg('email', returns => GraphQLString, { description: 'Email đăng nhập' }) email: string,
+        @Arg('password', returns => GraphQLString, { description: 'Mật khẩu đăng nhập' }) password: string,
         @SelectFields() fields
     ) {
-        const user = await this.repo.comparePassword({email, password});
+        const user = await this.repo.comparePassword({ email, password });
 
         if ( ! user ) {
             throw new Error(this.lang.t('These credentials do not match our records.'));
@@ -58,34 +58,34 @@ export class AuthResolve extends BaseResolve {
         const token = await user.createToken('new', ['viewUser']);
 
         const instance = await this.repo.query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(user.id);
+                                   .pushCriteria(new SelectionCriteria(fields))
+                                   .firstBy(user.id);
 
         instance['token'] = token;
 
         return instance;
     }
 
-    @Mutation(returns => UserType, {description: 'Đăng nhập hệ thống qua facebook.'})
+    @Mutation(returns => UserType, { description: 'Đăng nhập hệ thống qua facebook.' })
     @ValidateArgs({
         code: [
             'required',
         ]
     })
     async authFacebook(
-        @Arg('code', returns => GraphQLString, {description: 'Mã code'}) code: string
+        @Arg('code', returns => GraphQLString, { description: 'Mã code' }) code: string
     ) {
 
     }
 
-    @Mutation(returns => UserType, {description: 'Đăng nhập hệ thống qua google.'})
+    @Mutation(returns => UserType, { description: 'Đăng nhập hệ thống qua google.' })
     @ValidateArgs({
         token: [
             'required',
         ]
     })
     async authGoogle(
-        @Arg('token', returns => GraphQLString, {description: 'Mã token'}) token: string
+        @Arg('token', returns => GraphQLString, { description: 'Mã token' }) token: string
     ) {
 
     }

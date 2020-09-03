@@ -4,7 +4,7 @@
  * Date: 8/13/2020
  * Time: 10:48 AM
  */
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const UPDATE_PRODUCT = gql`
     mutation productUpdate(

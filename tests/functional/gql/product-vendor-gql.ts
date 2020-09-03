@@ -6,7 +6,7 @@
  */
 
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const PRODUCTVENDOR_LIST_QUERY = gql`
 query productVendors(

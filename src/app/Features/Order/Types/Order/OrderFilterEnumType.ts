@@ -4,9 +4,9 @@
  * Date: 6/5/2020
  * Time: 9:46 AM
  */
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
-import {converBoolean} from "../../../../../lib/utils";
-import {UserModel} from "../../../../UserModel";
+import { registerFilterEnumType } from '../../../../GraphQL/Types/FilterType';
+import { converBoolean } from '../../../../../lib/utils';
+import { UserModel } from '../../../../UserModel';
 
 enum OrderFilterEnumType {
     id = 'id',
@@ -27,4 +27,4 @@ enum OrderFilterEnumType {
 
 registerFilterEnumType('Order', OrderFilterEnumType);
 
-export {OrderFilterEnumType};
+export { OrderFilterEnumType };

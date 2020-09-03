@@ -5,8 +5,8 @@
  * Time: 9:46 AM
  */
 
-import {registerFilterEnumType} from "../../../../GraphQL/Types/FilterType";
-import {converBoolean} from "../../../../../lib/utils";
+import { registerFilterEnumType } from '../../../../GraphQL/Types/FilterType';
+import { converBoolean } from '../../../../../lib/utils';
 
 enum ProductMasterFilterEnumType {
     id = 'id',
@@ -40,4 +40,4 @@ namespace ProductMasterFilterEnumType {
 
 registerFilterEnumType('ProductMaster', ProductMasterFilterEnumType);
 
-export {ProductMasterFilterEnumType};
+export { ProductMasterFilterEnumType };

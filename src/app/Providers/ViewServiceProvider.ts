@@ -5,9 +5,9 @@
  * Time: 8:16 AM
  */
 
-import {Service, ServiceProvider} from "@tngraphql/illuminate";
-import * as path from "path";
-import {Repository} from "@tngraphql/illuminate/dist/Contracts/Config/Repository";
+import { Service, ServiceProvider } from '@tngraphql/illuminate';
+import * as path from 'path';
+import { Repository } from '@tngraphql/illuminate/dist/Contracts/Config/Repository';
 
 @Service()
 export class ViewServiceProvider extends ServiceProvider {
@@ -28,7 +28,7 @@ export class ViewServiceProvider extends ServiceProvider {
             edge.tag({
                 tagName: 't',
                 isBlock: false,
-                compile: (compiler, lexer, buffer, {body, childs, lineno}) => {
+                compile: (compiler, lexer, buffer, { body, childs, lineno }) => {
                     compiler.compileString(translator.__(body));
                 },
                 run() {
@@ -46,7 +46,7 @@ export class ViewServiceProvider extends ServiceProvider {
                     //         edge.global(i, data[i]);
                     //     }
                     // }
-                    return inlineCss(edge.render(template, data), {url: config.get('app.url')});
+                    return inlineCss(edge.render(template, data), { url: config.get('app.url') });
                 }
             };
         })

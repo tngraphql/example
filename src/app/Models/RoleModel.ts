@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
-import {column, manyToMany} from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { column, manyToMany } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import {ManyToMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import PermissionModel from "./PermissionModel";
-import PermissionRoleModel from "./PermissionRoleModel";
-import {Str} from "../../lib/Str";
+import { ManyToMany } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import PermissionModel from './PermissionModel';
+import PermissionRoleModel from './PermissionRoleModel';
+import { Str } from '../../lib/Str';
 
 export default class RoleModel extends BaseModel {
     public static table = 'roles';
@@ -43,13 +43,14 @@ export default class RoleModel extends BaseModel {
     public async cachedPermissions(): Promise<ManyToMany<typeof PermissionModel>> {
         const role = this as RoleModel;
 
-        if (role.permissions) {
+        if ( role.permissions ) {
             return role.permissions;
         }
 
-        if (!this.promiseLoadPermission) {
+        if ( ! this.promiseLoadPermission ) {
             this.promiseLoadPermission = role.preload((preloader) => {
-                preloader.preload('permissions', builder => {});
+                preloader.preload('permissions', builder => {
+                });
             });
         }
 

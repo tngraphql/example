@@ -4,8 +4,8 @@
  * Date: 7/11/2020
  * Time: 3:03 PM
  */
-import {GraphQLScalarType} from "graphql";
-import {validHTML} from "../../../../lib/utils";
+import { GraphQLScalarType } from 'graphql';
+import { validHTML } from '../../../../lib/utils';
 
 export const HtmlScalarType = new GraphQLScalarType({
     name: 'Html',
@@ -22,12 +22,12 @@ export const HtmlScalarType = new GraphQLScalarType({
         switch (ast.kind) {
             // Implement your own behavior here by returning what suits your needs
             // depending on ast.kind
-            case 'StringValue':
-                return ast.value;
-            case 'IntValue':
-                return ast.value;
-            default:
-                return ast['value'];
+        case 'StringValue':
+            return ast.value;
+        case 'IntValue':
+            return ast.value;
+        default:
+            return ast['value'];
         }
     },
 });

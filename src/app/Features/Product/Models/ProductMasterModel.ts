@@ -4,36 +4,36 @@
  * Date: 8/4/2020
  * Time: 9:33 AM
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasMany, hasOne, manyToMany, morphOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {converBoolean} from "../../../../lib/utils";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
-import FavoriteModel from "../../Favorite/FavoriteModel";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasMany, hasOne, manyToMany, morphOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { converBoolean } from '../../../../lib/utils';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
+import FavoriteModel from '../../Favorite/FavoriteModel';
 import {
     BelongsTo,
     HasMany,
     HasOne,
     ManyToMany,
     MorphOne
-} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import MediaModel from "../../Media/MediaModel";
-import {ProductmetaModel} from "./ProductmetaModel";
-import {InventoryModel} from "./InventoryModel";
-import {ProductImageModel} from "./ProductImageModel";
-import {ProductVendorModel} from "./ProductVendorModel";
-import {ProductTypeModel} from "./ProductTypeModel";
-import {ProductBranchToAttributeModel} from "./ProductBranchToAttributeModel";
-import {ProductBranchModel} from "./ProductBranchModel";
-import TagModel from "../../Tag/TagModel";
-import {ProductTagModel} from "./ProductTagModel";
-import {ProductCategoryModel} from "./ProductCategoryModel";
-import {Str} from "../../../../lib/Str";
+} from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import MediaModel from '../../Media/MediaModel';
+import { ProductmetaModel } from './ProductmetaModel';
+import { InventoryModel } from './InventoryModel';
+import { ProductImageModel } from './ProductImageModel';
+import { ProductVendorModel } from './ProductVendorModel';
+import { ProductTypeModel } from './ProductTypeModel';
+import { ProductBranchToAttributeModel } from './ProductBranchToAttributeModel';
+import { ProductBranchModel } from './ProductBranchModel';
+import TagModel from '../../Tag/TagModel';
+import { ProductTagModel } from './ProductTagModel';
+import { ProductCategoryModel } from './ProductCategoryModel';
+import { Str } from '../../../../lib/Str';
 
 export class ProductMasterModel extends BaseModel {
     public static table = 'product_master';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -58,7 +58,7 @@ export class ProductMasterModel extends BaseModel {
     public isFeatured: boolean;
 
     public static scopeIsFeatured(query, boolean = true, operation = '=') {
-        if (typeof boolean !== "boolean") {
+        if ( typeof boolean !== 'boolean' ) {
             throw new Error('value for isFeatured be must boolean');
         }
         return query.where('isFeatured', operation, converBoolean(boolean, 1, 0));
@@ -85,10 +85,10 @@ export class ProductMasterModel extends BaseModel {
     @column({ consume: value => Str.toString(value) })
     public productVendorId: string;
 
-    @column.dateTime({autoCreate: true})
+    @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
-    @column.dateTime({autoCreate: true, autoUpdate: true})
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime;
 
     @column.dateTime()
@@ -116,7 +116,7 @@ export class ProductMasterModel extends BaseModel {
     @hasOne(() => ProductBranchModel, {
         onQuery(query) {
             query.groupBy(query.qualifyColumn('productMasterId'))
-                .selectRaw('COUNT(*) as total')
+                 .selectRaw('COUNT(*) as total')
         }
     })
     public branchCount: HasOne<typeof ProductBranchModel>
@@ -163,7 +163,7 @@ export class ProductMasterModel extends BaseModel {
             let userId = null;
 
             query.withGlobalScope('auth', builder => {
-                if (builder.auth) {
+                if ( builder.auth ) {
                     userId = builder.auth.id;
                 }
 

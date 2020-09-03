@@ -4,7 +4,7 @@
  * Date: 6/5/2020
  * Time: 9:46 AM
  */
-import {registerFilterEnumType} from "../../../GraphQL/Types/FilterType";
+import { registerFilterEnumType } from '../../../GraphQL/Types/FilterType';
 
 enum CategoryFilterEnumType {
     id = 'id',
@@ -25,4 +25,4 @@ enum CategoryFilterEnumType {
 
 registerFilterEnumType('Category', CategoryFilterEnumType);
 
-export {CategoryFilterEnumType};
+export { CategoryFilterEnumType };

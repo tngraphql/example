@@ -4,12 +4,12 @@
  * Date: 6/10/2020
  * Time: 7:43 PM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {GraphQLString} from "graphql";
-import {ShippingZoneModel} from "../../Models/ShippingZoneModel";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { GraphQLString } from 'graphql';
+import { ShippingZoneModel } from '../../Models/ShippingZoneModel';
 
 
 @ArgsType()

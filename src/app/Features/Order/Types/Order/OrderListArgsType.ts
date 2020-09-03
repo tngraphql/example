@@ -4,11 +4,11 @@
  * Date: 6/5/2020
  * Time: 9:42 AM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {OrderFilterEnumType} from "./OrderFilterEnumType";
-import {OrderSortInputType} from "./OrderSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { OrderFilterEnumType } from './OrderFilterEnumType';
+import { OrderSortInputType } from './OrderSortInputType';
 
 @ArgsType()
 export class OrderListArgsType {
@@ -21,7 +21,7 @@ export class OrderListArgsType {
     @Field(returns => filterType(OrderFilterEnumType))
     filter: FilterContract<typeof OrderFilterEnumType>
 
-    @Field(returns => [OrderSortInputType],{description: 'order'})
+    @Field(returns => [OrderSortInputType], { description: 'order' })
     sortBy: OrderSortInputType
 
     where: any;

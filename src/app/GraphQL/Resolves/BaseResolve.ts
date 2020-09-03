@@ -1,10 +1,10 @@
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import {Resolver} from "@tngraphql/graphql";
-import {UserModel} from "../../UserModel";
-import {ResolveAuth} from "../../../decorators/ResolveAuth";
-import {AuthorizationException, Guard} from "@tngraphql/guard/dist/src";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {ResolveLang} from "../../../decorators/ResolveLang";
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import { Resolver } from '@tngraphql/graphql';
+import { UserModel } from '../../UserModel';
+import { ResolveAuth } from '../../../decorators/ResolveAuth';
+import { AuthorizationException, Guard } from '@tngraphql/guard/dist/src';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { ResolveLang } from '../../../decorators/ResolveLang';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -26,7 +26,7 @@ export class BaseResolve {
     public async authorize(ability, args = {}) {
         const guard = Guard.setDefaultUser(await this.auth.user());
 
-        if (!await guard.allows(ability, args as any, await this.auth.user())) {
+        if ( ! await guard.allows(ability, args as any, await this.auth.user()) ) {
             throw new AuthorizationException('This action is unauthorized.');
         }
     }

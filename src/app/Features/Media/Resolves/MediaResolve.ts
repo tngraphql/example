@@ -4,23 +4,23 @@
  * Date: 6/5/2020
  * Time: 9:34 AM
  */
-import {Args, Ctx,  Mutation, Query, Resolver, UseMiddleware} from '@tngraphql/graphql';
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {MediaRepository} from "../MediaRepository";
-import {MediaIndexArgsType} from "../Types/MediaIndexArgsType";
-import {MediaType} from "../Types/MediaType";
-import {MediaListArgsType} from "../Types/MediaListArgsType";
-import {MediaCreateArgsType} from "../Types/MediaCreateArgsType";
-import {MediaUpdateArgsType} from "../Types/MediaUpdateArgsType";
-import {MediaDeleteArgsType} from "../Types/MediaDeleteArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { MediaRepository } from '../MediaRepository';
+import { MediaIndexArgsType } from '../Types/MediaIndexArgsType';
+import { MediaType } from '../Types/MediaType';
+import { MediaListArgsType } from '../Types/MediaListArgsType';
+import { MediaCreateArgsType } from '../Types/MediaCreateArgsType';
+import { MediaUpdateArgsType } from '../Types/MediaUpdateArgsType';
+import { MediaDeleteArgsType } from '../Types/MediaDeleteArgsType';
 
 @Resolver()
 export class MediaResolve extends BaseResolve {
@@ -50,7 +50,7 @@ export class MediaResolve extends BaseResolve {
         return query.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => MediaType, {description: ''})
+    @Mutation(returns => MediaType, { description: '' })
     @ValidateArgs(MediaCreateArgsType)
     @UseMiddleware('auth')
     async create(@Args() args: MediaCreateArgsType, @SelectFields() fields) {

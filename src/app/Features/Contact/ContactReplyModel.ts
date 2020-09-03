@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import {Str} from "../../../lib/Str";
+import { Str } from '../../../lib/Str';
 
 export default class ContactReplyModel extends BaseModel {
     public static table = 'contact_replies';
@@ -12,7 +12,7 @@ export default class ContactReplyModel extends BaseModel {
     @column()
     public message: string
 
-    @column({consume: value => Str.toString(value)})
+    @column({ consume: value => Str.toString(value) })
     public contactId: string
 
     @column.dateTime({ autoCreate: true })

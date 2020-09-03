@@ -4,8 +4,8 @@
  * Date: 7/26/2020
  * Time: 5:40 PM
  */
-import {InMemoryLRUCache, PrefixingKeyValueCache} from 'apollo-server-caching';
-import {Database} from "@tngraphql/illuminate/dist/Support/Facades";
+import { InMemoryLRUCache, PrefixingKeyValueCache } from 'apollo-server-caching';
+import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
 
 function isJson(str) {
     try {
@@ -44,7 +44,7 @@ export class ConfigOptions {
 
         const old = await this.getOptions();
         if ( ! old ) {
-            if (!this.promiseOption) {
+            if ( ! this.promiseOption ) {
                 this.promiseOption = this.getAllOptions()
             }
 

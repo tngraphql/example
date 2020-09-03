@@ -5,20 +5,20 @@
  * Time: 10:42 PM
  */
 
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {OrderModel} from "../Models/OrderModel";
-import {OrderCreateArgsType} from "../Types/Order/OrderCreateArgsType";
-import {Cart} from "../Lib/Cart";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { OrderModel } from '../Models/OrderModel';
+import { OrderCreateArgsType } from '../Types/Order/OrderCreateArgsType';
+import { Cart } from '../Lib/Cart';
 import _ = require('lodash');
-import {OrderBillingRepository} from "./OrderBillingRepository";
-import {ShippingMethodRepository} from "./ShippingMethodRepository";
-import {OrderUpdateArgsType} from "../Types/Order/OrderUpdateArgsType";
-import {OrderItemRepository} from "./OrderItemRepository";
-import {OrderItemModel} from "../Models/OrderItemModel";
+import { OrderBillingRepository } from './OrderBillingRepository';
+import { ShippingMethodRepository } from './ShippingMethodRepository';
+import { OrderUpdateArgsType } from '../Types/Order/OrderUpdateArgsType';
+import { OrderItemRepository } from './OrderItemRepository';
+import { OrderItemModel } from '../Models/OrderItemModel';
 
 @Service()
-export class OrderRepository extends BaseRepository<OrderModel, typeof OrderModel>  {
+export class OrderRepository extends BaseRepository<OrderModel, typeof OrderModel> {
     @Inject(type => OrderBillingRepository)
     protected orderBilling: OrderBillingRepository;
 
@@ -71,11 +71,11 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
 
             if ( data.shipping && data.shipping.methodId ) {
                 const shipping = await this.shippingMethod
-                    .newQuery()
-                    .where('id', data.shipping.methodId)
-                    .where('methodType', data.shipping.methodType)
-                    .isEnabled()
-                    .first();
+                                           .newQuery()
+                                           .where('id', data.shipping.methodId)
+                                           .where('methodType', data.shipping.methodType)
+                                           .isEnabled()
+                                           .first();
 
                 await instance.related('shipping').create({
                     ...data.shipping,
@@ -119,11 +119,11 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
 
             if ( data.shipping && data.shipping.methodId ) {
                 const shipping = await this.shippingMethod
-                    .newQuery()
-                    .where('id', data.shipping.methodId)
-                    .where('methodType', data.shipping.methodType)
-                    .isEnabled()
-                    .first();
+                                           .newQuery()
+                                           .where('id', data.shipping.methodId)
+                                           .where('methodType', data.shipping.methodType)
+                                           .isEnabled()
+                                           .first();
 
                 await instance.related('shipping').create({
                     ...data.shipping,
@@ -173,9 +173,9 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
                 });
             } else {
                 await this.orderItem.newQuery()
-                    .where('type', 'shipping')
-                    .where('orderId', instance.id)
-                    .delete();
+                          .where('type', 'shipping')
+                          .where('orderId', instance.id)
+                          .delete();
             }
 
             return instance;
@@ -187,7 +187,7 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
 
         var template = '';
 
-        for (var i = 0; i < length; i++) {
+        for( var i = 0; i < length; i++ ) {
             template = template + '#';
         }
         length = null;
@@ -195,15 +195,15 @@ export class OrderRepository extends BaseRepository<OrderModel, typeof OrderMode
     }
 
     replaceSymbolWithNumber(string, symbol = undefined) {
-        string = string || "";
+        string = string || '';
         // default symbol is '#'
-        if (symbol === undefined) {
+        if ( symbol === undefined ) {
             symbol = '#';
         }
 
         var str = '';
-        for (var i = 0; i < string.length; i++) {
-            if (string.charAt(i) == symbol) {
+        for( var i = 0; i < string.length; i++ ) {
+            if ( string.charAt(i) == symbol ) {
                 str += this.randomNumber(9);
             } else {
                 str += string.charAt(i);

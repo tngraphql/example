@@ -4,20 +4,20 @@
  * Date: 7/19/2020
  * Time: 9:08 PM
  */
-import {Inject, InvalidArgumentException, Service} from "@tngraphql/illuminate";
-import CommentModel from "./CommentModel";
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import {ResolveAuth} from "../../../decorators/ResolveAuth";
-import {LucidRow, ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {CommentStatusEnumType} from "./Types/CommentStatusEnumType";
-import {ConfigOptions} from "../../../lib/ConfigOptions";
-import {DateTime} from "luxon";
-import {PostRepository} from "../Post/Repositories/PostRepository";
-import {Str} from "../../../lib/Str";
-import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
+import { Inject, InvalidArgumentException, Service } from '@tngraphql/illuminate';
+import CommentModel from './CommentModel';
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import { ResolveAuth } from '../../../decorators/ResolveAuth';
+import { LucidRow, ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { CommentStatusEnumType } from './Types/CommentStatusEnumType';
+import { ConfigOptions } from '../../../lib/ConfigOptions';
+import { DateTime } from 'luxon';
+import { PostRepository } from '../Post/Repositories/PostRepository';
+import { Str } from '../../../lib/Str';
+import { AuthContract } from '@tngraphql/auth/dist/src/Contract/AuthContract';
 
 @Service()
-export class CommentRepository extends BaseRepository<CommentModel>  {
+export class CommentRepository extends BaseRepository<CommentModel> {
     @ResolveAuth()
     protected auth: AuthContract;
 
@@ -132,7 +132,7 @@ export class CommentRepository extends BaseRepository<CommentModel>  {
         return this.transaction(async () => {
             const comment = id instanceof CommentModel ? id : (await this.newQuery().where(attribute, id).firstOrFail());
 
-            if (comment.status === CommentStatusEnumType.approved) {
+            if ( comment.status === CommentStatusEnumType.approved ) {
                 await this.updateCommentCount(comment, -1);
             }
 
@@ -147,10 +147,10 @@ export class CommentRepository extends BaseRepository<CommentModel>  {
      * @param count
      */
     public updateCommentCount(comment: CommentModel, count: number): Promise<any> {
-        const method = `update${Str.ucFirst(comment.commentableType)}CommentCount`;
+        const method = `update${ Str.ucFirst(comment.commentableType) }CommentCount`;
 
-        if (typeof this[method] !== 'function') {
-            throw new InvalidArgumentException(`Comment type ${comment.commentableType} is not defined.`);
+        if ( typeof this[method] !== 'function' ) {
+            throw new InvalidArgumentException(`Comment type ${ comment.commentableType } is not defined.`);
         }
 
         return this[method](comment.commentableId, count);

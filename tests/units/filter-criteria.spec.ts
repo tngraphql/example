@@ -4,14 +4,14 @@
  * Date: 5/26/2020
  * Time: 11:14 AM
  */
-import {expect} from 'chai';
-import {FilterCriteria} from "../../src/Repositories/Criteria/FilterCriteria";
-import {FilterContract} from "../../src/Contracts/FilterContract";
-import {OperatorEnumType} from "../../src/app/GraphQL/Types/OperatorEnumType";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
+import { expect } from 'chai';
+import { FilterCriteria } from '../../src/Repositories/Criteria/FilterCriteria';
+import { FilterContract } from '../../src/Contracts/FilterContract';
+import { OperatorEnumType } from '../../src/app/GraphQL/Types/OperatorEnumType';
+import { column, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
 
 describe('Filter Apply', () => {
     let UserModel: LucidModel;
@@ -158,14 +158,14 @@ describe('Filter Apply', () => {
                     operator: OperatorEnumType.eq,
                     value: 'nguyen',
                     field: (value, operation) => {
-                        return `name ${operation} ${value}`;
+                        return `name ${ operation } ${ value }`;
                     }
                 },
                 {
                     operator: OperatorEnumType.eq,
                     value: 'nguyen2',
                     field: (value, operation) => {
-                        return `name ${operation} ${value}`;
+                        return `name ${ operation } ${ value }`;
                     }
                 }
             ]
@@ -174,11 +174,11 @@ describe('Filter Apply', () => {
         FilterCriteria.filter(repo, filters);
         const sql = repo.toSQL();
         const rsql = UserModel.query()
-            .where(builder => {
-                builder.orWhere(builder => builder.whereRaw(`name = nguyen`))
-                    .orWhere(builder => builder.whereRaw(`name = nguyen2`))
-            })
-            .toSQL();
+                              .where(builder => {
+                                  builder.orWhere(builder => builder.whereRaw(`name = nguyen`))
+                                         .orWhere(builder => builder.whereRaw(`name = nguyen2`))
+                              })
+                              .toSQL();
         expect(sql.sql).to.deep.equal(rsql.sql);
         expect(sql.bindings).to.deep.equal(rsql.bindings);
     });
@@ -317,10 +317,10 @@ describe('Filter Apply', () => {
         const fsql = repo.toSQL().sql;
         const rsql = UserModel.query().where(query => {
             query.orWhere('id', 2)
-                .orWhere(query => {
-                    query.where('name', 2)
-                        .where('name', 2)
-                })
+                 .orWhere(query => {
+                     query.where('name', 2)
+                          .where('name', 2)
+                 })
         }).toSQL().sql;
 
         expect(fsql).to.be.equal(rsql);

@@ -1,8 +1,8 @@
-import {Field, InputType, registerEnumType} from "@tngraphql/graphql";
-import {OperatorEnumType} from "./OperatorEnumType";
-import {GraphQLString} from "graphql";
-import {FilterContract, GroupContract} from "../../../Contracts/FilterContract";
-import {ValueScalarType} from "./ValueScalarType";
+import { Field, InputType, registerEnumType } from '@tngraphql/graphql';
+import { OperatorEnumType } from './OperatorEnumType';
+import { GraphQLString } from 'graphql';
+import { FilterContract, GroupContract } from '../../../Contracts/FilterContract';
+import { ValueScalarType } from './ValueScalarType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -15,7 +15,7 @@ class StoreType {
     static data: any = [];
 
     static add(target, object) {
-        this.data.push({target, object});
+        this.data.push({ target, object });
     }
 
     static get(target) {
@@ -24,11 +24,11 @@ class StoreType {
 }
 
 export function registerFilterEnumType(name, target: any): void {
-    registerEnumType(target, {name: `FilterField${name}`});
+    registerEnumType(target, { name: `FilterField${ name }` });
 
-    const filterName =  name + 'Filter';
+    const filterName = name + 'Filter';
 
-    @InputType(`${name}FilterGroup`)
+    @InputType(`${ name }FilterGroup`)
     class FilterGroupType implements GroupContract {
         @Field()
         operator: string;
@@ -37,7 +37,7 @@ export function registerFilterEnumType(name, target: any): void {
         items: FilterContract[];
     }
 
-    @InputType(filterName, {description: 'Phân trang'})
+    @InputType(filterName, { description: 'Phân trang' })
     class FilterType implements FilterContract {
         @Field(returns => [FilterGroupType])
         groups: GroupContract[];

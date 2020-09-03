@@ -1,7 +1,7 @@
 import { CreateTableBuilder } from 'knex';
-import {Application} from "@tngraphql/illuminate";
-import {Schema} from "@tngraphql/lucid/build/src/Schema";
-import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
+import { Application } from '@tngraphql/illuminate';
+import { Schema } from '@tngraphql/lucid/build/src/Schema';
+import { Hash } from '@tngraphql/illuminate/dist/Support/Facades/Hash';
 
 export default class Users extends Schema {
     protected $tableName = 'users'

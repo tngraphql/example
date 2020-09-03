@@ -5,7 +5,7 @@
  * Time: 9:44 AM
  */
 
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 
 export const FAVORITE_LIST_QUERY = gql`

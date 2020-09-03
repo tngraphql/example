@@ -1,11 +1,11 @@
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "./BaseRepository";
-import RoleModel from "../../app/Models/RoleModel";
-import * as util from "util";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel/BaseModel";
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from './BaseRepository';
+import RoleModel from '../../app/Models/RoleModel';
+import * as util from 'util';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel/BaseModel';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
 import { Database } from '@tngraphql/illuminate/dist/Support/Facades';
-import {LucidRow} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
+import { LucidRow } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -34,9 +34,9 @@ export class MetableRepository<T extends LucidRow = LucidRow> extends BaseReposi
         const metaKey = meta.map((m) => (m.metaKey));
 
         await this.newQuery()
-            .whereNotIn('metaKey', metaKey)
-            .where(this.instanceKey, instance.id)
-            .delete();
+                  .whereNotIn('metaKey', metaKey)
+                  .where(this.instanceKey, instance.id)
+                  .delete();
 
         await Promise.all(meta.map(item => {
             return this.tup({

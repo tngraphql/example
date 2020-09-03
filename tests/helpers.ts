@@ -5,16 +5,16 @@
  * Time: 1:35 PM
  */
 
-import {QueryClientContract} from "@tngraphql/lucid/build/src/Contracts/Database/QueryClientContract";
-import {Application} from "@tngraphql/illuminate";
-import {Kernel} from "../src/app/GraphQL/Kernel";
-import {ApolloServer} from "apollo-server";
-import {Ace} from "@tngraphql/illuminate/dist/Support/Facades/Ace";
-import {Hash} from "@tngraphql/illuminate/dist/Support/Facades/Hash";
-import {Context} from "@tngraphql/graphql/dist/resolvers/context";
-import {RequestGuard} from "@tngraphql/auth/dist/src/Guards/RequestGuard";
-import {UserModel} from "../src/app/UserModel";
-import {merge} from "../src/lib/utils";
+import { QueryClientContract } from '@tngraphql/lucid/build/src/Contracts/Database/QueryClientContract';
+import { Application } from '@tngraphql/illuminate';
+import { Kernel } from '../src/app/GraphQL/Kernel';
+import { ApolloServer } from 'apollo-server';
+import { Ace } from '@tngraphql/illuminate/dist/Support/Facades/Ace';
+import { Hash } from '@tngraphql/illuminate/dist/Support/Facades/Hash';
+import { Context } from '@tngraphql/graphql/dist/resolvers/context';
+import { RequestGuard } from '@tngraphql/auth/dist/src/Guards/RequestGuard';
+import { UserModel } from '../src/app/UserModel';
+import { merge } from '../src/lib/utils';
 
 export async function setup(destroyDb: boolean = true) {
     const database = Application.getInstance<Application>().db;
@@ -23,7 +23,7 @@ export async function setup(destroyDb: boolean = true) {
     await Ace.call('migration:run', []);
 
     const hasProfilesTable = await db.schema.hasTable('profiles');
-    if (!hasProfilesTable) {
+    if ( ! hasProfilesTable ) {
         await db.schema.createTable('profiles', (table) => {
             table.increments()
             table.string('name', 121);
@@ -60,22 +60,22 @@ export async function seedDB(destroyDb: boolean = true) {
     });
 
     const insertRole = true
-    if (insertRole) {
+    if ( insertRole ) {
         const data = `INSERT INTO \`roles\` VALUES (1, 'owner', 'Project Owner', 'User is the owner of a given project', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`roles\` VALUES (2, 'admin', 'Quản trị viên', 'User is allowed to manage and edit other users', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`roles\` VALUES (3, 'member', 'Thành viên', 'User is allowed to manage and edit other users', '2020-06-03 07:49:10', '2020-06-03 07:49:10');`;
-        await Promise.all(data.split(';').filter(x => !!x.trim()).map(value => {
+        await Promise.all(data.split(';').filter(x => !! x.trim()).map(value => {
             return db.schema.raw(value);
         }))
     }
 
     const insertRoleUser = true;
-    if (insertRoleUser) {
+    if ( insertRoleUser ) {
         await db.schema.raw(`INSERT INTO \`role_user\` VALUES (1, 1, 1);`);
     }
 
     const insertPermissions = true
-    if (insertPermissions) {
+    if ( insertPermissions ) {
         const data = `INSERT INTO \`permissions\` VALUES (1, 'user-create', 'Create User', 'Create New User', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (2, 'user-update', 'Update User', 'Update User', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (3, 'user-delete', 'Delete User', 'Delete User', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
@@ -97,13 +97,13 @@ INSERT INTO \`permissions\` VALUES (18, 'page-delete', 'Delete Page', 'Delete Pa
 INSERT INTO \`permissions\` VALUES (19, 'menu-create', 'Create Menu', 'Create New Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (20, 'menu-update', 'Update Menu', 'Update Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');
 INSERT INTO \`permissions\` VALUES (21, 'menu-delete', 'Delete Menu', 'Delete Menu', '2020-06-03 07:49:10', '2020-06-03 07:49:10');`
-        await Promise.all(data.split(';').filter(x => !!x.trim()).map(value => {
+        await Promise.all(data.split(';').filter(x => !! x.trim()).map(value => {
             return db.schema.raw(value);
         }))
     }
 
     const insertPermissionRole = true
-    if (insertPermissionRole) {
+    if ( insertPermissionRole ) {
         const data = `INSERT INTO \`permission_role\` VALUES (1, 1, 1);
 INSERT INTO \`permission_role\` VALUES (2, 2, 1);
 INSERT INTO \`permission_role\` VALUES (3, 3, 1);
@@ -155,13 +155,13 @@ INSERT INTO \`permission_role\` VALUES (48, 15, 3);
 INSERT INTO \`permission_role\` VALUES (49, 16, 3);
 INSERT INTO \`permission_role\` VALUES (50, 17, 3);
 INSERT INTO \`permission_role\` VALUES (51, 18, 3);`
-        await Promise.all(data.split(';').filter(x => !!x.trim()).map(value => {
+        await Promise.all(data.split(';').filter(x => !! x.trim()).map(value => {
             return db.schema.raw(value);
         }))
     }
 
     const insertOption = true
-    if (insertOption) {
+    if ( insertOption ) {
         const data = `
         INSERT INTO \`options\` VALUES (1, 'siteurl', 'https://phantrungnguyen.com/', 'yes');
 INSERT INTO \`options\` VALUES (2, 'home', 'https://phantrungnguyen.com/', 'yes');
@@ -213,18 +213,18 @@ INSERT INTO \`options\` VALUES (54, 'autoRegister', '1', 'yes');
 INSERT INTO \`options\` VALUES (55, 'autoRegisterDisabledMessage', 'Registration is disabled for this website. Please contact the administrator for any gql.', 'yes');
 INSERT INTO \`options\` VALUES (56, 'socialRegisterRole', '3', 'yes');
 `;
-        await Promise.all(data.split(';').filter(x => !!x.trim()).map(value => {
+        await Promise.all(data.split(';').filter(x => !! x.trim()).map(value => {
             return db.schema.raw(value);
         }))
     }
 
     const insertLanguages = true
-    if (insertLanguages) {
+    if ( insertLanguages ) {
         await db.schema.raw(`INSERT INTO \`languages\` VALUES (1, 'Tiếng Việt', 'vi', 'vi', '1', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Flag_of_North_Vietnam_%281955%E2%80%931975%29.svg/800px-Flag_of_North_Vietnam_%281955%E2%80%931975%29.svg.png', 0, 'publish', '2020-06-03 07:49:10', '2020-06-03 07:49:10', NULL);`);
     }
 
     const insertProfile = true;
-    if (!insertProfile) {
+    if ( ! insertProfile ) {
         await db.table('profiles').insert({
             name: 'nguyen',
             user_id: '1'
@@ -276,6 +276,7 @@ export async function resetTables() {
 
     await database.manager.closeAll();
 }
+
 // @ts-ignore
 ApolloServer.prototype.setContext = function setContext(newContext) {
     this.context = newContext;
@@ -292,7 +293,7 @@ ApolloServer.prototype.mergeHeaders = function mergeHeaders(headers) {
     // this.context.bind(this, {req: {headers}})
     //
     this.context = merge({}, this.context, {
-        req: {headers}
+        req: { headers }
     });
 }
 
@@ -314,13 +315,13 @@ export async function createServer(context = {}): Promise<ApolloServer> {
     });
 }
 
-export function authContext(data: {id: string} = {id: "1"}) {
+export function authContext(data: { id: string } = { id: '1' }) {
     Context.getter('auth', () => {
         return new RequestGuard(() => {
-            if (!data) {
+            if ( ! data ) {
                 return null;
             }
-            if (data instanceof UserModel) {
+            if ( data instanceof UserModel ) {
                 return data;
             }
             const user = new UserModel();

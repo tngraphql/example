@@ -1,8 +1,8 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {ContactReplyFilterEnumType} from "./ContactReplyFilterEnumType";
-import {ContactReplySortInputType} from "./ContactReplySortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { ContactReplyFilterEnumType } from './ContactReplyFilterEnumType';
+import { ContactReplySortInputType } from './ContactReplySortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -22,7 +22,7 @@ export class ContactReplyListArgsType {
     @Field(returns => filterType(ContactReplyFilterEnumType))
     filter: FilterContract<typeof ContactReplyFilterEnumType>
 
-    @Field(returns => [ContactReplySortInputType],{description: 'order'})
+    @Field(returns => [ContactReplySortInputType], { description: 'order' })
     sortBy: ContactReplySortInputType
 
     where: any;

@@ -4,9 +4,9 @@
  * Date: 8/26/2020
  * Time: 11:33 AM
  */
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
 
 @ArgsType()
 export class ShippingMethodCreateArgsType {

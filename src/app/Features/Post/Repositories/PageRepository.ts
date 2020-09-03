@@ -4,17 +4,17 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {PageModel} from "../PageModel";
-import {ResolveAuth} from "../../../../decorators/ResolveAuth";
-import Arr from "../../../../lib/Arr";
-import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
-import {PostMetaRepository} from "./PostMetaRepository";
-import {MenuRepository} from "../../Menu/Repositories/MenuRepository";
-import {PageCreateArgsType} from "../Types/Page/PageCreateArgsType";
-import {PageUpdateArgsType} from "../Types/Page/PageUpdateArgsType";
-import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { PageModel } from '../PageModel';
+import { ResolveAuth } from '../../../../decorators/ResolveAuth';
+import Arr from '../../../../lib/Arr';
+import { TagRepository } from '../../Tag/Repositories/Lucid/TagRepository';
+import { PostMetaRepository } from './PostMetaRepository';
+import { MenuRepository } from '../../Menu/Repositories/MenuRepository';
+import { PageCreateArgsType } from '../Types/Page/PageCreateArgsType';
+import { PageUpdateArgsType } from '../Types/Page/PageUpdateArgsType';
+import { AuthContract } from '@tngraphql/auth/dist/src/Contract/AuthContract';
 
 @Service()
 export class PageRepository extends BaseRepository<PageModel> {
@@ -35,7 +35,7 @@ export class PageRepository extends BaseRepository<PageModel> {
     }
 
     async create(data: PageCreateArgsType): Promise<PageModel> {
-        if (await this.auth.check()) {
+        if ( await this.auth.check() ) {
             data.authorId = await this.auth.id() as string;
         }
 
@@ -47,7 +47,7 @@ export class PageRepository extends BaseRepository<PageModel> {
             await instance.related('categories').sync(Arr.wrap(categories));
 
             await instance.related('tags')
-                .sync(await this.tag.upsert(data.tags));
+                          .sync(await this.tag.upsert(data.tags));
 
             await this.meta.sync(data.meta, instance);
 
@@ -66,7 +66,7 @@ export class PageRepository extends BaseRepository<PageModel> {
             }
 
             await instance.related('tags')
-                .sync(await this.tag.upsert(data.tags));
+                          .sync(await this.tag.upsert(data.tags));
 
             await this.meta.sync(data.meta, instance);
 

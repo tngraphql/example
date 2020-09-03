@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum MenuItemTypeEnumType {
     post = 'post', // Liên kết bài viết
@@ -22,4 +22,4 @@ registerEnumType(MenuItemTypeEnumType, {
     description: 'Loại liên kết menu.'
 });
 
-export {MenuItemTypeEnumType};
+export { MenuItemTypeEnumType };

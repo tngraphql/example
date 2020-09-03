@@ -4,16 +4,16 @@
  * Date: 8/23/2020
  * Time: 11:23 AM
  */
-import {BaseRepository} from "./BaseRepository";
-import {Service} from "@tngraphql/illuminate";
-import {ResolveLang} from "../../decorators/ResolveLang";
-import PasswordResetModel from "../../app/Models/PasswordResetModel";
-import {ConfigOptions} from "../../lib/ConfigOptions";
-import {Str} from "../../lib/Str";
-import {Mail} from "@tngraphql/mail/dist/src/Mail";
-import {ResetPassword} from "../../app/Mail/ResetPassword";
-import {DateTime} from "luxon";
-import {Config} from "../../lib/Config";
+import { BaseRepository } from './BaseRepository';
+import { Service } from '@tngraphql/illuminate';
+import { ResolveLang } from '../../decorators/ResolveLang';
+import PasswordResetModel from '../../app/Models/PasswordResetModel';
+import { ConfigOptions } from '../../lib/ConfigOptions';
+import { Str } from '../../lib/Str';
+import { Mail } from '@tngraphql/mail/dist/src/Mail';
+import { ResetPassword } from '../../app/Mail/ResetPassword';
+import { DateTime } from 'luxon';
+import { Config } from '../../lib/Config';
 
 @Service()
 export class PasswordResetRepository extends BaseRepository<PasswordResetModel> {
@@ -32,7 +32,7 @@ export class PasswordResetRepository extends BaseRepository<PasswordResetModel> 
 
             const actionUrl = Str.trimUrl(home) + '/password/reset/' + created.token;
 
-            await Mail.to(created).send(new ResetPassword({actionUrl}));
+            await Mail.to(created).send(new ResetPassword({ actionUrl }));
 
             return created;
         });
@@ -74,7 +74,7 @@ export class PasswordResetRepository extends BaseRepository<PasswordResetModel> 
      * @return boolean
      */
     public tokenExpired(createdAt: DateTime) {
-        const expires = 60*1000 * Number(Config.get('auth.passwords.expire', 5));
+        const expires = 60 * 1000 * Number(Config.get('auth.passwords.expire', 5));
 
         return createdAt.plus(expires).diff(DateTime.local()).valueOf() < 0;
     }

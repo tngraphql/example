@@ -4,13 +4,13 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import {ModelAttributes} from "@tngraphql/lucid/build/src/Contracts/Model/LucidRow";
-import {ContactRepository} from "./ContactRepository";
-import ContactReplyModel from "./ContactReplyModel";
-import {ContactReplyMail} from "../../Mail/ContactReplyMail";
-import {Mail} from "@tngraphql/mail/dist/src/Mail";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import { ModelAttributes } from '@tngraphql/lucid/build/src/Contracts/Model/LucidRow';
+import { ContactRepository } from './ContactRepository';
+import ContactReplyModel from './ContactReplyModel';
+import { ContactReplyMail } from '../../Mail/ContactReplyMail';
+import { Mail } from '@tngraphql/mail/dist/src/Mail';
 
 @Service()
 export class ContactReplyRepository extends BaseRepository<ContactReplyModel> {

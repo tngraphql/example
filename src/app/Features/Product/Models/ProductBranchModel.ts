@@ -4,22 +4,22 @@
  * Date: 8/4/2020
  * Time: 9:27 AM
  */
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {belongsTo, column, hasMany, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {DateTime} from "luxon";
-import {ProductMasterModel} from "./ProductMasterModel";
-import {BelongsTo, HasMany, HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {ProductBranchToAttributeModel} from "./ProductBranchToAttributeModel";
-import {ProductImageModel} from "./ProductImageModel";
-import {InventoryModel} from "./InventoryModel";
-import {converBoolean} from "../../../../lib/utils";
-import {Str} from "../../../../lib/Str";
-import {SoftDeletes} from "@tngraphql/lucid/build/src/Orm/SoftDeletes";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { belongsTo, column, hasMany, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { DateTime } from 'luxon';
+import { ProductMasterModel } from './ProductMasterModel';
+import { BelongsTo, HasMany, HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { ProductBranchToAttributeModel } from './ProductBranchToAttributeModel';
+import { ProductImageModel } from './ProductImageModel';
+import { InventoryModel } from './InventoryModel';
+import { converBoolean } from '../../../../lib/utils';
+import { Str } from '../../../../lib/Str';
+import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
 
 export class ProductBranchModel extends BaseModel {
     public static table = 'product_branch';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()
@@ -35,7 +35,7 @@ export class ProductBranchModel extends BaseModel {
     public isMaster: boolean;
 
     public static scopeIsMaster(query, boolean: boolean = true, operation = '=') {
-        if (typeof boolean !== "boolean") {
+        if ( typeof boolean !== 'boolean' ) {
             throw new Error('value for isFeatured be must boolean');
         }
 
@@ -73,7 +73,7 @@ export class ProductBranchModel extends BaseModel {
     public requiresShipping: boolean;
 
     public static scopeRequiresShipping(query, boolean: boolean = true, operation = '=') {
-        if (typeof boolean !== "boolean") {
+        if ( typeof boolean !== 'boolean' ) {
             throw new Error('value for isFeatured be must boolean');
         }
 
@@ -104,10 +104,10 @@ export class ProductBranchModel extends BaseModel {
     @column()
     public lengthClass: string;
 
-    @column.dateTime({autoCreate: true})
+    @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
-    @column.dateTime({autoCreate: true, autoUpdate: true})
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime;
 
     @column.dateTime()
@@ -120,7 +120,7 @@ export class ProductBranchModel extends BaseModel {
     @belongsTo(() => ProductMasterModel)
     public master: BelongsTo<typeof ProductMasterModel>
 
-    @hasMany(() => ProductBranchModel, {foreignKey: 'productMasterId', localKey: 'productMasterId'})
+    @hasMany(() => ProductBranchModel, { foreignKey: 'productMasterId', localKey: 'productMasterId' })
     public branches: HasMany<typeof ProductBranchModel>
 
     @hasOne(() => ProductBranchModel, {

@@ -5,10 +5,10 @@
  * Time: 11:29 AM
  */
 
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {AttributeModel} from "../../Models/AttributeModel";
-import {AttributeType} from "./AttributeType";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { AttributeModel } from '../../Models/AttributeModel';
+import { AttributeType } from './AttributeType';
 
 @ObjectType('AllAttribute')
 export class AllAttributeType {
@@ -17,9 +17,9 @@ export class AllAttributeType {
     @Field(returns => ID)
     public id: string;
 
-    @Field({description: 'Tên nhóm thuộc tính.'})
+    @Field({ description: 'Tên nhóm thuộc tính.' })
     public name: string;
 
-    @Field(returns => [AttributeType], {description: 'Các thuộc tính sản phẩm'})
+    @Field(returns => [AttributeType], { description: 'Các thuộc tính sản phẩm' })
     public attributes: AttributeType[]
 }

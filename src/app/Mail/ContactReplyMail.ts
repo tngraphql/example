@@ -1,5 +1,5 @@
-import {Mailable} from "@tngraphql/mail";
-import {Application} from "@tngraphql/illuminate";
+import { Mailable } from '@tngraphql/mail';
+import { Application } from '@tngraphql/illuminate';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -24,6 +24,6 @@ export class ContactReplyMail extends Mailable {
     public build(): void {
         this.subject(app.config.get('app.name') + ' trả lời tin nhắn liên hệ.');
         this.from(app.config.get('mail.from.address'), 'Hỗ trợ ' + app.config.get('app.name'));
-        this.htmlView('contact-reply',  this.data)
+        this.htmlView('contact-reply', this.data)
     }
 }

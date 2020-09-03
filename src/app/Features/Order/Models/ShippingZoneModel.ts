@@ -5,18 +5,18 @@
  * Time: 8:20 PM
  */
 
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasMany} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {Str} from "../../../../lib/Str";
-import {DateTime} from "luxon";
-import {ShippingLocationModel} from "./ShippingLocationModel";
-import {HasMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {ShippingMethodModel} from "./ShippingMethodModel";
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column, hasMany } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { Str } from '../../../../lib/Str';
+import { DateTime } from 'luxon';
+import { ShippingLocationModel } from './ShippingLocationModel';
+import { HasMany } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { ShippingMethodModel } from './ShippingMethodModel';
 
 export class ShippingZoneModel extends BaseModel {
     static table = 'shipping_zones';
 
-    @column({isPrimary: true, consume: value => Str.toString(value)})
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
     public id: string;
 
     @column()

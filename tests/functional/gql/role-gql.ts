@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 export const ROLE_QUERY = gql(`
 query role($filter: RoleFilter, $sortBy: [RoleSort]) {

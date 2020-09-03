@@ -4,8 +4,8 @@
  * Date: 6/30/2020
  * Time: 11:19 AM
  */
-import {DocumentNode, GraphQLFormattedError} from "graphql";
-import {Response} from "apollo-server-env";
+import { DocumentNode, GraphQLFormattedError } from 'graphql';
+import { Response } from 'apollo-server-env';
 
 type StringOrAst = string | DocumentNode;
 

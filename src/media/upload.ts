@@ -1,9 +1,9 @@
 import * as DepreciatedJimp from 'jimp';
-import MediaModel from "../app/Features/Media/MediaModel";
-import {Str} from "../lib/Str";
-import {authMiddleware} from "./auth-middleware";
-import * as path from "path";
-import {corsMiddleware} from "./cors-middleware";
+import MediaModel from '../app/Features/Media/MediaModel';
+import { Str } from '../lib/Str';
+import { authMiddleware } from './auth-middleware';
+import * as path from 'path';
+import { corsMiddleware } from './cors-middleware';
 
 const express = require('express');
 const fs = require('fs');
@@ -162,9 +162,9 @@ function changeName(name, w, h) {
 function getUrlImage(urlFile) {
     let url = process.env.APP_URL.replace(/\/$/g, '');
 
-    if (/^https?:\/\/[a-z]+/g.test(url)) {
+    if ( /^https?:\/\/[a-z]+/g.test(url) ) {
         const u = new URL(url);
-        return `//${u.host}${urlFile}`;
+        return `//${ u.host }${ urlFile }`;
     }
 
     return `//${ url }${ urlFile }`;
@@ -172,8 +172,8 @@ function getUrlImage(urlFile) {
 
 const checkSlug = function(slug) {
     return MediaModel.query()
-        .where('title', slug)
-        .first().then(model => {
+                     .where('title', slug)
+                     .first().then(model => {
             return model === null;
         });
 };

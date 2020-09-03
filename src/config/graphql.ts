@@ -4,11 +4,12 @@
  * Date: 8/29/2020
  * Time: 4:42 PM
  */
-import {Application} from "@tngraphql/illuminate";
-import {Kernel} from "../app/GraphQL/Kernel";
+import { Application } from '@tngraphql/illuminate';
+import { Kernel } from '../app/GraphQL/Kernel';
 import costAnalysis from 'graphql-cost-analysis';
-import {Env} from "@tngraphql/illuminate/dist/Support/Env";
-import {ApolloServerExpressConfig} from "apollo-server-express/src/ApolloServer";
+import { Env } from '@tngraphql/illuminate/dist/Support/Env';
+import { ApolloServerExpressConfig } from 'apollo-server-express/src/ApolloServer';
+
 const responseCachePlugin = require('apollo-server-plugin-response-cache');
 
 const app = Application.getInstance<Application>();

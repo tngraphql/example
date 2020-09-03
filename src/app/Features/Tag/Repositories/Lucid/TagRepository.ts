@@ -4,11 +4,11 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {BaseRepository} from "../../../../../Repositories/Lucid/BaseRepository";
-import {Service} from "@tngraphql/illuminate";
-import TagModel from "../../TagModel";
+import { BaseRepository } from '../../../../../Repositories/Lucid/BaseRepository';
+import { Service } from '@tngraphql/illuminate';
+import TagModel from '../../TagModel';
 import * as _ from 'lodash'
-import Arr from "../../../../../lib/Arr";
+import Arr from '../../../../../lib/Arr';
 
 @Service()
 export class TagRepository extends BaseRepository<TagModel> {
@@ -27,7 +27,7 @@ export class TagRepository extends BaseRepository<TagModel> {
 
         type K<T> = T[];
 
-        const res: K<string|number> = [];
+        const res: K<string | number> = [];
 
         for( const name of tagsName ) {
             const tag = listTag.find(tag => tag.name === name);
@@ -36,7 +36,7 @@ export class TagRepository extends BaseRepository<TagModel> {
                 res.push(tag.id);
             } else {
                 // Nếu tag chưa tồn tại, chúng ta tạo mới tag.
-                const tagNew = await this.create({name});
+                const tagNew = await this.create({ name });
 
                 res.push(tagNew.id);
             }

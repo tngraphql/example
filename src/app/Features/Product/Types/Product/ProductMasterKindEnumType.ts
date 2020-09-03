@@ -5,7 +5,7 @@
  * Time: 9:46 AM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum ProductMasterKindEnumType {
     single = 'single',
@@ -13,6 +13,6 @@ enum ProductMasterKindEnumType {
     combo = 'combo',
 }
 
-registerEnumType(ProductMasterKindEnumType, {name: 'ProductKind'});
+registerEnumType(ProductMasterKindEnumType, { name: 'ProductKind' });
 
-export {ProductMasterKindEnumType};
+export { ProductMasterKindEnumType };

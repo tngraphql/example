@@ -1,5 +1,5 @@
-import {registerCustomInject} from "@tngraphql/illuminate";
-import {ResolverData} from "@tngraphql/graphql";
+import { registerCustomInject } from '@tngraphql/illuminate';
+import { ResolverData } from '@tngraphql/graphql';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -8,6 +8,6 @@ import {ResolverData} from "@tngraphql/graphql";
  * Time: 2:48 PM
  */
 
-export const ResolveLang = registerCustomInject((data: ResolverData<{lang: any}>) => {
+export const ResolveLang = registerCustomInject((data: ResolverData<{ lang: any }>) => {
     return data.context.lang;
 })

@@ -4,23 +4,23 @@
  * Date: 6/5/2020
  * Time: 9:34 AM
  */
-import {Args, Ctx,  Mutation, Query, Resolver, UseMiddleware} from '@tngraphql/graphql';
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {LanguageRepository} from "../LanguageRepository";
-import {LanguageType} from "../Types/LanguageType";
-import {LanguageIndexArgsType} from "../Types/LanguageIndexArgsType";
-import {LanguageListArgsType} from "../Types/LanguageListArgsType";
-import {LanguageCreateArgsType} from "../Types/LanguageCreateArgsType";
-import {LanguageUpdateArgsType} from "../Types/LanguageUpdateArgsType";
-import {LanguageDeleteArgsType} from "../Types/LanguageDeleteArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { LanguageRepository } from '../LanguageRepository';
+import { LanguageType } from '../Types/LanguageType';
+import { LanguageIndexArgsType } from '../Types/LanguageIndexArgsType';
+import { LanguageListArgsType } from '../Types/LanguageListArgsType';
+import { LanguageCreateArgsType } from '../Types/LanguageCreateArgsType';
+import { LanguageUpdateArgsType } from '../Types/LanguageUpdateArgsType';
+import { LanguageDeleteArgsType } from '../Types/LanguageDeleteArgsType';
 
 @Resolver()
 export class LanguageResolve extends BaseResolve {
@@ -44,7 +44,7 @@ export class LanguageResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => LanguageType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => LanguageType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(LanguageCreateArgsType)
     @UseMiddleware('auth')
     async create(@Args() args: LanguageCreateArgsType, @SelectFields() fields) {

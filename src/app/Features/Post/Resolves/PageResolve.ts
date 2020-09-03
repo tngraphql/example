@@ -4,23 +4,23 @@
  * Date: 7/11/2020
  * Time: 5:53 PM
  */
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {PageType} from "../Types/Page/PageType";
-import {PageIndexArgsType} from "../Types/Page/PageIndexArgsType";
-import {PageListArgsType} from "../Types/Page/PageListArgsType";
-import {PageCreateArgsType} from "../Types/Page/PageCreateArgsType";
-import {PageUpdateArgsType} from "../Types/Page/PageUpdateArgsType";
-import {PageDeleteArgsType} from "../Types/Page/PageDeleteArgsType";
-import {PageRepository} from "../Repositories/PageRepository";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { PageType } from '../Types/Page/PageType';
+import { PageIndexArgsType } from '../Types/Page/PageIndexArgsType';
+import { PageListArgsType } from '../Types/Page/PageListArgsType';
+import { PageCreateArgsType } from '../Types/Page/PageCreateArgsType';
+import { PageUpdateArgsType } from '../Types/Page/PageUpdateArgsType';
+import { PageDeleteArgsType } from '../Types/Page/PageDeleteArgsType';
+import { PageRepository } from '../Repositories/PageRepository';
 
 @Resolver()
 export class PageResolve extends BaseResolve {
@@ -47,7 +47,7 @@ export class PageResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => PageType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => PageType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(PageCreateArgsType)
     @UseMiddleware(['auth'])
     async create(@Args() args: PageCreateArgsType, @SelectFields() fields) {
@@ -68,9 +68,9 @@ export class PageResolve extends BaseResolve {
         const category = await this.repo.update(args, args.id);
 
         return this.repo
-            .query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(category.id);
+                   .query()
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(category.id);
     }
 
     @Mutation(returns => DeleteType)

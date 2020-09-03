@@ -1,5 +1,5 @@
-import {ObjectType} from "@tngraphql/graphql";
-import {OtherLanguageType} from "../../../../GraphQL/Types/OtherLanguageType";
+import { ObjectType } from '@tngraphql/graphql';
+import { OtherLanguageType } from '../../../../GraphQL/Types/OtherLanguageType';
 
 /**
  * Created by Phan Trung Nguyên.

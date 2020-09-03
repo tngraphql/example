@@ -1,12 +1,12 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {MetaInput} from "../../../GraphQL/Types/Input/MetaInput";
-import {GraphQLString} from "graphql";
-import {MenuModel} from "../MenuModel";
-import {MenuStatusEnumType} from "./Enum/MenuStatusEnumType";
-import {MenuItemInputType} from "./MenuItemInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { MetaInput } from '../../../GraphQL/Types/Input/MetaInput';
+import { GraphQLString } from 'graphql';
+import { MenuModel } from '../MenuModel';
+import { MenuStatusEnumType } from './Enum/MenuStatusEnumType';
+import { MenuItemInputType } from './MenuItemInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -17,14 +17,14 @@ import {MenuItemInputType} from "./MenuItemInputType";
 
 @ArgsType()
 export class MenuUpdateArgsType {
-    @Field(returns => ID, {description: 'ID bài viết',})
+    @Field(returns => ID, { description: 'ID bài viết', })
     @Rules([
         'required',
         Rule.exists(MenuModel.getTable(), 'id')
     ])
     public id?: string
 
-    @Field({description: 'Tên bài viết'})
+    @Field({ description: 'Tên bài viết' })
     @Rules(args => ([
         'filled',
         'max:120'
@@ -37,18 +37,18 @@ export class MenuUpdateArgsType {
     })
     public status: string;
 
-    @Field(returns => [MenuItemInputType], {description: 'Thông tin menuitem'})
+    @Field(returns => [MenuItemInputType], { description: 'Thông tin menuitem' })
     public menuItems: MenuItemInputType[];
 
-    @Field(returns => ID, {description: 'Header Navigation'})
+    @Field(returns => ID, { description: 'Header Navigation' })
     public headerNavigation: string;
 
-    @Field(returns => ID, {description: 'Main Navigation'})
+    @Field(returns => ID, { description: 'Main Navigation' })
     public mainNavigation: string;
 
-    @Field(returns => ID, {description: 'Footer Navigation'})
+    @Field(returns => ID, { description: 'Footer Navigation' })
     public footerNavigation: string;
 
-    @Field({description: 'Automatically add new top-level pages to this menu'})
+    @Field({ description: 'Automatically add new top-level pages to this menu' })
     public automanticallyMenu: boolean;
 }

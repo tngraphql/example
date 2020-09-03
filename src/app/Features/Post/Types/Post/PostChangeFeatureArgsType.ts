@@ -1,9 +1,9 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import {PostModel} from "../../PostModel";
-import {GraphQLBoolean} from "graphql";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import { PostModel } from '../../PostModel';
+import { GraphQLBoolean } from 'graphql';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -14,7 +14,7 @@ import {GraphQLBoolean} from "graphql";
 
 @ArgsType()
 export class PostChangeFeatureArgsType {
-    @Field(returns => ID, {description: 'ID bài viết',})
+    @Field(returns => ID, { description: 'ID bài viết', })
     @Rules([
         'required',
         Rule.exists(PostModel.getTable(), 'id')

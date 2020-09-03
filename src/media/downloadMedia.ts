@@ -1,7 +1,7 @@
-import {Application} from "@tngraphql/illuminate";
-import MediaModel from "../app/Features/Media/MediaModel";
-import {authMiddleware} from "./auth-middleware";
-import {corsMiddleware} from "./cors-middleware";
+import { Application } from '@tngraphql/illuminate';
+import MediaModel from '../app/Features/Media/MediaModel';
+import { authMiddleware } from './auth-middleware';
+import { corsMiddleware } from './cors-middleware';
 
 const express = require('express');
 const fs = require('fs');
@@ -18,14 +18,14 @@ const quality = 50;
 
 const folderUploads = Application.getInstance<Application>().basePath('../uploads/');
 
-router.use('/media/download',corsMiddleware);
+router.use('/media/download', corsMiddleware);
 router.use('/media/download', authMiddleware);
 
 router.all('/media/download', async (req, res) => {
     try {
         const data = await MediaModel.query()
-            .whereIn('id', req.query.selected.map(x => x.id))
-            .exec();
+                                     .whereIn('id', req.query.selected.map(x => x.id))
+                                     .exec();
         let listFile = [];
 
         if ( data.length ) {
@@ -42,9 +42,9 @@ router.all('/media/download', async (req, res) => {
                                                 }
 
                                                 return MediaModel.query()
-                                                    .allFolder(f)
-                                                    .where('mineType', '<>', `folder`)
-                                                    .exec();
+                                                                 .allFolder(f)
+                                                                 .where('mineType', '<>', `folder`)
+                                                                 .exec();
                                             }))
                                    .then(data => _.flattenDepth(data));
             listFile = _.concat(d.filter(x => x.src), listFile);

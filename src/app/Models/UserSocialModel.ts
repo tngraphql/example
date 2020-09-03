@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
-import {column, hasOne} from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { column, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import {UserModel} from "../UserModel";
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import { UserModel } from '../UserModel';
+import { HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
 
 export default class UserSocialModel extends BaseModel {
     static table = 'user_socials';

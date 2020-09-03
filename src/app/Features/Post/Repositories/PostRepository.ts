@@ -4,20 +4,20 @@
  * Date: 5/26/2020
  * Time: 8:32 AM
  */
-import {Inject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {PostModel} from "../PostModel";
-import {ResolveAuth} from "../../../../decorators/ResolveAuth";
-import {PostCreateArgsType} from "../Types/Post/PostCreateArgsType";
-import {PostUpdateArgsType} from "../Types/Post/PostUpdateArgsType";
-import {PostStatusEnumType} from "../Types/Post/PostStatusEnumType";
-import {DateTime} from "luxon";
-import Arr from "../../../../lib/Arr";
-import {TagRepository} from "../../Tag/Repositories/Lucid/TagRepository";
-import {PostMetaRepository} from "./PostMetaRepository";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {converBoolean} from "../../../../lib/utils";
-import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
+import { Inject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { PostModel } from '../PostModel';
+import { ResolveAuth } from '../../../../decorators/ResolveAuth';
+import { PostCreateArgsType } from '../Types/Post/PostCreateArgsType';
+import { PostUpdateArgsType } from '../Types/Post/PostUpdateArgsType';
+import { PostStatusEnumType } from '../Types/Post/PostStatusEnumType';
+import { DateTime } from 'luxon';
+import Arr from '../../../../lib/Arr';
+import { TagRepository } from '../../Tag/Repositories/Lucid/TagRepository';
+import { PostMetaRepository } from './PostMetaRepository';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { converBoolean } from '../../../../lib/utils';
+import { AuthContract } from '@tngraphql/auth/dist/src/Contract/AuthContract';
 
 @Service()
 export class PostRepository extends BaseRepository<PostModel> {
@@ -35,7 +35,7 @@ export class PostRepository extends BaseRepository<PostModel> {
     }
 
     async create(data: PostCreateArgsType): Promise<PostModel> {
-        if (await this.auth.check()) {
+        if ( await this.auth.check() ) {
             data.authorId = await this.auth.id() as string;
         }
 
@@ -59,7 +59,7 @@ export class PostRepository extends BaseRepository<PostModel> {
             await post.related('categories').sync(Arr.wrap(categories));
 
             await post.related('tags')
-                .sync(await this.tag.upsert(data.tags));
+                      .sync(await this.tag.upsert(data.tags));
 
             await this.meta.sync(data.meta, post);
 
@@ -81,7 +81,7 @@ export class PostRepository extends BaseRepository<PostModel> {
             }
 
             await post.related('tags')
-                .sync(await this.tag.upsert(data.tags));
+                      .sync(await this.tag.upsert(data.tags));
 
             await this.meta.sync(data.meta, post);
 
@@ -93,7 +93,7 @@ export class PostRepository extends BaseRepository<PostModel> {
         return this.transaction(async () => {
             let post = id;
 
-            if (!(id instanceof BaseModel)) {
+            if ( ! (id instanceof BaseModel) ) {
                 post = await this.query().firstBy(id, attribute);
             }
 
@@ -117,7 +117,7 @@ export class PostRepository extends BaseRepository<PostModel> {
      * @param featured
      * @param id
      */
-    async changeFeatured(featured: number|boolean, id: string) {
+    async changeFeatured(featured: number | boolean, id: string) {
         return this.update({
             isFeatured: converBoolean(featured, 1, 0)
         }, id);

@@ -4,33 +4,33 @@
  * Date: 7/11/2020
  * Time: 5:53 PM
  */
-import {Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {MenuRepository} from "../Repositories/MenuRepository";
-import {MenuListArgsType} from "../Types/MenuListArgsType";
-import {MenuType} from "../Types/MenuType";
-import {MenuIndexArgsType} from "../Types/MenuIndexArgsType";
-import {MenuCreateArgsType} from "../Types/MenuCreateArgsType";
-import {MenuUpdateArgsType} from "../Types/MenuUpdateArgsType";
-import {MenuDeleteArgsType} from "../Types/MenuDeleteArgsType";
-import {MenuNavigationEnumType} from "../Types/Enum/MenuNavigationEnumType";
-import {ConfigOptions} from "../../../../lib/ConfigOptions";
-import {OperatorEnumType} from "../../../GraphQL/Types/OperatorEnumType";
+import { Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { MenuRepository } from '../Repositories/MenuRepository';
+import { MenuListArgsType } from '../Types/MenuListArgsType';
+import { MenuType } from '../Types/MenuType';
+import { MenuIndexArgsType } from '../Types/MenuIndexArgsType';
+import { MenuCreateArgsType } from '../Types/MenuCreateArgsType';
+import { MenuUpdateArgsType } from '../Types/MenuUpdateArgsType';
+import { MenuDeleteArgsType } from '../Types/MenuDeleteArgsType';
+import { MenuNavigationEnumType } from '../Types/Enum/MenuNavigationEnumType';
+import { ConfigOptions } from '../../../../lib/ConfigOptions';
+import { OperatorEnumType } from '../../../GraphQL/Types/OperatorEnumType';
 
 @Resolver()
 export class MenuResolve extends BaseResolve {
     @Inject(MenuRepository)
     public repo: MenuRepository;
 
-    @Query(returns => MenuType, {description: 'Chi tiết menu.'})
+    @Query(returns => MenuType, { description: 'Chi tiết menu.' })
     async index(@Args() args: MenuIndexArgsType, @SelectFields() fields) {
         this.repo.pushCriteria(new SortByCriteria(args.order));
         this.repo.pushCriteria(new FilterCriteria(args.filter));
@@ -39,7 +39,7 @@ export class MenuResolve extends BaseResolve {
         return this.repo.first();
     }
 
-    @Query(returns => MenuType, {description: 'menu Navigation'})
+    @Query(returns => MenuType, { description: 'menu Navigation' })
     async menuNavigation(
         @Arg('navigation', returns => MenuNavigationEnumType) navigation: string = 'mainNavigation',
         @SelectFields() fields
@@ -59,7 +59,7 @@ export class MenuResolve extends BaseResolve {
         return query.first();
     }
 
-    @Query(returns => paginateType(MenuType), {description: 'Danh sách menu.'})
+    @Query(returns => paginateType(MenuType), { description: 'Danh sách menu.' })
     async list(@Args() args: MenuListArgsType, @SelectFields() fields, @Ctx() context) {
         // console.log(context.auth);
         this.repo.pushCriteria(new SortByCriteria(args.order));
@@ -69,7 +69,7 @@ export class MenuResolve extends BaseResolve {
         return this.repo.paginate(args.limit, args.page);
     }
 
-    @Mutation(returns => MenuType, {description: 'Tạo mới tài khoản'})
+    @Mutation(returns => MenuType, { description: 'Tạo mới tài khoản' })
     @ValidateArgs(MenuCreateArgsType)
     @UseMiddleware(['auth'])
     async create(@Args() args: MenuCreateArgsType, @SelectFields() fields) {
@@ -85,9 +85,9 @@ export class MenuResolve extends BaseResolve {
         const instance = await this.repo.update(args, args.id);
 
         return this.repo
-            .query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(instance.id);
+                   .query()
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(instance.id);
     }
 
     @Mutation(returns => DeleteType)

@@ -10,9 +10,9 @@ import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
 const ListFavoriteableId = [];
 
 Factory.blueprint('App/Features/Favorite/FavoriteModel', (faker, index, data) => {
-    if (!ListFavoriteableId.length || data.reload) {
+    if ( ! ListFavoriteableId.length || data.reload ) {
         ListFavoriteableId.length = 0;
-        ListFavoriteableId.push.apply(ListFavoriteableId, faker.unique(faker.integer, 20, {min: 0, max: 100}));
+        ListFavoriteableId.push.apply(ListFavoriteableId, faker.unique(faker.integer, 20, { min: 0, max: 100 }));
     }
 
     return {

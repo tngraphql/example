@@ -5,19 +5,20 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {PAGE_LIST_QUERY, PAGE_QUERY} from "./gql/page-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {PageModel} from "../../src/app/Features/Post/PageModel";
-import {PostStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostStatusEnumType";
-import {PostCommentStatusEnumType} from "../../src/app/Features/Post/Types/Post/PostCommentStatusEnumType";
-import {DateTime} from "luxon";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { PAGE_LIST_QUERY, PAGE_QUERY } from './gql/page-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { PageModel } from '../../src/app/Features/Post/PageModel';
+import { PostStatusEnumType } from '../../src/app/Features/Post/Types/Post/PostStatusEnumType';
+import { PostCommentStatusEnumType } from '../../src/app/Features/Post/Types/Post/PostCommentStatusEnumType';
+import { DateTime } from 'luxon';
 
 describe('page Http', () => {
     let client: ApolloServerTestClient;
@@ -60,8 +61,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -84,17 +85,17 @@ describe('page Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": page.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': page.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -102,17 +103,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.id).to.eq(page.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": page.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': page.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -120,17 +121,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.name).to.eq(page.name);
             })
-        
+
             it('should filter authorId without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({authorId: "2"});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ authorId: '2' });
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "authorId",
-                            "value": page.authorId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'authorId',
+                            'value': page.authorId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -138,17 +139,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.authorId).to.eq(page.authorId);
             })
-        
+
             it('should filter parentId without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({parentId: "2"});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ parentId: '2' });
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": page.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': page.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -156,17 +157,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.parentId).to.eq(page.parentId);
             })
-        
+
             it('should filter postStatus without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({postStatus: PostStatusEnumType.draft});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ postStatus: PostStatusEnumType.draft });
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "postStatus",
-                            "value": page.postStatus,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'postStatus',
+                            'value': page.postStatus,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -174,17 +175,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.postStatus).to.eq(page.postStatus);
             })
-        
+
             it('should filter commentStatus without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({commentStatus: PostCommentStatusEnumType.closed});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ commentStatus: PostCommentStatusEnumType.closed });
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentStatus",
-                            "value": page.commentStatus,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentStatus',
+                            'value': page.commentStatus,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -192,7 +193,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.commentStatus).to.eq(page.commentStatus);
             })
-        
+
             it('should filter commentCount without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
                 page.commentCount = 1;
@@ -201,10 +202,10 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentCount",
-                            "value": page.commentCount,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentCount',
+                            'value': page.commentCount,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -212,17 +213,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.commentCount).to.eq(page.commentCount);
             })
-        
+
             it('should filter description without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": page.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': page.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -230,17 +231,17 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.description).to.eq(page.description);
             })
-        
+
             it('should filter content without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "content",
-                            "value": page.content,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'content',
+                            'value': page.content,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -248,7 +249,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.content).to.eq(page.content);
             })
-        
+
             it('should filter publishedAt without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create({
                     publishedAt: DateTime.fromSQL('2020-06-16 11:25:42')
@@ -257,10 +258,10 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "publishedAt",
-                            "value": page.publishedAt,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'publishedAt',
+                            'value': page.publishedAt,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -271,7 +272,7 @@ describe('page Http', () => {
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -280,8 +281,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -299,8 +300,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -309,7 +310,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.id).to.eq(page.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -318,8 +319,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -337,8 +338,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -347,7 +348,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.name).to.eq(page.name);
             })
-        
+
             it('should sort by desc authorId without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -356,8 +357,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.DESC
+                        'sortBy': [{
+                            'authorId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -375,8 +376,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.ASC
+                        'sortBy': [{
+                            'authorId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -385,7 +386,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.authorId).to.eq(page.authorId);
             })
-        
+
             it('should sort by desc postStatus without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -394,8 +395,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "postStatus": SortEnumType.DESC
+                        'sortBy': [{
+                            'postStatus': SortEnumType.DESC
                         }]
                     }
                 });
@@ -413,8 +414,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "postStatus": SortEnumType.ASC
+                        'sortBy': [{
+                            'postStatus': SortEnumType.ASC
                         }]
                     }
                 });
@@ -423,7 +424,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.postStatus).to.eq(page.postStatus);
             })
-        
+
             it('should sort by desc commentStatus without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -432,8 +433,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentStatus": SortEnumType.DESC
+                        'sortBy': [{
+                            'commentStatus': SortEnumType.DESC
                         }]
                     }
                 });
@@ -451,8 +452,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentStatus": SortEnumType.ASC
+                        'sortBy': [{
+                            'commentStatus': SortEnumType.ASC
                         }]
                     }
                 });
@@ -461,7 +462,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.commentStatus).to.eq(page.commentStatus);
             })
-        
+
             it('should sort by desc commentCount without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -470,8 +471,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentCount": SortEnumType.DESC
+                        'sortBy': [{
+                            'commentCount': SortEnumType.DESC
                         }]
                     }
                 });
@@ -489,8 +490,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentCount": SortEnumType.ASC
+                        'sortBy': [{
+                            'commentCount': SortEnumType.ASC
                         }]
                     }
                 });
@@ -499,7 +500,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.commentCount).to.eq(page.commentCount);
             })
-        
+
             it('should sort by desc description without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -508,8 +509,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -527,8 +528,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
@@ -537,7 +538,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.description).to.eq(page.description);
             })
-        
+
             it('should sort by desc content without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -546,8 +547,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.DESC
+                        'sortBy': [{
+                            'content': SortEnumType.DESC
                         }]
                     }
                 });
@@ -565,8 +566,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.ASC
+                        'sortBy': [{
+                            'content': SortEnumType.ASC
                         }]
                     }
                 });
@@ -575,7 +576,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.content).to.eq(page.content);
             })
-        
+
             it('should sort by desc language without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -584,8 +585,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
@@ -603,8 +604,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
@@ -613,7 +614,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.language).to.eq(page.language);
             })
-        
+
             it('should sort by desc languageMaster without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -622,8 +623,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
@@ -641,8 +642,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
@@ -651,7 +652,7 @@ describe('page Http', () => {
                 expect(res.data.page.id).to.eq(page.id);
                 expect(res.data.page.languageMaster).to.eq(page.languageMaster);
             })
-        
+
             it('should sort by desc publishedAt without error', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(3);
 
@@ -660,8 +661,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.DESC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.DESC
                         }]
                     }
                 });
@@ -679,8 +680,8 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.ASC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.ASC
                         }]
                     }
                 });
@@ -733,17 +734,17 @@ describe('page Http', () => {
         });
 
         describe('page Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": page.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': page.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -751,17 +752,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].id).to.eq(page.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": page.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': page.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -769,17 +770,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].name).to.eq(page.name)
             });
-        
+
             it('should filter authorId without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({authorId: '2'});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ authorId: '2' });
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "authorId",
-                            "value": page.authorId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'authorId',
+                            'value': page.authorId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -787,17 +788,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].authorId).to.eq(page.authorId)
             });
-        
+
             it('should filter parentId without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({parentId: '1'});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ parentId: '1' });
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": page.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': page.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -805,17 +806,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].parentId).to.eq(page.parentId)
             });
-        
+
             it('should filter postStatus without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({postStatus: PostStatusEnumType.draft});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ postStatus: PostStatusEnumType.draft });
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "postStatus",
-                            "value": page.postStatus,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'postStatus',
+                            'value': page.postStatus,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -823,17 +824,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].postStatus).to.eq(page.postStatus)
             });
-        
+
             it('should filter commentStatus without error', async () => {
-                const page = await Factory.model('App/Features/Post/PageModel').create({commentStatus: PostCommentStatusEnumType.closed});
+                const page = await Factory.model('App/Features/Post/PageModel').create({ commentStatus: PostCommentStatusEnumType.closed });
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentStatus",
-                            "value": page.commentStatus,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentStatus',
+                            'value': page.commentStatus,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -841,7 +842,7 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].commentStatus).to.eq(page.commentStatus)
             });
-        
+
             it('should filter commentCount without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
                 page.commentCount = 1;
@@ -850,10 +851,10 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "commentCount",
-                            "value": page.commentCount,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'commentCount',
+                            'value': page.commentCount,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -861,17 +862,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].commentCount).to.eq(page.commentCount)
             });
-        
+
             it('should filter description without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": page.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': page.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -879,17 +880,17 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].description).to.eq(page.description)
             });
-        
+
             it('should filter content without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create();
 
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "content",
-                            "value": page.content,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'content',
+                            'value': page.content,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -897,7 +898,7 @@ describe('page Http', () => {
                 expect(res.data.pages.data[0].id).to.eq(page.id)
                 expect(res.data.pages.data[0].content).to.eq(page.content)
             });
-        
+
             it('should filter publishedAt without error', async () => {
                 const page = await Factory.model('App/Features/Post/PageModel').create({
                     publishedAt: DateTime.fromSQL('2020-06-16 11:25:42')
@@ -906,10 +907,10 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "publishedAt",
-                            "value": page.publishedAt,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'publishedAt',
+                            'value': page.publishedAt,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -920,7 +921,7 @@ describe('page Http', () => {
         });
 
         describe('page Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -929,14 +930,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -947,16 +948,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -965,14 +966,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -983,16 +984,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by authorId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1001,14 +1002,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.DESC
+                        'sortBy': [{
+                            'authorId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by authorId asc when sortBy as array', async () => {
@@ -1019,16 +1020,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "authorId": SortEnumType.ASC
+                        'sortBy': [{
+                            'authorId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by postStatus desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1037,14 +1038,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "postStatus": SortEnumType.DESC
+                        'sortBy': [{
+                            'postStatus': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by postStatus asc when sortBy as array', async () => {
@@ -1055,16 +1056,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "postStatus": SortEnumType.ASC
+                        'sortBy': [{
+                            'postStatus': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by commentStatus desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1073,14 +1074,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentStatus": SortEnumType.DESC
+                        'sortBy': [{
+                            'commentStatus': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by commentStatus asc when sortBy as array', async () => {
@@ -1091,16 +1092,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentStatus": SortEnumType.ASC
+                        'sortBy': [{
+                            'commentStatus': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by commentCount desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1109,14 +1110,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentCount": SortEnumType.DESC
+                        'sortBy': [{
+                            'commentCount': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by commentCount asc when sortBy as array', async () => {
@@ -1127,16 +1128,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "commentCount": SortEnumType.ASC
+                        'sortBy': [{
+                            'commentCount': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by description desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1145,14 +1146,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by description asc when sortBy as array', async () => {
@@ -1163,16 +1164,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by content desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1181,14 +1182,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.DESC
+                        'sortBy': [{
+                            'content': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by content asc when sortBy as array', async () => {
@@ -1199,16 +1200,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "content": SortEnumType.ASC
+                        'sortBy': [{
+                            'content': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by language desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1217,14 +1218,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by language asc when sortBy as array', async () => {
@@ -1235,16 +1236,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by languageMaster desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1253,14 +1254,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by languageMaster asc when sortBy as array', async () => {
@@ -1271,16 +1272,16 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by publishedAt desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Post/PageModel').createMany(5);
 
@@ -1289,14 +1290,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.DESC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by publishedAt asc when sortBy as array', async () => {
@@ -1307,14 +1308,14 @@ describe('page Http', () => {
                 const res = await client.query({
                     query: PAGE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "publishedAt": SortEnumType.ASC
+                        'sortBy': [{
+                            'publishedAt': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.pages.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.pages.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
         });
     });
@@ -1322,7 +1323,7 @@ describe('page Http', () => {
     describe('page Http | create', () => {
         describe('page Http | create', () => {
             it('page category', async () => {
-                const user = await UserModel.create({name: 'job'});
+                const user = await UserModel.create({ name: 'job' });
                 authContext(user);
                 const category = [
                     await Factory.model('App/Features/Category/CategoryModel').create(),
@@ -1375,12 +1376,12 @@ describe('page Http', () => {
                     }
                     `,
                     variables: {
-                        "name": "asfsaf",
-                        "content": "ajsnjsaf",
-                        "meta": [
+                        'name': 'asfsaf',
+                        'content': 'ajsnjsaf',
+                        'meta': [
                             {
-                                "metaKey": "afasgas",
-                                "metaValue": "asjfask"
+                                'metaKey': 'afasgas',
+                                'metaValue': 'asjfask'
                             }
                         ]
                     }
@@ -1451,12 +1452,12 @@ describe('page Http', () => {
                 `,
                 variables: {
                     id: page.id,
-                    "name": "asfsaf",
-                    "content": "ajsnjsaf",
-                    "meta": [
+                    'name': 'asfsaf',
+                    'content': 'ajsnjsaf',
+                    'meta': [
                         {
-                            "metaKey": "afasgas",
-                            "metaValue": "asjfask"
+                            'metaKey': 'afasgas',
+                            'metaValue': 'asjfask'
                         }
                     ]
                 }

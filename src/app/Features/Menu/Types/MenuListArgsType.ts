@@ -1,8 +1,8 @@
-import {ArgsType, Field, Int} from "@tngraphql/graphql";
-import {filterType} from "../../../GraphQL/Types/FilterType";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {MenuFilterEnumType} from "./MenuFilterEnumType";
-import {MenuSortInputType} from "./MenuSortInputType";
+import { ArgsType, Field, Int } from '@tngraphql/graphql';
+import { filterType } from '../../../GraphQL/Types/FilterType';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { MenuFilterEnumType } from './MenuFilterEnumType';
+import { MenuSortInputType } from './MenuSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -22,7 +22,7 @@ export class MenuListArgsType {
     @Field(returns => filterType(MenuFilterEnumType))
     filter: FilterContract<typeof MenuFilterEnumType>
 
-    @Field(returns => [MenuSortInputType],{description: 'order'})
+    @Field(returns => [MenuSortInputType], { description: 'order' })
     sortBy: MenuSortInputType
 
     where: any;

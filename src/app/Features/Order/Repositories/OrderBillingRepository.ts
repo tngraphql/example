@@ -5,12 +5,12 @@
  * Time: 10:42 PM
  */
 
-import {Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../../Repositories/Lucid/BaseRepository";
-import {OrderBillingModel} from "../Models/OrderBillingModel";
+import { Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../../Repositories/Lucid/BaseRepository';
+import { OrderBillingModel } from '../Models/OrderBillingModel';
 
 @Service()
-export class OrderBillingRepository extends BaseRepository<OrderBillingModel, typeof OrderBillingModel>  {
+export class OrderBillingRepository extends BaseRepository<OrderBillingModel, typeof OrderBillingModel> {
     model(): typeof OrderBillingModel {
         return OrderBillingModel;
     }

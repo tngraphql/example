@@ -5,7 +5,7 @@
  * Time: 3:12 PM
  */
 import { CartItem } from './CartItem';
-import {convertStringToNumber} from "./utils";
+import { convertStringToNumber } from './utils';
 
 const _ = require('lodash');
 
@@ -58,7 +58,7 @@ export class Cart {
     }
 
     public push(cartItem) {
-        if ( ! cartItem || ! cartItem.quantity) {
+        if ( ! cartItem || ! cartItem.quantity ) {
             return;
         }
         if ( cartItem instanceof CartItem ) {

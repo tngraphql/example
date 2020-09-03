@@ -6,7 +6,7 @@
  */
 
 import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
-import {DateTime} from "luxon";
+import { DateTime } from 'luxon';
 
 Factory.blueprint('App/Features/Post/PageModel', (faker, index, data) => {
     return {

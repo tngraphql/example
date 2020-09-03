@@ -1,22 +1,22 @@
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {CommentType} from "../Types/CommentType";
-import {CommentDeleteArgsType} from "../Types/CommentDeleteArgsType";
-import {CommentIndexArgsType} from "../Types/CommentIndexArgsType";
-import {CommentListArgsType} from "../Types/CommentListArgsType";
-import {CommentRepository} from "../CommentRepository";
-import {CommentPostCreateArgsType} from "../Types/CommentPostCreateArgsType";
-import {CommentPostUpdateArgsType} from "../Types/CommentPostUpdateArgsType";
-import {CommentableEnumType} from "../Types/CommentableEnumType";
-import {ISelection} from "../../../../Contracts/SelectionCriteriaContract";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { CommentType } from '../Types/CommentType';
+import { CommentDeleteArgsType } from '../Types/CommentDeleteArgsType';
+import { CommentIndexArgsType } from '../Types/CommentIndexArgsType';
+import { CommentListArgsType } from '../Types/CommentListArgsType';
+import { CommentRepository } from '../CommentRepository';
+import { CommentPostCreateArgsType } from '../Types/CommentPostCreateArgsType';
+import { CommentPostUpdateArgsType } from '../Types/CommentPostUpdateArgsType';
+import { CommentableEnumType } from '../Types/CommentableEnumType';
+import { ISelection } from '../../../../Contracts/SelectionCriteriaContract';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -54,11 +54,11 @@ export class CommentResolve extends BaseResolve {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 
-    @Mutation(returns => CommentType, {description: 'Bình luận mới cho bài viết'})
+    @Mutation(returns => CommentType, { description: 'Bình luận mới cho bài viết' })
     @ValidateArgs(CommentPostCreateArgsType)
     // @UseMiddleware('auth')
     async commentPostCreate(@Args() args: CommentPostCreateArgsType, @SelectFields() fields,) {
-        const {postId, ...data} = args;
+        const { postId, ...data } = args;
 
         const created = await this.repo.create(Object.assign({
             commentableId: postId,
@@ -68,7 +68,7 @@ export class CommentResolve extends BaseResolve {
         return this.repo.firstBy(created.id);
     }
 
-    @Mutation(returns => CommentType, {description: 'Cập nhật bình luận bài viết'})
+    @Mutation(returns => CommentType, { description: 'Cập nhật bình luận bài viết' })
     @UseMiddleware('auth')
     async commentPostUpdate(@Args() args: CommentPostUpdateArgsType, @SelectFields() fields) {
         const created = await this.repo.update(args, args.id);

@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../../Contracts/FilterContract";
-import {filterType} from "../../../../GraphQL/Types/FilterType";
-import {PostFilterEnumType} from "./PostFilterEnumType";
-import {PostSortInputType} from "./PostSortInputType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../../Contracts/FilterContract';
+import { filterType } from '../../../../GraphQL/Types/FilterType';
+import { PostFilterEnumType } from './PostFilterEnumType';
+import { PostSortInputType } from './PostSortInputType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class PostIndexArgsType {
     @Field(returns => filterType(PostFilterEnumType))
     filter: FilterContract<typeof PostFilterEnumType>
 
-    @Field(returns => [PostSortInputType], {description: 'order'})
+    @Field(returns => [PostSortInputType], { description: 'order' })
     sortBy: PostSortInputType
 
     where: any;

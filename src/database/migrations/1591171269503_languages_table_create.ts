@@ -4,7 +4,7 @@ import { CreateTableBuilder } from 'knex';
 export default class LanguageTableCreate extends BaseSchema {
     protected $tableName = 'languages'
 
-    public async up () {
+    public async up() {
         this.schema.raw(`CREATE TABLE \`languages\` (
   \`id\` int(11) NOT NULL AUTO_INCREMENT,
   \`name\` varchar(500) DEFAULT NULL,
@@ -24,7 +24,7 @@ export default class LanguageTableCreate extends BaseSchema {
         this.schema.raw(`INSERT INTO \`languages\` VALUES (1, 'Tiếng Việt', 'vi', 'vi', '1', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Flag_of_North_Vietnam_%281955%E2%80%931975%29.svg/800px-Flag_of_North_Vietnam_%281955%E2%80%931975%29.svg.png', 0, 'publish', '2020-06-03 07:49:10', '2020-06-03 07:49:10', NULL);`)
     }
 
-    public async down () {
+    public async down() {
         this.schema.dropTable(this.$tableName)
     }
 }

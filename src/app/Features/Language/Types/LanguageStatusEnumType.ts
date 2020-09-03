@@ -5,10 +5,10 @@
  * Time: 8:07 AM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 export enum LanguageStatusEnumType {
     publish = 'publish',
 }
 
-registerEnumType(LanguageStatusEnumType, {name: 'LanguageStatusEnum'});
+registerEnumType(LanguageStatusEnumType, { name: 'LanguageStatusEnum' });

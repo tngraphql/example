@@ -5,16 +5,17 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {PRODUCTTYPE_LIST_QUERY, PRODUCTTYPE_QUERY} from "./gql/product-type-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {ProductTypeModel} from "../../src/app/Features/Product/Models/ProductTypeModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { PRODUCTTYPE_LIST_QUERY, PRODUCTTYPE_QUERY } from './gql/product-type-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { ProductTypeModel } from '../../src/app/Features/Product/Models/ProductTypeModel';
 
 describe('productType Http', () => {
     let client: ApolloServerTestClient;
@@ -56,8 +57,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -81,17 +82,17 @@ describe('productType Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": productType.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': productType.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -99,17 +100,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.id).to.eq(productType.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": productType.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': productType.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -117,17 +118,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.name).to.eq(productType.name);
             })
-        
+
             it('should filter description without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": productType.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': productType.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -135,7 +136,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.description).to.eq(productType.description);
             })
-        
+
             it('should filter parentId without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     parentId: '2'
@@ -144,10 +145,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": productType.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': productType.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -155,17 +156,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.parentId).to.eq(productType.parentId);
             })
-        
+
             it('should filter slug without error', async () => {
                 const productType = await ProductTypeModel.first();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": productType.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': productType.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -173,7 +174,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.slug).to.eq(productType.slug);
             })
-        
+
             it('should filter categoryOrder without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     categoryOrder: 10
@@ -182,10 +183,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "categoryOrder",
-                            "value": productType.categoryOrder,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'categoryOrder',
+                            'value': productType.categoryOrder,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -193,7 +194,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.categoryOrder).to.eq(productType.categoryOrder);
             })
-        
+
             it('should filter language without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     language: '2'
@@ -202,10 +203,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "language",
-                            "value": productType.language,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'language',
+                            'value': productType.language,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -213,17 +214,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.language).to.eq(productType.language);
             })
-        
+
             it('should filter languageMaster without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": productType.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': productType.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -231,17 +232,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.languageMaster).to.eq(productType.languageMaster);
             })
-        
+
             it('should filter seoTitle without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoTitle",
-                            "value": productType.seoTitle,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoTitle',
+                            'value': productType.seoTitle,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -249,17 +250,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.seoTitle).to.eq(productType.seoTitle);
             })
-        
+
             it('should filter seoDescription without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoDescription",
-                            "value": productType.seoDescription,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoDescription',
+                            'value': productType.seoDescription,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -267,17 +268,17 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.seoDescription).to.eq(productType.seoDescription);
             })
-        
+
             it('should filter seoKeyword without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoKeyword",
-                            "value": productType.seoKeyword,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoKeyword',
+                            'value': productType.seoKeyword,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -285,11 +286,11 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.seoKeyword).to.eq(productType.seoKeyword);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -298,8 +299,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -317,8 +318,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -327,7 +328,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.id).to.eq(productType.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -336,8 +337,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -355,8 +356,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -365,7 +366,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.name).to.eq(productType.name);
             })
-        
+
             it('should sort by desc description without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -374,8 +375,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -393,8 +394,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
@@ -403,7 +404,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.description).to.eq(productType.description);
             })
-        
+
             it('should sort by desc parentId without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -412,8 +413,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.DESC
+                        'sortBy': [{
+                            'parentId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -431,8 +432,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.ASC
+                        'sortBy': [{
+                            'parentId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -441,7 +442,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.parentId).to.eq(productType.parentId);
             })
-        
+
             it('should sort by desc slug without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -450,8 +451,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
@@ -469,8 +470,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
@@ -479,7 +480,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.slug).to.eq(productType.slug);
             })
-        
+
             it('should sort by desc categoryOrder without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -488,8 +489,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.DESC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.DESC
                         }]
                     }
                 });
@@ -507,8 +508,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.ASC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.ASC
                         }]
                     }
                 });
@@ -517,7 +518,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.categoryOrder).to.eq(productType.categoryOrder);
             })
-        
+
             it('should sort by desc language without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -526,8 +527,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
@@ -545,8 +546,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
@@ -555,7 +556,7 @@ describe('productType Http', () => {
                 expect(res.data.productType.id).to.eq(productType.id);
                 expect(res.data.productType.language).to.eq(productType.language);
             })
-        
+
             it('should sort by desc languageMaster without error', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(3);
 
@@ -564,8 +565,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
@@ -583,8 +584,8 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
@@ -636,17 +637,17 @@ describe('productType Http', () => {
         });
 
         describe('productType Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": productType.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': productType.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -654,17 +655,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": productType.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': productType.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -672,17 +673,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].name).to.eq(productType.name)
             });
-        
+
             it('should filter description without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": productType.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': productType.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -690,7 +691,7 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].description).to.eq(productType.description)
             });
-        
+
             it('should filter parentId without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     parentId: '2'
@@ -699,10 +700,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "parentId",
-                            "value": productType.parentId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'parentId',
+                            'value': productType.parentId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -710,17 +711,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].parentId).to.eq(productType.parentId)
             });
-        
+
             it('should filter slug without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "slug",
-                            "value": productType.slug,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'slug',
+                            'value': productType.slug,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -728,7 +729,7 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].slug).to.eq(productType.slug)
             });
-        
+
             it('should filter categoryOrder without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     categoryOrder: 10
@@ -737,10 +738,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "categoryOrder",
-                            "value": productType.categoryOrder,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'categoryOrder',
+                            'value': productType.categoryOrder,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -748,7 +749,7 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].categoryOrder).to.eq(productType.categoryOrder)
             });
-        
+
             it('should filter language without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create({
                     language: '2'
@@ -757,10 +758,10 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "language",
-                            "value": productType.language,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'language',
+                            'value': productType.language,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -768,17 +769,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].language).to.eq(productType.language)
             });
-        
+
             it('should filter languageMaster without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": productType.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': productType.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -786,17 +787,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].languageMaster).to.eq(productType.languageMaster)
             });
-        
+
             it('should filter seoTitle without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoTitle",
-                            "value": productType.seoTitle,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoTitle',
+                            'value': productType.seoTitle,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -804,17 +805,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].seoTitle).to.eq(productType.seoTitle)
             });
-        
+
             it('should filter seoDescription without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoDescription",
-                            "value": productType.seoDescription,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoDescription',
+                            'value': productType.seoDescription,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -822,17 +823,17 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].seoDescription).to.eq(productType.seoDescription)
             });
-        
+
             it('should filter seoKeyword without error', async () => {
                 const productType = await Factory.model('App/Features/Product/Models/ProductTypeModel').create();
 
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "seoKeyword",
-                            "value": productType.seoKeyword,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'seoKeyword',
+                            'value': productType.seoKeyword,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -840,11 +841,11 @@ describe('productType Http', () => {
                 expect(res.data.productTypes.data[0].id).to.eq(productType.id)
                 expect(res.data.productTypes.data[0].seoKeyword).to.eq(productType.seoKeyword)
             });
-        
+
         });
 
         describe('productType Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -853,14 +854,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -871,16 +872,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -889,14 +890,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -907,16 +908,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by description desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -925,14 +926,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by description asc when sortBy as array', async () => {
@@ -943,16 +944,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by parentId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -961,14 +962,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.DESC
+                        'sortBy': [{
+                            'parentId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by parentId asc when sortBy as array', async () => {
@@ -979,16 +980,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "parentId": SortEnumType.ASC
+                        'sortBy': [{
+                            'parentId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by slug desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -997,14 +998,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.DESC
+                        'sortBy': [{
+                            'slug': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by slug asc when sortBy as array', async () => {
@@ -1015,16 +1016,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "slug": SortEnumType.ASC
+                        'sortBy': [{
+                            'slug': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by categoryOrder desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -1033,14 +1034,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.DESC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by categoryOrder asc when sortBy as array', async () => {
@@ -1051,16 +1052,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "categoryOrder": SortEnumType.ASC
+                        'sortBy': [{
+                            'categoryOrder': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by language desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -1069,14 +1070,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by language asc when sortBy as array', async () => {
@@ -1087,16 +1088,16 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by languageMaster desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Product/Models/ProductTypeModel').createMany(5);
 
@@ -1105,14 +1106,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by languageMaster asc when sortBy as array', async () => {
@@ -1123,14 +1124,14 @@ describe('productType Http', () => {
                 const res = await client.query({
                     query: PRODUCTTYPE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.productTypes.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.productTypes.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
         });
     });
@@ -1178,7 +1179,7 @@ describe('productType Http', () => {
                     `,
                 variables: {
                     name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
-                    meta: { metaKey: "assaf", metaValue: "asfsf" }
+                    meta: { metaKey: 'assaf', metaValue: 'asfsf' }
                 }
             });
 
@@ -1239,7 +1240,7 @@ describe('productType Http', () => {
                     id: category.id,
                     name: 'Để xác minh cài đặt thành công, bạn thực hiện các bước sau',
                     slug: 'de-xac-minh-cai-dat-thanh-cong-ban-thuc-hien-cac-buoc-sau',
-                    meta: { metaKey: "assaf", metaValue: "asfsf" }
+                    meta: { metaKey: 'assaf', metaValue: 'asfsf' }
                 }
             });
             expect(res.errors).to.be.undefined;

@@ -4,16 +4,16 @@
  * Date: 5/26/2020
  * Time: 9:19 PM
  */
-import {resetTables, seedDB} from "../helpers";
-import {expect} from 'chai';
-import {LucidModel} from "@tngraphql/lucid/build/src/Contracts/Model/LucidModel";
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
-import {Criteria} from "../../src/Repositories/Criteria/Criteria";
-import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {DateTime} from "luxon";
+import { resetTables, seedDB } from '../helpers';
+import { expect } from 'chai';
+import { LucidModel } from '@tngraphql/lucid/build/src/Contracts/Model/LucidModel';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { column, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
+import { Criteria } from '../../src/Repositories/Criteria/Criteria';
+import { BaseRepository } from '../../src/Repositories/Lucid/BaseRepository';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { DateTime } from 'luxon';
 
 function getBaseRepository() {
     class Example extends BaseRepository {
@@ -39,7 +39,7 @@ describe('Base Repository', () => {
         class UserModelClass extends BaseModel {
             public static table = 'users'
 
-            @column({isPrimary: true})
+            @column({ isPrimary: true })
             public id: string;
 
             @column()
@@ -128,27 +128,27 @@ describe('Base Repository', () => {
 
     it('create', async () => {
         const repo = new UserRepository();
-        const user: any = await repo.create({name: 'nguyen'});
+        const user: any = await repo.create({ name: 'nguyen' });
         expect(user.name).to.be.eq('nguyen');
     });
 
     it('update', async () => {
         const repo = new UserRepository();
-        await repo.create({name: 'nguyen'});
-        const user: any = await repo.update({name: 'anh'}, 'nguyen', 'name');
+        await repo.create({ name: 'nguyen' });
+        const user: any = await repo.update({ name: 'anh' }, 'nguyen', 'name');
         expect(user.name).to.be.eq('anh');
     });
 
     it('delete', async () => {
         const repo = new UserRepository();
-        const user: any = await repo.create({name: 'nguyen'});
+        const user: any = await repo.create({ name: 'nguyen' });
         expect(await repo.delete(user.id)).to.be.eq(1);
         expect(await UserModel.query().where('id', user.id).first()).to.be.null;
     });
 
     it('delete where attribute', async () => {
         const repo = new UserRepository();
-        await repo.create({name: 'nguyen'});
+        await repo.create({ name: 'nguyen' });
         const deleted = await repo.delete('nguyen', 'name');
         expect(deleted).to.be.eq(1);
     });
@@ -159,11 +159,11 @@ describe('Base Repository', () => {
         const repo = new UserRepository();
         const stack = [];
         const deleteFn = repo.delete.bind(repo)
-        repo.delete = function (id, a = 'id') {
+        repo.delete = function(id, a = 'id') {
             stack.push(id);
             return deleteFn(id, a);
         };
-        const user: any = await repo.create({name: 'nguyen'});
+        const user: any = await repo.create({ name: 'nguyen' });
         expect(await repo.destroy([user.id])).to.deep.eq([user.id]);
         expect(await UserModel.query().where('id', user.id).first()).to.be.null;
         expect(stack[0].id).to.eq(user.id);

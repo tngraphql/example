@@ -5,17 +5,18 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {MENU_LIST_QUERY, MENU_QUERY} from "./gql/menu-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import {MenuModel} from "../../src/app/Features/Menu/MenuModel";
-import {MenuStatusEnumType} from "../../src/app/Features/Menu/Types/Enum/MenuStatusEnumType";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { MENU_LIST_QUERY, MENU_QUERY } from './gql/menu-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import { MenuModel } from '../../src/app/Features/Menu/MenuModel';
+import { MenuStatusEnumType } from '../../src/app/Features/Menu/Types/Enum/MenuStatusEnumType';
 
 describe('menu Http', () => {
     let client: ApolloServerTestClient;
@@ -56,8 +57,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -81,17 +82,17 @@ describe('menu Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": menu.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': menu.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -99,17 +100,17 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.id).to.eq(menu.id);
             })
-        
+
             it('should filter name without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": menu.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': menu.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -117,17 +118,17 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.name).to.eq(menu.name);
             })
-        
+
             it('should filter status without error', async () => {
-                const menu = await Factory.model('App/Features/Menu/MenuModel').create({status: MenuStatusEnumType.pending});
+                const menu = await Factory.model('App/Features/Menu/MenuModel').create({ status: MenuStatusEnumType.pending });
 
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": menu.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': menu.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -135,17 +136,17 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.status).to.eq(menu.status);
             })
-        
+
             it('should filter description without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": menu.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': menu.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -160,10 +161,10 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": menu.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': menu.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -174,7 +175,7 @@ describe('menu Http', () => {
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -183,8 +184,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -202,8 +203,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -212,7 +213,7 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.id).to.eq(menu.id);
             })
-        
+
             it('should sort by desc name without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -221,8 +222,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
@@ -240,8 +241,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
@@ -250,7 +251,7 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.name).to.eq(menu.name);
             })
-        
+
             it('should sort by desc status without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -259,8 +260,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.DESC
+                        'sortBy': [{
+                            'status': SortEnumType.DESC
                         }]
                     }
                 });
@@ -278,8 +279,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.ASC
+                        'sortBy': [{
+                            'status': SortEnumType.ASC
                         }]
                     }
                 });
@@ -288,7 +289,7 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.status).to.eq(menu.status);
             })
-        
+
             it('should sort by desc description without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -297,8 +298,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
@@ -316,8 +317,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
@@ -326,7 +327,7 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.description).to.eq(menu.description);
             })
-        
+
             it('should sort by desc language without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -335,8 +336,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
@@ -354,8 +355,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
@@ -364,7 +365,7 @@ describe('menu Http', () => {
                 expect(res.data.menu.id).to.eq(menu.id);
                 expect(res.data.menu.language).to.eq(menu.language);
             })
-        
+
             it('should sort by desc languageMaster without error', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(3);
 
@@ -373,8 +374,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
@@ -392,8 +393,8 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
@@ -446,17 +447,17 @@ describe('menu Http', () => {
         });
 
         describe('menu Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": menu.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': menu.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -464,17 +465,17 @@ describe('menu Http', () => {
                 expect(res.data.menus.data[0].id).to.eq(menu.id)
                 expect(res.data.menus.data[0].id).to.eq(menu.id)
             });
-        
+
             it('should filter name without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "name",
-                            "value": menu.name,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'name',
+                            'value': menu.name,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -482,7 +483,7 @@ describe('menu Http', () => {
                 expect(res.data.menus.data[0].id).to.eq(menu.id)
                 expect(res.data.menus.data[0].name).to.eq(menu.name)
             });
-        
+
             it('should filter status without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create({
                     status: MenuStatusEnumType.pending
@@ -491,10 +492,10 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "status",
-                            "value": menu.status,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'status',
+                            'value': menu.status,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -502,17 +503,17 @@ describe('menu Http', () => {
                 expect(res.data.menus.data[0].id).to.eq(menu.id)
                 expect(res.data.menus.data[0].status).to.eq(menu.status)
             });
-        
+
             it('should filter description without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "description",
-                            "value": menu.description,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'description',
+                            'value': menu.description,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -520,17 +521,17 @@ describe('menu Http', () => {
                 expect(res.data.menus.data[0].id).to.eq(menu.id)
                 expect(res.data.menus.data[0].description).to.eq(menu.description)
             });
-        
+
             it('should filter languageMaster without error', async () => {
                 const menu = await Factory.model('App/Features/Menu/MenuModel').create();
 
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "languageMaster",
-                            "value": menu.languageMaster,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'languageMaster',
+                            'value': menu.languageMaster,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -541,7 +542,7 @@ describe('menu Http', () => {
         });
 
         describe('menu Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -550,14 +551,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -568,16 +569,16 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by name desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -586,14 +587,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.DESC
+                        'sortBy': [{
+                            'name': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by name asc when sortBy as array', async () => {
@@ -604,16 +605,16 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "name": SortEnumType.ASC
+                        'sortBy': [{
+                            'name': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by status desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -622,14 +623,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.DESC
+                        'sortBy': [{
+                            'status': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by status asc when sortBy as array', async () => {
@@ -640,16 +641,16 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "status": SortEnumType.ASC
+                        'sortBy': [{
+                            'status': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by description desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -658,14 +659,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.DESC
+                        'sortBy': [{
+                            'description': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by description asc when sortBy as array', async () => {
@@ -676,16 +677,16 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "description": SortEnumType.ASC
+                        'sortBy': [{
+                            'description': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by language desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -694,14 +695,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.DESC
+                        'sortBy': [{
+                            'language': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by language asc when sortBy as array', async () => {
@@ -712,16 +713,16 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "language": SortEnumType.ASC
+                        'sortBy': [{
+                            'language': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by languageMaster desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Menu/MenuModel').createMany(5);
 
@@ -730,14 +731,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.DESC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by languageMaster asc when sortBy as array', async () => {
@@ -748,14 +749,14 @@ describe('menu Http', () => {
                 const res = await client.query({
                     query: MENU_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "languageMaster": SortEnumType.ASC
+                        'sortBy': [{
+                            'languageMaster': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.menus.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.menus.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
         });
     });

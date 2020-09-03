@@ -4,12 +4,12 @@
  * Date: 7/11/2020
  * Time: 4:54 PM
  */
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../GraphQL/Types/TimestampScalarType";
-import {DateTime} from "luxon";
-import {registerPaginateType} from "../../../GraphQL/Types/PaginateType";
-import TagModel from "../TagModel";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../GraphQL/Types/TimestampScalarType';
+import { DateTime } from 'luxon';
+import { registerPaginateType } from '../../../GraphQL/Types/PaginateType';
+import TagModel from '../TagModel';
 
 @ObjectType('Tag')
 export class TagType {

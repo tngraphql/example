@@ -4,12 +4,12 @@
  * Date: 8/26/2020
  * Time: 11:32 AM
  */
-import {Field, ObjectType} from "@tngraphql/graphql";
-import {DateTime} from "luxon";
-import {ShippingLocationModel} from "../../Models/ShippingLocationModel";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {TimestampScalarType} from "../../../../GraphQL/Types/TimestampScalarType";
-import {registerPaginateType} from "../../../../GraphQL/Types/PaginateType";
+import { Field, ObjectType } from '@tngraphql/graphql';
+import { DateTime } from 'luxon';
+import { ShippingLocationModel } from '../../Models/ShippingLocationModel';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { TimestampScalarType } from '../../../../GraphQL/Types/TimestampScalarType';
+import { registerPaginateType } from '../../../../GraphQL/Types/PaginateType';
 
 @ObjectType('ShippingLocation')
 export class ShippingLocationType {

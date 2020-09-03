@@ -1,9 +1,9 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import FavoriteModel from "../FavoriteModel";
-import {ID} from "../../../GraphQL/Types/UidScalerType";
-import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import FavoriteModel from '../FavoriteModel';
+import { ID } from '../../../GraphQL/Types/UidScalerType';
+import { FavoriteTypeEnumType } from './FavoriteTypeEnumType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -14,7 +14,7 @@ import {FavoriteTypeEnumType} from "./FavoriteTypeEnumType";
 
 @ArgsType()
 export class FavoriteUpdateArgsType {
-    @Field(returns => ID, {description: 'ID'})
+    @Field(returns => ID, { description: 'ID' })
     @Rules([
         'required',
         Rule.exists(FavoriteModel.getTable(), 'id')

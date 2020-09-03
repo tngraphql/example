@@ -5,11 +5,11 @@
  * Time: 8:17 AM
  */
 
-import {registerCustomInject, Service} from "@tngraphql/illuminate";
-import {BaseRepository} from "../../../Repositories/Lucid/BaseRepository";
-import FavoriteModel from "./FavoriteModel";
-import {ResolveAuth} from "../../../decorators/ResolveAuth";
-import {AuthContract} from "@tngraphql/auth/dist/src/Contract/AuthContract";
+import { registerCustomInject, Service } from '@tngraphql/illuminate';
+import { BaseRepository } from '../../../Repositories/Lucid/BaseRepository';
+import FavoriteModel from './FavoriteModel';
+import { ResolveAuth } from '../../../decorators/ResolveAuth';
+import { AuthContract } from '@tngraphql/auth/dist/src/Contract/AuthContract';
 
 @Service()
 export class FavoriteRepository extends BaseRepository<FavoriteModel> {

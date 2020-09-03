@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
-import {ID} from "../../../../GraphQL/Types/UidScalerType";
-import {Rule} from "@tngraphql/illuminate/dist/Foundation/Validate/Rule";
-import ContactModel from "../../ContactModel";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
+import { ID } from '../../../../GraphQL/Types/UidScalerType';
+import { Rule } from '@tngraphql/illuminate/dist/Foundation/Validate/Rule';
+import ContactModel from '../../ContactModel';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -13,7 +13,7 @@ import ContactModel from "../../ContactModel";
 
 @ArgsType()
 export class ContactUpdateArgsType {
-    @Field(returns => ID, {description: 'ID. contact'})
+    @Field(returns => ID, { description: 'ID. contact' })
     @Rules([
         'required',
         Rule.exists(ContactModel.getTable(), 'id')

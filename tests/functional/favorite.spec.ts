@@ -5,17 +5,18 @@
  * Time: 4:06 PM
  */
 
-import {ApolloServerTestClient} from "../../src/Contracts/ApolloTestClient";
-import {createTestClient} from "apollo-server-testing";
-import {authContext, createServer, resetTables, seedDB} from "../helpers";
+import { ApolloServerTestClient } from '../../src/Contracts/ApolloTestClient';
+import { createTestClient } from 'apollo-server-testing';
+import { authContext, createServer, resetTables, seedDB } from '../helpers';
+
 const { gql } = require('apollo-server');
-import {expect} from "chai";
-import {Factory} from "@tngraphql/illuminate/dist/Support/Facades";
-import {UserModel} from "../../src/app/UserModel";
-import {FAVORITE_LIST_QUERY, FAVORITE_QUERY, FAVORITE_LIST_FOR_USER_QUERY} from "./gql/favorite-gql";
-import {SortEnumType} from "../../src/app/GraphQL/Types/SortEnumType";
-import FavoriteModel from "../../src/app/Features/Favorite/FavoriteModel";
-import ContactReplyModel from "../../src/app/Features/Contact/ContactReplyModel";
+import { expect } from 'chai';
+import { Factory } from '@tngraphql/illuminate/dist/Support/Facades';
+import { UserModel } from '../../src/app/UserModel';
+import { FAVORITE_LIST_QUERY, FAVORITE_QUERY, FAVORITE_LIST_FOR_USER_QUERY } from './gql/favorite-gql';
+import { SortEnumType } from '../../src/app/GraphQL/Types/SortEnumType';
+import FavoriteModel from '../../src/app/Features/Favorite/FavoriteModel';
+import ContactReplyModel from '../../src/app/Features/Contact/ContactReplyModel';
 
 describe('favorite Http', () => {
     let client: ApolloServerTestClient;
@@ -31,8 +32,9 @@ describe('favorite Http', () => {
         const user = await UserModel.first();
         await Factory.model('App/Features/Favorite/FavoriteModel').create({
             userId: user.id,
-            reload: true});
-        await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5, {userId: user.id});
+            reload: true
+        });
+        await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5, { userId: user.id });
         authContext(user);
     });
 
@@ -62,8 +64,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": {
-                            "id": "DESC"
+                        'sortBy': {
+                            'id': 'DESC'
                         }
                     }
                 });
@@ -85,17 +87,17 @@ describe('favorite Http', () => {
         });
 
         describe('User Http | index | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create();
 
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": favorite.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': favorite.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -103,17 +105,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.id).to.eq(favorite.id);
             })
-        
+
             it('should filter favoriteableId without error', async () => {
                 const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create();
 
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableId",
-                            "value": favorite.favoriteableId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableId',
+                            'value': favorite.favoriteableId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -121,17 +123,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.favoriteableId).to.eq(favorite.favoriteableId);
             })
-        
+
             it('should filter favoriteableType without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({favoriteableType: 'product'});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ favoriteableType: 'product' });
 
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableType",
-                            "value": favorite.favoriteableType,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableType',
+                            'value': favorite.favoriteableType,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -140,17 +142,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.favoriteableType).to.eq(favorite.favoriteableType);
             })
-        
+
             it('should filter userId without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({userId: '8888'});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ userId: '8888' });
 
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "userId",
-                            "value": favorite.userId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'userId',
+                            'value': favorite.userId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -158,11 +160,11 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.userId).to.eq(favorite.userId);
             })
-        
+
         });
 
         describe('User Http | index | sortBy', () => {
-        
+
             it('should sort by desc id without error', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(3);
 
@@ -171,8 +173,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
@@ -190,8 +192,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
@@ -200,7 +202,7 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.id).to.eq(favorite.id);
             })
-        
+
             it('should sort by desc favoriteableId without error', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(3);
 
@@ -209,8 +211,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -228,8 +230,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -238,7 +240,7 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.favoriteableId).to.eq(favorite.favoriteableId);
             })
-        
+
             it('should sort by desc favoriteableType without error', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(3);
 
@@ -247,8 +249,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.DESC
                         }]
                     }
                 });
@@ -266,8 +268,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.ASC
                         }]
                     }
                 });
@@ -276,7 +278,7 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.favoriteableType).to.eq(favorite.favoriteableType);
             })
-        
+
             it('should sort by desc userId without error', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(3);
 
@@ -285,8 +287,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.DESC
+                        'sortBy': [{
+                            'userId': SortEnumType.DESC
                         }]
                     }
                 });
@@ -304,8 +306,8 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.ASC
+                        'sortBy': [{
+                            'userId': SortEnumType.ASC
                         }]
                     }
                 });
@@ -314,7 +316,7 @@ describe('favorite Http', () => {
                 expect(res.data.favorite.id).to.eq(favorite.id);
                 expect(res.data.favorite.userId).to.eq(favorite.userId);
             })
-        
+
         });
     });
 
@@ -368,17 +370,17 @@ describe('favorite Http', () => {
         });
 
         describe('favorite Http | list | filter', () => {
-        
+
             it('should filter id without error', async () => {
                 const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create();
 
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": favorite.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': favorite.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -386,17 +388,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorites.data[0].id).to.eq(favorite.id)
                 expect(res.data.favorites.data[0].id).to.eq(favorite.id)
             });
-        
+
             it('should filter favoriteableId without error', async () => {
                 const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create();
 
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableId",
-                            "value": favorite.favoriteableId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableId',
+                            'value': favorite.favoriteableId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -404,17 +406,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorites.data[0].id).to.eq(favorite.id)
                 expect(res.data.favorites.data[0].favoriteableId).to.eq(favorite.favoriteableId)
             });
-        
+
             it('should filter favoriteableType without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({favoriteableType: 'product'});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ favoriteableType: 'product' });
 
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableType",
-                            "value": favorite.favoriteableType,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableType',
+                            'value': favorite.favoriteableType,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -422,17 +424,17 @@ describe('favorite Http', () => {
                 expect(res.data.favorites.data[0].id).to.eq(favorite.id)
                 expect(res.data.favorites.data[0].favoriteableType).to.eq(favorite.favoriteableType)
             });
-        
+
             it('should filter userId without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({userId: '8888'});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ userId: '8888' });
 
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "userId",
-                            "value": favorite.userId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'userId',
+                            'value': favorite.userId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -440,11 +442,11 @@ describe('favorite Http', () => {
                 expect(res.data.favorites.data[0].id).to.eq(favorite.id)
                 expect(res.data.favorites.data[0].userId).to.eq(favorite.userId)
             });
-        
+
         });
 
         describe('favorite Http | list | sortBy', () => {
-        
+
             it('should order by id desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5);
 
@@ -453,14 +455,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -471,16 +473,16 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by favoriteableId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5);
 
@@ -489,14 +491,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableId asc when sortBy as array', async () => {
@@ -507,16 +509,16 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by favoriteableType desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5);
 
@@ -525,14 +527,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableType asc when sortBy as array', async () => {
@@ -543,16 +545,16 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
             it('should order by userId desc when sortBy as array', async () => {
                 await Factory.model('App/Features/Favorite/FavoriteModel').createMany(5);
 
@@ -561,14 +563,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.DESC
+                        'sortBy': [{
+                            'userId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by userId asc when sortBy as array', async () => {
@@ -579,16 +581,16 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.ASC
+                        'sortBy': [{
+                            'userId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
-        
+
         });
     });
 
@@ -645,15 +647,15 @@ describe('favorite Http', () => {
         describe('favorite Http | favoritesUser | filter', () => {
 
             it('should filter id without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({userId: user.id});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ userId: user.id });
 
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "id",
-                            "value": favorite.id,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'id',
+                            'value': favorite.id,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -663,15 +665,15 @@ describe('favorite Http', () => {
             });
 
             it('should filter favoriteableId without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({userId: user.id});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({ userId: user.id });
 
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableId",
-                            "value": favorite.favoriteableId,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableId',
+                            'value': favorite.favoriteableId,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -681,15 +683,18 @@ describe('favorite Http', () => {
             });
 
             it('should filter favoriteableType without error', async () => {
-                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({userId: user.id, favoriteableType: 'product'});
+                const favorite = await Factory.model('App/Features/Favorite/FavoriteModel').create({
+                    userId: user.id,
+                    favoriteableType: 'product'
+                });
 
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "filter": {
-                            "field": "favoriteableType",
-                            "value": favorite.favoriteableType,
-                            "operator": "eq"
+                        'filter': {
+                            'field': 'favoriteableType',
+                            'value': favorite.favoriteableType,
+                            'operator': 'eq'
                         }
                     }
                 });
@@ -709,14 +714,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.DESC
+                        'sortBy': [{
+                            'id': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by id asc when sortBy as array', async () => {
@@ -727,14 +732,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "id": SortEnumType.ASC
+                        'sortBy': [{
+                            'id': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableId desc when sortBy as array', async () => {
@@ -745,14 +750,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableId asc when sortBy as array', async () => {
@@ -763,14 +768,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableId": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableType desc when sortBy as array', async () => {
@@ -781,14 +786,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.DESC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by favoriteableType asc when sortBy as array', async () => {
@@ -799,14 +804,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "favoriteableType": SortEnumType.ASC
+                        'sortBy': [{
+                            'favoriteableType': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by userId desc when sortBy as array', async () => {
@@ -817,14 +822,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.DESC
+                        'sortBy': [{
+                            'userId': SortEnumType.DESC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
             it('should order by userId asc when sortBy as array', async () => {
@@ -835,14 +840,14 @@ describe('favorite Http', () => {
                 const res = await client.query({
                     query: FAVORITE_LIST_FOR_USER_QUERY,
                     variables: {
-                        "sortBy": [{
-                            "userId": SortEnumType.ASC
+                        'sortBy': [{
+                            'userId': SortEnumType.ASC
                         }]
                     }
                 });
 
                 expect(res.errors).to.undefined;
-                expect(res.data.favorites.data.map(x=>x.id)).to.deep.eq(data.map(x => x.id));
+                expect(res.data.favorites.data.map(x => x.id)).to.deep.eq(data.map(x => x.id));
             });
 
         });

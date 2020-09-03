@@ -1,4 +1,4 @@
-import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
+import { HasOne } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/types';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -6,13 +6,13 @@ import {HasOne} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
  * Date: 5/30/2020
  * Time: 7:36 PM
  */
-import {expect} from 'chai';
-import {BaseModel} from "@tngraphql/lucid/build/src/Orm/BaseModel";
-import {SelectionCriteria} from "../../src/Repositories/Criteria/SelectionCriteria";
-import {BaseRepository} from "../../src/Repositories/Lucid/BaseRepository";
-import {column, hasOne} from "@tngraphql/lucid/build/src/Orm/Decorators";
-import {resetTables, seedDB} from "../helpers";
-import {RelationQueryBuilderContract} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/RelationQueryBuilderContract";
+import { expect } from 'chai';
+import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
+import { SelectionCriteria } from '../../src/Repositories/Criteria/SelectionCriteria';
+import { BaseRepository } from '../../src/Repositories/Lucid/BaseRepository';
+import { column, hasOne } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import { resetTables, seedDB } from '../helpers';
+import { RelationQueryBuilderContract } from '@tngraphql/lucid/build/src/Contracts/Orm/Relations/RelationQueryBuilderContract';
 
 describe('Selection Criteria', () => {
     let UserModel;
@@ -22,26 +22,26 @@ describe('Selection Criteria', () => {
         class Profile extends BaseModel {
             public static table = 'profiles'
 
-            @column({isPrimary: true})
+            @column({ isPrimary: true })
             id: string;
 
             @column()
             public userId: number
 
-            @hasOne(() => Profile, {foreignKey: 'userId', localKey: 'id'})
+            @hasOne(() => Profile, { foreignKey: 'userId', localKey: 'id' })
             profileNested: HasOne<typeof Profile>;
         }
 
         class User extends BaseModel {
             public static table = 'users'
 
-            @column({isPrimary: true})
+            @column({ isPrimary: true })
             id: string;
 
             // @column()
             // localKey: string;
 
-            @hasOne(() => Profile, {foreignKey: 'userId', localKey: 'id'})
+            @hasOne(() => Profile, { foreignKey: 'userId', localKey: 'id' })
             profile: HasOne<typeof Profile>;
         }
 
@@ -50,13 +50,13 @@ describe('Selection Criteria', () => {
         await seedDB();
     });
 
-    afterEach( async () => {
+    afterEach(async () => {
         await resetTables()
     })
 
     it('should select column without error', async () => {
         const query = UserModel.query();
-        const selection = new SelectionCriteria({columns: ['id'], preloads: []});
+        const selection = new SelectionCriteria({ columns: ['id'], preloads: [] });
         selection.apply(query, {} as BaseRepository);
         expect(query.toSQL().sql).to.deep.eq(UserModel.query().select(['id']).toSQL().sql)
     });
@@ -70,7 +70,7 @@ describe('Selection Criteria', () => {
         });
         selection.apply(query, {} as BaseRepository);
         expect(query.toSQL().sql).to.deep.eq(UserModel.query().select(['id']).toSQL().sql);
-        const profile = processRelation('profile', [{id: 1}], query);
+        const profile = processRelation('profile', [{ id: 1 }], query);
         expect(profile.query.selectRelationKeys().toSQL().sql)
             .to.deep.eq(ProfileModel.query().whereIn('user_id', [1]).toSQL().sql);
     });
@@ -85,7 +85,7 @@ describe('Selection Criteria', () => {
         });
         selection.apply(query, {} as BaseRepository);
         expect(query.toSQL().sql).to.deep.eq(UserModel.query().select(['id']).toSQL().sql);
-        const profile = processRelation('profile', [{id: 1}], query);
+        const profile = processRelation('profile', [{ id: 1 }], query);
         expect(profile.query.selectRelationKeys().toSQL().sql)
             .to.deep.eq(ProfileModel.query().select(['id', 'userId']).whereIn('user_id', [1]).toSQL().sql);
     });
@@ -106,25 +106,25 @@ describe('Selection Criteria', () => {
         });
         selection.apply(query, {} as BaseRepository);
         expect(query.toSQL().sql).to.deep.eq(UserModel.query().select(['id']).toSQL().sql);
-        const profile = processRelation('profile', [{id: 1}], query);
+        const profile = processRelation('profile', [{ id: 1 }], query);
         expect(profile.query.selectRelationKeys().toSQL().sql)
             .to.deep.eq(ProfileModel.query().select(['id', 'userId']).whereIn('user_id', [1]).toSQL().sql);
 
-        const profileNested = processRelation('profileNested', [{id: 1}], profile.query);
+        const profileNested = processRelation('profileNested', [{ id: 1 }], profile.query);
         expect(profileNested.query.selectRelationKeys().toSQL().sql)
             .to.deep.eq(ProfileModel.query().select(['id', 'userId']).whereIn('user_id', [1]).toSQL().sql);
     });
 });
 
-function processRelation(name, parent, query): {query: RelationQueryBuilderContract<any, any>} {
+function processRelation(name, parent, query): { query: RelationQueryBuilderContract<any, any> } {
     const preloads = query.preloader.preloads;
     expect(preloads.hasOwnProperty(name)).to.be.true;
 
     const query1 = preloads[name].relation.eagerQuery(parent as any, query.client).sideload(query.preloader.sideloaded);
 
-    if (typeof preloads[name].callback === "function") {
+    if ( typeof preloads[name].callback === 'function' ) {
         preloads[name].callback(query1);
     }
 
-    return {query: query1}
+    return { query: query1 }
 }

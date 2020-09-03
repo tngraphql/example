@@ -5,7 +5,7 @@
  * Time: 6:00 PM
  */
 
-import {registerEnumType} from "@tngraphql/graphql";
+import { registerEnumType } from '@tngraphql/graphql';
 
 enum MenuStatusEnumType {
     publish = 'publish', // Xuất bản
@@ -18,4 +18,4 @@ registerEnumType(MenuStatusEnumType, {
     description: 'Trạng thái menu'
 });
 
-export {MenuStatusEnumType};
+export { MenuStatusEnumType };

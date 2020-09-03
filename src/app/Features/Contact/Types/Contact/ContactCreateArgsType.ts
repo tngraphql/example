@@ -1,5 +1,5 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {Rules} from "@tngraphql/illuminate";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { Rules } from '@tngraphql/illuminate';
 
 /**
  * Created by Phan Trung Nguyên.

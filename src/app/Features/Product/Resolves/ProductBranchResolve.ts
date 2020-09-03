@@ -4,25 +4,25 @@
  * Date: 7/11/2020
  * Time: 5:53 PM
  */
-import {Args, Ctx, Mutation, Query, Resolver, UseMiddleware} from "@tngraphql/graphql";
-import {BaseResolve} from "../../../GraphQL/Resolves/BaseResolve";
-import {Inject, ValidateArgs} from "@tngraphql/illuminate";
-import {SelectFields} from "../../../../decorators/SelectFields";
-import {SortByCriteria} from "../../../../Repositories/Criteria/SortByCriteria";
-import {FilterCriteria} from "../../../../Repositories/Criteria/FilterCriteria";
-import {SelectionCriteria} from "../../../../Repositories/Criteria/SelectionCriteria";
-import {paginateType} from "../../../GraphQL/Types/PaginateType";
-import {DeleteType} from "../../../GraphQL/Types/DeleteType";
-import {Resource} from "../../../../lib/Resource";
-import {ProductBranchIndexArgsType} from "../Types/ProductBranch/ProductBranchIndexArgsType";
-import {ProductBranchListArgsType} from "../Types/ProductBranch/ProductBranchListArgsType";
-import {ProductBranchDeleteArgsType} from "../Types/ProductBranch/ProductBranchDeleteArgsType";
-import {ProductBranchRepository} from "../Repositories/ProductBranchRepository";
-import {ProductBranchType} from "../Types/ProductBranch/ProductBranchType";
-import {ProductInventoryType} from "../Types/Product/ProductInventoryType";
-import {InventoryArgsType} from "../Types/ProductBranch/InventoryArgsType";
-import {InventoryRepository} from "../Repositories/InventoryRepository";
-import {ProductMasterFeaturedArgsType} from "../Types/Product/ProductMasterFeaturedArgsType";
+import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from '@tngraphql/graphql';
+import { BaseResolve } from '../../../GraphQL/Resolves/BaseResolve';
+import { Inject, ValidateArgs } from '@tngraphql/illuminate';
+import { SelectFields } from '../../../../decorators/SelectFields';
+import { SortByCriteria } from '../../../../Repositories/Criteria/SortByCriteria';
+import { FilterCriteria } from '../../../../Repositories/Criteria/FilterCriteria';
+import { SelectionCriteria } from '../../../../Repositories/Criteria/SelectionCriteria';
+import { paginateType } from '../../../GraphQL/Types/PaginateType';
+import { DeleteType } from '../../../GraphQL/Types/DeleteType';
+import { Resource } from '../../../../lib/Resource';
+import { ProductBranchIndexArgsType } from '../Types/ProductBranch/ProductBranchIndexArgsType';
+import { ProductBranchListArgsType } from '../Types/ProductBranch/ProductBranchListArgsType';
+import { ProductBranchDeleteArgsType } from '../Types/ProductBranch/ProductBranchDeleteArgsType';
+import { ProductBranchRepository } from '../Repositories/ProductBranchRepository';
+import { ProductBranchType } from '../Types/ProductBranch/ProductBranchType';
+import { ProductInventoryType } from '../Types/Product/ProductInventoryType';
+import { InventoryArgsType } from '../Types/ProductBranch/InventoryArgsType';
+import { InventoryRepository } from '../Repositories/InventoryRepository';
+import { ProductMasterFeaturedArgsType } from '../Types/Product/ProductMasterFeaturedArgsType';
 
 @Resolver()
 export class ProductBranchResolve extends BaseResolve {
@@ -67,14 +67,14 @@ export class ProductBranchResolve extends BaseResolve {
         return Resource.delete(await this.repo.destroy(args.id), ctx.lang);
     }
 
-    @Mutation(returns => ProductInventoryType, {description: 'Điều chỉnh số lượng hàng tồn kho'})
+    @Mutation(returns => ProductInventoryType, { description: 'Điều chỉnh số lượng hàng tồn kho' })
     @ValidateArgs(InventoryArgsType)
     // @UseMiddleware('auth')
     async inventoryAdjustQuantity(@Args() args: InventoryArgsType, @SelectFields() fields) {
         await this.inventory.updateQuantity(args, args.productBranchId);
 
         return this.inventory.query()
-            .pushCriteria(new SelectionCriteria(fields))
-            .firstBy(args.productBranchId, 'productBranchId');
+                   .pushCriteria(new SelectionCriteria(fields))
+                   .firstBy(args.productBranchId, 'productBranchId');
     }
 }

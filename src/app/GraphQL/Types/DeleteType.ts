@@ -1,6 +1,6 @@
-import {Field, Int, ObjectType} from "@tngraphql/graphql";
-import {StatusScalarType} from "./StatusScalarType";
-import {GraphQLString} from "graphql";
+import { Field, Int, ObjectType } from '@tngraphql/graphql';
+import { StatusScalarType } from './StatusScalarType';
+import { GraphQLString } from 'graphql';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -9,7 +9,7 @@ import {GraphQLString} from "graphql";
  * Time: 8:10 PM
  */
 
-@ObjectType('Delete', {description: 'Phân trang'})
+@ObjectType('Delete', { description: 'Phân trang' })
 export class DeleteType {
     @Field(returns => StatusScalarType)
     status: any

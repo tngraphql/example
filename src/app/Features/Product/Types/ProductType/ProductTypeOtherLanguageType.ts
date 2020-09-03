@@ -1,4 +1,4 @@
-import {ObjectType} from "@tngraphql/graphql";
+import { ObjectType } from '@tngraphql/graphql';
 import { OtherLanguageType } from '../../../../GraphQL/Types/OtherLanguageType';
 
 /**

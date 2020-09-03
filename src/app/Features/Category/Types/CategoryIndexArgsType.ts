@@ -1,8 +1,8 @@
-import {ArgsType, Field} from "@tngraphql/graphql";
-import {FilterContract} from "../../../../Contracts/FilterContract";
-import {CategoryFilterEnumType} from "./CategoryFilterEnumType";
-import {CategorySortInputType} from "./CategorySortInputType";
-import {filterType} from "../../../GraphQL/Types/FilterType";
+import { ArgsType, Field } from '@tngraphql/graphql';
+import { FilterContract } from '../../../../Contracts/FilterContract';
+import { CategoryFilterEnumType } from './CategoryFilterEnumType';
+import { CategorySortInputType } from './CategorySortInputType';
+import { filterType } from '../../../GraphQL/Types/FilterType';
 
 /**
  * Created by Phan Trung Nguyên.
@@ -16,7 +16,7 @@ export class CategoryIndexArgsType {
     @Field(returns => filterType(CategoryFilterEnumType))
     filter: FilterContract<typeof CategoryFilterEnumType>
 
-    @Field(returns => [CategorySortInputType], {description: 'order'})
+    @Field(returns => [CategorySortInputType], { description: 'order' })
     sortBy: CategorySortInputType
 
     where: any;
