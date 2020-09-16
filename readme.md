@@ -26,3 +26,6 @@ sau cùng chạy lệnh
 ```bash
 npm run dev
 ```
+
+# Document
+[tngraphql](https://tngraphql.com)
