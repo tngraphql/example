@@ -12,6 +12,8 @@ import { Str } from '../../../../lib/Str';
 
 export class ProductmetaModel extends BaseModel {
     public static table = 'productmeta';
+    @column({ isPrimary: true, consume: value => Str.toString(value) })
+    public id: string;
 
     @column({ consume: value => Str.toString(value) })
     public productMasterId: string;
