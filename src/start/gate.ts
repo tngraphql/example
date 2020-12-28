@@ -4,7 +4,7 @@
  * Date: 9/2/2020
  * Time: 9:05 PM
  */
-import { Gate } from '@tngraphql/guard/dist/src';
+import { Gate as abc } from '@tngraphql/guard/dist/src';
 import { UserModel } from '../app/UserModel';
 import { PostModel } from '../app/Features/Post/PostModel';
 
