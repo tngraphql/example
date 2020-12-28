@@ -8,6 +8,8 @@ import { Gate } from '@tngraphql/guard/dist/src';
 import { UserModel } from '../app/UserModel';
 import { PostModel } from '../app/Features/Post/PostModel';
 
+const Gate: any = abc;
+
 Gate.define('role', async (user: any) => {
     if ( user.isOwner() ) {
         return true;
