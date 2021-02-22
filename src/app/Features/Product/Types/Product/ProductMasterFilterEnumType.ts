@@ -30,6 +30,8 @@ enum ProductMasterFilterEnumType {
     commentCount = 'commentCount',
     attributeId = 'allAttribute.attributeId',
     attributeValue = 'allAttribute.attribute.name',
+    priceSale = 'branches.priceSale',
+    price = 'branches.price',
 }
 
 namespace ProductMasterFilterEnumType {
