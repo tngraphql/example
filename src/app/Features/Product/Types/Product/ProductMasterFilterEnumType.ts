@@ -27,7 +27,9 @@ enum ProductMasterFilterEnumType {
     tagSlug = 'tags.slug',
     views = 'views',
     commentStatus = 'commentStatus',
-    commentCount = 'commentCount'
+    commentCount = 'commentCount',
+    attributeId = 'allAttribute.attributeId',
+    attributeValue = 'allAttribute.attribute.name',
 }
 
 namespace ProductMasterFilterEnumType {
