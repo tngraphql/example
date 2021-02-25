@@ -26,11 +26,16 @@ import { AllAttributeType } from '../Types/Attribute/AllAttributeType';
 import { ISelection } from '../../../../Contracts/SelectionCriteriaContract';
 import _ = require('lodash');
 import { ID } from '../../../GraphQL/Types/UidScalerType';
+import {ProductBranchToAttributeRepository} from "../Repositories/ProductBranchToAttributeRepository";
+import {AttributeGroupRepository} from "../Repositories/AttributeGroupRepository";
 
 @Resolver()
 export class ProductMasterResolve extends BaseResolve {
     @Inject(ProductMasterRepository)
     public repo: ProductMasterRepository;
+
+    @Inject(type => AttributeGroupRepository)
+    attributeGroup: AttributeGroupRepository;
 
     @Query(returns => ProductMasterType, {
         description: 'Chi tiết sản phẩm'
@@ -164,4 +169,15 @@ export class ProductMasterResolve extends BaseResolve {
 
         return res;
     }
+
+    @Query(returns => [AllAttributeType], { description: 'Tất cả attribute.' })
+    async allAttribute(
+        @Arg('productMasterId', returns => ID) productMasterId: string,
+        @SelectFields() fields
+    ) {
+        return await this.attributeGroup.query()
+            .pushCriteria(new SelectionCriteria(fields))
+            .all();
+    }
+
 }

@@ -83,6 +83,7 @@ Route.group(() => {
     Route.query('product_master', 'ProductMasterResolve.index');
     Route.query('product_master_list', 'ProductMasterResolve.productMasterList');
     Route.query('product_all_attribute', 'ProductMasterResolve.productAllAttribute');
+    Route.query('all_attribute', 'ProductMasterResolve.allAttribute');
 
     Route.mutation('productCreate', 'ProductMasterResolve.create');
     Route.mutation('productUpdate', 'ProductMasterResolve.update');

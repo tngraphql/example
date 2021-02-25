@@ -7,12 +7,12 @@
 
 import { Field, ObjectType } from '@tngraphql/graphql';
 import { ID } from '../../../../GraphQL/Types/UidScalerType';
-import { AttributeModel } from '../../Models/AttributeModel';
 import { AttributeType } from './AttributeType';
+import {AttributeGroupModel} from "../../Models/AttributeGroupModel";
 
 @ObjectType('AllAttribute')
 export class AllAttributeType {
-    static model = AttributeModel
+    static model = AttributeGroupModel
 
     @Field(returns => ID)
     public id: string;

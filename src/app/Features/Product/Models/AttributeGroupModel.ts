@@ -5,10 +5,12 @@
  * Time: 9:23 AM
  */
 import { BaseModel } from '@tngraphql/lucid/build/src/Orm/BaseModel';
-import { column } from '@tngraphql/lucid/build/src/Orm/Decorators';
+import {belongsTo, column, hasMany} from '@tngraphql/lucid/build/src/Orm/Decorators';
 import { DateTime } from 'luxon';
 import { SoftDeletes } from '@tngraphql/lucid/build/src/Orm/SoftDeletes';
 import { Str } from '../../../../lib/Str';
+import {AttributeModel} from "./AttributeModel";
+import {BelongsTo, HasMany} from "@tngraphql/lucid/build/src/Contracts/Orm/Relations/types";
 
 export class AttributeGroupModel extends BaseModel {
     public static table = 'attribute_group';
@@ -27,6 +29,9 @@ export class AttributeGroupModel extends BaseModel {
 
     @column.dateTime()
     public deletedAt: DateTime;
+
+    @hasMany(() => AttributeModel)
+    public attributes: HasMany<typeof AttributeModel>
 
     public static boot() {
         this.uses([SoftDeletes])
