@@ -33,6 +33,9 @@ export class ProductTypeCreateArgsType {
     @Field({ description: 'Mô tả' })
     public description: string;
 
+    @Field({ description: 'Nội dung' })
+    public content: string;
+
     @Field(returns => ID, { description: 'Danh mục cha', })
     public parentId: string = '0';
 

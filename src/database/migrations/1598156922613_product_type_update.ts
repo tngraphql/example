@@ -1,8 +1,8 @@
 import { Schema as BaseSchema } from '@tngraphql/lucid/build/src/Schema';
 import {AlterTableBuilder, CreateTableBuilder} from 'knex';
 
-export default class CagegoryUpdate extends BaseSchema {
-    protected $tableName = 'categories'
+export default class ProductTypeUpdate extends BaseSchema {
+    protected $tableName = 'product_types'
 
     public async up() {
         this.schema.table(this.$tableName, (table: AlterTableBuilder) => {

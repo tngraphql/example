@@ -68,7 +68,7 @@ export default class CategoryModel extends BaseModel {
     })
     public meta: HasMany<typeof CategorymetaModel>
 
-    public static $columns: Pick<CategoryModel, 'id' | 'name' | 'description' | 'parentId' | 'slug'
+    public static $columns: Pick<CategoryModel, 'id' | 'name' | 'description' | 'content' | 'parentId' | 'slug'
         | 'categoryOrder' | 'language' | 'languageMaster' | 'seoTitle' | 'seoDescription' | 'seoKeyword'
         | 'createdAt' | 'updatedAt' | 'deletedAt'>
 
