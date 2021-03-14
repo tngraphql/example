@@ -27,6 +27,9 @@ export class CategoryType {
     @Field()
     public description: string;
 
+    @Field()
+    public content: string;
+
     @Field(returns => ID)
     public parentId: string;
 

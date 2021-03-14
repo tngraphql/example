@@ -60,7 +60,7 @@ const databaseConfig = {
                 host: Env.get('MYSQL_HOST', '127.0.0.1') as string,
                 port: Number(Env.get('MYSQL_PORT', 3306)),
                 user: Env.get('MYSQL_USER', 'root') as string,
-                password: Env.get('MYSQL_PASSWORD', '123123As') as string,
+                password: Env.get('MYSQL_PASSWORD', '') as string,
                 database: Env.get('DB_NAME', 'lucid') as string,
             },
             healthCheck: false,
