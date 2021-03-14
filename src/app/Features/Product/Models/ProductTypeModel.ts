@@ -31,7 +31,7 @@ export class ProductTypeModel extends BaseModel {
     @column()
     public content: string;
 
-    @column()
+    @column({columnName: 'content2'})
     public content2: string;
 
     @column({ consume: value => Str.toString(value) })
