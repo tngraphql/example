@@ -53,6 +53,7 @@ export class MediaType {
         try {
             data = JSON.parse(parent.thumbnail);
         } catch (e) {
+            console.error(e)
             // code
         }
         if ( data && data.sizes && data.sizes.thumbnail ) {
@@ -65,8 +66,9 @@ export class MediaType {
     @Field(returns => Any)
     public data(@Root() parent): any {
         try {
-            return JSON.parse(parent.data);
+            return JSON.parse(parent.thumbnail);
         } catch (e) {
+            console.error(e)
             return {};
         }
     };

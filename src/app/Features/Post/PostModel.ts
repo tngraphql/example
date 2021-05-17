@@ -17,6 +17,7 @@ import PostmetaModel from './PostmetaModel';
 import { LanguageMixin } from '../../../lib/LanguageMixin';
 import { converBoolean } from '../../../lib/utils';
 import { Str } from '../../../lib/Str';
+import MediaModel from "../Media/MediaModel";
 
 
 class PostModel extends BaseModel {
@@ -146,6 +147,9 @@ class PostModel extends BaseModel {
     @column({ consume: value => Str.toString(value) })
     public thumbnailId: string;
 
+    @belongsTo(() => MediaModel, {
+        foreignKey: 'thumbnailId'
+    })
     public thumbnail;
 
     public static $columns: Pick<PostModel, 'id' | 'format' | 'isFeatured' | 'views' | 'name' | 'authorId'
