@@ -27,11 +27,11 @@ export class MetaType {
                 const media = await MediaModel.findBy('id', value.thumbnailId);
 
                 if ( media ) {
-                    const { guid, data, title } = media.toJSON();
+                    const { guid, thumbnail, title } = media.toJSON();
 
                     let djson = {};
                     try {
-                        djson = JSON.parse(data);
+                        djson = JSON.parse(thumbnail);
                     } catch (e) {
                         // console.log(e);
                     }
