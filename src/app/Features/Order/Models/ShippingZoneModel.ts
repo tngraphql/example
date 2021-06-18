@@ -31,9 +31,13 @@ export class ShippingZoneModel extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
-    @hasMany(() => ShippingLocationModel)
+    @hasMany(() => ShippingLocationModel, {
+        foreignKey: 'zoneId'
+    })
     public location: HasMany<typeof ShippingLocationModel>;
 
-    @hasMany(() => ShippingMethodModel)
+    @hasMany(() => ShippingMethodModel, {
+        foreignKey: 'zoneId'
+    })
     public methods: HasMany<typeof ShippingMethodModel>;
 }
