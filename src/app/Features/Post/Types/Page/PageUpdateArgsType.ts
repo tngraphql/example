@@ -68,7 +68,6 @@ export class PageUpdateArgsType {
     public tags?: string[];
 
     @Field(returns => [ID], { description: 'Chọn danh mục bài viết.', defaultValue: '1' })
-    @Rules(['filled', Rule.exists(CategoryModel.getTable(), 'id')])
     public categories?: string[];
 
     @Field({ description: 'Seo title' })
