@@ -10,6 +10,7 @@ import CategoryModel from '../../../Category/CategoryModel';
 import { PostCommentStatusEnumType } from '../Post/PostCommentStatusEnumType';
 import { PageStatusEnumType } from './PageStatusEnumType';
 import { PageModel } from '../../PageModel';
+import {PostStatusEnumType} from "../Post/PostStatusEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -27,7 +28,10 @@ export class PageCreateArgsType {
     ]))
     public name: string
 
-    @Field(returns => PageStatusEnumType, { defaultValue: 'publish', description: 'Trạng thái của bài viết.', })
+    @Field({ description: 'Hình đại diện' })
+    public avatar: string;
+
+    @Field(returns => PostStatusEnumType, { defaultValue: 'publish', description: 'Trạng thái của bài viết.', })
     public postStatus: string = 'publish';
 
     @Field({ description: 'Mật khẩu của bài viết nếu có.', })

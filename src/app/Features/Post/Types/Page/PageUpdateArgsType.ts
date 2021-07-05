@@ -8,6 +8,7 @@ import { PageStatusEnumType } from './PageStatusEnumType';
 import { PostCommentStatusEnumType } from '../Post/PostCommentStatusEnumType';
 import { GraphQLString } from 'graphql';
 import CategoryModel from '../../../Category/CategoryModel';
+import {PostStatusEnumType} from "../Post/PostStatusEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -38,7 +39,7 @@ export class PageUpdateArgsType {
     @Field({ description: 'Trạng thái của bài viết.', })
     public thumbnailId?: string;
 
-    @Field(returns => PageStatusEnumType, { defaultValue: 'publish', description: 'Trạng thái của bài viết.', })
+    @Field(returns => PostStatusEnumType, { defaultValue: 'publish', description: 'Trạng thái của bài viết.', })
     public postStatus?: string = 'publish';
 
     @Field({ description: 'Mật khẩu của bài viết nếu có.', })

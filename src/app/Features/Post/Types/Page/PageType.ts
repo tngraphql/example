@@ -16,6 +16,7 @@ import { GraphQLString } from 'graphql';
 import { HTML } from '../../../../GraphQL/Types/ScalarType/HtmlScalerType';
 import { PageStatusEnumType } from './PageStatusEnumType';
 import { PostCommentStatusEnumType } from '../Post/PostCommentStatusEnumType';
+import {PostStatusEnumType} from "../Post/PostStatusEnumType";
 
 /**
  * Created by Phan Trung Nguyên.
@@ -114,7 +115,7 @@ export class PageType {
     @Field(returns => PostCommentStatusEnumType, { description: 'Trạng thái được phép bình luận bài viết' })
     public commentStatus: string;
 
-    @Field(returns => PageStatusEnumType, { description: 'Trạng thái bài viết' })
+    @Field(returns => PostStatusEnumType, { description: 'Trạng thái bài viết' })
     public postStatus: string;
 
     @Field(returns => GraphQLString, { description: 'Mật khẩu bài post', })
