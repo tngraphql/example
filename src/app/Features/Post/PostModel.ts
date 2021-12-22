@@ -50,6 +50,9 @@ class PostModel extends BaseModel {
     @column()
     public name: string;
 
+    @column()
+    public slug: string;
+
     @column({ consume: value => Str.toString(value) })
     public authorId: string;
 

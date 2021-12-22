@@ -60,7 +60,7 @@ export class PostType {
 
     @Field()
     public slug(@Root() parent): string {
-        return Str.slug(parent.name);
+        return parent.slug || Str.slug(parent.name);
     };
 
     @Field(returns => HTML)
